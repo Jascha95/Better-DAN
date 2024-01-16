@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index.html">
+<link rel="Up" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtList.html">
+<link title="Index of types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_types.html">
+<link title="Index of exceptions" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_exceptions.html">
+<link title="Index of values" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_values.html">
+<link title="Index of modules" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_modules.html">
+<link title="Index of module types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_module_types.html">
+<link title="ExtList" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtList.html">
+<link title="ExtSMap" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSMap.html">
+<link title="ExtSSet" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSSet.html">
+<link title="ExtSSetImp" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSSetImp.html">
+<link title="ExtString" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtString.html">
+<link title="ExtSQueue" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSQueue.html">
+<link title="ExtUtils" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtUtils.html">
+<link title="HiddenInts" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/HiddenInts.html">
+<link title="HistoryMap" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/HistoryMap.html">
+<link title="Log" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Log.html">
+<link title="Option" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Option.html">
+<link title="OUnit" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OUnit.html">
+<link title="OwnMap" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.html">
+<link title="Path" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Path.html">
+<link title="PrioQueues" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/PrioQueues.html">
+<link title="String_of" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/String_of.html">
+<link title="Test" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Test.html"><link title="Additional functions " rel="Section" href="ExtList.List.html#1_Additionalfunctions">
+<link title="Functions from the standard libary " rel="Section" href="ExtList.List.html#1_Functionsfromthestandardlibary">
+<link title="Iterators" rel="Subsection" href="ExtList.List.html#2_Iterators">
+<link title="Comparators " rel="Subsection" href="ExtList.List.html#2_Comparators">
+<link title="Maybe " rel="Subsection" href="ExtList.List.html#2_Maybe">
+<link title="Set functions " rel="Subsection" href="ExtList.List.html#2_Setfunctions">
+<link title="Association lists " rel="Subsection" href="ExtList.List.html#2_Associationlists">
+<title>ExtList.List</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtList.html">Up</a>
+&nbsp;</div>
+<center><h1>Module <a href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/type_ExtList.List.html">ExtList.List</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> List: <code class="code">sig</code> <a href="ExtList.List.html">..</a> <code class="code">end</code></pre><hr width="100%">
+<br>
+<a name="1_Additionalfunctions"></a>
+<h1>Additional functions </h1><br>
+<pre><span class="keyword">val</span> <a name="VALis_empty"></a>is_empty : <code class="type">'a list -> bool</code></pre><div class="info">
+returns <code class="code">true</code> if the list is empty, otherwise returns <code class="code">false</code>.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALfind'"></a>find' : <code class="type">('a -> bool) -> 'a list -> 'a option</code></pre><div class="info">
+like find, but does not throw an error.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALtake"></a>take : <code class="type">int -> 'a list -> 'a list</code></pre><div class="info">
+Gets the first n-th arguments of an list<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALselect"></a>select : <code class="type">('a -> bool) -> 'a list -> 'a list * 'a list</code></pre><div class="info">
+<code class="code">select pred l</code> returns a pair containing as the first component the longest
+      prefix <code class="code">p</code> of <code class="code">l</code>, such that all elements of <code class="code">p</code> satisfies <code class="code">pred</code>. 
+      The second component <code class="code">q</code> contains all forthcoming elements of <code class="code">l</code>, such that
+      <code class="code">p @ q = l</code>. So the first element of <code class="code">q</code> does not satisfy the <code class="code">pred</code>.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALmem_cmp"></a>mem_cmp : <code class="type">('a -> 'a -> bool) -> 'a -> 'a list -> bool</code></pre><div class="info">
+<code class="code">mem_cmp cmp a l</code> checks if a is element of the list, and uses
+      cmp as compare operator.<br>
+</div>
+<br>
+<a name="2_Iterators"></a>
+<h2>Iterators</h2><br>
+<pre><span class="keyword">val</span> <a name="VALmapi"></a>mapi : <code class="type">(int -> 'a -> 'b) -> 'a list -> 'b list</code></pre><div class="info">
+<code class="code">mapi f l</code> applies <code class="code">f</code> to each element of the list and also 
+      gives the position of the list element as first parameter.<br>
+</div>
+<br>
+<a name="2_Comparators"></a>
+<h2>Comparators </h2><br>
+<pre><span class="keyword">val</span> <a name="VALcompare"></a>compare : <code class="type">('a -> 'a -> int) -> 'a list -> 'a list -> int</code></pre><div class="info">
+Compares two lists using a compare operator over
+      the elements of the list.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcompare_ignore_order"></a>compare_ignore_order : <code class="type">?equal:('a -> 'a -> bool) -> 'a list -> 'a list -> bool</code></pre><div class="info">
+<code class="code">compare_ignore_order ~equal:eq l1 l2</code> returns <code class="code">true</code> if the two lists <code class="code">l1</code>
+      and <code class="code">l2</code> has the same elements. The order of the elements is ignored. As a
+      comparison function is <code class="code">eq</code> used if given. If the parameter is not set the
+      default will be <code class="code">Pervasives.compare</code>.<br>
+</div>
+<br>
+<a name="2_Maybe"></a>
+<h2>Maybe </h2><br>
+<pre><span class="keyword">val</span> <a name="VALmaybe_forall"></a>maybe_forall : <code class="type">('a -> bool option) -> 'a list -> bool option</code></pre><div class="info">
+<code class="code">maybe_forall f l</code> returns <code class="code">Some true</code> if <code class="code">f e == Some true</code>
+      for all elements <code class="code">e</code> of <code class="code">l</code>. If there exists one <code class="code">e</code> in <code class="code">l</code>
+      such that <code class="code">f e == Some false</code> then <code class="code">Some false</code> is the result
+      of <code class="code">maybe_forall f l</code>. If no application of <code class="code">f</code> to the elements
+      results in <code class="code">Some false</code>, but some returns <code class="code">None</code>, then <code class="code">None</code>
+      is returned.
+<p>
+
+      If the element with number <code class="code">i</code> returns <code class="code">Some false</code> then
+      <code class="code">f (take j l)</code> for <code class="code">i &lt; j &lt; length l</code> is not evaluated.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALmaybe_exists"></a>maybe_exists : <code class="type">('a -> bool option) -> 'a list -> bool option</code></pre><div class="info">
+<code class="code">maybe_exists f l</code> returns <code class="code">Some true</code> if <code class="code">f e == Some true</code>
+      for at least one element <code class="code">e</code> of <code class="code">l</code>. If for all <code class="code">e</code> in <code class="code">l</code>
+      it holds that <code class="code">f e == Some false</code> then <code class="code">Some false</code> is the result
+      of <code class="code">maybe_forall f l</code>. If no application of <code class="code">f</code> to the elements
+      results in <code class="code">Some True</code>, but some returns <code class="code">None</code>, then <code class="code">None</code>
+      is returned.
+<p>
+
+      If the element with number <code class="code">i</code> returns <code class="code">Some True</code> then
+      <code class="code">f (take j l)</code> for <code class="code">i &lt; j &lt; length l</code> is not evaluated.<br>
+</div>
+<br>
+<a name="2_Setfunctions"></a>
+<h2>Set functions </h2><br>
+<pre><span class="keyword">val</span> <a name="VALsubset"></a>subset : <code class="type">?equal:('a -> 'a -> bool) -> 'a list -> 'a list -> bool</code></pre><div class="info">
+returns <code class="code">true</code> if the first list is a subset of the second one.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALadd"></a>add : <code class="type">'a -> 'a list -> 'a list</code></pre><div class="info">
+adds the element to the list, if the list don't contains 
+      it already.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALremove"></a>remove : <code class="type">'a -> 'a list -> 'a list</code></pre><div class="info">
+<code class="code">remove elm set</code> returns the set that do not contain <code class="code">elm</code>.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALunion"></a>union : <code class="type">'a list -> 'a list -> 'a list</code></pre><div class="info">
+If these two lists are sets, the result is a set that
+     contains all elements of the two given sets.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALinter"></a>inter : <code class="type">'a list -> 'a list -> 'a list</code></pre><div class="info">
+<code class="code">inter l1 l2</code> contains the intersection of the two sets <code class="code">l1</code>
+      and <code class="code">l2</code>.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALdiff"></a>diff : <code class="type">'a list -> 'a list -> 'a list</code></pre><div class="info">
+<code class="code">diff l1 l2</code> contains all elements of <code class="code">l1</code> that are
+      not part of <code class="code">l2</code> if <code class="code">l1, l2</code> as sets.<br>
+</div>
+<br>
+<a name="2_Associationlists"></a>
+<h2>Association lists </h2><br>
+<pre><span class="keyword">val</span> <a name="VALassoc'"></a>assoc' : <code class="type">?equal:('a -> 'a -> bool) -> 'a -> ('a * 'b) list -> 'b option</code></pre><div class="info">
+<code class="code">assoc' a l == Some b</code> iff <code class="code">assoc a l == b</code>. If
+      <code class="code">assoc a l -&gt; throws Not_found</code>, then <code class="code">assoc' a l == None</code>.<br>
+</div>
+<br>
+<a name="1_Functionsfromthestandardlibary"></a>
+<h1>Functions from the standard libary </h1><br>
+<br>
+Same as original List module, see
+      <a href="http://caml.inria.fr/pub/docs/manual-ocaml/libref/List.html">List</a>.<br>
+<pre><span class="keyword">val</span> <a name="VALlength"></a>length : <code class="type">'a list -> int</code></pre><pre><span class="keyword">val</span> <a name="VALhd"></a>hd : <code class="type">'a list -> 'a</code></pre><pre><span class="keyword">val</span> <a name="VALtl"></a>tl : <code class="type">'a list -> 'a list</code></pre><pre><span class="keyword">val</span> <a name="VALnth"></a>nth : <code class="type">'a list -> int -> 'a</code></pre><pre><span class="keyword">val</span> <a name="VALrev"></a>rev : <code class="type">'a list -> 'a list</code></pre><pre><span class="keyword">val</span> <a name="VALappend"></a>append : <code class="type">'a list -> 'a list -> 'a list</code></pre><pre><span class="keyword">val</span> <a name="VALrev_append"></a>rev_append : <code class="type">'a list -> 'a list -> 'a list</code></pre><pre><span class="keyword">val</span> <a name="VALconcat"></a>concat : <code class="type">'a list list -> 'a list</code></pre><pre><span class="keyword">val</span> <a name="VALflatten"></a>flatten : <code class="type">'a list list -> 'a list</code></pre><pre><span class="keyword">val</span> <a name="VALiter"></a>iter : <code class="type">('a -> unit) -> 'a list -> unit</code></pre><pre><span class="keyword">val</span> <a name="VALmap"></a>map : <code class="type">('a -> 'b) -> 'a list -> 'b list</code></pre><pre><span class="keyword">val</span> <a name="VALrev_map"></a>rev_map : <code class="type">('a -> 'b) -> 'a list -> 'b list</code></pre><pre><span class="keyword">val</span> <a name="VALfold_left"></a>fold_left : <code class="type">('a -> 'b -> 'a) -> 'a -> 'b list -> 'a</code></pre><pre><span class="keyword">val</span> <a name="VALfold_right"></a>fold_right : <code class="type">('a -> 'b -> 'b) -> 'a list -> 'b -> 'b</code></pre><pre><span class="keyword">val</span> <a name="VALiter2"></a>iter2 : <code class="type">('a -> 'b -> unit) -> 'a list -> 'b list -> unit</code></pre><pre><span class="keyword">val</span> <a name="VALmap2"></a>map2 : <code class="type">('a -> 'b -> 'c) -> 'a list -> 'b list -> 'c list</code></pre><pre><span class="keyword">val</span> <a name="VALrev_map2"></a>rev_map2 : <code class="type">('a -> 'b -> 'c) -> 'a list -> 'b list -> 'c list</code></pre><pre><span class="keyword">val</span> <a name="VALfold_left2"></a>fold_left2 : <code class="type">('a -> 'b -> 'c -> 'a) -> 'a -> 'b list -> 'c list -> 'a</code></pre><pre><span class="keyword">val</span> <a name="VALfold_right2"></a>fold_right2 : <code class="type">('a -> 'b -> 'c -> 'c) -> 'a list -> 'b list -> 'c -> 'c</code></pre><pre><span class="keyword">val</span> <a name="VALfor_all"></a>for_all : <code class="type">('a -> bool) -> 'a list -> bool</code></pre><pre><span class="keyword">val</span> <a name="VALexists"></a>exists : <code class="type">('a -> bool) -> 'a list -> bool</code></pre><pre><span class="keyword">val</span> <a name="VALfor_all2"></a>for_all2 : <code class="type">('a -> 'b -> bool) -> 'a list -> 'b list -> bool</code></pre><pre><span class="keyword">val</span> <a name="VALexists2"></a>exists2 : <code class="type">('a -> 'b -> bool) -> 'a list -> 'b list -> bool</code></pre><pre><span class="keyword">val</span> <a name="VALmem"></a>mem : <code class="type">'a -> 'a list -> bool</code></pre><pre><span class="keyword">val</span> <a name="VALmemq"></a>memq : <code class="type">'a -> 'a list -> bool</code></pre><pre><span class="keyword">val</span> <a name="VALfind"></a>find : <code class="type">('a -> bool) -> 'a list -> 'a</code></pre><pre><span class="keyword">val</span> <a name="VALfilter"></a>filter : <code class="type">('a -> bool) -> 'a list -> 'a list</code></pre><pre><span class="keyword">val</span> <a name="VALfind_all"></a>find_all : <code class="type">('a -> bool) -> 'a list -> 'a list</code></pre><pre><span class="keyword">val</span> <a name="VALpartition"></a>partition : <code class="type">('a -> bool) -> 'a list -> 'a list * 'a list</code></pre><pre><span class="keyword">val</span> <a name="VALassoc"></a>assoc : <code class="type">'a -> ('a * 'b) list -> 'b</code></pre><pre><span class="keyword">val</span> <a name="VALassq"></a>assq : <code class="type">'a -> ('a * 'b) list -> 'b</code></pre><pre><span class="keyword">val</span> <a name="VALmem_assoc"></a>mem_assoc : <code class="type">'a -> ('a * 'b) list -> bool</code></pre><pre><span class="keyword">val</span> <a name="VALmem_assq"></a>mem_assq : <code class="type">'a -> ('a * 'b) list -> bool</code></pre><pre><span class="keyword">val</span> <a name="VALremove_assoc"></a>remove_assoc : <code class="type">'a -> ('a * 'b) list -> ('a * 'b) list</code></pre><pre><span class="keyword">val</span> <a name="VALremove_assq"></a>remove_assq : <code class="type">'a -> ('a * 'b) list -> ('a * 'b) list</code></pre><pre><span class="keyword">val</span> <a name="VALsplit"></a>split : <code class="type">('a * 'b) list -> 'a list * 'b list</code></pre><pre><span class="keyword">val</span> <a name="VALcombine"></a>combine : <code class="type">'a list -> 'b list -> ('a * 'b) list</code></pre><pre><span class="keyword">val</span> <a name="VALsort"></a>sort : <code class="type">('a -> 'a -> int) -> 'a list -> 'a list</code></pre><pre><span class="keyword">val</span> <a name="VALstable_sort"></a>stable_sort : <code class="type">('a -> 'a -> int) -> 'a list -> 'a list</code></pre><pre><span class="keyword">val</span> <a name="VALfast_sort"></a>fast_sort : <code class="type">('a -> 'a -> int) -> 'a list -> 'a list</code></pre><pre><span class="keyword">val</span> <a name="VALmerge"></a>merge : <code class="type">('a -> 'a -> int) -> 'a list -> 'a list -> 'a list</code></pre></body></html>

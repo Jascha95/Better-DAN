@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>Notenverzeichnis SWT 2008 Abschlussklausur</title>
+  </head>
+
+  <body>
+    <h1>Notenverzeichnis SWT 2008 Abschlussklausur</h1>
+    <form action="https://nonopapa.informatik.uni-freiburg.de:8043/cgi-bin/grade-lookup.cgi" method="get">
+      <input type="hidden" name="type" value="swt-2008">
+      <input type="hidden" name="title" value="SWT 2008 Abschlussklausur">
+      <table>
+        <tbody>
+          <tr>
+            <td>Vorname:</td>
+            <td>
+              <input name="firstname" type="text" size="30" 
+                maxlength="30">
+            </td>
+          </tr>
+          <tr>
+            <td>Nachname:</td>
+            <td>
+              <input name="lastname" type="text" size="30" 
+                maxlength="30">
+            </td>
+          </tr>
+          <tr>
+            <td>Matrikelnummer:</td>
+            <td>
+              <input name="studentId" type="text" size="7" 
+                maxlength="7">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <input type="submit" value="Absenden">
+      </p>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,641 @@
+
+7. Integralrechnung
+===================
+
+7.1 Definition und Beispiele
+----------------------------
+
+Definition: Eine Funktion f:[a,b]->CC heisst stueckweise stetig, wenn
+es eine Zerlegung des Intervalls [a,b] in endlich viele Teilintervalle
+gibt, sodass f auf jedem Teilintervall stetig ist. Formal muss es
+a0..an geben mit a=a0<a1<...<an=b, sodass f  eingeschraenkt auf [ai,a(i+1)]
+jeweils stetig ist.
+
+Das bedeutet insbesondere, dass f nur an endlich vielen
+Ausnahmepunkten unstetig ist und dass diese endlich vielen
+Ausnahmepunkte alles "Sprungstellen" sind (links- und rechtsseitiger
+Grenzwert existieren). Es ist auch klar, dass eine stueckweise stetige
+Funktion beschraenkt ist.
+
+Beispiele: Wenn f ueberhaupt stetig ist, dann ist f natuerlich auch
+stueckweise stetig, also z.B. f(x)=x^2*sin(x) auf [-3,7]. Die Funktion
+darf aber wie gesagt endlich viele Sprungstellen haben, also zum
+Beispiel f(x)=floor(x) auf [-10,10] mit 21 Sprungstellen.
+
+Die Funktion f(x) = 1/x^2 auf [-1,1] hat zwar nur eine
+Unstetigkeitsstelle bei x=0, gilt aber wegen dem oben Ausgefuehrten
+nicht als stueckweise  stetig.
+
+Definition: Sei f:D->W <= CC eine Funktion, sodass f eingeschraenkt
+auf das Intervall [a,b] stueckweise stetig ist. Das Riemann-Integral
+ist dann als folgender Grenzwert definiert:
+
+                        N-1
+   b                    ___
+   /                    \
+   | f(x) dx  := lim     >   f(a+k(b-a)/N)*(b-a)/N
+   /             N->oo  /
+   a                    ---
+                        k=0
+
+Man kann zeigen, dass dieser Grenzwert immer existiert.
+
+Wir schreiben auch int(f(x) dx, a..b)
+
+Beispiele:
+
+int(x dx, 0..b) = lim sum(k*b/N * b/N,k=0..N-1) = lim b^2/N^2*sum(k,k=0..N-1) = 
+                  N->oo
+
+= lim b^2/N^2*N*(N-1)/2 = b^2/2. 
+
+
+int(x^2 dx, 0..b) = lim sum((k*b/N)^2 * b/N,k=0..N-1) =
+= lim b^3/N^3*sum(k^2,k=0..N-1) = 1/3 b^3.
+
+Man deutet das Integral geometrisch als die Flaeche unter dem Graphen
+von f im Intervall a..b.
+
+
+
+ ^
+ |
+ 1            |        Die Flaeche des krummlinigen Dreiecks, also unterhalb
+ |           ||        der Normalparabel ist also int(x^2 dx,x=0..1) = 1/3. 
+ |           /|
+ .5         / |
+ |         -  |
+ | _   - °    |
+-|-----.5-----1----------->
+
+
+Die krummlinige Flaeche wird durch Flaechen von immer schmaler
+werdenden Rechtecken (der Hoehe f(a + k*(b-a)/N) und Breite (b-a)/N)
+angenaehert.
+
+
+Bemerkung: Normalerweise definiert man das Riemann-Integral zunaechst
+fuer beliebige Funktionen als Grenzwert von Summen wie oben, wobei
+allerdings die Wahl der Stuetzstellen nicht unbedingt aequidistant zu
+erfolgen hat. Existiert der Grenzwert unabhaengig von der Wahl der
+Stuetzstellen, sofern nur deren Abstand (Maschenweite) gegen Null
+geht, so bezeichnet man die Funktion als "Riemann integrierbar".
+
+Man kann dann zeigen, dass eine Funktion genau dann Riemann
+integrierbar ist, wenn sie hoechstens abzaehlbar viele
+Unstetigkeitsstellen hat und ausserdem auf dem Intervall [a,b]
+beschraenkt ist (Lebesgue-Kriterium). Im Falle einer Riemann-integrierbaren
+Funktion genuegen dann natuerlich auch die aequidistanten Unterteilungen.
+
+Es gibt auch noch allgemeinere Integralbegriffe (heutiger Standard ist
+das Lebesgue-Integral), mit dem auch noch anderen Funktionen ein
+Integral zugewiesen werden kann, insbesondere solchen, die auf einem
+offenen Intervall, wie [0,oo[ definiert sind, oder solchen, die
+nirgendwo stetig sind, wie etwa die Dirichlet Funktion
+
+d(x) = if x rational then 1 else 0
+
+Fuer unsere Zwecke (und die allermeisten in der Praxis vorkommenden Faelle)
+genuegt die Definition des Integrals fuer stueckweise stetige Funktionen. 
+
+Weiteres Beispiel:
+
+int(exp(x) dx, x=0..b).
+
+Zunaechst stellen wir fest
+
+sum(exp(k*b/N),k=0..N-1) = sum(exp(b/N)^k,k=0..N-1) =
+(exp(N*b/N)-1) / (exp(b/N)-1)  /* geometrische Reihe */
+= (exp(b)-1)/(exp(b/N)-1)
+
+Also sum(exp(k*b/N)*b/N,k=0..N-1) =
+b/N * (exp(b)-1)/(exp(b/N)-1).
+
+Der Grenzwert hiervon fuer N->oo ergibt sich zu exp(b)-1, also ist 
+
+int(exp(x) dx, x=0..b) = exp(b)-1. 
+
+Satz: Fuer a<=b<=c gilt (sofern die vorkommenden Ausdruecke ueberhaupt definiert sind)
+
+int(f(x)dx,x=a..b) + int(f(x)dx,x=b..c) = int(f(x)dx,x=a..c)
+
+Begruendung: Intuitiv ist das klar, fuer einen rigorosen Beweis muss
+man etwas vorsichtig sein, weil die Zusammensetzung von zwei
+aequidistanten Einteilungen im allgemeinen nicht wieder eine
+aequidistante Einteilung liefert.
+
+Satz (Mittelwertsatz der Integralrechnung):
+Ist f:[a,b]->RR stetig (nicht nur stueckweise!),
+so existiert x0:[a,b] derart dass
+
+int(f(x) dx,x=a..b) = f(x0)*(b-a)
+
+Veranschaulichung: f(x0)*(b-a) ist ein Rechteck der Breite b-a und
+Hoehe f(x0). Man waehlt zunaechst die Hoehe so, dass diese Flaeche
+gerade dem Integral entspricht. Dann erhaelt man mit dem
+Zwischenwertsatz einen passenden x-Wert.
+
+Es gilt auch noch folgende allgemeinere Version des Mittelwertsatzes:
+
+Satz: Seien f und g auf [a,b] stetig und g(x)>=0. Es existiert x0:[a,b] mit
+int(f(x)*g(x) dx,x=a..b) = f(x0)*int(g(x) dx,x=a..b). 
+
+Beweis: Falls int(g(x) dx, x=a..b)=0, so ist g(x)=0 auf ganz [a,b]
+(Uebung) und x0 kann beliebig gewaehlt werden. Sei nun int(g(x) dx,
+x=a..b) >0 und m das absolute Minimum von f auf [a,b] und M das
+Maximum.
+
+Setze mu := int(f(x)*g(x) dx, x=a..b)/int(g(x) dx, x=a..b). Wegen
+m*int(g(x) dx, x=a..b) <= int(f(x)*g(x) dx,x=a..b) <= M*int(g(x) dx,
+x=a..b) (hier benutzt man g(x)>=0), liegt mu zwischen m und M und wird nach dem Zwischenwertsatz
+von f angenommen. Das liefert das gewuenschte x0.  QED
+
+Das folgende Beispiel zeigt, dass die Annahme int(g(x) dx, x=a..b) !=
+0 anstelle von g(x)>=0 nicht hinreichend ist.
+
+Setze f(x)=x, g(x)=x^3, a=-1, b=1,1 
+
+int(x*x^3 dx, x=1..1,1) = [1/5 x^5]_{-1}^{1,1} = 0,52..
+int(x*x^3 dx, x=1..1,1) = [1/4 x^4]_{-1}^{1,1} = 0,12..
+
+
+
+ 
+
+7.2 Integration und Differentiation
+-----------------------------------
+
+Satz:
+
+Sei I ein Intervall (moeglicherweise offen,
+moeglicherweise mit Grenzen -oo, oo) und f:D->W stetig.
+
+Fuer jedes a:I ist die Funktion F:I->W definiert durch
+
+F(x) = int(f(t) dt,t=a..x)
+
+auf ganz I stetig differenzierbar  und es ist F'(x)=f(x).
+
+Beweisskizze: F(x+h)-F(x) = int(f(t) dt,t=x..x+h) = h*f(xi) fuer ein
+xi:[x..x+h] /*Mittelwertsatz der Integralrechnung*/. Es folgt
+
+F'(x) = lim (F(x+h)-F(x))/h = f(x). 
+        h->0
+
+
+Definition: Sei f stetig. Eine Funktion F mit F'=f heisst
+*Stammfunktion* von f.
+
+Man kann den Begriff der Stammfunktion auf stueckweise stetige
+Funktionen f erweitern. Hier muss dann die Stammfunktion ueberall
+ausser an den Sprungstellen vonf differenzierbar sein und ihre
+Ableitung muss dort mit f uebereinstimmen.
+
+Beispiel: Die Betragsfunktion ist in diesem Sinne Stammfunktion der
+Signumfunktion.
+
+Aus obigem Satz folgt unmittelbar der Fundamentalsatz der Differential-
+und Integralrechnung:
+
+Ist F Stammfunktion von f, so ist int(f(x) dx,x=a..b) = F(b)-F(a)
+
+Begruendung: Zwei Stammfunktionen koennen sich nur um eine Konstante
+unterscheiden, die sich bei der Differenz weghebt. Die Funktion
+int(f(t) dt,t=a..x) selbst ist aber auch eine Stammfunktion.
+
+Man fuehrt fuer die Differenz F(b)-F(a) die Notation [F(x)]_a^b ein.
+
+Dieser Fundamentalsatz erlaubt die sehr komfortable Auswertung von Integralen:
+
+Beispiele:
+
+Aus d/dx x^s = s*x^{s-1} ergibt sich, dass 1/(s+1)*x^(s+1) Stammfunktion zu x^s ist. Also folgt
+
+    int(x^s dx, x=a..b) = [1/(s+1) x^(s+1)]_a^b
+
+Man schreibt fuer eine Stammfunktion von f abkuerzend
+
+int(f(x) dx)
+
+und bezeichnet das als "unbestimmtes Integral" im Gegensatz zu den
+vorher eingefuehrten "bestimmten Integralen" mit expliziten
+Integrationsgrenzen.
+
+Zum Beispiel ist: 
+
+int(x dx) = 1/2 * x^2
+
+Die Notation ist aber mit etwas Vorsicht zu verwenden, denn 1/2*x^2 +
+1 ist ja auch eine Stammfunktion.
+
+Man sieht daher auch die Notation
+
+int(f(x) dx) = F(x) + C
+
+wobei C eine beliebige Konstante repraesentieren soll.
+
+Aus den bisher gefundenen Ableitungen ergeben sich folgende weitere
+Stammfunktionen.
+
+int(sin(x) dx) = -cos(x)
+int(cos(x) dx) = -sin(x)
+int(exp(x) dx) = exp(x)
+int(1/x dx) = ln(x), falls x>0
+int(1/x dx) = ln(-x), falls x<0
+daher insgesamt: int(1/x dx) = ln(|x|).
+int(1/(1+x^2) dx) = arctan(x)
+int(1/sqrt(1-x^2) dx) = arcsin(x)
+
+Wir halten noch fest, dass die Integration eine lineare Operation ist:
+
+int(f(x)+g(x) dx) = int(f(x) dx) + int(g(x) dx)
+int(lambda*f(x) dx) = lambda * int(f(x) dx)
+
+7.3 Substitutionsregel
+----------------------
+
+Die Kettenregel lautet bekanntlich: Ist f(x)=h(g(x)), so ist
+f'(x)=h'(g(x))*g'(x)
+
+Dementsprechend ist h(g(x)) eine Stammfunktion zu h'(g(x))*g'(x):
+
+int(h'(g(x))*g'(x) dx) = h(g(x))
+
+Das ist die *Substitutionsregel*.
+
+Die Schwierigkeit liegt darin, dass der *Integrand* dieses ganz
+bestimmte Format h'(g(x))*g'(x) fuer geeignete Funktionen g,h haben
+muss, damit die Regel anwendbar ist.
+
+Beispiele: 
+
+int(exp(lambda*x) dx) = 1/lambda int(exp(lambda*x)*lambda dx) =
+                                             1/lambda exp(lambda*x) 
+int(exp(x^2)*x dx) = 1/2 * int(exp(x^2)*2x dx) = 1/2 exp(x^2)
+
+Manchmal ist als Merkhilfe folgende symbolische Rechnung nuetzlich:
+
+Nachdem g'(x) = dg(x)/dx hat man *formal* auch g'(x) dx = dg(x), also
+
+int(h(g(x))*dg(x), x=a..b) = int(h(u) du, u=g(a)..g(b))
+
+und ebenso
+
+int(h(g(x))*dg(x)) = int(h(u) du)
+
+Hiermit kann man wie folgt rechnen:
+
+int(exp(x^2)*x dx) = 1/2*int(exp(u) du) = 1/2 exp(u) = 1/2 exp(x^2)
+
+NR: Setze u:=x^2, also du/dx = 2x, also du = 2x dx, also x dx = 1/2 du. 
+
+Weitere Beispiele:
+
+int(tan(x) dx) = int(sin(x)/cos(x) dx) = - int(1/u du) = - ln(|u|) = -ln(|cos(x)|).
+
+NR: u=cos(x), also du = -sin(x) dx. 
+
+
+Manchmal muss man die Substitutionsregel auch in umgekehrter Richtung
+anwenden:
+
+Sucht man eine Stammfunktion zu f und besitzt g eine Umkehrfunktion
+(ggf eingeschraenkt auf ein passendes Intervall) und ist
+
+h(y) = int f(g(y))*g'(y) dy 
+
+so gilt fuer die Stammfunktion F(x) = int f(x) dx, dass
+
+F(g(y)) = h(y),
+
+also F(x) = h(g^(-1)(x)).
+
+Beispiel: Gesucht ist eine Stammfunktion zu f(x)=sqrt(1-x^2)
+(definiert auf [-1,1]).
+
+Wir waehlen g(y)=sin(y) auf [-pi/2,pi/2] mit Umkehrfunktion
+arcsin:[-1,1]->[-pi/2,pi/2]
+
+Es ist int f(g(y)) g'(y) dy = int sqrt(1-sin(y)^2) * cos(y) dy = int
+|cos(y)|*cos(y) dy = int cos(y)^2 dy = 1/2*(y+sin(y)*cos(y)) /*Durch
+Raten*/.
+
+
+Also ist int sqrt(1-x^2)dx = 1/2*(arcsin(x)+x*sqrt(1-x^2))
+
+Insbesondere ist int(sqrt(1-x^2) dx,-1..1) = arcsin(1) = pi/2 (Flaeche
+des halben Einheitskreises).
+
+Auch diese Version der Substitutionsregel kann durch die formale
+Rechnung mit dx,du anschaulich gemerkt werden:
+
+int sqrt(1-x^2) dx = ... 
+
+Substitution x=sin(y), dx/dy = cos(y), also dx = cos(y)dy
+
+... = int sqrt(1-sin(y)^2) cos(y) dy =
+int cos(y)^2 dy = ...
+
+
+Man kann die Substitutionsregel auch fuer Integrale mit
+Integrationsgrenzen verwenden ("bestimmte Integrale"), wenn man die
+Grenzen entsprechend mitsubstituiert:
+
+int(f'(g(x))*g'(x) dx, x=a..b) = [f(g(x))]_{x=a}^b = [f(u)]_{u=f(a)}^{f(b)}
+Oder mit dem Leibniz-Kalkuel:
+
+int(f'(g(x))*g'(x) dx, x=a..b) = int(f'(u) du,u=g(a)..g(b)) = [f(u)]_{u=f(a)}^{f(b)}
+
+
+Beispiel:
+int(exp(x^2)*x dx, x=0..2) = 1/2*int(exp(u) du,u=0..4) = [1/2 exp(u)]_0^4.
+int(exp(x^2)*x dx, x=-1..1) = 1/2*int(exp(u) du,u=1..1) = 0.
+
+Bei der umgekehrten Anwendung der Substitutionsregel ist wiederum die
+Umkehrfunktion erforderlich und ggf muss das Integral zerlegt werden.
+
+int(sqrt(1-x^2) dx,x=-1..1) = /* x = sin(phi), phi=arcsin(phi),
+                                 dx=cos(phi)d phi */
+int(cos(phi)^2 d phi,x=-pi/2..pi/2) = 
+[1/2*(phi+sin(phi)*cos(phi))]_(pi/2)^(pi/2) = pi/2
+
+
+
+7.4 Partialbruchzerlegung
+-------------------------
+
+Folgendes Beispiel moege die Methode der Partialbruchzerlegung
+erlaeutern: Es gelte, eine Stammfunktion zu f(x)=1/(x^2-x-2)
+aufzusuchen. Man zerlegt zunaechst den Nenner in Linearfaktoren:
+x^2-x-2 = (x+1)(x-2). Sodann macht man den Ansatz
+
+1/((x+1)(x-2)) = A/(x+1) + B/(x-2)
+
+Durchmultiplizieren mit dem Hauptnenner fuehrt auf B(x+1)+A(x-2)=1,
+also (Koeffizientenvergleich!): A+B=0, -2A+B=1, also A=-1,
+B=1. Demnach ist
+
+int(1/(x^2-x-2) dx) = int(-1/(x+1)+1/(x-2) dx) = -ln(|x+1|) + ln(|x-2|). 
+
+Die beiden Brueche -1/(x+1) und 1/(x+2) heissen *Partialbrueche*.
+
+Dieser Ansatz funktioniert immer, wenn der Nenner vom Grad d auch d
+verschiedene reelle Nullstellen hat. Gibt es komplexe Nullstellen, so
+muss man Partialbrueche ansetzen, die die entsprechenden quadratischen
+Faktoren als Nenner haben (und lineare Terme Ax+B im
+Zaehler). Alternativ kann man auch formal mit komplexen Zahlen
+rechnen.  Hat man eine Nullstelle a groesserer Vielfachheit, so
+muessen Partialbrueche mit Nenner (x-a)^i fuer i von 1 bis zur
+Vielfachheit der Nullstelle angesetzt werden.
+
+Beispiel: Es gelte, eine Stammfunktion zu 1/((x-1)^2*(x^2+2x+3)
+(Nullstellen des Nenners 1 (doppelt), -1+i sqrt(2), -1-i sqrt(2)
+
+Ansatz. 
+1/((x-1)^2*(x^2+2x+3)) = A/(x-1) + B/(x-1)^2 + (Cx+D)/(x^2+2x+3)
+
+1 = A(x-1)(x^2+2x+3) + B(x^2+2x+3) + (Cx+D)(x-1)^2
+
+1 = A(x^3+x^2+x-3) + B(x^2+2x+3) + C(x^3-2x^2+x) + D(x^2-2x+1)
+
+Koeffizientenvergleich: 
+A+C=0           /* x^3 */
+A+B-2C+D=0      /* x^2 */
+A+2B+C-2D=0     /* x   */
+-3A+3B+D=1      /* 1   */
+
+Einsetzungs und Additionsverfahren: 
+A=-1/9, B=1/6, C=1/9, D=1/6
+
+Die Partialbruchzerlegung: 
+1/((x-1)^2*(x^2+2x+3))=-1/(9(x-1)) + 1/(6(x-1)^2) + (2x+3)/(18(x^2+2x+3))
+
+Also:
+int(1/((x-1)^2*(x^2+2x+3)) dx) =
+ -1/9*ln|x-1| - 1/(6(x-1)) + 1/18*ln|x^2+2x+3| +
+  sqrt(2)/36*arctan((x+1)/sqrt(2))
+
+
+
+Nebenrechnung: 
+
+int(1/(x^2+2x+3) dx) = int(1/((x+1)^2+2) dx)  /* quadr. Ergaenzung */
+= int(1/(y^2+2) dy)  /* y=x+1 */
+= int((1/2)/((y/sqrt(2))^2+1) dy)  /* y=x+1 */
+= int((1/2)/((y/sqrt(2))^2+1) dy)  /* z=y/sqrt(2) */
+= sqrt(2)/2 int(1/(z^2+1) dz)
+= 1/sqrt(2) arctan(z) = 1/sqrt(2) arctan((x+1)/sqrt(2))
+
+int(x/(x^2+2x+3) dx) 
+= int(1/2 * (2x+2)/(x^2+2x+3) - 1/(x^2+2x+3)  dx) =
+= 1/2*int(1/u du) - 1/sqrt(2) arctan((x+1)/sqrt(2))  /* u = x^2+2x+3 */
+= 1/2*ln|x^2+2x+3| - 1/sqrt(2) arctan((x+1)/sqrt(2))
+
+
+
+Weitere Beispiele
+
+int 1/(1-x^4) dx. Nullstellen des Nenners: 1,-1,i,-i,
+also 1-x^4=(x-1)(x+1)(x^2+1)
+
+int 1/(1+x^4) dx. Nullstellen des Nenners: a+ai, a-ai, -a+ai,-a-ai mit
+a=1/2*sqrt(2). Also 1+x^4=(x^2+ax+1)(x^2-ax+1).
+
+Das letztere Beispiel ist erstaunlich kompliziert und soll Leibniz
+Schwierigkeiten bereitet haben.
+
+
+
+
+
+
+
+7.5 Partielle Integration
+-------------------------
+
+Aus der Produktregel des Differenzierens erhaelt man folgende
+Rechenregel fuer die Integration, die sog. *partielle Integration*:
+
+u(x)*v(x) = int(u'(x)*v(x) dx) + int(u(x)*v'(x) dx)
+
+oder in nuetzlicherer Form:
+
+int(u'(x)*v(x) dx) = u(x)*v(x) - int(u(x)*v'(x) dx)
+
+Man kann diese Regel verwenden, wenn der Integrand ein Produkt ist,
+sodass fuer einen der Faktoren eine Stammfunktion bekannt ist. Leider
+wird durch die partielle Integration das Integral nicht komplett
+geloest, sondern nur auf ein anderes zurueckgefuehrt, welches
+leichter, aber auch schwieriger, sein kann.
+
+Beispiele:
+
+*) int(cos(x)*x dx)  /* u' = cos(x), u = sin(x), v=x, v'=1 */
+= sin(x)*x - int(sin(x)*1 dx)
+= sin(x)*x + cos(x) + C
+
+*) int(ln(x) dx)
+= int(1*ln(x) dx) /* u' = 1, u = x, v=ln(x), v'=1/x */
+= x*ln(x) - int(x/x dx)
+= x*ln(x) - x + C
+
+*) int(arctan(x) dx)
+= x*arctan(x) - int(x/(1+x^2) dx)
+= x*arctan(x) - 1/2 ln|1+x^2| + C
+
+*) int(cos(y)^2 dy) = 
+= sin(y)*cos(y) + int sin(y)^2 dy 
+
+jetzt nicht nochmal so weitermachen, sonst dreht man sich im Kreis.
+Stattdessen:
+
+ int(cos(y)^2 dy) = sin(y)cos(y)+int 1-cos(y)^2 dy =
+sin(y)cos(y)+x-int cos(y)^2 dy 
+
+Also int(cos(y)^2 dy) = 1/2(x+sin(y)cos(y)) + C
+
+*) Man bestimme I_m(x) = int 1/(1+x^2)^m dx.
+
+I_m(x) = int 1/(x^2+1)^m dx =   /* u=1, v=1/(x^2+1)^m */
+   x/(x^2+1)^m + 2m * int x^2/(1+x^2)^(m+1) dx = /* Umformung+Kuerzen*/
+   x/(x^2+1)^m + 2m * int 1/(1+x^2)^(m+1) - 1/(1+x^2)^m dx =
+   x/(x^2+1)^m + 2m * (I_(m+1)(x) - I_m(x))
+
+NR: x^2/(1+x^2)^(m+1) = (1+x^2)/(1+x^2)^(m+1)-1/(1+x^2)^(m+1) =
+1/(1+x^2)^m-1/(1+x^2)^(m+1).
+
+Also:
+
+I_(m+1)(x) = 1/(2m) * ((2m-1)I_m(x) + x/(1+x^2)^m)
+
+Mit I_1(x)=arctan(x) kann man so die I_m sukzessive berechnen.
+
+*) Man bestimme J_m(x) = int sin(x)^m dx
+
+J_0(x) = x
+J_1(x) = -cos(x)
+J_m(x) = -sin(x)^(m-1)*cos(x) + (m-1)*int sin(x)^(m-2)*cos(x)^2 dx =
+ = -sin(x)^(m-1)*cos(x) + (m-1)*int sin(x)^(m-2)*(1-sin(x)^2)dx =
+ = -sin(x)^(m-1)*cos(x) + (m-1) * (J_(m-2)(x) - J_m(x))
+
+Also J_m(x) = -1/m cos(x)sin^(m-1)(x) + (m-1)/m J_(m-2)(x)
+
+
+
+7.6 Uneigentliche Integrale
+---------------------------
+
+Der Ausdruck int(f(x) dx,x=a..b) ist bekanntlich nur definiert, wenn f
+auf [a,b] definiert ist. Ist also a oder b = +-oo oder ist f an a oder
+b nicht definiert, so existiert das Integral "im eigentlichen Sinne"
+nicht. Man kann dem Ausdruck aber durch Limesbildung in manchen
+Faellen doch einen sinnvollen Wert zuweisen, der dann als
+"uneigentliches Integral" bezeichnet wird.
+
+Beispiel:
+
+int(1/x^2 dx, x=1..oo) =
+lim int(1/x^2, x=1..z) = 
+z->oo
+lim [-1/x]_1^z = 1-1/z = 1
+z->oo
+
+
+int(1/sqrt(x) dx, x=0..1) =
+lim int(1/sqrt(x), x=z..1) = 
+z->0
+lim [2*sqrt(x)]_z^1 = 2-2*sqrt(z) = 2
+z->0
+
+int(1/sqrt(1-x^2) dx,x=-1..1) =
+lim arcsin(1-eps) - arcsin(-1+eps) =  
+eps->0
+- (- pi/2) + pi/2 = pi
+
+Aehnlich:
+int(1/(1+x^2) dx,x=-oo..oo) = pi
+
+
+Nicht immer koennen bestimmte (insbesondere uneigentliche) Integrale
+ueber Stammfunktionen ausgewertet werden.
+
+Beispiel:
+
+Man bestimme int(sin(x)/x dx, x=0..oo)
+
+NB sin(x)/x kann fuer x=0 stetig fortgesetzt werden.
+
+Die Stammfunktion F(x) zu f(x) = sin(x)/x mit F(0)=0 heisst "Sinus
+integralis" und wird mit Si(x) bezeichnet. Es gibt keine geschlossene
+Formel fuer Si(x).
+
+Man interessiert sich hier also fuer lim Si(x)
+                                     x->oo
+
+Wir beweisen nur, dass der Grenzwert existiert.
+
+fuer x=n*pi ... (n+1)*pi, n gerade, ist sin(x)/x positiv
+fuer x=n*pi ... (n+1)*pi, n ungerade, ist sin(x)/x negativ
+
+Also ist lim Si(x) =  sum (-1)^n*int(|sin(x)/x| dx,x=n*pi..(n+1)*pi,n=0..oo)
+        x->oo
+
+und die Reihe konvergiert nach dem Leibniz Kriterium fuer
+alternierende Reihen.  Man kann zeigen (s. Forster), dass der
+Grenzwert gerade pi/2 ist.
+
+
+Eine interessante Anwendung von uneigentlichen Integralen ist das
+folgende Konvergenzkriterium fuer Reihen (Integralkriterium).
+
+Satz: Ist f:[1,oo]->RR^+ eine Funktion, sodass die Folge (a_n)_n mit
+a_n=f(n) monoton faellt, so konvergiert sum(a_n, n=1..oo) genau dann,
+wenn das uneigentliche Integral int(f(x) dx, x=1..oo) existiert.
+
+Der Beweis ergibt sich unmittelbar aus der Abschaetzung
+a_n >=  int(f(x),x=n..n+1) >= a_(n+1): 
+
+int(f(x),x=1..oo) <= a_1 + a_2 + a_3 + ... <= a_1 + int(f(x),x=1..oo)
+
+Beispiel: Die Reihe sum(1/n^s,n=1..oo) konvergiert fuer s>1, denn
+int(1/x^s,x=1..oo)=[x^(1-s)/(1-s)]_1^oo = 1/(s-1).
+
+
+
+Man kann die im Beweis verwendete Abschaetzung bisweilen auch direkt
+einsetzen: aus int(1/x dx)=ln(x) ergibt sich durch
+Integralabschaetzung
+
+sum(1/n,n=2..N) <= ln(N) <= sum(1/n,n=1..N-1) (Skizze!)
+
+Also 0 <= sum(1/n,n=1..N)-ln(N) <= sum(1/n,n=1..N)-sum(1/n,n=2..N) = 1.
+
+Setzt man gamma_N := sum(1/n,n=1..N)-ln(N), so ist
+
+gamma_{N-1}-gamma_N = [ln(x)]_(x=N-1)^N - 1/N = int(1/x-1/N dx,x=N-1..N) > 0
+
+d.h. die Folge (gamma_N)_N ist positiv, beschraenkt und monoton
+fallend, muss daher gegen eine Zahl konvergieren. Diese heisst
+Euler-Mascheroni-Konstante und wird mit gamma bezeichnet. Es ist gamma
+= 0,57721... Man weiss nicht, ob gamma rational, irrational, oder
+transzendent ist und ob es sich durch die "anderen Zahlen" wie pi, e,
+etc. irgendwie ausdruecken laesst.
+
+Anwendung: Sei
+S_N = sum(1/n, n=1..N) 
+A_N = sum((-1)^(n+1)*1/n, n=1..N) (alternierende harmonische Reihe.)
+
+Es ist S_N = ln(N)-gamma + o(1)
+A_(2N) = S_(2N) - S_N = ln(2)+ln(N)-ln(N)+gamma-gamma+o(1)=ln(2)+o(1)
+
+Bsp:
+
+1 - 1/2 + 1/3 - 1/4 + 1/5 - 1/6 =
+1 + 1/2 + 1/3 + 1/4 + 1/5 + 1/6
+  - 2/2       - 2/4       - 2/6 =
+1 + 1/2 + 1/3 + 1/4 + 1/5 + 1/6
+  -  1        - 1/2       - 1/3  
+
+Also lim A_N = ln(2)
+    N->oo
+

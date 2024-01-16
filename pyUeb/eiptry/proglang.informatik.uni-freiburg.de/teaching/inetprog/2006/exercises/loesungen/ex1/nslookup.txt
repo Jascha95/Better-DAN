@@ -1,0 +1,74 @@
+wehr@waawaa:~$ nslookup
+> set norec 
+> set nosearch
+> www.abc.com.au.
+Server:         132.230.150.3
+Address:        132.230.150.3#53
+
+Non-authoritative answer:
+www.abc.com.au  canonical name = www.abc.net.au.
+Name:   www.abc.net.au
+Address: 203.2.218.61
+> set q=ns
+> .
+Server:         132.230.150.3
+Address:        132.230.150.3#53
+
+Non-authoritative answer:
+.       nameserver = L.ROOT-SERVERS.NET.
+...
+Authoritative answers can be found from:
+L.ROOT-SERVERS.NET      internet address = 198.32.64.12
+...
+> server 198.32.64.12
+Default server: 198.32.64.12
+Address: 198.32.64.12#53
+> au.
+Server:         198.32.64.12
+Address:        198.32.64.12#53
+
+Non-authoritative answer:
+*** Can't find au.: No answer
+
+Authoritative answers can be found from:
+...
+NS.UU.NET       internet address = 137.39.1.3
+...
+> server 137.39.1.3
+Default server: 137.39.1.3
+Address: 137.39.1.3#53
+> com.au.
+Server:         137.39.1.3
+Address:        137.39.1.3#53
+
+Non-authoritative answer:
+*** Can't find com.au.: No answer
+
+Authoritative answers can be found from:
+...
+com.au  nameserver = ns-au.ripe.net.
+au2ld.CSIRO.au  internet address = 130.116.2.21
+> server 130.116.2.21 
+Default server: 130.116.2.21
+Address: 130.116.2.21#53
+> abc.com.au
+Server:         130.116.2.21
+Address:        130.116.2.21#53
+
+Non-authoritative answer:
+*** Can't find abc.com.au: No answer
+
+Authoritative answers can be found from:
+abc.com.au      nameserver = ns.abc.net.au.
+abc.com.au      nameserver = ns1.abc.net.au.
+> server ns.abc.net.au
+Default server: ns.abc.net.au
+Address: 203.2.218.145#53
+> set q=A
+> www.abc.com.au.
+Server:         ns.abc.net.au
+Address:        203.2.218.145#53
+
+www.abc.com.au  canonical name = www.abc.net.au.
+Name:   www.abc.net.au
+Address: 203.2.218.61

@@ -1,0 +1,25 @@
+Die Quersumme einer positiven, ganzen Zahl `n` ist definiert als die Summe der Ziffern von `n`.
+
+1. [10 Punkte] Schreiben Sie eine Funktion `digits`, die eine ganze Zahl (int) als Argument nimmt und eine Liste der Ziffern in natürlicher Reihenfolge zurückgibt.
+
+Beispiele:
+[code]
+>>> digits(1324)
+[1, 3, 2, 4]
+>>> digits(0)
+[0]
+[/code]
+
+Hinweis: Es bietet sich an die Liste der Ziffern erst in umgekehrter Reihenfolge zu berechnen und danach umzudrehen, z.B. mittels Slicing.
+
+Hinweis: Analog zur Umrechnung von Dezimal- zu Binärzahlen, bietet es sich an in einer while-Schleife die Operatoren `//` und `%` zu verwenden (oder `Math.divmod`).
+
+2. [5 Punkte] Schreiben Sie eine Funktion `cross_sum`, die eine ganze Zahl (int) als Argument nimmt und die Quersumme der Zahl berechnet. Verwenden sie hierzu die `digits` Funktion aus Aufgabenteil 1.
+
+Beispiele:
+[code]
+>>> cross_sum(1234)  # Same as 1+2+3+4
+10
+>>> cross_sum(110)   # Same as 1+1+0
+2
+[/code]

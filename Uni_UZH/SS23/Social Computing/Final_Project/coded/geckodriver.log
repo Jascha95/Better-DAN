@@ -1,0 +1,196 @@
+1683723497958	geckodriver	INFO	Listening on 127.0.0.1:51718
+1683723539430	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... s" "localhost" "-foreground" "-no-remote" "-profile" "/var/folders/39/rz4zzkw938z95166vdpwxkl80000gn/T/rust_mozprofilebuQ9Dp"
+*** You are running in headless mode.
+*** You are running in headless mode.
+2023-05-10 14:59:12.672 plugin-container[50564:2812124] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2023-05-10 14:59:12.672 plugin-container[50564:2812124] nil host used in call to allowsAnyHTTPSCertificateForHost:
+WebDriver BiDi listening on ws://127.0.0.1:51719
+2023-05-10 14:59:13.205 plugin-container[50564:2812124] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2023-05-10 14:59:13.205 plugin-container[50564:2812124] nil host used in call to allowsAnyHTTPSCertificateForHost:
+2023-05-10 14:59:13.206 plugin-container[50564:2812131] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2023-05-10 14:59:13.206 plugin-container[50564:2812131] nil host used in call to allowsAnyHTTPSCertificateForHost:
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:51719/devtools/browser/089796e5-37f3-4d9f-8291-6c4bc1be1d2e
+1683723798421	geckodriver	INFO	Listening on 127.0.0.1:51883
+1683723846061	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... s" "localhost" "-foreground" "-no-remote" "-profile" "/var/folders/39/rz4zzkw938z95166vdpwxkl80000gn/T/rust_mozprofileW055wf"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1683723846945	Marionette	INFO	Marionette enabled
+1683723847196	Marionette	INFO	Listening on port 51901
+console.error: "Warning: unrecognized command line flag -remote-allow-hosts\n"
+Read port: 51901
+2023-05-10 15:04:07.287 plugin-container[50819:2818487] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2023-05-10 15:04:07.288 plugin-container[50819:2818487] nil host used in call to allowsAnyHTTPSCertificateForHost:
+2023-05-10 15:04:07.303 plugin-container[50819:2818487] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2023-05-10 15:04:07.303 plugin-container[50819:2818487] nil host used in call to allowsAnyHTTPSCertificateForHost:
+2023-05-10 15:04:07.303 plugin-container[50819:2818498] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2023-05-10 15:04:07.303 plugin-container[50819:2818498] nil host used in call to allowsAnyHTTPSCertificateForHost:
+WebDriver BiDi listening on ws://127.0.0.1:51884
+1683723847532	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:51884/devtools/browser/86011ba9-a3b2-4762-9fa3-9929a67c26e2
+JavaScript warning: https://static.cdninstagram.com/rsrc.php/v3ijWR4/y5/l/de_DE/Yy4VFOGEX4O.js?_nc_x=Ij3Wp8lg5Kz, line 26: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://www.amazon.com/stores/page/411BF6D1-B789-48CD-9C1E-D8608A9FF70A?ingress=3 line 2040 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+2023-05-10 13:04:36.224 plugin-container[50834:2819612] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2023-05-10 13:04:36.224 plugin-container[50834:2819612] nil host used in call to allowsAnyHTTPSCertificateForHost:
+2023-05-10 13:04:36.231 plugin-container[50834:2819612] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2023-05-10 13:04:36.231 plugin-container[50834:2819612] nil host used in call to allowsAnyHTTPSCertificateForHost:
+2023-05-10 13:04:36.232 plugin-container[50834:2819615] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2023-05-10 13:04:36.232 plugin-container[50834:2819615] nil host used in call to allowsAnyHTTPSCertificateForHost:
+console.error: "Failed to start [root-node] legacy listener for target null" (new Error("Connection closed, pending request to server0.conn0.windowGlobal10737418241/domwalker19, type watchRootNode failed\n\nRequest stack:\nrequest@resource://devtools/shared/protocol/Front.js:300:14\ngenerateRequestMethods/</frontProto[name]@resource://devtools/shared/protocol/Front/FrontClassWithSpec.js:47:19\nmodule.exports@resource://devtools/shared/commands/resource/legacy-listeners/root-node.js:60:31\n", "resource://devtools/shared/protocol/Front.js", 106))
+console.error: "Failed to start [root-node] legacy listener for target server0.conn0.windowGlobal10737418244/windowGlobalTarget2" (new Error("Connection closed, pending request to server0.conn0.windowGlobal10737418241/domwalker19, type getEmbedderElement failed\n\nRequest stack:\nrequest@resource://devtools/shared/protocol/Front.js:300:14\ngenerateRequestMethods/</frontProto[name]@resource://devtools/shared/protocol/Front/FrontClassWithSpec.js:47:19\nreparentRemoteFrame@resource://devtools/client/fronts/walker.js:409:26\n", "resource://devtools/shared/protocol/Front.js", 106))
+console.warn: "Error while destroying front:" "inspector" (new Error("Connection closed, pending request to server0.conn0.windowGlobal10737418241/domwalker19, type getEmbedderElement failed\n\nRequest stack:\nrequest@resource://devtools/shared/protocol/Front.js:300:14\ngenerateRequestMethods/</frontProto[name]@resource://devtools/shared/protocol/Front/FrontClassWithSpec.js:47:19\nreparentRemoteFrame@resource://devtools/client/fronts/walker.js:409:26\n", "resource://devtools/shared/protocol/Front.js", 106))
+console.error: (new Error("Connection closed, pending request to server0.conn0.windowGlobal8589934593/domwalker19, type querySelector failed\n\nRequest stack:\nrequest@resource://devtools/shared/protocol/Front.js:300:14\ngenerateRequestMethods/</frontProto[name]@resource://devtools/shared/protocol/Front/FrontClassWithSpec.js:47:19\nquerySelector@resource://devtools/client/fronts/walker.js:147:34\n_getDefaultNodeForSelection/defaultNodeSelectors<@resource://devtools/client/inspector/inspector.js:604:20\n_getDefaultNodeForSelection@resource://devtools/client/inspector/inspector.js:611:26\n", "resource://devtools/shared/protocol/Front.js", 106))
+console.error: (new TypeError("(destructured parameter) is null", "resource://devtools/client/shared/output-parser.js", 104))
+console.error: "Exception when calling onAvailable handler" "Target already destroyed, unable to fetch children fronts" (new Error("Target already destroyed, unable to fetch children fronts", "resource://devtools/client/fronts/targets/target-mixin.js", 241))
+Handler function threw an exception: TypeError: browsingContext.currentWindowGlobal is null
+Stack: isChannelFromSystemPrincipal@resource://devtools/shared/network-observer/NetworkUtils.sys.mjs:91:1
+_createResource@resource://devtools/server/actors/network-monitor/network-event-actor.js:189:40
+NetworkEventActor@resource://devtools/server/actors/network-monitor/network-event-actor.js:106:27
+onNetworkEvent@resource://devtools/server/actors/resources/network-events.js:285:19
+#createNetworkEvent@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:667:46
+#onRequestHeader@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:711:29
+@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:587:28
+makeInfallible/<@resource://devtools/shared/DevToolsInfaillibleUtils.sys.mjs:43:22
+Line: 91, column: 1
+console.error: (new TypeError("browsingContext.currentWindowGlobal is null", "resource://devtools/shared/network-observer/NetworkUtils.sys.mjs", 91))
+Handler function threw an exception: TypeError: httpActivity.owner is null
+Stack: #sendRequestBody@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:1348:7
+#dispatchActivity@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:504:30
+@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:617:29
+makeInfallible/<@resource://devtools/shared/DevToolsInfaillibleUtils.sys.mjs:43:22
+Line: 1348, column: 7
+console.error: (new TypeError("httpActivity.owner is null", "resource://devtools/shared/network-observer/NetworkObserver.sys.mjs", 1348))
+Handler function threw an exception: TypeError: browsingContext.currentWindowGlobal is null
+Stack: isChannelFromSystemPrincipal@resource://devtools/shared/network-observer/NetworkUtils.sys.mjs:91:1
+_createResource@resource://devtools/server/actors/network-monitor/network-event-actor.js:189:40
+NetworkEventActor@resource://devtools/server/actors/network-monitor/network-event-actor.js:106:27
+onNetworkEvent@resource://devtools/server/actors/resources/network-events.js:285:19
+#createNetworkEvent@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:667:46
+@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:332:33
+makeInfallible/<@resource://devtools/shared/DevToolsInfaillibleUtils.sys.mjs:43:22
+Line: 91, column: 1
+console.error: (new TypeError("browsingContext.currentWindowGlobal is null", "resource://devtools/shared/network-observer/NetworkUtils.sys.mjs", 91))
+JavaScript warning: https://static.xx.fbcdn.net/rsrc.php/v3i2UN4/yK/l/de_DE/c78rBSKGb1H.js?_nc_x=Ij3Wp8lg5Kz, line 20: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.facebook.com."
+JavaScript warning: https://www.amazon.com/stores/page/411BF6D1-B789-48CD-9C1E-D8608A9FF70A?ingress=3 line 2040 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.error: "Unable to find target with innerWindowId:12884901889"
+console.error: "Unable to find target with innerWindowId:12884901889"
+console.error: (new Error("Connection closed, pending request to server0.conn0.windowGlobal15032385537/domwalker105, type querySelector failed\n\nRequest stack:\nrequest@resource://devtools/shared/protocol/Front.js:300:14\ngenerateRequestMethods/</frontProto[name]@resource://devtools/shared/protocol/Front/FrontClassWithSpec.js:47:19\nquerySelector@resource://devtools/client/fronts/walker.js:147:34\n_getDefaultNodeForSelection/defaultNodeSelectors<@resource://devtools/client/inspector/inspector.js:604:20\n_getDefaultNodeForSelection@resource://devtools/client/inspector/inspector.js:611:26\n", "resource://devtools/shared/protocol/Front.js", 106))
+console.warn: "Error while destroying front:" "accessibility" (new Error("Connection closed, pending request to server0.conn0.windowGlobal15032385537/accessibilityActor12, type getSimulator failed\n\nRequest stack:\nrequest@resource://devtools/shared/protocol/Front.js:300:14\ngenerateRequestMethods/</frontProto[name]@resource://devtools/shared/protocol/Front/FrontClassWithSpec.js:47:19\ninitialize@resource://devtools/client/fronts/accessibility.js:521:39\n", "resource://devtools/shared/protocol/Front.js", 106))
+console.warn: "Error while destroying front:" "inspector" (new Error("Connection closed, pending request to server0.conn0.windowGlobal15032385537/domwalker105, type getEmbedderElement failed\n\nRequest stack:\nrequest@resource://devtools/shared/protocol/Front.js:300:14\ngenerateRequestMethods/</frontProto[name]@resource://devtools/shared/protocol/Front/FrontClassWithSpec.js:47:19\nreparentRemoteFrame@resource://devtools/client/fronts/walker.js:409:26\n", "resource://devtools/shared/protocol/Front.js", 106))
+console.warn: "Error while destroying front:" "inspector" (new Error("Connection closed, pending request to server0.conn0.windowGlobal15032385537/domwalker105, type getEmbedderElement failed\n\nRequest stack:\nrequest@resource://devtools/shared/protocol/Front.js:300:14\ngenerateRequestMethods/</frontProto[name]@resource://devtools/shared/protocol/Front/FrontClassWithSpec.js:47:19\nreparentRemoteFrame@resource://devtools/client/fronts/walker.js:409:26\n", "resource://devtools/shared/protocol/Front.js", 106))
+console.error: "Failed to start [root-node] legacy listener for target null" (new Error("Connection closed, pending request to server0.conn0.windowGlobal15032385537/domwalker105, type getEmbedderElement failed\n\nRequest stack:\nrequest@resource://devtools/shared/protocol/Front.js:300:14\ngenerateRequestMethods/</frontProto[name]@resource://devtools/shared/protocol/Front/FrontClassWithSpec.js:47:19\nreparentRemoteFrame@resource://devtools/client/fronts/walker.js:409:26\n", "resource://devtools/shared/protocol/Front.js", 106))
+console.error: "Failed to start [root-node] legacy listener for target null" (new Error("Connection closed, pending request to server0.conn0.windowGlobal15032385537/domwalker105, type getEmbedderElement failed\n\nRequest stack:\nrequest@resource://devtools/shared/protocol/Front.js:300:14\ngenerateRequestMethods/</frontProto[name]@resource://devtools/shared/protocol/Front/FrontClassWithSpec.js:47:19\nreparentRemoteFrame@resource://devtools/client/fronts/walker.js:409:26\n", "resource://devtools/shared/protocol/Front.js", 106))
+JavaScript error: resource://devtools/shared/protocol/Front.js, line 106: Error: Connection closed, pending request to server0.conn0.windowGlobal15032385537/domwalker105, type getEmbedderElement failed
+
+Request stack:
+request@resource://devtools/shared/protocol/Front.js:300:14
+generateRequestMethods/</frontProto[name]@resource://devtools/shared/protocol/Front/FrontClassWithSpec.js:47:19
+reparentRemoteFrame@resource://devtools/client/fronts/walker.js:409:26
+
+JavaScript error: resource://devtools/shared/protocol/Front.js, line 106: Error: Connection closed, pending request to server0.conn0.windowGlobal15032385537/domwalker105, type getEmbedderElement failed
+
+Request stack:
+request@resource://devtools/shared/protocol/Front.js:300:14
+generateRequestMethods/</frontProto[name]@resource://devtools/shared/protocol/Front/FrontClassWithSpec.js:47:19
+reparentRemoteFrame@resource://devtools/client/fronts/walker.js:409:26
+
+JavaScript error: resource://devtools/shared/protocol/Front.js, line 106: Error: Connection closed, pending request to server0.conn0.windowGlobal15032385537/accessibilityActor12, type getSimulator failed
+
+Request stack:
+request@resource://devtools/shared/protocol/Front.js:300:14
+generateRequestMethods/</frontProto[name]@resource://devtools/shared/protocol/Front/FrontClassWithSpec.js:47:19
+initialize@resource://devtools/client/fronts/accessibility.js:521:39
+
+console.error: "Unable to find target with innerWindowId:15032385537"
+console.error: "Unable to find target with innerWindowId:15032385537"
+console.error: "Unable to find target with innerWindowId:15032385537"
+console.error: "Unable to find target with innerWindowId:15032385537"
+console.error: "Unable to find target with innerWindowId:15032385537"
+console.error: "Unable to find target with innerWindowId:15032385537"
+Handler function threw an exception: Error: Got notified about channel 109160888795202 more than once.
+Stack: onNetworkEvent@resource://devtools/server/actors/resources/network-events.js:280:13
+#createNetworkEvent@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:667:46
+@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:332:33
+makeInfallible/<@resource://devtools/shared/DevToolsInfaillibleUtils.sys.mjs:43:22
+Line: 280, column: 13
+console.error: (new Error("Got notified about channel 109160888795202 more than once.", "resource://devtools/server/actors/resources/network-events.js", 280))
+Handler function threw an exception: Error: Got notified about channel 109160888795203 more than once.
+Stack: onNetworkEvent@resource://devtools/server/actors/resources/network-events.js:280:13
+#createNetworkEvent@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:667:46
+@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:332:33
+makeInfallible/<@resource://devtools/shared/DevToolsInfaillibleUtils.sys.mjs:43:22
+Line: 280, column: 13
+console.error: (new Error("Got notified about channel 109160888795203 more than once.", "resource://devtools/server/actors/resources/network-events.js", 280))
+Handler function threw an exception: Error: Got notified about channel 109160888795204 more than once.
+Stack: onNetworkEvent@resource://devtools/server/actors/resources/network-events.js:280:13
+#createNetworkEvent@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:667:46
+@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:332:33
+makeInfallible/<@resource://devtools/shared/DevToolsInfaillibleUtils.sys.mjs:43:22
+Line: 280, column: 13
+console.error: (new Error("Got notified about channel 109160888795204 more than once.", "resource://devtools/server/actors/resources/network-events.js", 280))
+console.error: "Unable to find target with innerWindowId:15032385537"
+console.error: "Unable to find target with innerWindowId:15032385537"
+console.error: "Unable to find target with innerWindowId:15032385537"
+console.error: "Unable to find target with innerWindowId:15032385537"
+console.error: "Unable to find target with innerWindowId:15032385537"
+console.error: "Unable to find target with innerWindowId:15032385537"
+console.error: "Unable to find target with innerWindowId:15032385537"
+console.error: "Unable to find target with innerWindowId:15032385537"
+console.error: "Unable to find target with innerWindowId:15032385537"
+console.error: "Unable to find target with innerWindowId:15032385537"
+Handler function threw an exception: Error: Got notified about channel 109160888795208 more than once.
+Stack: onNetworkEvent@resource://devtools/server/actors/resources/network-events.js:280:13
+#createNetworkEvent@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:667:46
+@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:332:33
+makeInfallible/<@resource://devtools/shared/DevToolsInfaillibleUtils.sys.mjs:43:22
+Line: 280, column: 13
+console.error: (new Error("Got notified about channel 109160888795208 more than once.", "resource://devtools/server/actors/resources/network-events.js", 280))
+Handler function threw an exception: Error: Got notified about channel 109160888795207 more than once.
+Stack: onNetworkEvent@resource://devtools/server/actors/resources/network-events.js:280:13
+#createNetworkEvent@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:667:46
+@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:332:33
+makeInfallible/<@resource://devtools/shared/DevToolsInfaillibleUtils.sys.mjs:43:22
+Line: 280, column: 13
+console.error: (new Error("Got notified about channel 109160888795207 more than once.", "resource://devtools/server/actors/resources/network-events.js", 280))
+Handler function threw an exception: Error: Got notified about channel 109160888795209 more than once.
+Stack: onNetworkEvent@resource://devtools/server/actors/resources/network-events.js:280:13
+#createNetworkEvent@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:667:46
+@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:332:33
+makeInfallible/<@resource://devtools/shared/DevToolsInfaillibleUtils.sys.mjs:43:22
+Line: 280, column: 13
+console.error: (new Error("Got notified about channel 109160888795209 more than once.", "resource://devtools/server/actors/resources/network-events.js", 280))
+[Child 50832, Main Thread] WARNING: JSWindowActorChild::SendRawMessage (ContentMeta, Meta:SetPageInfo) not sent: !CanSend() || !mManager || !mManager->CanSend(): file /builds/worker/checkouts/gecko/dom/ipc/jsactor/JSWindowActorChild.cpp:57
+JavaScript error: resource://gre/actors/ContentMetaChild.sys.mjs, line 179: InvalidStateError: JSWindowActorChild.sendAsyncMessage: JSWindowActorChild cannot send at the moment
+JavaScript warning: https://static.cdninstagram.com/rsrc.php/v3ijWR4/y5/l/de_DE/Yy4VFOGEX4O.js?_nc_x=Ij3Wp8lg5Kz, line 26: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: resource://devtools/client/framework/toolbox.js, line 2014: TypeError: currentPanel is undefined
+[Child 50836, Main Thread] WARNING: JSWindowActorChild::SendRawMessage (DevToolsFrame, DevToolsFrameChild:destroy) not sent: !CanSend() || !mManager || !mManager->CanSend(): file /builds/worker/checkouts/gecko/dom/ipc/jsactor/JSWindowActorChild.cpp:57
+console.error: "Unable to find target with innerWindowId:17179869185"
+console.error: "Unable to find target with innerWindowId:17179869185"
+JavaScript warning: https://static.cdninstagram.com/rsrc.php/v3ijWR4/y5/l/de_DE/Yy4VFOGEX4O.js?_nc_x=Ij3Wp8lg5Kz, line 26: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+[Child 50836, Main Thread] WARNING: JSWindowActorChild::SendRawMessage (DevToolsFrame, DevToolsFrameChild:destroy) not sent: !CanSend() || !mManager || !mManager->CanSend(): file /builds/worker/checkouts/gecko/dom/ipc/jsactor/JSWindowActorChild.cpp:57
+console.error: "Unable to find target with innerWindowId:17179869186"
+JavaScript warning: https://static.cdninstagram.com/rsrc.php/v3ijWR4/y5/l/de_DE/Yy4VFOGEX4O.js?_nc_x=Ij3Wp8lg5Kz, line 26: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+[Child 50836, Main Thread] WARNING: JSWindowActorChild::SendRawMessage (DevToolsFrame, DevToolsFrameChild:destroy) not sent: !CanSend() || !mManager || !mManager->CanSend(): file /builds/worker/checkouts/gecko/dom/ipc/jsactor/JSWindowActorChild.cpp:57
+console.error: "Unable to find target with innerWindowId:17179869187"
+JavaScript warning: https://static.cdninstagram.com/rsrc.php/v3ijWR4/y5/l/de_DE/Yy4VFOGEX4O.js?_nc_x=Ij3Wp8lg5Kz, line 26: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://static.cdninstagram.com/rsrc.php/v3ijWR4/y5/l/de_DE/Yy4VFOGEX4O.js?_nc_x=Ij3Wp8lg5Kz, line 26: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript warning: https://static.cdninstagram.com/rsrc.php/v3ijWR4/y5/l/de_DE/Yy4VFOGEX4O.js?_nc_x=Ij3Wp8lg5Kz, line 26: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+[Child 50820, Main Thread] WARNING: JSWindowActorChild::SendRawMessage (Conduits, ConduitClosed) not sent: !CanSend() || !mManager || !mManager->CanSend(): file /builds/worker/checkouts/gecko/dom/ipc/jsactor/JSWindowActorChild.cpp:57
+[Child 50820, Main Thread] WARNING: JSWindowActorChild::SendRawMessage (Conduits, ConduitClosed) not sent: !CanSend() || !mManager || !mManager->CanSend(): file /builds/worker/checkouts/gecko/dom/ipc/jsactor/JSWindowActorChild.cpp:57
+[Child 50820, Main Thread] WARNING: JSWindowActorChild::SendRawMessage (Conduits, ConduitClosed) not sent: !CanSend() || !mManager || !mManager->CanSend(): file /builds/worker/checkouts/gecko/dom/ipc/jsactor/JSWindowActorChild.cpp:57
+[Child 50820, Main Thread] WARNING: JSWindowActorChild::SendRawMessage (Conduits, ConduitClosed) not sent: !CanSend() || !mManager || !mManager->CanSend(): file /builds/worker/checkouts/gecko/dom/ipc/jsactor/JSWindowActorChild.cpp:57
+[Child 50820, Main Thread] WARNING: JSWindowActorChild::SendRawMessage (Conduits, ConduitClosed) not sent: !CanSend() || !mManager || !mManager->CanSend(): file /builds/worker/checkouts/gecko/dom/ipc/jsactor/JSWindowActorChild.cpp:57
+[Child 50820, Main Thread] WARNING: JSWindowActorChild::SendRawMessage (Conduits, ConduitClosed) not sent: !CanSend() || !mManager || !mManager->CanSend(): file /builds/worker/checkouts/gecko/dom/ipc/jsactor/JSWindowActorChild.cpp:57
+[Child 50820, Main Thread] WARNING: JSWindowActorChild::SendRawMessage (Conduits, ConduitClosed) not sent: !CanSend() || !mManager || !mManager->CanSend(): file /builds/worker/checkouts/gecko/dom/ipc/jsactor/JSWindowActorChild.cpp:57
+[Child 50820, Main Thread] WARNING: JSWindowActorChild::SendRawMessage (Conduits, ConduitClosed) not sent: !CanSend() || !mManager || !mManager->CanSend(): file /builds/worker/checkouts/gecko/dom/ipc/jsactor/JSWindowActorChild.cpp:57
+1683723930499	Marionette	INFO	Stopped listening on port 51901
+JavaScript error: chrome://remote/content/marionette/cert.sys.mjs, line 51: NS_ERROR_NOT_AVAILABLE: Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsICertOverrideService.setDisableAllSecurityChecksAndLetAttackersInterceptMyData]
+!!! error running onStopped callback: TypeError: callback is not a function
+1683723930596	WebDriver BiDi	ERROR	Failed to stop protocol: [Exception... "Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsICertOverrideService.setDisableAllSecurityChecksAndLetAttackersInterceptMyData]"  nsresult: "0x80040111 (NS_ERROR_NOT_AVAILABLE)"  location: "JS frame :: chrome://remote/content/marionette/cert.sys.mjs :: allowAllCerts.disable :: line 51"  data: no] Stack trace: allowAllCerts.disable()@cert.sys.mjs:51
+destroy()@Session.sys.mjs:207
+deleteSession()@WebDriverBiDi.sys.mjs:142
+stop()@WebDriverBiDi.sys.mjs:230

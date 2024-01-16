@@ -1,0 +1,225 @@
+-- | Functional IO
+
+-- Referential Transparency and Substitutivity
+
+f () + g () == g () + f ()
+f () + f ( ) == 2 * f ()
+
+let x = input () in
+x + x
+==
+input () + input ()
+
+_???
+
+
+-- Haskell is a pure language <-> IO is a side effect
+-- Contradiction?
+
+
+
+
+
+
+
+
+
+
+
+
+-- example: writeFile
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Haskell IO
+
+-- top-level result of a program is an "instruction"
+main :: IO ()
+main = undefined
+
+-- instruction describes the *effect* of the program
+-- effect = IO action, imperative state change
+
+-- (executing) instructions may return a result
+
+readFile
+
+
+
+
+-- Kinds of instructions
+
+-- * primitive instructions: read character, write character, read file, write file, etc
+-- * combination of instructions: the bind operator (>>=)
+--      the next instruction may depend on the result of the preceding one
+
+(>>=) :: IO a -> (a -> IO b) -> IO b
+             ^            ^      ^            ^
+             |             |       |             overall result, result of 2nd instr
+             |             |       2nd instruction yields result of type b
+             |             result of 1st instruction passed on
+             1st instruction yields result of type a
+
+-- * no-op instruction: return
+--     just injects a result in the instruction stream, no effect
+
+return :: a -> IO a
+
+readFiles f1 f2 =
+   readFile f1 >>= \xs1 -> readFile f2 
+
+
+
+
+
+
+
+
+
+
+
+-- More convenient:
+-- * do notation
+
+copyFile source target = undefined
+
+doTwice io = undefined
+
+doNot io = undefined
+
+
+
+
+
+
+
+
+
+
+-- instructions vs functions
+-- * functions behave the same each time they are called
+-- * instructions may be interpreted differently each time 
+--   they are interpreted, depending on context
+
+
+
+
+
+
+
+
+
+
+
+
+-- Underlying concept: *Monad*
+-- monad:
+-- * abstract datatype for instructions
+-- * built-in combination
+-- * abstracts over different interpretations (computations)
+
+
+
+
+
+
+
+
+
+
+
+-- check type of doTwice
+
+
+
+
+
+
+
+
+
+
+
+
+-- Built-in: The IO monad
+-- * IO a    type of IO computations with result of type a
+-- Primitives
+-- * putStr :: String -> IO ()
+-- * readFile :: String -> IO String
+-- * writeFile :: String -> String -> IO ()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Task: Define a function
+
+sortFile :: FilePath -> FilePath -> IO ()
+
+-- sortFile inFile outFile 
+-- reads inFile, sorts its lines, and writes the result to outFile
+
+-- recall
+-- sort :: Ord a => [a] -> [a]
+-- lines :: String -> [String]
+-- unlines :: [String] -> String
+
+
+
+
+
+
+
+
+
+
+-- Utilities: sequence
+
+sequence :: [IO a] -> IO [a]
+sequence_ :: [IO a] -> IO ()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Task: Define function
+
+printTable :: [String] -> IO ()
+
+{-
+printTable ["New York", "Rio", "Tokio"]
+outputs
+1: New York
+2: Rio
+3: Tokio
+-} 
+

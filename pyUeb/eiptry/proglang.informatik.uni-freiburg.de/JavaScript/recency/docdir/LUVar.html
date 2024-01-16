@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="LUNVar.html">
+<link rel="next" href="MapVar.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Args" rel="Chapter" href="Args.html">
+<link title="Gen" rel="Chapter" href="Gen.html">
+<link title="GenVars" rel="Chapter" href="GenVars.html">
+<link title="Gvars" rel="Chapter" href="Gvars.html">
+<link title="Inf" rel="Chapter" href="Inf.html">
+<link title="Location" rel="Chapter" href="Location.html">
+<link title="LowerUpper" rel="Chapter" href="LowerUpper.html">
+<link title="LowerUpperNeg" rel="Chapter" href="LowerUpperNeg.html">
+<link title="LUNVar" rel="Chapter" href="LUNVar.html">
+<link title="LUVar" rel="Chapter" href="LUVar.html">
+<link title="MapVar" rel="Chapter" href="MapVar.html">
+<link title="PrioQueue" rel="Chapter" href="PrioQueue.html">
+<link title="ProgLabel" rel="Chapter" href="ProgLabel.html">
+<link title="Syntax" rel="Chapter" href="Syntax.html"><title>LUVar</title>
+</head>
+<body>
+<div class="navbar"><a href="LUNVar.html">Previous</a>
+&nbsp;<a href="index.html">Up</a>
+&nbsp;<a href="MapVar.html">Next</a>
+</div>
+<center><h1>Module <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/type_LUVar.html">LUVar</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> LUVar: <code class="code">sig</code> <a href="LUVar.html">..</a> <code class="code">end</code></pre><hr width="100%">
+<pre><span class="keyword">module type</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUVar.S.html">S</a> = <code class="code">sig</code> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUVar.S.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUVar.Make.html">Make</a>: <div class="sig_block"><code class="code">functor (</code><code class="code">LU</code><code class="code"> : </code><code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpper.S.html">LowerUpper.S</a></code><code class="code">) -&gt; </code><div class="sig_block"><code class="code">functor (</code><code class="code">Var</code><code class="code"> : </code><code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/GenVars.VAR.html">GenVars.VAR</a></code><code class="type">  with type img = LU.t</code><code class="code">) -&gt; </code><code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUVar.S.html">S</a></code><code class="type"> 
+  with type elm = LU.elm
+  and type obs = Var.obs
+  and type img = LU.t</code></div></div></pre></body></html>

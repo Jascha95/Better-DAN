@@ -1,0 +1,2 @@
+HINWEIS:
+  Den Code zur Lösung der Aufgabe A9-2 "Five-in-a-Row" finden Sie in UniWorX als eigenes Übungsblatt mit dem Titel "Lösung A9-? (keine Abgabe)" zum Download.

@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+ <head>
+  <title>Index of /teaching/konzepte/2009ss/solutions/ex04/explicit-refs</title>
+ </head>
+ <body>
+<h1>Index of /teaching/konzepte/2009ss/solutions/ex04/explicit-refs</h1>
+  <table>
+   <tr><th valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/blank.gif" alt="[ICO]"></th><th><a href="https://proglang.informatik.uni-freiburg.de/teaching/konzepte/2009ss/solutions/ex04/explicit-refs/?C=N;O=D">Name</a></th><th><a href="https://proglang.informatik.uni-freiburg.de/teaching/konzepte/2009ss/solutions/ex04/explicit-refs/?C=M;O=A">Last modified</a></th><th><a href="https://proglang.informatik.uni-freiburg.de/teaching/konzepte/2009ss/solutions/ex04/explicit-refs/?C=S;O=A">Size</a></th><th><a href="https://proglang.informatik.uni-freiburg.de/teaching/konzepte/2009ss/solutions/ex04/explicit-refs/?C=D;O=A">Description</a></th></tr>
+   <tr><th colspan="5"><hr></th></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/back.gif" alt="[PARENTDIR]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/konzepte/2009ss/solutions/ex04/">Parent Directory</a></td><td>&nbsp;</td><td align="right">  - </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/konzepte/2009ss/solutions/ex04/explicit-refs/data-structures.scm">data-structures.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">2.5K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/konzepte/2009ss/solutions/ex04/explicit-refs/drscheme-init.scm">drscheme-init.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">4.3K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/konzepte/2009ss/solutions/ex04/explicit-refs/environments.scm">environments.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">1.9K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/konzepte/2009ss/solutions/ex04/explicit-refs/interp-sw.scm">interp-sw.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">5.2K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/konzepte/2009ss/solutions/ex04/explicit-refs/interp.scm">interp.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">4.6K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/konzepte/2009ss/solutions/ex04/explicit-refs/lang.scm">lang.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">2.2K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/konzepte/2009ss/solutions/ex04/explicit-refs/store-sw.scm">store-sw.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">3.7K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/konzepte/2009ss/solutions/ex04/explicit-refs/store.scm">store.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">3.3K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/konzepte/2009ss/solutions/ex04/explicit-refs/tests.scm">tests.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">4.9K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/konzepte/2009ss/solutions/ex04/explicit-refs/top-sw.scm">top-sw.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">1.8K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/konzepte/2009ss/solutions/ex04/explicit-refs/top.scm">top.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">1.7K</td><td>&nbsp;</td></tr>
+   <tr><th colspan="5"><hr></th></tr>
+</table>
+</body></html>

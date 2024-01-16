@@ -1,0 +1,36 @@
+h1 {
+    color:red;
+    font-size: 20px;
+}
+a {
+/*    */
+}
+body{
+/*    */
+}
+
+/*IDs Classes*/
+#myid {
+/*    */
+}
+
+.myclass {
+/*    */
+}
+
+ul,ol,p.myclass{
+    background:green;
+    background:rgba(255,255,128);
+    background:#74992e;
+    background: url("bg.jpg");
+
+/*    */
+}
+
+/*margin-left: 50vw; of the width of the device 
+margin-left: 50vh; of the hight of the device */
+
+
+
+
+

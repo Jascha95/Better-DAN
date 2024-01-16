@@ -1,0 +1,530 @@
+            _______________________________________________
+
+             2013-10-29: LIST COMPREHENSIONS AND DATATYPES
+
+                    Peter Thiemann, Luminous Fennell
+            _______________________________________________
+
+
+1 Recap: Slow Power
+===================
+
+  Remember what's upd that my laptop choked last time?
+  ,----
+  | ghci> quickCheck prop_power_is_power'
+  `----
+  This was a compiler bug :/
+
+  But what to do, when properties are really expensive?
+  ,----
+  | power x n | n == 0 = 1
+  | power x n | n > 0 = x * power x (n - 1)
+  | 
+  | prop_power (x, n1, n2, n3)  =
+  |   not (n1 >= 0 && n2 >= 0 && n3 >= 0) ||
+  |    power x (n1 * n2 * n3) ==
+  |    power (power (power x n1) n2) n3
+  `----
+
+
+
+2 Resizing Test Generators
+==========================
+
+
+3 Resizing Test Generators
+==========================
+
+  Usage of the magic `resize' and `forAll' functions:
+
+  `quickCheck (forAll (resize <n> arbitrary) <prop>)'
+
+  ,----
+  | Main> quickCheck (forAll (resize 10 arbitrary)
+  |                            prop_power)
+  `----
+
+
+4 Remember `map' and `filter'?
+==============================
+
+  ,----
+  | double :: Integer -> Integer
+  | double x = 2 * x
+  | 
+  | doubles xs = map double xs
+  | evens   xs = filter even xs
+  `----
+
+
+5 List Comprehensions
+=====================
+
+  An alternative notation with the power of `map' and `filter' is list
+  comprehensions
+
+  ,----
+  | Prelude> [ 2*n | n<- [10..12] ]
+  | [20,22,24]
+  | Prelude>
+  `----
+  - Based on set-theoretic notation
+    \begin{equation*}
+    \{ 2n \mid n \in \{10 \ldots 12\} \}
+    \end{equation*}
+
+  - used in earlier functional languages (Hope, KRC).
+  - Popularised by Python.
+
+
+6 List Comprehensions
+=====================
+
+  - [ 3*n | n<- [10..12], even n]
+
+    "the list of all 3*n, where n is taken from the list of integers
+    from 10 to 12, and n is even".
+
+
+  - equivalent to:
+
+
+  ,----
+  | filter even [3*n | n <- [10..12] ]
+  | map (3*) [ n | n <- [10..12], even n]
+  | map (3*) (filter even [10..12])
+  `----
+
+
+7 List Comprehensions: Further example
+======================================
+
+  - Multiple generators
+
+    ,----
+    | pythag :: Int -> [(Int, Int, Int)]
+    | pythag n = [(x,y,z) | 
+    |        x <- [1..n],
+    |        y <- [x..n],
+    |        z <- [y..n],
+    |        x^2 + y^2 == z^2]
+    `----
+  - A generator can be any list-producing expression (of appropriate
+    type), not just [a..b]-expressions.
+
+
+8 Queries with List Comprehensions
+==================================
+
+  Which underaged users of an online video store have illicetly bought
+  an R-rated horror movie?
+
+  Entities:
+
+  ,----
+  | users :: [(String, Int)]
+  | --        ^ name   ^ Year of birth 
+  | purchases :: [(String,      String    , Int)]
+  | --             ^ user id  ^ item Id     ^ date of purchase
+  | items :: [(String, Int)] 
+  | --         ^ title  ^ fsk
+  | -- ...
+  | fskProblems :: [(String, String, Int, Int)]
+  | --               ^ buyer  ^ title ^ age ^fsk              
+  | fskProblems = undefined
+  `----
+
+
+9 Queries with List Comprehensions
+==================================
+
+  ,----
+  | fskProblems :: [(String, String, Int, Int)]
+  | --               ^ buyer  ^ title ^ age ^fsk              
+  | fskProblems =
+  |   [(buyer, title, age, fsk) |
+  |      (uName, bYear) <- users,
+  |      (buyer, title, pYear) <- purchases,
+  |      buyer == uName,
+  |      (iName, fsk) <- items,
+  |      title == iName,
+  |      let age = pYear - bYear,
+  |      age < fsk ]
+  `----
+
+  Note: Left-hand side of ``<-'' is a Pattern 
+
+
+10 Type Aliases
+===============
+
+  Explaining the meaning of data in comments is bad!
+
+
+  ,----
+  | users :: [(String, Int)]
+  | --        ^ name   ^ Year of birth
+  `----
+
+
+11 Type Aliases
+===============
+
+  Quick fix: type aliases
+
+  ,----
+  | type Name = String
+  | type Title = String
+  | type Year = Int
+  | type Age = Int
+  | 
+  | type User = (Name, Year)
+  | --        ^ name   ^ Year of birth 
+  | type Film = (Title, Age)
+  | --                   ^ fsk           
+  | type Purchase = (Name, Title, Year) -- <---+
+  | --             ^ user name ^ item name     ^ date of purchase
+  | users :: [User]
+  | ...
+  `----
+
+
+
+12 Type Aliases
+===============
+
+  Just aliases for type signature! Query stays the same:
+
+  ,----
+  | users :: [(String, Int)]
+  | 
+  | fskProblems =
+  |   [(buyer, title, pYear - bYear, fsk) |
+  |      (uName, bYear) <- users,
+  `----
+
+
+
+
+
+13 Datatypes: Scenario
+======================
+
+  - Model a Card Game (,,Hearts'')
+  - How to represent the ``things'' that make up the game?
+  - How to define simple logic on the representations
+
+
+
+
+
+
+
+
+14 Primitive Datatypes
+======================
+
+  In principle, we can encode everything with numbers and lists...
+
+  ,----
+  | diamondsAce = 0
+  | diamondsTwo = 1
+  | diamondsThree = 2
+  | ...
+  | heartsAce = 10
+  | ...
+  | diamondsJack = 100
+  | ...
+  | spadesKing = 402
+  | 
+  | myHand = [3, 101, 303, 34]
+  | isJack card = card == 100 || card == 200 || ...
+  `----
+  ... but that's very inconvenient (Assembler anyone?)  
+
+
+15 Datamodel for Card Games
+===========================
+
+  - A card has a *suit* and a *rank*
+  - A card *beats* another card, if it has the same suit, but a higher
+    rank
+  - Thus, we will
+    - represent a card
+    - define, when a card beats another
+    - define a function that, given a card, chooses a better card from a
+      *hand of cards*, if possible
+
+
+
+16 Defining new types: `data'
+=============================
+
+  A card has a *suit* and a rank.
+
+  ,----
+  | data Suit = Spades | Hearts | Diamonds | Clubs
+  `----
+  - new type consisting of (exactly) those four values
+  - `Suit': the name of the new *type*
+  - `Spades, Hearts': the name of its *constructors*.  Like special,
+    compiler generated definitions:
+    ,----
+    | Spades :: Suit
+    | ...
+    `----
+  - Type and constructor names are written capital
+
+
+
+
+17 Printing custom types in ghci
+================================
+
+  ,----
+  | Main> [5]
+  | [5]
+  | Main> Spades
+  | 
+  | <interactive>:3:1:
+  |   No instance for (Show Suit) arising from
+  |   a use of `print'
+  |   Possible fix: [...]
+  `----
+
+
+
+
+
+
+
+18 Printing custom types in ghci
+================================
+
+  - ghci does not know how the values of `Suit' should be printed
+  - we can make it generate a default representation
+
+  ,----
+  | data Suit = Spades | Hearts | Diamonds | Clubs
+  |   deriving (Show) -- makes `Suit' printable
+  `----
+
+  ,----
+  | Main> Spades
+  | Spades
+  | Main> show Spades
+  | "Spades"
+  | Main> :t show 
+  | show :: Show a => a -> String
+  `----
+
+
+
+19 Functions on custom types
+============================
+
+  Each suit has a color:
+
+  ,----
+  | data Color = Black | Red
+  |  deriving (Show)
+  `----
+  Define functions by patter-matching:
+  ,----
+  | color :: Suit -> Color
+  | color Spades = Black
+  | color Hearts = Red
+  | color Diamonds = Red
+  | color Clubs = Black
+  `----
+
+
+
+20 More `data'
+==============
+
+  A card has a suit and a *rank*.
+
+
+21 More `data'
+==============
+
+  A card has a suit and a *rank*.
+
+  ,----
+  | data Rank = Numeric Integer | Jack | Queen
+  |           | King | Ace
+  |   deriving Show
+  `----
+
+  Was macht der Konstruktor `Numeric'?
+
+  ,----
+  | Main> :t Numeric
+  | Numeric :: Integer -> Rank
+  `----
+
+
+
+22 Comparing ranks
+==================
+
+  ,----
+  | -- rankBeats givenCard c returns True,
+  | --- if c beats the givenCard
+  | rankBeats :: Rank -> Rank -> Bool
+  | rankBeats givenCard c = ...
+  `----
+
+
+
+23 Comparing ranks
+==================
+
+  ,----
+  | -- rankBeats r1 r2 returns True, if r1 beats r2
+  | rankBeats :: Rank -> Rank -> Bool
+  | rankBeats _  Ace    = False
+  | rankBeats Ace _     = True
+  | rankBeats _ King    = False
+  | rankBeats King _    = True
+  | rankBeats _  Queen  = False
+  | rankBeats Queen _   = True
+  | rankBeats _ Jack    = False
+  | rankBeats Jack _    = True
+  | rankBeats (Numeric n1) (Numeric n2) = n1 > n2
+  | --          ^^ pattern match on constructor
+  | --             yields its argument
+  `----
+
+
+
+24 Intermezzo: Testing `rankBeats'
+==================================
+
+
+25 Intermezzo: Testing `rankBeats'
+==================================
+
+  It's a *strict total order*
+
+
+26 Intermezzo: Testing `rankBeats'
+==================================
+
+  It's a *strict total order*
+
+  ,----
+  | -- transitive
+  | prop_rankBeats_transitive (r1, r2, r3) =
+  |   not ((rankBeats r1 r2) &&
+  |        (rankBeats r2 r3)) ||
+  |    rankBeats r1 r3
+  | -- trichotomous 
+  | prop_rankBeats_trichotomous (r1, r2) =
+  |   xor3 (rankBeats r1 r2) 
+  |        (rankBeats r2 r1) 
+  |        r1 == r2
+  | 
+  | xor3 :: Bool -> Bool -> Bool -> Bool
+  | xor3 True False False = True
+  | xor3 False True False = True
+  | xor3 False False True = True
+  | xor3 _     _     _    = False
+  `----
+
+
+
+
+27 Intermezzo: Testing `rankBeats'
+==================================
+
+  ,----
+  | Main> :l CardGame.hs
+  | CardGame.hs:47:7:
+  |     No instance for (Eq Rank) arising from
+  |     a use of `=='
+  |     Possible fix: add an instance declaration
+  |     for (Eq Rank)
+  |     In the second argument of `xor',
+  |     No instance for (Eq Rank)
+  |       arising from the 'deriving' clause of a
+  |       data type declaration
+  `----
+  Ok... so Haskell doesn't know how to do ``==''
+
+
+28 Intermezzo: Testing `rankBeats'
+==================================
+
+  We can tell it to generate a default definition.  (Similar as for
+  ``show'', above)
+
+  ,----
+  | data Rank = Numeric Integer | Jack | Queen
+  |           | King | Ace
+  |   deriving (Show, Eq)
+  `----
+
+  Now it compiles...  
+
+
+29 Intermezzo: Testing `rankBeats'
+==================================
+
+  ,----
+  | Main> quickCheck  prop_rankBeats_trichotomous
+  | <interactive>:29:1:
+  |     No instance for (Arbitrary Rank) arising
+  |     from a use of `quickCheck' [...]
+  `----
+  ... but does not run! Bahh!  
+
+
+30 Intermezzo: Testing `rankBeats'
+==================================
+
+  QC does not know how to generate Ranks!  So let's tell it:
+
+
+31 Intermezzo: Testing `rankBeats'
+==================================
+
+  QC does not know how to generate Ranks!  So let's tell it:
+
+  ,----
+  | allRanks = [ Ace, King, Queen, Jack ]
+  |            ++ [ Numeric n | n <- [2..9]]
+  | 
+  | gen_rankPairs =
+  |   elements $ [ (r1, r2) | r1 <- allRanks,
+  |                           r2 <- allRanks ]
+  | gen_rankTriple =
+  |   elements $ [ (r1, r2, r3) | r1 <- allRanks,
+  |                               r2 <- allRanks,
+  |                               r3 <- allRanks ]
+  `----
+
+  `elements' is a *magic function* that creates a *Quick Check
+  Generator* from a list.  
+
+
+32 Intermezzo: Testing `rankBeats'
+==================================
+
+  To test with custom QC generators, use another magic function:
+  `forAll'.
+
+  Usage: `quickCheck (forAll <generator> <property>)'
+
+  ,----
+  | Main> quickCheck
+  |          (forAll gen_rankTriple
+  |                  prop_rankBeats_transitive)
+  | +++ OK, passed 100 tests.
+  | Main> quickCheck
+  |          (forAll gen_rankPairs
+  |                  prop_rankBeats_trichotomous)
+  | +++ OK, passed 100 tests.
+  `----
+

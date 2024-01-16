@@ -1,0 +1,38 @@
+html{
+    /*  add padding to the left and right  */
+    padding-left: 3em;
+    padding-right: 5em;
+    /* change the background color   */
+    background-color: #EFD4BD;
+}
+p {
+    padding-top: 1em;
+    font-size: 20px;
+    font-weight: bolder;
+    text-align: center;
+}
+
+/* access the pumpkin elements by classname and change color of the font */
+.pumpkin {
+    color: #E67E22;
+}
+
+
+.topping {
+    color: #CD5C5C;
+}
+
+/* you can make your life easier by adding multiple classes to the elements
+and then access all the chosen elements by this class and underline the text */
+.subtopics {
+    text-decoration: underline;
+}
+
+#pumpkinpie_picture {
+    border-radius: 20px;
+    border: 5px solid #E67E22;
+
+}
+
+
+

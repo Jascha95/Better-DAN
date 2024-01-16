@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link href="coqdoc.css" rel="stylesheet" type="text/css"/>
+<title>SfLib</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library SfLib</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab383"></a><h1 class="section">SfLib: Software Foundations Library</h1>
+
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Here we collect together several useful definitions and theorems
+    from Basics.v, List.v, Poly.v, Ind.v, and Logic.v that are not
+    already in the Coq standard library.  From now on we can <span class="inlinecode"><span class="id" type="keyword">Import</span></span>
+    or <span class="inlinecode"><span class="id" type="keyword">Export</span></span> this file, instead of cluttering our environment with
+    all the examples and false starts in those files. 
+<div class="paragraph"> </div>
+
+<a name="lab384"></a><h1 class="section">From the Coq Standard Library</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Require</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.omega.Omega.html#"><span class="id" type="library">Omega</span></a>. <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Export</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Bool.Bool.html#"><span class="id" type="library">Bool</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Export</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Lists.List.html#"><span class="id" type="library">List</span></a>.<br/>
+<span class="id" type="keyword">Export</span> <span class="id" type="var">ListNotations</span>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Export</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Arith.Arith.html#"><span class="id" type="library">Arith</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Export</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Arith.EqNat.html#"><span class="id" type="library">Arith.EqNat</span></a>. 
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab385"></a><h1 class="section">From Basics.v</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="admit"><span class="id" type="definition">admit</span></a> {<span class="id" type="var">T</span>: <span class="id" type="keyword">Type</span>} : <a class="idref" href="SfLib.html#T"><span class="id" type="variable">T</span></a>. <span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Require</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Strings.String.html#"><span class="id" type="library">String</span></a>. <span class="id" type="keyword">Open</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">string_scope</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Ltac</span> <span class="id" type="var">move_to_top</span> <span class="id" type="var">x</span> :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">match</span> <span class="id" type="var">reverse</span> <span class="id" type="keyword">goal</span> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;| <span class="id" type="var">H</span> : <span class="id" type="var">_</span> |- <span class="id" type="var">_</span> ⇒ <span class="id" type="tactic">try</span> <span class="id" type="tactic">move</span> <span class="id" type="var">x</span> <span class="id" type="keyword">after</span> <span class="id" type="var">H</span><br/>
+&nbsp;&nbsp;<span class="id" type="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Tactic Notation</span> "assert_eq" <span class="id" type="var">ident</span>(<span class="id" type="var">x</span>) <span class="id" type="keyword">constr</span>(<span class="id" type="var">v</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">let</span> <span class="id" type="var">H</span> := <span class="id" type="tactic">fresh</span> <span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;<span class="id" type="tactic">assert</span> (<span class="id" type="var">x</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <span class="id" type="var">v</span>) <span class="id" type="keyword">as</span> <span class="id" type="var">H</span> <span class="id" type="tactic">by</span> <span class="id" type="tactic">reflexivity</span>;<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">clear</span> <span class="id" type="var">H</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Tactic Notation</span> "Case_aux" <span class="id" type="var">ident</span>(<span class="id" type="var">x</span>) <span class="id" type="keyword">constr</span>(<span class="id" type="var">name</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">first</span> [<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">set</span> (<span class="id" type="var">x</span> := <span class="id" type="var">name</span>); <span class="id" type="var">move_to_top</span> <span class="id" type="var">x</span><br/>
+&nbsp;&nbsp;| <span class="id" type="var">assert_eq</span> <span class="id" type="var">x</span> <span class="id" type="var">name</span>; <span class="id" type="var">move_to_top</span> <span class="id" type="var">x</span><br/>
+&nbsp;&nbsp;| <span class="id" type="tactic">fail</span> 1 "because we are working on a different case" ].<br/>
+
+<br/>
+<span class="id" type="keyword">Tactic Notation</span> "Case" <span class="id" type="keyword">constr</span>(<span class="id" type="var">name</span>) := <span class="id" type="var">Case_aux</span> <span class="id" type="var">Case</span> <span class="id" type="var">name</span>.<br/>
+<span class="id" type="keyword">Tactic Notation</span> "SCase" <span class="id" type="keyword">constr</span>(<span class="id" type="var">name</span>) := <span class="id" type="var">Case_aux</span> <span class="id" type="var">SCase</span> <span class="id" type="var">name</span>.<br/>
+<span class="id" type="keyword">Tactic Notation</span> "SSCase" <span class="id" type="keyword">constr</span>(<span class="id" type="var">name</span>) := <span class="id" type="var">Case_aux</span> <span class="id" type="var">SSCase</span> <span class="id" type="var">name</span>.<br/>
+<span class="id" type="keyword">Tactic Notation</span> "SSSCase" <span class="id" type="keyword">constr</span>(<span class="id" type="var">name</span>) := <span class="id" type="var">Case_aux</span> <span class="id" type="var">SSSCase</span> <span class="id" type="var">name</span>.<br/>
+<span class="id" type="keyword">Tactic Notation</span> "SSSSCase" <span class="id" type="keyword">constr</span>(<span class="id" type="var">name</span>) := <span class="id" type="var">Case_aux</span> <span class="id" type="var">SSSSCase</span> <span class="id" type="var">name</span>.<br/>
+<span class="id" type="keyword">Tactic Notation</span> "SSSSSCase" <span class="id" type="keyword">constr</span>(<span class="id" type="var">name</span>) := <span class="id" type="var">Case_aux</span> <span class="id" type="var">SSSSSCase</span> <span class="id" type="var">name</span>.<br/>
+<span class="id" type="keyword">Tactic Notation</span> "SSSSSSCase" <span class="id" type="keyword">constr</span>(<span class="id" type="var">name</span>) := <span class="id" type="var">Case_aux</span> <span class="id" type="var">SSSSSSCase</span> <span class="id" type="var">name</span>.<br/>
+<span class="id" type="keyword">Tactic Notation</span> "SSSSSSSCase" <span class="id" type="keyword">constr</span>(<span class="id" type="var">name</span>) := <span class="id" type="var">Case_aux</span> <span class="id" type="var">SSSSSSSCase</span> <span class="id" type="var">name</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Fixpoint</span> <a name="ble_nat"><span class="id" type="definition">ble_nat</span></a> (<span class="id" type="var">n</span> <span class="id" type="var">m</span> : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a>) : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#bool"><span class="id" type="inductive">bool</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">match</span> <a class="idref" href="SfLib.html#n"><span class="id" type="variable">n</span></a> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#O"><span class="id" type="constructor">O</span></a> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#true"><span class="id" type="constructor">true</span></a><br/>
+&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#S"><span class="id" type="constructor">S</span></a> <span class="id" type="var">n'</span> ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">match</span> <a class="idref" href="SfLib.html#m"><span class="id" type="variable">m</span></a> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#O"><span class="id" type="constructor">O</span></a> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#false"><span class="id" type="constructor">false</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#S"><span class="id" type="constructor">S</span></a> <span class="id" type="var">m'</span> ⇒ <a class="idref" href="SfLib.html#ble_nat"><span class="id" type="definition">ble_nat</span></a> <span class="id" type="var">n'</span> <span class="id" type="var">m'</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">end</span><br/>
+&nbsp;&nbsp;<span class="id" type="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="andb_true_elim1"><span class="id" type="lemma">andb_true_elim1</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">b</span> <span class="id" type="var">c</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#andb"><span class="id" type="definition">andb</span></a> <a class="idref" href="SfLib.html#b"><span class="id" type="variable">b</span></a> <a class="idref" href="SfLib.html#c"><span class="id" type="variable">c</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#true"><span class="id" type="constructor">true</span></a> → <a class="idref" href="SfLib.html#b"><span class="id" type="variable">b</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#true"><span class="id" type="constructor">true</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">b</span> <span class="id" type="var">c</span> <span class="id" type="var">H</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> <span class="id" type="var">b</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "b = true".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "b = false".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">rewrite</span> &lt;- <span class="id" type="var">H</span>. <span class="id" type="tactic">reflexivity</span>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="andb_true_elim2"><span class="id" type="lemma">andb_true_elim2</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">b</span> <span class="id" type="var">c</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#andb"><span class="id" type="definition">andb</span></a> <a class="idref" href="SfLib.html#b"><span class="id" type="variable">b</span></a> <a class="idref" href="SfLib.html#c"><span class="id" type="variable">c</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#true"><span class="id" type="constructor">true</span></a> → <a class="idref" href="SfLib.html#c"><span class="id" type="variable">c</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#true"><span class="id" type="constructor">true</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+<span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="beq_nat_sym"><span class="id" type="lemma">beq_nat_sym</span></a> : <span class="id" type="keyword">∀</span> (<span class="id" type="var">n</span> <span class="id" type="var">m</span> : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a>),<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Arith.EqNat.html#beq_nat"><span class="id" type="definition">beq_nat</span></a> <a class="idref" href="SfLib.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="SfLib.html#m"><span class="id" type="variable">m</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Arith.EqNat.html#beq_nat"><span class="id" type="definition">beq_nat</span></a> <a class="idref" href="SfLib.html#m"><span class="id" type="variable">m</span></a> <a class="idref" href="SfLib.html#n"><span class="id" type="variable">n</span></a>.<br/>
+<span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab386"></a><h1 class="section">From Props.v</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="ev"><span class="id" type="inductive">ev</span></a> : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a> → <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;| <a name="ev_0"><span class="id" type="constructor">ev_0</span></a> : <a class="idref" href="SfLib.html#ev"><span class="id" type="inductive">ev</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#O"><span class="id" type="constructor">O</span></a><br/>
+&nbsp;&nbsp;| <a name="ev_SS"><span class="id" type="constructor">ev_SS</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">n</span>:<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a>, <a class="idref" href="SfLib.html#ev"><span class="id" type="inductive">ev</span></a> <a class="idref" href="SfLib.html#n"><span class="id" type="variable">n</span></a> → <a class="idref" href="SfLib.html#ev"><span class="id" type="inductive">ev</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#S"><span class="id" type="constructor">S</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#S"><span class="id" type="constructor">S</span></a> <a class="idref" href="SfLib.html#n"><span class="id" type="variable">n</span></a>)).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab387"></a><h1 class="section">From Logic.v</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="andb_true"><span class="id" type="lemma">andb_true</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">b</span> <span class="id" type="var">c</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#andb"><span class="id" type="definition">andb</span></a> <a class="idref" href="SfLib.html#b"><span class="id" type="variable">b</span></a> <a class="idref" href="SfLib.html#c"><span class="id" type="variable">c</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#true"><span class="id" type="constructor">true</span></a> → <a class="idref" href="SfLib.html#b"><span class="id" type="variable">b</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#true"><span class="id" type="constructor">true</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">∧</span></a> <a class="idref" href="SfLib.html#c"><span class="id" type="variable">c</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#true"><span class="id" type="constructor">true</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">b</span> <span class="id" type="var">c</span> <span class="id" type="var">H</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> <span class="id" type="var">b</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> <span class="id" type="var">c</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#conj"><span class="id" type="constructor">conj</span></a>. <span class="id" type="tactic">reflexivity</span>. <span class="id" type="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="false_beq_nat"><span class="id" type="lemma">false_beq_nat</span></a>: <span class="id" type="keyword">∀</span> <span class="id" type="var">n</span> <span class="id" type="var">n'</span> : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="SfLib.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'<>'_x"><span class="id" type="notation">≠</span></a> <a class="idref" href="SfLib.html#n'"><span class="id" type="variable">n'</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Arith.EqNat.html#beq_nat"><span class="id" type="definition">beq_nat</span></a> <a class="idref" href="SfLib.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="SfLib.html#n'"><span class="id" type="variable">n'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#false"><span class="id" type="constructor">false</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+<span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="ex_falso_quodlibet"><span class="id" type="lemma">ex_falso_quodlibet</span></a> : <span class="id" type="keyword">∀</span> (<span class="id" type="var">P</span>:<span class="id" type="keyword">Prop</span>),<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#False"><span class="id" type="inductive">False</span></a> → <a class="idref" href="SfLib.html#P"><span class="id" type="variable">P</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">P</span> <span class="id" type="var">contra</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">contra</span>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="ev_not_ev_S"><span class="id" type="lemma">ev_not_ev_S</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">n</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="SfLib.html#ev"><span class="id" type="inductive">ev</span></a> <a class="idref" href="SfLib.html#n"><span class="id" type="variable">n</span></a> → <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">¬</span></a> <a class="idref" href="SfLib.html#ev"><span class="id" type="inductive">ev</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#S"><span class="id" type="constructor">S</span></a> <a class="idref" href="SfLib.html#n"><span class="id" type="variable">n</span></a>).<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+<span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="ble_nat_true"><span class="id" type="lemma">ble_nat_true</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">n</span> <span class="id" type="var">m</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="SfLib.html#ble_nat"><span class="id" type="definition">ble_nat</span></a> <a class="idref" href="SfLib.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="SfLib.html#m"><span class="id" type="variable">m</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#true"><span class="id" type="constructor">true</span></a> → <a class="idref" href="SfLib.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#:nat_scope:x_'<='_x"><span class="id" type="notation">≤</span></a> <a class="idref" href="SfLib.html#m"><span class="id" type="variable">m</span></a>.<br/>
+<span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="ble_nat_false"><span class="id" type="lemma">ble_nat_false</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">n</span> <span class="id" type="var">m</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="SfLib.html#ble_nat"><span class="id" type="definition">ble_nat</span></a> <a class="idref" href="SfLib.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="SfLib.html#m"><span class="id" type="variable">m</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#false"><span class="id" type="constructor">false</span></a> → <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">~(</span></a><a class="idref" href="SfLib.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#:nat_scope:x_'<='_x"><span class="id" type="notation">≤</span></a> <a class="idref" href="SfLib.html#m"><span class="id" type="variable">m</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">)</span></a>.<br/>
+<span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="appears_in"><span class="id" type="inductive">appears_in</span></a> (<span class="id" type="var">n</span> : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a>) : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#list"><span class="id" type="inductive">list</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a> → <span class="id" type="keyword">Prop</span> :=<br/>
+| <a name="ai_here"><span class="id" type="constructor">ai_here</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">l</span>, <a class="idref" href="SfLib.html#appears_in"><span class="id" type="inductive">appears_in</span></a> <span class="id" type="var">n</span> (<span class="id" type="var">n</span><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#:list_scope:x_'::'_x"><span class="id" type="notation">::</span></a><a class="idref" href="SfLib.html#l"><span class="id" type="variable">l</span></a>)<br/>
+| <a name="ai_later"><span class="id" type="constructor">ai_later</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">m</span> <span class="id" type="var">l</span>, <a class="idref" href="SfLib.html#appears_in"><span class="id" type="inductive">appears_in</span></a> <span class="id" type="var">n</span> <a class="idref" href="SfLib.html#l"><span class="id" type="variable">l</span></a> → <a class="idref" href="SfLib.html#appears_in"><span class="id" type="inductive">appears_in</span></a> <span class="id" type="var">n</span> (<a class="idref" href="SfLib.html#m"><span class="id" type="variable">m</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#:list_scope:x_'::'_x"><span class="id" type="notation">::</span></a><a class="idref" href="SfLib.html#l"><span class="id" type="variable">l</span></a>).<br/>
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="next_nat"><span class="id" type="inductive">next_nat</span></a> (<span class="id" type="var">n</span>:<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a>) : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a> → <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;| <a name="nn"><span class="id" type="constructor">nn</span></a> : <a class="idref" href="SfLib.html#next_nat"><span class="id" type="inductive">next_nat</span></a> <span class="id" type="var">n</span> (<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#S"><span class="id" type="constructor">S</span></a> <span class="id" type="var">n</span>).<br/>
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="total_relation"><span class="id" type="inductive">total_relation</span></a> : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a> → <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a> → <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="tot"><span class="id" type="constructor">tot</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">n</span> <span class="id" type="var">m</span> : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a>, <a class="idref" href="SfLib.html#total_relation"><span class="id" type="inductive">total_relation</span></a> <a class="idref" href="SfLib.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="SfLib.html#m"><span class="id" type="variable">m</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="empty_relation"><span class="id" type="inductive">empty_relation</span></a> : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a> → <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a> → <span class="id" type="keyword">Prop</span> := .<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab388"></a><h1 class="section">From Later Files</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="relation"><span class="id" type="definition">relation</span></a> (<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>) := <a class="idref" href="SfLib.html#X"><span class="id" type="variable">X</span></a> → <a class="idref" href="SfLib.html#X"><span class="id" type="variable">X</span></a> → <span class="id" type="keyword">Prop</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="deterministic"><span class="id" type="definition">deterministic</span></a> {<span class="id" type="var">X</span>: <span class="id" type="keyword">Type</span>} (<span class="id" type="var">R</span>: <a class="idref" href="SfLib.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="SfLib.html#X"><span class="id" type="variable">X</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">y1</span> <span class="id" type="var">y2</span> : <a class="idref" href="SfLib.html#X"><span class="id" type="variable">X</span></a>, <a class="idref" href="SfLib.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="SfLib.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="SfLib.html#y1"><span class="id" type="variable">y1</span></a> → <a class="idref" href="SfLib.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="SfLib.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="SfLib.html#y2"><span class="id" type="variable">y2</span></a> → <a class="idref" href="SfLib.html#y1"><span class="id" type="variable">y1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="SfLib.html#y2"><span class="id" type="variable">y2</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="multi"><span class="id" type="inductive">multi</span></a> (<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>) (<span class="id" type="var">R</span>: <a class="idref" href="SfLib.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="SfLib.html#X"><span class="id" type="variable">X</span></a>) <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="id" type="var">X</span> → <span class="id" type="var">X</span> → <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;| <a name="multi_refl"><span class="id" type="constructor">multi_refl</span></a>  : <span class="id" type="keyword">∀</span> (<span class="id" type="var">x</span> : <span class="id" type="var">X</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="SfLib.html#multi"><span class="id" type="inductive">multi</span></a> <span class="id" type="var">X</span> <span class="id" type="var">R</span> <a class="idref" href="SfLib.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="SfLib.html#x"><span class="id" type="variable">x</span></a><br/>
+&nbsp;&nbsp;| <a name="multi_step"><span class="id" type="constructor">multi_step</span></a> : <span class="id" type="keyword">∀</span> (<span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">z</span> : <span class="id" type="var">X</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">R</span> <a class="idref" href="SfLib.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="SfLib.html#y"><span class="id" type="variable">y</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="SfLib.html#multi"><span class="id" type="inductive">multi</span></a> <span class="id" type="var">X</span> <span class="id" type="var">R</span> <a class="idref" href="SfLib.html#y"><span class="id" type="variable">y</span></a> <a class="idref" href="SfLib.html#z"><span class="id" type="variable">z</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="SfLib.html#multi"><span class="id" type="inductive">multi</span></a> <span class="id" type="var">X</span> <span class="id" type="var">R</span> <a class="idref" href="SfLib.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="SfLib.html#z"><span class="id" type="variable">z</span></a>.<br/>
+<span class="id" type="keyword">Implicit Arguments</span> <a class="idref" href="SfLib.html#multi"><span class="id" type="inductive">multi</span></a> [[<span class="id" type="var">X</span>]].<br/>
+
+<br/>
+<span class="id" type="keyword">Tactic Notation</span> "multi_cases" <span class="id" type="var">tactic</span>(<span class="id" type="tactic">first</span>) <span class="id" type="var">ident</span>(<span class="id" type="var">c</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">first</span>;<br/>
+&nbsp;&nbsp;[ <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "multi_refl" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "multi_step" ].<br/>
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="multi_R"><span class="id" type="lemma">multi_R</span></a> : <span class="id" type="keyword">∀</span> (<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>) (<span class="id" type="var">R</span>:<a class="idref" href="SfLib.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="SfLib.html#X"><span class="id" type="variable">X</span></a>) (<span class="id" type="var">x</span> <span class="id" type="var">y</span> : <a class="idref" href="SfLib.html#X"><span class="id" type="variable">X</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="SfLib.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="SfLib.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="SfLib.html#y"><span class="id" type="variable">y</span></a> → <a class="idref" href="SfLib.html#multi"><span class="id" type="inductive">multi</span></a> <a class="idref" href="SfLib.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="SfLib.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="SfLib.html#y"><span class="id" type="variable">y</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">X</span> <span class="id" type="var">R</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">r</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="SfLib.html#multi_step"><span class="id" type="constructor">multi_step</span></a> <span class="id" type="keyword">with</span> <span class="id" type="var">y</span>. <span class="id" type="tactic">apply</span> <span class="id" type="var">r</span>. <span class="id" type="tactic">apply</span> <a class="idref" href="SfLib.html#multi_refl"><span class="id" type="constructor">multi_refl</span></a>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="multi_trans"><span class="id" type="lemma">multi_trans</span></a> :<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">∀</span> (<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>) (<span class="id" type="var">R</span>: <a class="idref" href="SfLib.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="SfLib.html#X"><span class="id" type="variable">X</span></a>) (<span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">z</span> : <a class="idref" href="SfLib.html#X"><span class="id" type="variable">X</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="SfLib.html#multi"><span class="id" type="inductive">multi</span></a> <a class="idref" href="SfLib.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="SfLib.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="SfLib.html#y"><span class="id" type="variable">y</span></a>  →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="SfLib.html#multi"><span class="id" type="inductive">multi</span></a> <a class="idref" href="SfLib.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="SfLib.html#y"><span class="id" type="variable">y</span></a> <a class="idref" href="SfLib.html#z"><span class="id" type="variable">z</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="SfLib.html#multi"><span class="id" type="inductive">multi</span></a> <a class="idref" href="SfLib.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="SfLib.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="SfLib.html#z"><span class="id" type="variable">z</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ Identifiers and polymorphic partial maps. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="id"><span class="id" type="inductive">id</span></a> : <span class="id" type="keyword">Type</span> := <br/>
+&nbsp;&nbsp;<a name="Id"><span class="id" type="constructor">Id</span></a> : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a> → <a class="idref" href="SfLib.html#id"><span class="id" type="inductive">id</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">id1</span> <span class="id" type="var">id2</span> : <a class="idref" href="SfLib.html#id"><span class="id" type="inductive">id</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Specif.html#:type_scope:'{'_x_'}'_'+'_'{'_x_'}'"><span class="id" type="notation">{</span></a><a class="idref" href="SfLib.html#id1"><span class="id" type="variable">id1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="SfLib.html#id2"><span class="id" type="variable">id2</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Specif.html#:type_scope:'{'_x_'}'_'+'_'{'_x_'}'"><span class="id" type="notation">}</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Specif.html#:type_scope:'{'_x_'}'_'+'_'{'_x_'}'"><span class="id" type="notation">+</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Specif.html#:type_scope:'{'_x_'}'_'+'_'{'_x_'}'"><span class="id" type="notation">{</span></a><a class="idref" href="SfLib.html#id1"><span class="id" type="variable">id1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'<>'_x"><span class="id" type="notation">≠</span></a> <a class="idref" href="SfLib.html#id2"><span class="id" type="variable">id2</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Specif.html#:type_scope:'{'_x_'}'_'+'_'{'_x_'}'"><span class="id" type="notation">}</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">id1</span> <span class="id" type="var">id2</span>.<br/>
+&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> <span class="id" type="var">id1</span> <span class="id" type="keyword">as</span> [<span class="id" type="var">n1</span>]. <span class="id" type="tactic">destruct</span> <span class="id" type="var">id2</span> <span class="id" type="keyword">as</span> [<span class="id" type="var">n2</span>].<br/>
+&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> (<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Arith.Peano_dec.html#eq_nat_dec"><span class="id" type="lemma">eq_nat_dec</span></a> <span class="id" type="var">n1</span> <span class="id" type="var">n2</span>) <span class="id" type="keyword">as</span> [<span class="id" type="var">Heq</span> | <span class="id" type="var">Hneq</span>].<br/>
+&nbsp;&nbsp;&nbsp;<span class="id" type="var">Case</span> "n1 = n2".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">left</span>. <span class="id" type="tactic">rewrite</span> <span class="id" type="var">Heq</span>. <span class="id" type="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;<span class="id" type="var">Case</span> "n1 &lt;&gt; n2".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">right</span>. <span class="id" type="tactic">intros</span> <span class="id" type="var">contra</span>. <span class="id" type="tactic">inversion</span> <span class="id" type="var">contra</span>. <span class="id" type="tactic">apply</span> <span class="id" type="var">Hneq</span>. <span class="id" type="tactic">apply</span> <span class="id" type="var">H0</span>.<br/>
+<span class="id" type="keyword">Defined</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="eq_id"><span class="id" type="lemma">eq_id</span></a> : <span class="id" type="keyword">∀</span> (<span class="id" type="var">T</span>:<span class="id" type="keyword">Type</span>) <span class="id" type="var">x</span> (<span class="id" type="var">p</span> <span class="id" type="var">q</span>:<a class="idref" href="SfLib.html#T"><span class="id" type="variable">T</span></a>), <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">(</span></a><span class="id" type="keyword">if</span> <a class="idref" href="SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <a class="idref" href="SfLib.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="SfLib.html#x"><span class="id" type="variable">x</span></a> <span class="id" type="keyword">then</span> <a class="idref" href="SfLib.html#p"><span class="id" type="variable">p</span></a> <span class="id" type="keyword">else</span> <a class="idref" href="SfLib.html#q"><span class="id" type="variable">q</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="SfLib.html#p"><span class="id" type="variable">p</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> (<a class="idref" href="SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <span class="id" type="var">x</span> <span class="id" type="var">x</span>); <span class="id" type="tactic">try</span> <span class="id" type="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="SfLib.html#ex_falso_quodlibet"><span class="id" type="lemma">ex_falso_quodlibet</span></a>; <span class="id" type="tactic">auto</span>.<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="neq_id"><span class="id" type="lemma">neq_id</span></a> : <span class="id" type="keyword">∀</span> (<span class="id" type="var">T</span>:<span class="id" type="keyword">Type</span>) <span class="id" type="var">x</span> <span class="id" type="var">y</span> (<span class="id" type="var">p</span> <span class="id" type="var">q</span>:<a class="idref" href="SfLib.html#T"><span class="id" type="variable">T</span></a>), <a class="idref" href="SfLib.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'<>'_x"><span class="id" type="notation">≠</span></a> <a class="idref" href="SfLib.html#y"><span class="id" type="variable">y</span></a> → <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">(</span></a><span class="id" type="keyword">if</span> <a class="idref" href="SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <a class="idref" href="SfLib.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="SfLib.html#y"><span class="id" type="variable">y</span></a> <span class="id" type="keyword">then</span> <a class="idref" href="SfLib.html#p"><span class="id" type="variable">p</span></a> <span class="id" type="keyword">else</span> <a class="idref" href="SfLib.html#q"><span class="id" type="variable">q</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="SfLib.html#q"><span class="id" type="variable">q</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="partial_map"><span class="id" type="definition">partial_map</span></a> (<span class="id" type="var">A</span>:<span class="id" type="keyword">Type</span>) := <a class="idref" href="SfLib.html#id"><span class="id" type="inductive">id</span></a> → <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#option"><span class="id" type="inductive">option</span></a> <a class="idref" href="SfLib.html#A"><span class="id" type="variable">A</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="empty"><span class="id" type="definition">empty</span></a> {<span class="id" type="var">A</span>:<span class="id" type="keyword">Type</span>} : <a class="idref" href="SfLib.html#partial_map"><span class="id" type="definition">partial_map</span></a> <a class="idref" href="SfLib.html#A"><span class="id" type="variable">A</span></a> := (<span class="id" type="keyword">fun</span> <span class="id" type="var">_</span> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#None"><span class="id" type="constructor">None</span></a>).<br/>
+
+<br/>
+<span class="id" type="keyword">Notation</span> <a name="::'\empty'"><span class="id" type="notation">"</span></a>'\empty'" := <a class="idref" href="SfLib.html#empty"><span class="id" type="definition">empty</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="extend"><span class="id" type="definition">extend</span></a> {<span class="id" type="var">A</span>:<span class="id" type="keyword">Type</span>} (<span class="id" type="var">Gamma</span> : <a class="idref" href="SfLib.html#partial_map"><span class="id" type="definition">partial_map</span></a> <a class="idref" href="SfLib.html#A"><span class="id" type="variable">A</span></a>) (<span class="id" type="var">x</span>:<a class="idref" href="SfLib.html#id"><span class="id" type="inductive">id</span></a>) (<span class="id" type="var">T</span> : <a class="idref" href="SfLib.html#A"><span class="id" type="variable">A</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">fun</span> <span class="id" type="var">x'</span> ⇒ <span class="id" type="keyword">if</span> <a class="idref" href="SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <a class="idref" href="SfLib.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="SfLib.html#x'"><span class="id" type="variable">x'</span></a> <span class="id" type="keyword">then</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" type="constructor">Some</span></a> <a class="idref" href="SfLib.html#T"><span class="id" type="variable">T</span></a> <span class="id" type="keyword">else</span> <a class="idref" href="SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="SfLib.html#x'"><span class="id" type="variable">x'</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="extend_eq"><span class="id" type="lemma">extend_eq</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">A</span> (<span class="id" type="var">ctxt</span>: <a class="idref" href="SfLib.html#partial_map"><span class="id" type="definition">partial_map</span></a> <a class="idref" href="SfLib.html#A"><span class="id" type="variable">A</span></a>) <span class="id" type="var">x</span> <span class="id" type="var">T</span>,<br/>
+&nbsp;&nbsp;(<a class="idref" href="SfLib.html#extend"><span class="id" type="definition">extend</span></a> <a class="idref" href="SfLib.html#ctxt"><span class="id" type="variable">ctxt</span></a> <a class="idref" href="SfLib.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="SfLib.html#T"><span class="id" type="variable">T</span></a>) <a class="idref" href="SfLib.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" type="constructor">Some</span></a> <a class="idref" href="SfLib.html#T"><span class="id" type="variable">T</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span>. <span class="id" type="tactic">unfold</span> <a class="idref" href="SfLib.html#extend"><span class="id" type="definition">extend</span></a>. <span class="id" type="tactic">rewrite</span> <a class="idref" href="SfLib.html#eq_id"><span class="id" type="lemma">eq_id</span></a>; <span class="id" type="tactic">auto</span>.<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="extend_neq"><span class="id" type="lemma">extend_neq</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">A</span> (<span class="id" type="var">ctxt</span>: <a class="idref" href="SfLib.html#partial_map"><span class="id" type="definition">partial_map</span></a> <a class="idref" href="SfLib.html#A"><span class="id" type="variable">A</span></a>) <span class="id" type="var">x1</span> <span class="id" type="var">T</span> <span class="id" type="var">x2</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="SfLib.html#x2"><span class="id" type="variable">x2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'<>'_x"><span class="id" type="notation">≠</span></a> <a class="idref" href="SfLib.html#x1"><span class="id" type="variable">x1</span></a> →<br/>
+&nbsp;&nbsp;(<a class="idref" href="SfLib.html#extend"><span class="id" type="definition">extend</span></a> <a class="idref" href="SfLib.html#ctxt"><span class="id" type="variable">ctxt</span></a> <a class="idref" href="SfLib.html#x2"><span class="id" type="variable">x2</span></a> <a class="idref" href="SfLib.html#T"><span class="id" type="variable">T</span></a>) <a class="idref" href="SfLib.html#x1"><span class="id" type="variable">x1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="SfLib.html#ctxt"><span class="id" type="variable">ctxt</span></a> <a class="idref" href="SfLib.html#x1"><span class="id" type="variable">x1</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span>. <span class="id" type="tactic">unfold</span> <a class="idref" href="SfLib.html#extend"><span class="id" type="definition">extend</span></a>. <span class="id" type="tactic">rewrite</span> <a class="idref" href="SfLib.html#neq_id"><span class="id" type="axiom">neq_id</span></a>; <span class="id" type="tactic">auto</span>.<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="extend_shadow"><span class="id" type="lemma">extend_shadow</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">A</span> (<span class="id" type="var">ctxt</span>: <a class="idref" href="SfLib.html#partial_map"><span class="id" type="definition">partial_map</span></a> <a class="idref" href="SfLib.html#A"><span class="id" type="variable">A</span></a>) <span class="id" type="var">t1</span> <span class="id" type="var">t2</span> <span class="id" type="var">x1</span> <span class="id" type="var">x2</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="SfLib.html#extend"><span class="id" type="definition">extend</span></a> (<a class="idref" href="SfLib.html#extend"><span class="id" type="definition">extend</span></a> <a class="idref" href="SfLib.html#ctxt"><span class="id" type="variable">ctxt</span></a> <a class="idref" href="SfLib.html#x2"><span class="id" type="variable">x2</span></a> <a class="idref" href="SfLib.html#t1"><span class="id" type="variable">t1</span></a>) <a class="idref" href="SfLib.html#x2"><span class="id" type="variable">x2</span></a> <a class="idref" href="SfLib.html#t2"><span class="id" type="variable">t2</span></a> <a class="idref" href="SfLib.html#x1"><span class="id" type="variable">x1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="SfLib.html#extend"><span class="id" type="definition">extend</span></a> <a class="idref" href="SfLib.html#ctxt"><span class="id" type="variable">ctxt</span></a> <a class="idref" href="SfLib.html#x2"><span class="id" type="variable">x2</span></a> <a class="idref" href="SfLib.html#t2"><span class="id" type="variable">t2</span></a> <a class="idref" href="SfLib.html#x1"><span class="id" type="variable">x1</span></a>.<br/>
+<span class="id" type="keyword">Proof</span> <span class="id" type="keyword">with</span> <span class="id" type="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span>. <span class="id" type="tactic">unfold</span> <a class="idref" href="SfLib.html#extend"><span class="id" type="definition">extend</span></a>. <span class="id" type="tactic">destruct</span> (<a class="idref" href="SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <span class="id" type="var">x2</span> <span class="id" type="var">x1</span>)...<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<hr/>
+ 
+<div class="paragraph"> </div>
+
+<a name="lab389"></a><h1 class="section">Some useful tactics</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Tactic Notation</span> "solve_by_inversion_step" <span class="id" type="var">tactic</span>(<span class="id" type="var">t</span>) :=  <br/>
+&nbsp;&nbsp;<span class="id" type="keyword">match</span> <span class="id" type="keyword">goal</span> <span class="id" type="keyword">with</span>  <br/>
+&nbsp;&nbsp;| <span class="id" type="var">H</span> : <span class="id" type="var">_</span> |- <span class="id" type="var">_</span> ⇒ <span class="id" type="tactic">solve</span> [ <span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>; <span class="id" type="tactic">subst</span>; <span class="id" type="var">t</span> ] <br/>
+&nbsp;&nbsp;<span class="id" type="keyword">end</span><br/>
+&nbsp;&nbsp;|| <span class="id" type="tactic">fail</span> "because the goal is not solvable by inversion.".<br/>
+
+<br/>
+<span class="id" type="keyword">Tactic Notation</span> "solve" "by" "inversion" "1" :=<br/>
+&nbsp;&nbsp;<span class="id" type="var">solve_by_inversion_step</span> <span class="id" type="tactic">idtac</span>.<br/>
+<span class="id" type="keyword">Tactic Notation</span> "solve" "by" "inversion" "2" :=<br/>
+&nbsp;&nbsp;<span class="id" type="var">solve_by_inversion_step</span> (<span class="id" type="tactic">solve</span> <span class="id" type="tactic">by</span> <span class="id" type="tactic">inversion</span> 1).<br/>
+<span class="id" type="keyword">Tactic Notation</span> "solve" "by" "inversion" "3" :=<br/>
+&nbsp;&nbsp;<span class="id" type="var">solve_by_inversion_step</span> (<span class="id" type="tactic">solve</span> <span class="id" type="tactic">by</span> <span class="id" type="tactic">inversion</span> 2).<br/>
+<span class="id" type="keyword">Tactic Notation</span> "solve" "by" "inversion" :=<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">solve</span> <span class="id" type="tactic">by</span> <span class="id" type="tactic">inversion</span> 1.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

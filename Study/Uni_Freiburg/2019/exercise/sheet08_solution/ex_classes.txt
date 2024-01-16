@@ -1,0 +1,49 @@
+In dieser Aufgabe sollen Kochrezepte und Zutaten durch Klassen repräsentiert werden und Funktionen, die auf entsprechenden Objekten arbeiten, implementiert werden.
+
+1. [5 Punkte] Implementieren Sie die Klasse `Ingredient`, welche eine Zutat zu einem Kochrezept repräsentiert.
+Die Attribute der Klasse sollen den Namen der Zutat, den Preis in Cent und ob die Zutat vegetarisch ist enthalten.
+
+Beispielaufrufe:
+[code]
+dough = Ingredient('Dough', 100, True)
+sauce = Ingredient('Tomato Sauce', 100, True)
+cheese = Ingredient('Cheese', 150, True)
+mushrooms = Ingredient('Mushrooms', 250, True)
+salami = Ingredient('Salami', 300, False)
+rum = Ingredient('Rum', 350, True)
+coke = Ingredient('Coke', 200, True)
+[/code]
+
+2. [5 Punkte] Implementieren Sie die Klasse `Recipe`, welche ein Kochrezept repräsentiert.
+Die Attribute der Klassen sollen den Namen des Rezepts sowie eine Liste von Zutaten enthalten.
+
+Beispielaufrufe:
+[code]
+mushroom_pizza = Recipe('Mushroom Pizza', [dough, sauce, cheese, mushrooms])
+salami_pizza = Recipe('Salami Pizza', [dough, sauce, cheese, salami])
+cuba_libre = Recipe('Cuba Libre', [rum, coke])
+virgin_cuba_libre = Recipe('Virgin Cuba Libre', [coke])
+ghandi_platter = Recipe('Ghandi Platter', [])
+[/code]
+
+3. [5 Punkte] Implementieren Sie die Funktion `recipe_price`, welche ein Rezept als Argument nimmt, den Gesamtpreis der Zutaten errechnet und diesen zurück gibt.
+
+4. [5 Punkte] Implementieren Sie die Funktion `is_veggi`, welche ein Rezept als Argument nimmt, bestimmt ob es vegetarisch ist und dies zurück gibt.
+
+5. [15 Punkte] Implementieren Sie die Funktion `recipe_str`, welche ein Rezept als Argument nimmt, in einen String umwandelt und diesen zurückgibt.
+
+Vermeiden Sie bei Ihrer Implementierung das Zugreifen auf mehr als eine Ebene von Unterobjekten. Erstellen Sie hierfür die Hilfsfunktion `ingredient_str`.
+
+Zu den obigen Beispielen sollen sich exakt folgende Ausgaben ergeben:
+[code]
+>>> print(recipe_str(mushroom_pizza))
+A Mushroom Pizza has Dough, Tomato Sauce, Cheese and Mushrooms. It is vegetarian and costs 6.0 Euro.
+>>> print(recipe_str(salami_pizza))
+A Salami Pizza has Dough, Tomato Sauce, Cheese and Salami. It is not vegetarian and costs 6.5 Euro.
+>>> print(recipe_str(cuba_libre))
+A Cuba Libre has Rum and Coke. It is vegetarian and costs 5.5 Euro.
+>>> print(recipe_str(virgin_cuba_libre))
+A Virgin Cuba Libre has Coke. It is vegetarian and costs 2.0 Euro.
+>>> print(recipe_str(ghandi_platter))
+A Ghandi Platter has nothing. It is vegetarian and costs 0.0 Euro.
+[/code]

@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>JSConTest - Test Framework - Basic</title>
+    <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="lib/jscontest.js"></script>
+    <script type="text/javascript" src="lib/jscontest.contracts.js"></script>
+    <script type="text/javascript" src="lib/jscontest.cexp.js"></script>
+    <script type="text/javascript" src="lib/jscontest.statistic.js"></script>
+    <script type="text/javascript" src="lib/jscontest.tests.js"></script>
+    <script type="text/javascript" src="lib/jscontest.events.js"></script>
+    <script type="text/javascript" src="lib/jscontest.effects.js"></script>
+
+    <!-- keep this, if you would like to see warning, statistic e.g. as usual -->
+    <script type="text/javascript" src="lib/jscontest.events.handler.simple.js"></script>
+    
+    <!-- includes effect inference handler file --> 
+    <script type="text/javascript" src="lib/jscontest.events.handler.effects2.js"></script>
+
+    <script type="text/javascript" src="richards.generators.js"></script>
+    <script type="text/javascript" src="base.js"></script>
+    <script type="text/javascript" src="richards.test.js"></script>
+  
+  </head>
+
+  <body onload="JSConTest.tests.run()">
+    <h1>JSConTest - Test Framework - Richards</h1>
+    
+    <p>OS kernel simulation benchmark, originally written in BCPL by 
+      Martin Richards (539 lines) taken from the V8 benchmark suite.
+ 	</p>
+ 		
+    
+    <div id="effects"></div>
+    <div id="logger"></div>
+    
+
+    <script type="text/javascript">
+		var dl = JSConTest.events.handler.simple.create('logger',"ul");
+		JSConTest.events.register(dl);
+        var effect_div = document.getElementById('effects');
+        JSConTest.events.register(JSConTest.events.handler.effects.create(effect_div));
+    </script>
+    
+  </body>
+</html>

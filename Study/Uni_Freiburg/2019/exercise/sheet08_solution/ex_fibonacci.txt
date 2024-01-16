@@ -1,0 +1,16 @@
+Die Fibonacci-Zahlen werden wie folgt definiert:
+
+* fib[0] = 0
+* fib[1] = 1
+* fib[2] = fib[0] + fib[1]
+* fib[3] = fib[1] + fib[2]
+* ...
+* fib[n] = fib[n-2] + fib[n-1]
+
+Aufgabe:
+
+1. [10] Implementieren Sie eine Funktion `fib(n: int) -> int`, welche die `n`-te Fibonaccizahl berechnet und zurück gibt.
+
+In Ihrer Funktion soll eine Liste der ersten n Fibonaccizahlen aufgebaut werden. Beginnen Sie hierzu mit der Liste `[0, 1]`, welche die nullte und erste Fibonaccizahl enthält. Berechnen sie anschließend aus den beiden vorhandenen Werten die zweite Fibonaccizahl, dann die Dritte, und so weiter.
+
+Verwenden Sie in Ihrer Lösung keine `while`-Schleifen und keine Rekursion.

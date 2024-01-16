@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="String_of.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="ExtList" rel="Chapter" href="ExtList.html">
+<link title="ExtSMap" rel="Chapter" href="ExtSMap.html">
+<link title="ExtSSet" rel="Chapter" href="ExtSSet.html">
+<link title="ExtSSetImp" rel="Chapter" href="ExtSSetImp.html">
+<link title="ExtString" rel="Chapter" href="ExtString.html">
+<link title="ExtSQueue" rel="Chapter" href="ExtSQueue.html">
+<link title="ExtUtils" rel="Chapter" href="ExtUtils.html">
+<link title="HiddenInts" rel="Chapter" href="HiddenInts.html">
+<link title="HistoryMap" rel="Chapter" href="HistoryMap.html">
+<link title="Log" rel="Chapter" href="Log.html">
+<link title="Option" rel="Chapter" href="Option.html">
+<link title="OUnit" rel="Chapter" href="OUnit.html">
+<link title="OwnMap" rel="Chapter" href="OwnMap.html">
+<link title="Path" rel="Chapter" href="Path.html">
+<link title="PrioQueues" rel="Chapter" href="PrioQueues.html">
+<link title="String_of" rel="Chapter" href="String_of.html">
+<link title="Test" rel="Chapter" href="Test.html"><link title="OUnit functions " rel="Section" href="Test.html#2_OUnitfunctions">
+<link title="Functions for manipulating the global test case list " rel="Section" href="Test.html#2_Functionsformanipulatingtheglobaltestcaselist">
+<title>Test</title>
+</head>
+<body>
+<div class="navbar"><a href="String_of.html">Previous</a>
+&nbsp;<a href="index.html">Up</a>
+&nbsp;</div>
+<center><h1>Module <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/type_Test.html">Test</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> Test: <code class="code">sig</code> <a href="Test.html">..</a> <code class="code">end</code></pre>Unit for doing the tests.<br>
+<b>Author(s):</b> Stefan Wehr, Phillip Heidegger<br>
+<hr width="100%">
+<br>
+<a name="2_OUnitfunctions"></a>
+<h2><a href="OUnit.html"><code class="code">OUnit</code></a> functions </h2><br>
+<pre><span class="keyword">val</span> <a name="VALassert_failure"></a>assert_failure : <code class="type">string -> 'a</code></pre><div class="info">
+</div>
+<pre><span class="keyword">val</span> <a name="VALassert_bool"></a>assert_bool : <code class="type">string -> bool -> unit</code></pre><pre><span class="keyword">val</span> <a name="VAL(@?)"></a>(@?) : <code class="type">string -> bool -> unit</code></pre><pre><span class="keyword">val</span> <a name="VALassert_string"></a>assert_string : <code class="type">string -> unit</code></pre><pre><span class="keyword">val</span> <a name="VALassert_equal"></a>assert_equal : <code class="type">?cmp:('a -> 'a -> bool) -><br>       ?printer:('a -> string) -> ?msg:string -> 'a -> 'a -> unit</code></pre><pre><span class="keyword">val</span> <a name="VALassert_raises"></a>assert_raises : <code class="type">?msg:string -> exn -> (unit -> 'a) -> unit</code></pre><pre><span class="keyword">val</span> <a name="VALcmp_float"></a>cmp_float : <code class="type">?epsilon:float -> float -> float -> bool</code></pre><pre><span class="keyword">val</span> <a name="VALbracket"></a>bracket : <code class="type">(unit -> 'a) -> ('a -> 'b) -> ('a -> 'c) -> unit -> 'c</code></pre><br>
+<a name="2_Functionsformanipulatingtheglobaltestcaselist"></a>
+<h2>Functions for manipulating the global test case list </h2><br>
+<pre><span class="keyword">type</span> <a name="TYPEtest_fun"></a><code class="type"></code>test_fun = <code class="type">unit -> unit</code> </pre>
+<div class="info">
+type of a test function<br>
+</div>
+
+<pre><span class="keyword">type</span> <a name="TYPEtests"></a><code class="type"></code>tests = <code class="type">(string * <a href="Test.html#TYPEtest_fun">test_fun</a>) list</code> </pre>
+<div class="info">
+List of Unit tests for one module<br>
+</div>
+
+<pre><span class="keyword">val</span> <a name="VALinstall_tests"></a>install_tests : <code class="type">string -> (unit -> <a href="Test.html#TYPEtests">tests</a>) -> unit</code></pre><div class="info">
+<code class="code">install_tests "module" f</code> adds for the module 
+    give as first parameter all test into the test suite,
+    if run tests is called. The function <code class="code">f</code> returns the
+    tests. It is not directly given to avoid computing the
+    tests if they are not called. The tests are added into
+    the global test case list.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALrun_tests"></a>run_tests : <code class="type">string list option -> bool</code></pre><div class="info">
+Runs all tests if <code class="code">None</code> is given. If <code class="code">Some l</code> is given,
+    <code class="code">l</code> is the list of modules witch tests should be executed.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALtest_program"></a>test_program : <code class="type">string -> <a href="Test.html#TYPEtest_fun">test_fun</a></code></pre></body></html>

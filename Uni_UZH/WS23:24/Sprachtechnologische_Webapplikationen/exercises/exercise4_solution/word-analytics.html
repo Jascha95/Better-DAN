@@ -1,0 +1,35 @@
+<html lang="en">
+  <!DOCTYPE html>
+  <head>
+    <title>Analyze the word</title>
+    <script src="word-analytics.js" defer></script>
+    <link rel="stylesheet" href="word-analytics.css" />
+  </head>
+  <body>
+    <div class="img-header"></div>
+    <div class="introduction">
+      <h1>Word Analytics</h1>
+      <h2>Enter a noun below and start analyzing!</h2>
+    </div>
+    <div class="inputDiv">
+      <input type="text" id="wordInput" />
+      <button>Analyze!</button>
+    </div>
+    <div class="analysis">
+      <h3>Word entered: <span id="word"> </span></h3>
+      <p>The language of your word is: <span id="language"> </span></p>
+      <p>Your word has the length: <span id="wordLength"> </span></p>
+      <p>
+        The first letter is capitalized: <span id="letterCapitalized"></span>
+      </p>
+      <p>Number of distinct letters: <span id="distinctLetters"> </span></p>
+      <p>
+        Ratio of consonants to vowels in the word: <span id="wordRatio"> </span>
+      </p>
+      <p>Inverted the case of the word: <span id="invertedWord"> </span></p>
+      <p>Worth of the word: <span id="wordWorth"> </span></p>
+      <p>Palindromeness:</p>
+      <div id="palindromeContainer"></div>
+    </div>
+  </body>
+</html>

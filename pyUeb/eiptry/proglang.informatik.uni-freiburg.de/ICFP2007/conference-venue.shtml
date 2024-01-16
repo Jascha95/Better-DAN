@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+  <html>
+  <head>
+    <title>ICFP 2007: Conference Venue</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      
+  
+
+    <link rel="stylesheet" type="text/css" href="../IFL2007/common-style.css">
+    <script language="javascript" type="text/javascript">
+      function make () {
+        var c = '@';
+        var r = arguments[0];
+        for (var i=1; i < arguments.length; i++) {
+          r = r + c + arguments[i];
+          c = '.';
+      }
+      /* new line  */
+      r = r.replace(/[A-Z]/g,'')
+      var res = '\x3Ca href="mailto:' + r + '"\x3E' + r + '\x3C/a\x3E';
+      return res;
+      }
+      
+      var ifl = make ('ADEiDLKOfDOPlPP07X', 'informatik', 'uni-freiburg', 'de');
+      var icfp = make ('SDFAicSDFAPfpDOI07POLS', 'informatik', 'uni-freiburg', 'de');
+      var berit = make ('IObrSDFAOPauSDFASOPQerXLDK', 'informatik', 'uni-freiburg', 'de');
+    </script>
+  </head>
+  
+  <body>
+
+    <div id="menu">
+        <ul>
+    <li><a href="index.shtml">Home</a></li>
+    <li><a href="registration.shtml">Registration</a></li>
+    <li><a href="accommodation.shtml">Accommodation</a></li>
+    <li><a href="travel-information.shtml">Travel Information</a></li>
+    <li><a href="conference-venue.shtml">Conference Venue</a></li>
+    <li><a href="local-information.shtml">Local Information</a></li>
+    <li><a href="schedule.shtml">Schedule</a></li>
+    <li><a href="maps.shtml">Maps</a></li>
+    <li><a href="local-organizers.shtml">Local Organizers</a></li>
+    <li class="exit">
+      <a href="http://www.informatik.uni-bonn.de/~ralf/icfp07.html">
+        General ICFP '07 Page
+        </a>
+    </li>
+  </ul>
+
+    </div>
+    <div id="wrapper">
+    <div id="content">
+      <div id="header">
+        <center>
+  <h1>
+    The 12th ACM SIGPLAN International Conference on Functional Programming
+  </h1>
+  
+  <h2>ICFP 2007</h2>
+  
+  <h2>Freiburg, Germany, 1-3 October 2007</h2>
+  
+  <h3>
+    Co-located with 
+    <a href="../IFL2007/index.html">IFL 2007</a> 
+    (September 27-29, 2007)
+  </h3>
+</center>
+
+      </div>
+      
+      <div id="mainmatter">
+        <p class="printable">
+          <a href="conference-venue.pdf">Printable PDF</a>
+        </p>
+        <h1>Conference Venue</h1>
+        <ul class="icfp-venue">
+          <li>
+            <p>
+              All <em>scientific sessions</em> of ICFP and its 
+              affiliated workshops as well as 
+              the <em>participants' registration</em>
+              take place at
+              the <a href="http://www.stadthotel-kolping.de/en/index.php">
+                Stadthotel Freiburg Kolping Hotels &amp; Resorts</a>:
+            </p>
+            <center>
+              Stadthotel Freiburg Kolping Hotels &amp; Resorts <br>
+              Karlstrasse 7<br>
+              D-79104 Freiburg<br>
+              Germany<br>
+              Phone: +49 761 / 3193-0<br>
+              Fax: +49 761 / 3193-202<br>
+              Email: <a href="mailto:info@stadthotel-kolping.de">
+                info@stadthotel-kolping.de</a>
+            </center>
+          </li>
+          <li>
+            The <em>reception</em> on Sept. 30 also takes place at
+            the Stadthotel Freiburg Kolping Hotels &amp; Resorts.
+          </li>
+          <li>
+            <p>
+              The <em>conference dinner</em> on Oct. 2 takes place at the
+              <a href="http://www.dattler.de/">Schlossbergrestaurant Dattler</a>:
+            </p>
+            <center>
+              Schlossbergrestaurant Dattler<br>
+              Am Schlossberg 1<br>
+              D-79104 Freiburg<br>
+              Germany<br>
+              Phone: +49 761 / 3 17 29<br>
+              Fax: +49 761 / 2 62 43<br>
+              Email: <a href="mailto:info@dattler.de">info@dattler.de</a>
+            </center>
+          </li>
+        </ul>
+        <p>
+          All locations are marked on
+          <a href="http://maps.google.com/maps/ms?ie=UTF8&amp;hl=en&amp;msa=0&amp;om=1&amp;msid=112565914073914710272.0000011293bc4c0bc450c&amp;ll=47.999169,7.86046&amp;spn=0.041064,0.078621&amp;z=14">this map</a>.
+          WLAN is available at the
+          Stadthotel Freiburg Kolping Hotels &amp; Resorts.
+        </p>
+      </div>
+
+      <div id="footer">
+            <a href="impressum.shtml">Impressum</a>,
+    Webmaster: 
+    <script type="text/javascript">
+      document.write (icfp);
+    </script><noscript>icfp2007 AT informatik DOT uni-freiburg DOT de</noscript>,
+    
+    Last modified: 2019-10-22 14:25:02
+
+      </div>
+    </div>
+    </div>
+  </body>
+  </html>

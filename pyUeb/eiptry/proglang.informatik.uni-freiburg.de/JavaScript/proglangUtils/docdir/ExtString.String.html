@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index.html">
+<link rel="Up" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtString.html">
+<link title="Index of types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_types.html">
+<link title="Index of exceptions" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_exceptions.html">
+<link title="Index of values" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_values.html">
+<link title="Index of modules" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_modules.html">
+<link title="Index of module types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_module_types.html">
+<link title="ExtList" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtList.html">
+<link title="ExtSMap" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSMap.html">
+<link title="ExtSSet" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSSet.html">
+<link title="ExtSSetImp" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSSetImp.html">
+<link title="ExtString" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtString.html">
+<link title="ExtSQueue" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSQueue.html">
+<link title="ExtUtils" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtUtils.html">
+<link title="HiddenInts" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/HiddenInts.html">
+<link title="HistoryMap" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/HistoryMap.html">
+<link title="Log" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Log.html">
+<link title="Option" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Option.html">
+<link title="OUnit" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OUnit.html">
+<link title="OwnMap" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.html">
+<link title="Path" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Path.html">
+<link title="PrioQueues" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/PrioQueues.html">
+<link title="String_of" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/String_of.html">
+<link title="Test" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Test.html"><link title="New Functions" rel="Section" href="ExtString.String.html#2_NewFunctions">
+<link title="Older Functions" rel="Section" href="ExtString.String.html#2_OlderFunctions">
+<title>ExtString.String</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtString.html">Up</a>
+&nbsp;</div>
+<center><h1>Module <a href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/type_ExtString.String.html">ExtString.String</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> String: <code class="code">sig</code> <a href="ExtString.String.html">..</a> <code class="code">end</code></pre><hr width="100%">
+<br>
+<a name="2_NewFunctions"></a>
+<h2>New Functions</h2><br>
+<pre><span class="keyword">val</span> <a name="VALinit"></a>init : <code class="type">int -> (int -> char) -> string</code></pre><div class="info">
+<code class="code">init l f</code> returns the string of length <code class="code">l</code> with the chars
+		f 0 , f 1 , f 2 ... f (l-1).<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALfind"></a>find : <code class="type">string -> string -> int</code></pre><div class="info">
+<code class="code">find s x</code> returns the starting index of the string <code class="code">x</code>
+	    within the string <code class="code">s</code> or raises <code class="code">Invalid_string</code> if <code class="code">x</code>
+	    is not a substring of <code class="code">s</code>.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALsplit"></a>split : <code class="type">string -> string -> string * string</code></pre><div class="info">
+<code class="code">split s sep</code> splits the string <code class="code">s</code> between the first
+		occurrence of <code class="code">sep</code>.
+	    raises <code class="code">Invalid_string</code> if the separator is not found.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALnsplit"></a>nsplit : <code class="type">string -> string -> string list</code></pre><div class="info">
+<code class="code">nsplit s sep</code> splits the string <code class="code">s</code> into a list of strings
+		which are separated by <code class="code">sep</code>.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALjoin"></a>join : <code class="type">string -> string list -> string</code></pre><div class="info">
+Same as <code class="code">concat</code><br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALslice"></a>slice : <code class="type">?first:int -> ?last:int -> string -> string</code></pre><div class="info">
+<code class="code">slice ?first ?last s</code> returns a "slice" of the string
+        which corresponds to the characters <code class="code">s.[first]</code>,
+        <code class="code">s.[first+1]</code>, ..., <code class="code">s[last-1]</code>. Note that the character at
+        index <code class="code">last</code> is <b>not</b> included! If <code class="code">first</code> is omitted it
+        defaults to the start of the string, i.e. index 0, and if
+        <code class="code">last</code> is omitted is defaults to point just past the end of
+        <code class="code">s</code>, i.e. <code class="code">length s</code>.  Thus, <code class="code">slice s</code> is equivalent to
+        <code class="code">copy s</code>.
+<p>
+
+        Negative indexes are interpreted as counting from the end of
+        the string. For example, <code class="code">slice ~last:-2 s</code> will return the
+        string <code class="code">s</code>, but without the last two characters.
+<p>
+
+        This function <b>never</b> raises any exceptions. If the
+        indexes are out of bounds they are automatically clipped.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALlchop"></a>lchop : <code class="type">string -> string</code></pre><div class="info">
+Returns the same string but without the first character.
+	    does nothing if the string is empty.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALrchop"></a>rchop : <code class="type">string -> string</code></pre><div class="info">
+Returns the same string but without the last character.
+	   does nothing if the string is empty.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALof_int"></a>of_int : <code class="type">int -> string</code></pre><div class="info">
+Returns the string representation of an int.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALof_float"></a>of_float : <code class="type">float -> string</code></pre><div class="info">
+Returns the string representation of an float.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALof_char"></a>of_char : <code class="type">char -> string</code></pre><div class="info">
+Returns a string containing one given character.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALto_int"></a>to_int : <code class="type">string -> int</code></pre><div class="info">
+Returns the integer represented by the given string or
+	    raises <code class="code">Invalid_string</code> if the string does not represent an integer.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALto_float"></a>to_float : <code class="type">string -> float</code></pre><div class="info">
+Returns the float represented by the given string or
+	    raises Invalid_string if the string does not represent a float.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALends_with"></a>ends_with : <code class="type">string -> string -> bool</code></pre><div class="info">
+<code class="code">ends_with s x</code> returns true if the string <code class="code">s</code> is ending with <code class="code">x</code>.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstarts_with"></a>starts_with : <code class="type">string -> string -> bool</code></pre><div class="info">
+<code class="code">starts_with s x</code> return true if <code class="code">s</code> is starting with <code class="code">x</code>.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALmap"></a>map : <code class="type">(char -> char) -> string -> string</code></pre><div class="info">
+<code class="code">map f s</code> returns a string where all characters <code class="code">c</code> in <code class="code">s</code> have been
+		replaced by <code class="code">f c</code>. *<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALfold_left"></a>fold_left : <code class="type">('a -> char -> 'a) -> 'a -> string -> 'a</code></pre><div class="info">
+<code class="code">fold_left f a s</code> is
+	      <code class="code">f (... (f (f a s.[0]) s.[1]) ...) s.[n-1]</code><br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALfold_right"></a>fold_right : <code class="type">(char -> 'a -> 'a) -> string -> 'a -> 'a</code></pre><div class="info">
+<code class="code">fold_right f s b</code> is
+	      <code class="code">f s.[0] (f s.[1] (... (f s.[n-1] b) ...))</code><br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALexplode"></a>explode : <code class="type">string -> char list</code></pre><div class="info">
+<code class="code">explode s</code> returns the list of characters in the string <code class="code">s</code>.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALimplode"></a>implode : <code class="type">char list -> string</code></pre><div class="info">
+<code class="code">implode cs</code> returns a string resulting from concatenating
+	      the characters in the list <code class="code">cs</code>.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstrip"></a>strip : <code class="type">?chars:string -> string -> string</code></pre><div class="info">
+Returns the string without the chars if they are at the beginning or
+		at the end of the string. By default chars are " \t\r\n".<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALexists"></a>exists : <code class="type">string -> string -> bool</code></pre><div class="info">
+<code class="code">exists str sub</code> returns true if <code class="code">sub</code> is a substring of <code class="code">str</code> or
+		false otherwise.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALreplace_chars"></a>replace_chars : <code class="type">(char -> string) -> string -> string</code></pre><div class="info">
+<code class="code">replace_chars f s</code> returns a string where all chars <code class="code">c</code> of <code class="code">s</code> have been
+		replaced by the string returned by <code class="code">f c</code>.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALreplace"></a>replace : <code class="type">str:string -> sub:string -> by:string -> bool * string</code></pre><div class="info">
+<code class="code">replace ~str ~sub ~by</code> returns a tuple constisting of a boolean
+		and a string where the first occurrence of the string <code class="code">sub</code>
+		within <code class="code">str</code> has been replaced by the string <code class="code">by</code>. The boolean
+		is true if a subtitution has taken place.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALlazy_concat"></a>lazy_concat : <code class="type">string Lazy.t -> string Lazy.t -> string Lazy.t</code></pre><div class="info">
+<code class="code">lazy_concat s1 s2</code> concats the two suspensions if the result
+        is forced. You can concatenate the two lazy strings, and get
+        the garantie, that is will done only once, and only if the 
+        hole string is forced.<br>
+</div>
+<br>
+<a name="2_OlderFunctions"></a>
+<h2>Older Functions</h2><br>
+<br>
+Please refer to the 
+        <a href="http://caml.inria.fr/pub/docs/manual-ocaml/libref/List.html">Ocaml Manual</a> 
+        for documentation of these functions.<br>
+<pre><span class="keyword">val</span> <a name="VALlength"></a>length : <code class="type">string -> int</code></pre><pre><span class="keyword">val</span> <a name="VALget"></a>get : <code class="type">string -> int -> char</code></pre><pre><span class="keyword">val</span> <a name="VALset"></a>set : <code class="type">string -> int -> char -> unit</code></pre><pre><span class="keyword">val</span> <a name="VALcreate"></a>create : <code class="type">int -> string</code></pre><pre><span class="keyword">val</span> <a name="VALmake"></a>make : <code class="type">int -> char -> string</code></pre><pre><span class="keyword">val</span> <a name="VALcopy"></a>copy : <code class="type">string -> string</code></pre><pre><span class="keyword">val</span> <a name="VALsub"></a>sub : <code class="type">string -> int -> int -> string</code></pre><pre><span class="keyword">val</span> <a name="VALfill"></a>fill : <code class="type">string -> int -> int -> char -> unit</code></pre><pre><span class="keyword">val</span> <a name="VALblit"></a>blit : <code class="type">string -> int -> string -> int -> int -> unit</code></pre><pre><span class="keyword">val</span> <a name="VALconcat"></a>concat : <code class="type">string -> string list -> string</code></pre><pre><span class="keyword">val</span> <a name="VALiter"></a>iter : <code class="type">(char -> unit) -> string -> unit</code></pre><pre><span class="keyword">val</span> <a name="VALescaped"></a>escaped : <code class="type">string -> string</code></pre><pre><span class="keyword">val</span> <a name="VALindex"></a>index : <code class="type">string -> char -> int</code></pre><pre><span class="keyword">val</span> <a name="VALrindex"></a>rindex : <code class="type">string -> char -> int</code></pre><pre><span class="keyword">val</span> <a name="VALindex_from"></a>index_from : <code class="type">string -> int -> char -> int</code></pre><pre><span class="keyword">val</span> <a name="VALrindex_from"></a>rindex_from : <code class="type">string -> int -> char -> int</code></pre><pre><span class="keyword">val</span> <a name="VALcontains"></a>contains : <code class="type">string -> char -> bool</code></pre><pre><span class="keyword">val</span> <a name="VALcontains_from"></a>contains_from : <code class="type">string -> int -> char -> bool</code></pre><pre><span class="keyword">val</span> <a name="VALrcontains_from"></a>rcontains_from : <code class="type">string -> int -> char -> bool</code></pre><pre><span class="keyword">val</span> <a name="VALuppercase"></a>uppercase : <code class="type">string -> string</code></pre><pre><span class="keyword">val</span> <a name="VALlowercase"></a>lowercase : <code class="type">string -> string</code></pre><pre><span class="keyword">val</span> <a name="VALcapitalize"></a>capitalize : <code class="type">string -> string</code></pre><pre><span class="keyword">val</span> <a name="VALuncapitalize"></a>uncapitalize : <code class="type">string -> string</code></pre><pre><span class="keyword">type</span> <a name="TYPEt"></a><code class="type"></code>t = <code class="type">string</code> </pre>
+
+<pre><span class="keyword">val</span> <a name="VALcompare"></a>compare : <code class="type"><a href="ExtString.String.html#TYPEt">t</a> -> <a href="ExtString.String.html#TYPEt">t</a> -> int</code></pre></body></html>

@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index.html">
+<link rel="previous" href="Location.LSetRef.html">
+<link rel="next" href="Location.LSetInEx.html">
+<link rel="Up" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Location.html">
+<link title="Index of types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_types.html">
+<link title="Index of exceptions" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_exceptions.html">
+<link title="Index of values" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_values.html">
+<link title="Index of modules" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_modules.html">
+<link title="Index of module types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_module_types.html">
+<link title="Args" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Args.html">
+<link title="Gen" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gen.html">
+<link title="GenVars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/GenVars.html">
+<link title="Gvars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gvars.html">
+<link title="Inf" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.html">
+<link title="Location" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Location.html">
+<link title="LowerUpper" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpper.html">
+<link title="LowerUpperNeg" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpperNeg.html">
+<link title="LUNVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUNVar.html">
+<link title="LUVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUVar.html">
+<link title="MapVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.html">
+<link title="PrioQueue" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/PrioQueue.html">
+<link title="ProgLabel" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/ProgLabel.html">
+<link title="Syntax" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Syntax.html"><title>Location.P</title>
+</head>
+<body>
+<div class="navbar"><a href="Location.LSetRef.html">Previous</a>
+&nbsp;<a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Location.html">Up</a>
+&nbsp;<a href="Location.LSetInEx.html">Next</a>
+</div>
+<center><h1>Module <a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/type_Location.P.html">Location.P</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> P: <code class="code">sig</code> <a href="Location.P.html">..</a> <code class="code">end</code></pre>This module represents pointers to locations. They
+    could be exact or inexact.<br>
+<hr width="100%">
+<pre><span class="keyword">type</span> <a name="TYPEt"></a><code class="type"></code>t </pre>
+<div class="info">
+Program locations<br>
+</div>
+
+<pre><span class="keyword">val</span> <a name="VALcreate_exact"></a>create_exact : <code class="type">unit -> <a href="Location.P.html#TYPEt">t</a></code></pre><div class="info">
+Create a new unique exact pointer<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcreate_inexact"></a>create_inexact : <code class="type">unit -> <a href="Location.P.html#TYPEt">t</a></code></pre><div class="info">
+Create a new unique inexact pointer<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstring_of"></a>string_of : <code class="type"><a href="Location.P.html#TYPEt">t</a> -> string</code></pre><div class="info">
+Returns a string representation of a pointer<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALget_location"></a>get_location : <code class="type"><a href="Location.P.html#TYPEt">t</a> -> <a href="Location.Loc.html#TYPEt">Location.Loc.t</a></code></pre><div class="info">
+<code class="code">get_location p</code> returns the location of the pointer.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALis_precise"></a>is_precise : <code class="type"><a href="Location.P.html#TYPEt">t</a> -> bool</code></pre><div class="info">
+<code class="code">is_precise p</code> returns <code class="code">true</code> if the pointer is precise, 
+      otherwise <code class="code">false</code> is returned.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALreset"></a>reset : <code class="type">unit -> unit</code></pre><div class="info">
+IMPORTANT: Use this only for testing. Otherwise
+      the create_new function will not create unique
+      locations.<br>
+</div>
+</body></html>

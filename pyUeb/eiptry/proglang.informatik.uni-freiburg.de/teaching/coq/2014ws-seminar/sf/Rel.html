@@ -1,0 +1,632 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/coqdoc.css" rel="stylesheet" type="text/css"/>
+<title>Rel</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library Rel</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab240"></a><h1 class="section">Rel: Properties of Relations</h1>
+
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Export</span> <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#"><span class="id" type="library">SfLib</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A (binary) <i>relation</i> is just a parameterized proposition. As you know
+    from your undergraduate discrete math course, there are a lot of
+    ways of discussing and describing relations <i>in general</i> -- ways
+    of classifying relations (are they reflexive, transitive, etc.),
+    theorems that can be proved generically about classes of
+    relations, constructions that build one relation from another,
+    etc.  Let us pause here to review a few that will be useful in
+    what follows. 
+<div class="paragraph"> </div>
+
+ A (binary) relation <i>on</i> a set <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Imp.html#X"><span class="id" type="definition">X</span></a></span> is a proposition parameterized by two
+    <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Imp.html#X"><span class="id" type="definition">X</span></a></span>s -- i.e., it is a logical assertion involving two values from
+    the set <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Imp.html#X"><span class="id" type="definition">X</span></a></span>.  
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="relation"><span class="id" type="definition">relation</span></a> (<span class="id" type="var">X</span>: <span class="id" type="keyword">Type</span>) := <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>→<a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>→<span class="id" type="keyword">Prop</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Somewhat confusingly, the Coq standard library hijacks the generic
+    term "relation" for this specific instance. To maintain
+    consistency with the library, we will do the same.  So, henceforth
+    the Coq identifier <span class="inlinecode"><a class="idref" href="Smallstep.html#SimpleArith1.relation"><span class="id" type="definition">relation</span></a></span> will always refer to a binary
+    relation between some set and itself, while the English word
+    "relation" can refer either to the specific Coq concept or the
+    more general concept of a relation between any number of possibly
+    different sets.  The context of the discussion should always make
+    clear which is meant. 
+<div class="paragraph"> </div>
+
+ An example relation on <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#Playground1.nat"><span class="id" type="inductive">nat</span></a></span> is <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/MoreInd.html#le"><span class="id" type="inductive">le</span></a></span>, the less-that-or-equal-to
+    relation which we usually write like this <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Prop.html#n1"><span class="id" type="variable">n1</span></a></span> <span class="inlinecode">≤</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Prop.html#n2"><span class="id" type="variable">n2</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Print</span> <span class="id" type="var">le</span>.<br/>
+<span class="id" type="keyword">Check</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#le"><span class="id" type="inductive">le</span></a> : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a> → <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a> → <span class="id" type="keyword">Prop</span>.<br/>
+<span class="id" type="keyword">Check</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#le"><span class="id" type="inductive">le</span></a> : <a class="idref" href="Rel.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab241"></a><h1 class="section">Basic Properties of Relations</h1>
+
+<div class="paragraph"> </div>
+
+ A relation <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span> on a set <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Imp.html#X"><span class="id" type="definition">X</span></a></span> is a <i>partial function</i> if, for every
+    <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>, there is at most one <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span> such that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span> -- i.e., if <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>
+    <span class="inlinecode"><a class="idref" href="Rel.html#y1"><span class="id" type="variable">y1</span></a></span> and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode"><a class="idref" href="Rel.html#y2"><span class="id" type="variable">y2</span></a></span> together imply <span class="inlinecode"><a class="idref" href="Rel.html#y1"><span class="id" type="variable">y1</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="Rel.html#y2"><span class="id" type="variable">y2</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="partial_function"><span class="id" type="definition">partial_function</span></a> {<span class="id" type="var">X</span>: <span class="id" type="keyword">Type</span>} (<span class="id" type="var">R</span>: <a class="idref" href="Rel.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">y1</span> <span class="id" type="var">y2</span> : <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>, <a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="Rel.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Rel.html#y1"><span class="id" type="variable">y1</span></a> → <a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="Rel.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Rel.html#y2"><span class="id" type="variable">y2</span></a> → <a class="idref" href="Rel.html#y1"><span class="id" type="variable">y1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="Rel.html#y2"><span class="id" type="variable">y2</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+For example, the <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#next_nat"><span class="id" type="inductive">next_nat</span></a></span> relation defined in Logic.v is a
+    partial function. 
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+However, the <span class="inlinecode">≤</span> relation on numbers is not a partial function.
+
+<div class="paragraph"> </div>
+
+    This can be shown by contradiction.  In short: Assume, for a
+    contradiction, that <span class="inlinecode">≤</span> is a partial function.  But then, since
+    <span class="inlinecode">0</span> <span class="inlinecode">≤</span> <span class="inlinecode">0</span> and <span class="inlinecode">0</span> <span class="inlinecode">≤</span> <span class="inlinecode">1</span>, it follows that <span class="inlinecode">0</span> <span class="inlinecode">=</span> <span class="inlinecode">1</span>.  This is nonsense,
+    so our assumption was contradictory. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="le_not_a_partial_function"><span class="id" type="lemma">le_not_a_partial_function</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">¬</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Rel.html#partial_function"><span class="id" type="definition">partial_function</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#le"><span class="id" type="inductive">le</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">)</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">unfold</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#not"><span class="id" type="definition">not</span></a>. <span class="id" type="tactic">unfold</span> <a class="idref" href="Rel.html#partial_function"><span class="id" type="definition">partial_function</span></a>. <span class="id" type="tactic">intros</span> <span class="id" type="var">Hc</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">assert</span> (0 <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> 1) <span class="id" type="keyword">as</span> <span class="id" type="var">Nonsense</span>.<br/>
+&nbsp;&nbsp;&nbsp;<span class="id" type="var">Case</span> "Proof of assertion".<br/>
+&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <span class="id" type="var">Hc</span> <span class="id" type="keyword">with</span> (<span class="id" type="var">x</span> := 0).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#le_n"><span class="id" type="constructor">le_n</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#le_S"><span class="id" type="constructor">le_S</span></a>. <span class="id" type="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#le_n"><span class="id" type="constructor">le_n</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">Nonsense</span>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab242"></a><h4 class="section">Exercise: 2 stars, optional</h4>
+ Show that the <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#total_relation"><span class="id" type="inductive">total_relation</span></a></span> defined in Logic.v is not a partial
+    function. 
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+<a name="lab243"></a><h4 class="section">Exercise: 2 stars, optional</h4>
+ Show that the <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty_relation"><span class="id" type="inductive">empty_relation</span></a></span> defined in Logic.v is a partial
+    function. 
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+ A <i>reflexive</i> relation on a set <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Imp.html#X"><span class="id" type="definition">X</span></a></span> is one for which every element
+    of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Imp.html#X"><span class="id" type="definition">X</span></a></span> is related to itself. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="reflexive"><span class="id" type="definition">reflexive</span></a> {<span class="id" type="var">X</span>: <span class="id" type="keyword">Type</span>} (<span class="id" type="var">R</span>: <a class="idref" href="Rel.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">∀</span> <span class="id" type="var">a</span> : <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>, <a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="Rel.html#a"><span class="id" type="variable">a</span></a> <a class="idref" href="Rel.html#a"><span class="id" type="variable">a</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="le_reflexive"><span class="id" type="lemma">le_reflexive</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="Rel.html#reflexive"><span class="id" type="definition">reflexive</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#le"><span class="id" type="inductive">le</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">unfold</span> <a class="idref" href="Rel.html#reflexive"><span class="id" type="definition">reflexive</span></a>. <span class="id" type="tactic">intros</span> <span class="id" type="var">n</span>. <span class="id" type="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#le_n"><span class="id" type="constructor">le_n</span></a>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A relation <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span> is <i>transitive</i> if <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Poly.html#MumbleBaz.c"><span class="id" type="constructor">c</span></a></span> holds whenever <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Poly.html#MumbleBaz.b"><span class="id" type="constructor">b</span></a></span>
+    and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Poly.html#MumbleBaz.b"><span class="id" type="constructor">b</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Poly.html#MumbleBaz.c"><span class="id" type="constructor">c</span></a></span> do. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="transitive"><span class="id" type="definition">transitive</span></a> {<span class="id" type="var">X</span>: <span class="id" type="keyword">Type</span>} (<span class="id" type="var">R</span>: <a class="idref" href="Rel.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">∀</span> <span class="id" type="var">a</span> <span class="id" type="var">b</span> <span class="id" type="var">c</span> : <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>, (<a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="Rel.html#a"><span class="id" type="variable">a</span></a> <a class="idref" href="Rel.html#b"><span class="id" type="variable">b</span></a>) → (<a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="Rel.html#b"><span class="id" type="variable">b</span></a> <a class="idref" href="Rel.html#c"><span class="id" type="variable">c</span></a>) → (<a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="Rel.html#a"><span class="id" type="variable">a</span></a> <a class="idref" href="Rel.html#c"><span class="id" type="variable">c</span></a>).<br/>
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="le_trans"><span class="id" type="lemma">le_trans</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="Rel.html#transitive"><span class="id" type="definition">transitive</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#le"><span class="id" type="inductive">le</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">n</span> <span class="id" type="var">m</span> <span class="id" type="var">o</span> <span class="id" type="var">Hnm</span> <span class="id" type="var">Hmo</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">induction</span> <span class="id" type="var">Hmo</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "le_n". <span class="id" type="tactic">apply</span> <span class="id" type="var">Hnm</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "le_S". <span class="id" type="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#le_S"><span class="id" type="constructor">le_S</span></a>. <span class="id" type="tactic">apply</span> <span class="id" type="var">IHHmo</span>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="lt_trans"><span class="id" type="lemma">lt_trans</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="Rel.html#transitive"><span class="id" type="definition">transitive</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#lt"><span class="id" type="definition">lt</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">unfold</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#lt"><span class="id" type="definition">lt</span></a>. <span class="id" type="tactic">unfold</span> <a class="idref" href="Rel.html#transitive"><span class="id" type="definition">transitive</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">n</span> <span class="id" type="var">m</span> <span class="id" type="var">o</span> <span class="id" type="var">Hnm</span> <span class="id" type="var">Hmo</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#le_S"><span class="id" type="constructor">le_S</span></a> <span class="id" type="keyword">in</span> <span class="id" type="var">Hnm</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Rel.html#le_trans"><span class="id" type="lemma">le_trans</span></a> <span class="id" type="keyword">with</span> (<span class="id" type="var">a</span> := (<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#S"><span class="id" type="constructor">S</span></a> <span class="id" type="var">n</span>)) (<span class="id" type="var">b</span> := (<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#S"><span class="id" type="constructor">S</span></a> <span class="id" type="var">m</span>)) (<span class="id" type="var">c</span> := <span class="id" type="var">o</span>).<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <span class="id" type="var">Hnm</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <span class="id" type="var">Hmo</span>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab244"></a><h4 class="section">Exercise: 2 stars, optional</h4>
+ We can also prove <span class="inlinecode"><a class="idref" href="Rel.html#lt_trans"><span class="id" type="lemma">lt_trans</span></a></span> more laboriously by induction,
+    without using le_trans.  Do this.
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="lt_trans'"><span class="id" type="lemma">lt_trans'</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="Rel.html#transitive"><span class="id" type="definition">transitive</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#lt"><span class="id" type="definition">lt</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">unfold</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#lt"><span class="id" type="definition">lt</span></a>. <span class="id" type="tactic">unfold</span> <a class="idref" href="Rel.html#transitive"><span class="id" type="definition">transitive</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">n</span> <span class="id" type="var">m</span> <span class="id" type="var">o</span> <span class="id" type="var">Hnm</span> <span class="id" type="var">Hmo</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">induction</span> <span class="id" type="var">Hmo</span> <span class="id" type="keyword">as</span> [| <span class="id" type="var">m'</span> <span class="id" type="var">Hm'o</span>].<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+<a name="lab245"></a><h4 class="section">Exercise: 2 stars, optional</h4>
+ Prove the same thing again by induction on <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#o"><span class="id" type="variable">o</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="lt_trans''"><span class="id" type="lemma">lt_trans''</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="Rel.html#transitive"><span class="id" type="definition">transitive</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#lt"><span class="id" type="definition">lt</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">unfold</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#lt"><span class="id" type="definition">lt</span></a>. <span class="id" type="tactic">unfold</span> <a class="idref" href="Rel.html#transitive"><span class="id" type="definition">transitive</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">n</span> <span class="id" type="var">m</span> <span class="id" type="var">o</span> <span class="id" type="var">Hnm</span> <span class="id" type="var">Hmo</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">induction</span> <span class="id" type="var">o</span> <span class="id" type="keyword">as</span> [| <span class="id" type="var">o'</span>].<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+ The transitivity of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/MoreInd.html#le"><span class="id" type="inductive">le</span></a></span>, in turn, can be used to prove some facts
+    that will be useful later (e.g., for the proof of antisymmetry
+    below)... 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="le_Sn_le"><span class="id" type="lemma">le_Sn_le</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">n</span> <span class="id" type="var">m</span>, <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#S"><span class="id" type="constructor">S</span></a> <a class="idref" href="Rel.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#:nat_scope:x_'<='_x"><span class="id" type="notation">≤</span></a> <a class="idref" href="Rel.html#m"><span class="id" type="variable">m</span></a> → <a class="idref" href="Rel.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#:nat_scope:x_'<='_x"><span class="id" type="notation">≤</span></a> <a class="idref" href="Rel.html#m"><span class="id" type="variable">m</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">n</span> <span class="id" type="var">m</span> <span class="id" type="var">H</span>. <span class="id" type="tactic">apply</span> <a class="idref" href="Rel.html#le_trans"><span class="id" type="lemma">le_trans</span></a> <span class="id" type="keyword">with</span> (<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#S"><span class="id" type="constructor">S</span></a> <span class="id" type="var">n</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#le_S"><span class="id" type="constructor">le_S</span></a>. <span class="id" type="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#le_n"><span class="id" type="constructor">le_n</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <span class="id" type="var">H</span>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab246"></a><h4 class="section">Exercise: 1 star, optional</h4>
+
+</div>
+<div class="code">
+<span class="id" type="keyword">Theorem</span> <a name="le_S_n"><span class="id" type="lemma">le_S_n</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">n</span> <span class="id" type="var">m</span>,<br/>
+&nbsp;&nbsp;(<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#S"><span class="id" type="constructor">S</span></a> <a class="idref" href="Rel.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#:nat_scope:x_'<='_x"><span class="id" type="notation">≤</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#S"><span class="id" type="constructor">S</span></a> <a class="idref" href="Rel.html#m"><span class="id" type="variable">m</span></a>) → (<a class="idref" href="Rel.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#:nat_scope:x_'<='_x"><span class="id" type="notation">≤</span></a> <a class="idref" href="Rel.html#m"><span class="id" type="variable">m</span></a>).<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+<a name="lab247"></a><h4 class="section">Exercise: 2 stars, optional (le_Sn_n_inf)</h4>
+ Provide an informal proof of the following theorem:
+
+<div class="paragraph"> </div>
+
+    Theorem: For every <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/MoreStlc.html#STLCExtended.Examples.n"><span class="id" type="abbreviation">n</span></a></span>, <span class="inlinecode">~(<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#Playground1.S"><span class="id" type="constructor">S</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/MoreStlc.html#STLCExtended.Examples.n"><span class="id" type="abbreviation">n</span></a></span> <span class="inlinecode">≤</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/MoreStlc.html#STLCExtended.Examples.n"><span class="id" type="abbreviation">n</span></a>)</span>
+
+<div class="paragraph"> </div>
+
+    A formal proof of this is an optional exercise below, but try
+    the informal proof without doing the formal proof first.
+
+<div class="paragraph"> </div>
+
+    Proof:
+        <font size=-2>&#9744;</font>
+ 
+<div class="paragraph"> </div>
+
+<a name="lab248"></a><h4 class="section">Exercise: 1 star, optional</h4>
+
+</div>
+<div class="code">
+<span class="id" type="keyword">Theorem</span> <a name="le_Sn_n"><span class="id" type="lemma">le_Sn_n</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">n</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">¬</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">(</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#S"><span class="id" type="constructor">S</span></a> <a class="idref" href="Rel.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#:nat_scope:x_'<='_x"><span class="id" type="notation">≤</span></a> <a class="idref" href="Rel.html#n"><span class="id" type="variable">n</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">)</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+ Reflexivity and transitivity are the main concepts we'll need for
+    later chapters, but, for a bit of additional practice working with
+    relations in Coq, here are a few more common ones.
+
+<div class="paragraph"> </div>
+
+   A relation <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span> is <i>symmetric</i> if <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Poly.html#MumbleBaz.b"><span class="id" type="constructor">b</span></a></span> implies <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Poly.html#MumbleBaz.b"><span class="id" type="constructor">b</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="symmetric"><span class="id" type="definition">symmetric</span></a> {<span class="id" type="var">X</span>: <span class="id" type="keyword">Type</span>} (<span class="id" type="var">R</span>: <a class="idref" href="Rel.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">∀</span> <span class="id" type="var">a</span> <span class="id" type="var">b</span> : <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>, (<a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="Rel.html#a"><span class="id" type="variable">a</span></a> <a class="idref" href="Rel.html#b"><span class="id" type="variable">b</span></a>) → (<a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="Rel.html#b"><span class="id" type="variable">b</span></a> <a class="idref" href="Rel.html#a"><span class="id" type="variable">a</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab249"></a><h4 class="section">Exercise: 2 stars, optional</h4>
+
+</div>
+<div class="code">
+<span class="id" type="keyword">Theorem</span> <a name="le_not_symmetric"><span class="id" type="lemma">le_not_symmetric</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">¬</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Rel.html#symmetric"><span class="id" type="definition">symmetric</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#le"><span class="id" type="inductive">le</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">)</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+ A relation <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span> is <i>antisymmetric</i> if <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Poly.html#MumbleBaz.b"><span class="id" type="constructor">b</span></a></span> and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Poly.html#MumbleBaz.b"><span class="id" type="constructor">b</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a></span> together
+    imply <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Poly.html#MumbleBaz.b"><span class="id" type="constructor">b</span></a></span> -- that is, if the only "cycles" in <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span> are trivial
+    ones. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="antisymmetric"><span class="id" type="definition">antisymmetric</span></a> {<span class="id" type="var">X</span>: <span class="id" type="keyword">Type</span>} (<span class="id" type="var">R</span>: <a class="idref" href="Rel.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">∀</span> <span class="id" type="var">a</span> <span class="id" type="var">b</span> : <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>, (<a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="Rel.html#a"><span class="id" type="variable">a</span></a> <a class="idref" href="Rel.html#b"><span class="id" type="variable">b</span></a>) → (<a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="Rel.html#b"><span class="id" type="variable">b</span></a> <a class="idref" href="Rel.html#a"><span class="id" type="variable">a</span></a>) → <a class="idref" href="Rel.html#a"><span class="id" type="variable">a</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="Rel.html#b"><span class="id" type="variable">b</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab250"></a><h4 class="section">Exercise: 2 stars, optional</h4>
+
+</div>
+<div class="code">
+<span class="id" type="keyword">Theorem</span> <a name="le_antisymmetric"><span class="id" type="lemma">le_antisymmetric</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="Rel.html#antisymmetric"><span class="id" type="definition">antisymmetric</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#le"><span class="id" type="inductive">le</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+<a name="lab251"></a><h4 class="section">Exercise: 2 stars, optional</h4>
+
+</div>
+<div class="code">
+<span class="id" type="keyword">Theorem</span> <a name="le_step"><span class="id" type="lemma">le_step</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">n</span> <span class="id" type="var">m</span> <span class="id" type="var">p</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="Rel.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#:nat_scope:x_'<'_x"><span class="id" type="notation">&lt;</span></a> <a class="idref" href="Rel.html#m"><span class="id" type="variable">m</span></a> →<br/>
+&nbsp;&nbsp;<a class="idref" href="Rel.html#m"><span class="id" type="variable">m</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#:nat_scope:x_'<='_x"><span class="id" type="notation">≤</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#S"><span class="id" type="constructor">S</span></a> <a class="idref" href="Rel.html#p"><span class="id" type="variable">p</span></a> →<br/>
+&nbsp;&nbsp;<a class="idref" href="Rel.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#:nat_scope:x_'<='_x"><span class="id" type="notation">≤</span></a> <a class="idref" href="Rel.html#p"><span class="id" type="variable">p</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+ A relation is an <i>equivalence</i> if it's reflexive, symmetric, and
+    transitive.  
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="equivalence"><span class="id" type="definition">equivalence</span></a> {<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>} (<span class="id" type="var">R</span>: <a class="idref" href="Rel.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>) :=<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Rel.html#reflexive"><span class="id" type="definition">reflexive</span></a> <a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">∧</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Rel.html#symmetric"><span class="id" type="definition">symmetric</span></a> <a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">∧</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Rel.html#transitive"><span class="id" type="definition">transitive</span></a> <a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">)</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A relation is a <i>partial order</i> when it's reflexive,
+    <i>anti</i>-symmetric, and transitive.  In the Coq standard library
+    it's called just "order" for short. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="order"><span class="id" type="definition">order</span></a> {<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>} (<span class="id" type="var">R</span>: <a class="idref" href="Rel.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>) :=<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Rel.html#reflexive"><span class="id" type="definition">reflexive</span></a> <a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">∧</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Rel.html#antisymmetric"><span class="id" type="definition">antisymmetric</span></a> <a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">∧</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Rel.html#transitive"><span class="id" type="definition">transitive</span></a> <a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">)</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A preorder is almost like a partial order, but doesn't have to be
+    antisymmetric. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="preorder"><span class="id" type="definition">preorder</span></a> {<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>} (<span class="id" type="var">R</span>: <a class="idref" href="Rel.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>) :=<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Rel.html#reflexive"><span class="id" type="definition">reflexive</span></a> <a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">∧</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Rel.html#transitive"><span class="id" type="definition">transitive</span></a> <a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">)</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="le_order"><span class="id" type="lemma">le_order</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="Rel.html#order"><span class="id" type="definition">order</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#le"><span class="id" type="inductive">le</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">unfold</span> <a class="idref" href="Rel.html#order"><span class="id" type="definition">order</span></a>. <span class="id" type="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">Case</span> "refl". <span class="id" type="tactic">apply</span> <a class="idref" href="Rel.html#le_reflexive"><span class="id" type="lemma">le_reflexive</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">Case</span> "antisym". <span class="id" type="tactic">apply</span> <a class="idref" href="Rel.html#le_antisymmetric"><span class="id" type="axiom">le_antisymmetric</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">Case</span> "transitive.". <span class="id" type="tactic">apply</span> <a class="idref" href="Rel.html#le_trans"><span class="id" type="lemma">le_trans</span></a>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab252"></a><h1 class="section">Reflexive, Transitive Closure</h1>
+
+<div class="paragraph"> </div>
+
+ The <i>reflexive, transitive closure</i> of a relation <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span> is the
+    smallest relation that contains <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span> and that is both reflexive and
+    transitive.  Formally, it is defined like this in the Relations
+    module of the Coq standard library: 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="clos_refl_trans"><span class="id" type="inductive">clos_refl_trans</span></a> {<span class="id" type="var">A</span>: <span class="id" type="keyword">Type</span>} (<span class="id" type="var">R</span>: <a class="idref" href="Rel.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="Rel.html#A"><span class="id" type="variable">A</span></a>) : <a class="idref" href="Rel.html#relation"><span class="id" type="definition">relation</span></a> <span class="id" type="var">A</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a name="rt_step"><span class="id" type="constructor">rt_step</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span>, <span class="id" type="var">R</span> <a class="idref" href="Rel.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Rel.html#y"><span class="id" type="variable">y</span></a> → <a class="idref" href="Rel.html#clos_refl_trans"><span class="id" type="inductive">clos_refl_trans</span></a> <span class="id" type="var">R</span> <a class="idref" href="Rel.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Rel.html#y"><span class="id" type="variable">y</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a name="rt_refl"><span class="id" type="constructor">rt_refl</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span>, <a class="idref" href="Rel.html#clos_refl_trans"><span class="id" type="inductive">clos_refl_trans</span></a> <span class="id" type="var">R</span> <a class="idref" href="Rel.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Rel.html#x"><span class="id" type="variable">x</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a name="rt_trans"><span class="id" type="constructor">rt_trans</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">z</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Rel.html#clos_refl_trans"><span class="id" type="inductive">clos_refl_trans</span></a> <span class="id" type="var">R</span> <a class="idref" href="Rel.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Rel.html#y"><span class="id" type="variable">y</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Rel.html#clos_refl_trans"><span class="id" type="inductive">clos_refl_trans</span></a> <span class="id" type="var">R</span> <a class="idref" href="Rel.html#y"><span class="id" type="variable">y</span></a> <a class="idref" href="Rel.html#z"><span class="id" type="variable">z</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Rel.html#clos_refl_trans"><span class="id" type="inductive">clos_refl_trans</span></a> <span class="id" type="var">R</span> <a class="idref" href="Rel.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Rel.html#z"><span class="id" type="variable">z</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+For example, the reflexive and transitive closure of the
+    <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#next_nat"><span class="id" type="inductive">next_nat</span></a></span> relation coincides with the <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/MoreInd.html#le"><span class="id" type="inductive">le</span></a></span> relation. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="next_nat_closure_is_le"><span class="id" type="lemma">next_nat_closure_is_le</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">n</span> <span class="id" type="var">m</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'<->'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Rel.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#:nat_scope:x_'<='_x"><span class="id" type="notation">≤</span></a> <a class="idref" href="Rel.html#m"><span class="id" type="variable">m</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'<->'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'<->'_x"><span class="id" type="notation">↔</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'<->'_x"><span class="id" type="notation">(</span></a>(<a class="idref" href="Rel.html#clos_refl_trans"><span class="id" type="inductive">clos_refl_trans</span></a> <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#next_nat"><span class="id" type="inductive">next_nat</span></a>) <a class="idref" href="Rel.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="Rel.html#m"><span class="id" type="variable">m</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'<->'_x"><span class="id" type="notation">)</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">n</span> <span class="id" type="var">m</span>. <span class="id" type="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">Case</span> "-&gt;".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intro</span> <span class="id" type="var">H</span>. <span class="id" type="tactic">induction</span> <span class="id" type="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "le_n". <span class="id" type="tactic">apply</span> <a class="idref" href="Rel.html#rt_refl"><span class="id" type="constructor">rt_refl</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "le_S".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Rel.html#rt_trans"><span class="id" type="constructor">rt_trans</span></a> <span class="id" type="keyword">with</span> <span class="id" type="var">m</span>. <span class="id" type="tactic">apply</span> <span class="id" type="var">IHle</span>. <span class="id" type="tactic">apply</span> <a class="idref" href="Rel.html#rt_step"><span class="id" type="constructor">rt_step</span></a>. <span class="id" type="tactic">apply</span> <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#nn"><span class="id" type="constructor">nn</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">Case</span> "&lt;-".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intro</span> <span class="id" type="var">H</span>. <span class="id" type="tactic">induction</span> <span class="id" type="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "rt_step". <span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>. <span class="id" type="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#le_S"><span class="id" type="constructor">le_S</span></a>. <span class="id" type="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#le_n"><span class="id" type="constructor">le_n</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "rt_refl". <span class="id" type="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano.html#le_n"><span class="id" type="constructor">le_n</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "rt_trans".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Rel.html#le_trans"><span class="id" type="lemma">le_trans</span></a> <span class="id" type="keyword">with</span> <span class="id" type="var">y</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <span class="id" type="var">IHclos_refl_trans1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <span class="id" type="var">IHclos_refl_trans2</span>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The above definition of reflexive, transitive closure is
+    natural -- it says, explicitly, that the reflexive and transitive
+    closure of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span> is the least relation that includes <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span> and that is
+    closed under rules of reflexivity and transitivity.  But it turns
+    out that this definition is not very convenient for doing
+    proofs -- the "nondeterminism" of the <span class="inlinecode"><a class="idref" href="Rel.html#rt_trans"><span class="id" type="constructor">rt_trans</span></a></span> rule can sometimes
+    lead to tricky inductions.
+
+<div class="paragraph"> </div>
+
+    Here is a more useful definition... 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="refl_step_closure"><span class="id" type="inductive">refl_step_closure</span></a> {<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>} (<span class="id" type="var">R</span>: <a class="idref" href="Rel.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>) : <a class="idref" href="Rel.html#relation"><span class="id" type="definition">relation</span></a> <span class="id" type="var">X</span> :=<br/>
+&nbsp;&nbsp;| <a name="rsc_refl"><span class="id" type="constructor">rsc_refl</span></a>  : <span class="id" type="keyword">∀</span> (<span class="id" type="var">x</span> : <span class="id" type="var">X</span>), <a class="idref" href="Rel.html#refl_step_closure"><span class="id" type="inductive">refl_step_closure</span></a> <span class="id" type="var">R</span> <a class="idref" href="Rel.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Rel.html#x"><span class="id" type="variable">x</span></a><br/>
+&nbsp;&nbsp;| <a name="rsc_step"><span class="id" type="constructor">rsc_step</span></a> : <span class="id" type="keyword">∀</span> (<span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">z</span> : <span class="id" type="var">X</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">R</span> <a class="idref" href="Rel.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Rel.html#y"><span class="id" type="variable">y</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Rel.html#refl_step_closure"><span class="id" type="inductive">refl_step_closure</span></a> <span class="id" type="var">R</span> <a class="idref" href="Rel.html#y"><span class="id" type="variable">y</span></a> <a class="idref" href="Rel.html#z"><span class="id" type="variable">z</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Rel.html#refl_step_closure"><span class="id" type="inductive">refl_step_closure</span></a> <span class="id" type="var">R</span> <a class="idref" href="Rel.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Rel.html#z"><span class="id" type="variable">z</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+(Note that, aside from the naming of the constructors, this
+    definition is the same as the <span class="inlinecode"><a class="idref" href="Smallstep.html#multi"><span class="id" type="inductive">multi</span></a></span> step relation used in many
+    other chapters.) 
+<div class="paragraph"> </div>
+
+ (The following <span class="inlinecode"><span class="id" type="keyword">Tactic</span></span> <span class="inlinecode"><span class="id" type="keyword">Notation</span></span> definitions are explained in
+    Imp.v.  You can ignore them if you haven't read that chapter
+    yet.) 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Tactic Notation</span> "rt_cases" <span class="id" type="var">tactic</span>(<span class="id" type="tactic">first</span>) <span class="id" type="var">ident</span>(<span class="id" type="var">c</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">first</span>;<br/>
+&nbsp;&nbsp;[ <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "rt_step" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "rt_refl" <br/>
+&nbsp;&nbsp;| <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "rt_trans" ].<br/>
+
+<br/>
+<span class="id" type="keyword">Tactic Notation</span> "rsc_cases" <span class="id" type="var">tactic</span>(<span class="id" type="tactic">first</span>) <span class="id" type="var">ident</span>(<span class="id" type="var">c</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">first</span>;<br/>
+&nbsp;&nbsp;[ <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "rsc_refl" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "rsc_step" ].<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Our new definition of reflexive, transitive closure "bundles"
+    the <span class="inlinecode"><a class="idref" href="Rel.html#rt_step"><span class="id" type="constructor">rt_step</span></a></span> and <span class="inlinecode"><a class="idref" href="Rel.html#rt_trans"><span class="id" type="constructor">rt_trans</span></a></span> rules into the single rule step.
+    The left-hand premise of this step is a single use of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#R"><span class="id" type="definition">R</span></a></span>,
+    leading to a much simpler induction principle.
+
+<div class="paragraph"> </div>
+
+    Before we go on, we should check that the two definitions do
+    indeed define the same relation...
+
+<div class="paragraph"> </div>
+
+    First, we prove two lemmas showing that <span class="inlinecode"><a class="idref" href="Rel.html#refl_step_closure"><span class="id" type="inductive">refl_step_closure</span></a></span> mimics
+    the behavior of the two "missing" <span class="inlinecode"><a class="idref" href="Rel.html#clos_refl_trans"><span class="id" type="inductive">clos_refl_trans</span></a></span>
+    constructors.  
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="rsc_R"><span class="id" type="lemma">rsc_R</span></a> : <span class="id" type="keyword">∀</span> (<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>) (<span class="id" type="var">R</span>:<a class="idref" href="Rel.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>) (<span class="id" type="var">x</span> <span class="id" type="var">y</span> : <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="Rel.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Rel.html#y"><span class="id" type="variable">y</span></a> → <a class="idref" href="Rel.html#refl_step_closure"><span class="id" type="inductive">refl_step_closure</span></a> <a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="Rel.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Rel.html#y"><span class="id" type="variable">y</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">X</span> <span class="id" type="var">R</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">H</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Rel.html#rsc_step"><span class="id" type="constructor">rsc_step</span></a> <span class="id" type="keyword">with</span> <span class="id" type="var">y</span>. <span class="id" type="tactic">apply</span> <span class="id" type="var">H</span>. <span class="id" type="tactic">apply</span> <a class="idref" href="Rel.html#rsc_refl"><span class="id" type="constructor">rsc_refl</span></a>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab253"></a><h4 class="section">Exercise: 2 stars, optional (rsc_trans)</h4>
+
+</div>
+<div class="code">
+<span class="id" type="keyword">Theorem</span> <a name="rsc_trans"><span class="id" type="lemma">rsc_trans</span></a> :<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">∀</span> (<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>) (<span class="id" type="var">R</span>: <a class="idref" href="Rel.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>) (<span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">z</span> : <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Rel.html#refl_step_closure"><span class="id" type="inductive">refl_step_closure</span></a> <a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="Rel.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Rel.html#y"><span class="id" type="variable">y</span></a>  →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Rel.html#refl_step_closure"><span class="id" type="inductive">refl_step_closure</span></a> <a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="Rel.html#y"><span class="id" type="variable">y</span></a> <a class="idref" href="Rel.html#z"><span class="id" type="variable">z</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Rel.html#refl_step_closure"><span class="id" type="inductive">refl_step_closure</span></a> <a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="Rel.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Rel.html#z"><span class="id" type="variable">z</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+ Then we use these facts to prove that the two definitions of
+    reflexive, transitive closure do indeed define the same
+    relation. 
+<div class="paragraph"> </div>
+
+<a name="lab254"></a><h4 class="section">Exercise: 3 stars, optional (rtc_rsc_coincide)</h4>
+
+</div>
+<div class="code">
+<span class="id" type="keyword">Theorem</span> <a name="rtc_rsc_coincide"><span class="id" type="lemma">rtc_rsc_coincide</span></a> : <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">∀</span> (<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>) (<span class="id" type="var">R</span>: <a class="idref" href="Rel.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>) (<span class="id" type="var">x</span> <span class="id" type="var">y</span> : <a class="idref" href="Rel.html#X"><span class="id" type="variable">X</span></a>),<br/>
+&nbsp;&nbsp;<a class="idref" href="Rel.html#clos_refl_trans"><span class="id" type="inductive">clos_refl_trans</span></a> <a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="Rel.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Rel.html#y"><span class="id" type="variable">y</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'<->'_x"><span class="id" type="notation">↔</span></a> <a class="idref" href="Rel.html#refl_step_closure"><span class="id" type="inductive">refl_step_closure</span></a> <a class="idref" href="Rel.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="Rel.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Rel.html#y"><span class="id" type="variable">y</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+</div>
+<div class="code">
+
+<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

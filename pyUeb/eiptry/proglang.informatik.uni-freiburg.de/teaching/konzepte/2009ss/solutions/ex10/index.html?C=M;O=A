@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+ <head>
+  <title>Index of /teaching/konzepte/2009ss/solutions/ex10</title>
+ </head>
+ <body>
+<h1>Index of /teaching/konzepte/2009ss/solutions/ex10</h1>
+  <table>
+   <tr><th valign="top"><img src="../../../../../icons/blank.gif" alt="[ICO]"></th><th><a href="index.html?C=N%3BO=A">Name</a></th><th><a href="index.html?C=M%3BO=D">Last modified</a></th><th><a href="index.html?C=S%3BO=A">Size</a></th><th><a href="index.html?C=D%3BO=A">Description</a></th></tr>
+   <tr><th colspan="5"><hr></th></tr>
+<tr><td valign="top"><img src="../../../../../icons/back.gif" alt="[PARENTDIR]"></td><td><a href="../index.html">Parent Directory</a></td><td>&nbsp;</td><td align="right">  - </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="../../../../../icons/unknown.gif" alt="[   ]"></td><td><a href="data-structures.scm">data-structures.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">1.5K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="../../../../../icons/unknown.gif" alt="[   ]"></td><td><a href="drscheme-init.scm">drscheme-init.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">4.3K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="../../../../../icons/unknown.gif" alt="[   ]"></td><td><a href="environments.scm">environments.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">1.2K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="../../../../../icons/unknown.gif" alt="[   ]"></td><td><a href="equal-up-to-gensyms.scm">equal-up-to-gensyms.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">2.2K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="../../../../../icons/unknown.gif" alt="[   ]"></td><td><a href="inferrer-sw.scm">inferrer-sw.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">6.1K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="../../../../../icons/unknown.gif" alt="[   ]"></td><td><a href="inferrer.scm">inferrer.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">5.9K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="../../../../../icons/unknown.gif" alt="[   ]"></td><td><a href="interp.scm">interp.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">2.0K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="../../../../../icons/unknown.gif" alt="[   ]"></td><td><a href="lang.scm">lang.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">3.6K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="../../../../../icons/unknown.gif" alt="[   ]"></td><td><a href="substitutions.scm">substitutions.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">2.9K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="../../../../../icons/unknown.gif" alt="[   ]"></td><td><a href="tests.scm">tests.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right"> 10K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="../../../../../icons/unknown.gif" alt="[   ]"></td><td><a href="top-sw.scm">top-sw.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">2.7K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="../../../../../icons/unknown.gif" alt="[   ]"></td><td><a href="top.scm">top.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">2.8K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="../../../../../icons/unknown.gif" alt="[   ]"></td><td><a href="unifier-sw.scm">unifier-sw.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">2.5K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="../../../../../icons/unknown.gif" alt="[   ]"></td><td><a href="unifier.scm">unifier.scm</a></td><td align="right">2019-10-22 14:25  </td><td align="right">2.6K</td><td>&nbsp;</td></tr>
+   <tr><th colspan="5"><hr></th></tr>
+</table>
+</body></html>

@@ -1,0 +1,1235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html
+xmlns="http://www.w3.org/1999/xhtml"
+><head
+><link
+href="include/default.css"
+rel="stylesheet"
+type="text/css"
+></link
+><link
+href="include/favicon.ico"
+rel="shortcut icon"
+></link
+><script
+src="include/email.js"
+type="text/javascript"
+xml:space="preserve"
+></script
+><meta
+content="text/html; charset=ISO-8859-1"
+http-equiv="Content-Type"
+></meta
+><script
+xml:space="preserve"
+src="include/menu.js"
+type="text/javascript"
+></script
+><link
+rel="stylesheet"
+type="text/css"
+href="include/menu.css"
+></link
+><title
+></title
+><meta
+content="hevea 1.05"
+name="GENERATOR"
+></meta
+><meta
+content="text/css"
+http-equiv="Content-Style-Type"
+></meta
+></head
+><body
+onload="createMail();GLOBAL_MENU_72a2692.setup(175,'MENU_ITEM_17','MENU_PROGLANG_72a2692_COOKIE')"
+><div
+id="wrapper"
+>
+				<table
+id="wrapperTable"
+summary="layout table"
+><tbody
+><tr
+><td
+colspan="1"
+id="leftwrapperTable"
+rowspan="1"
+>
+								<div
+id="leftcolumnWrapper"
+>
+									<div
+id="leftTopSpace"
+> </div
+>
+									<div
+id="leftGreyBar"
+> </div
+>
+									<div
+id="leftUpperSpace"
+> </div
+>
+									<div
+id="HOLE_vmenu"
+><ul
+><li
+class="leaf"
+><a
+shape="rect"
+href="publications"
+id="MENU_ITEM_16"
+>Publikationen</a
+></li
+><li
+><a
+shape="rect"
+href="publications#"
+onclick="javascript:GLOBAL_MENU_72a2692.toggle('MENU_ITEM_15')"
+class="submenu"
+id="MENU_ITEM_15a"
+>Projekte</a
+><ul
+id="MENU_ITEM_15"
+><li
+class="leaf"
+><a
+shape="rect"
+href="projects/gradual/ljgs/index.html"
+id="MENU_ITEM_14"
+>LJGS</a
+></li
+><li
+class="leaf"
+><a
+shape="rect"
+href="http://proglang.informatik.uni-freiburg.de/treatjs/"
+id="MENU_ITEM_13"
+>TreatJS</a
+></li
+><li
+class="leaf"
+><a
+shape="rect"
+href="sandbox/index.html"
+id="MENU_ITEM_12"
+>DecentJS</a
+></li
+><li
+class="leaf"
+><a
+shape="rect"
+href="proxy/index.html"
+id="MENU_ITEM_11"
+>Transparent Object Proxies for JavaScript</a
+></li
+><li
+class="leaf"
+><a
+shape="rect"
+href="containment/index.html"
+id="MENU_ITEM_10"
+>Regular Expression Inequalities</a
+></li
+><li
+class="leaf"
+><a
+shape="rect"
+href="tbda/index.html"
+id="MENU_ITEM_9"
+>Type-based Dependency Analysis</a
+></li
+><li
+class="leaf"
+><a
+shape="rect"
+href="jscontest2/index.html"
+id="MENU_ITEM_8"
+>JSConTest2</a
+></li
+><li
+class="leaf"
+><a
+shape="rect"
+href="jscontest/index.html"
+id="MENU_ITEM_7"
+>JSConTest</a
+></li
+><li
+class="leaf"
+><a
+shape="rect"
+href="JavaScript/index.html"
+id="MENU_ITEM_6"
+>Recency (JavaScript)</a
+></li
+><li
+class="leaf"
+><a
+shape="rect"
+href="projects/dstm/index.html"
+id="MENU_ITEM_5"
+>STM for Distributed Systems</a
+></li
+><li
+class="leaf"
+><a
+shape="rect"
+href="projects/twilight/index.html"
+id="MENU_ITEM_4"
+>Twilight STM</a
+></li
+><li
+class="leaf"
+><a
+shape="rect"
+href="http://www.informatik.uni-freiburg.de/~thiemann/haskell/WASH/"
+id="MENU_ITEM_3"
+>WASH</a
+></li
+><li
+class="leaf"
+><a
+shape="rect"
+href="projects/coroutines/index.html"
+id="MENU_ITEM_2"
+>Coroutines</a
+></li
+></ul
+></li
+></ul
+></div
+>
+								</div
+>
+							</td
+><td
+colspan="1"
+id="logowrapperTable"
+rowspan="1"
+>
+								<div
+id="logocolumnWrapper"
+>
+									<div
+id="logoWrapper"
+>
+										<a
+href="http://www.uni-freiburg.de/"
+shape="rect"
+title="Albert-Ludwigs-Universität Freiburg"
+><img
+alt="Uni-Logo"
+src="include/unilogo-200x66.gif"
+></img
+></a
+>
+									</div
+>
+								</div
+>
+							</td
+><td
+colspan="1"
+id="rightwrapperTable"
+rowspan="1"
+>
+								<div
+id="rightcolumnWrapper"
+>
+									<div
+id="portal-header"
+>
+										<div
+id="title-resource"
+>
+											<table
+border="0"
+cellpadding="0"
+cellspacing="0"
+summary="layout table"
+><tbody
+><tr
+><td
+colspan="1"
+rowspan="1"
+valign="bottom"
+><span
+class="resource"
+>Prog&#955;ang</span
+></td
+></tr
+></tbody
+></table
+>
+										</div
+>
+										<div
+id="logo-resource"
+></div
+>
+										<div
+id="title-uni"
+>
+											<a
+href="http://www.uni-freiburg.de/"
+shape="rect"
+title="Albert-Ludwigs-Universität Freiburg"
+>Albert-Ludwigs-Universität Freiburg</a
+>
+										</div
+>
+									</div
+>
+									<div
+id="red-bar"
+></div
+>
+									<div
+id="sections-breadcrumbs"
+>
+										<div
+id="portal-breadcrumbs"
+>
+											<span
+id="breadcrumbs-fix"
+></span
+>
+											<div
+>
+                                               <ul
+class="right"
+><li
+><a
+href="http://www.informatik.uni-freiburg.de"
+shape="rect"
+>Institut 
+                                                 für Informatik</a
+></li
+><li
+><a
+href="http://www.tf.uni-freiburg.de"
+shape="rect"
+>Technische 
+                                                 Fakultät</a
+></li
+></ul
+>
+                                            </div
+>
+                                            <div
+id="HOLE_hmenu"
+><ul
+><li
+><a
+shape="rect"
+href="index.html"
+>Home</a
+></li
+><li
+><a
+shape="rect"
+href="personal/index.html"
+>Personal</a
+></li
+><li
+><a
+shape="rect"
+href="teaching/index.html"
+>Lehre</a
+></li
+><li
+class="mark"
+><a
+shape="rect"
+href="research/index.html"
+class="mark"
+>Forschung</a
+></li
+><li
+><a
+shape="rect"
+href="events/index.html"
+>Veranstaltungen</a
+></li
+><li
+><a
+shape="rect"
+href="offers/index.html"
+>Stellen</a
+></li
+></ul
+></div
+>
+											
+										</div
+>
+									</div
+>
+					                <div
+class="def"
+id="content"
+style="vertical-align: top;"
+>
+										<div
+id="HOLE_content"
+><h2
+>Publikationsliste, Arbeitsbereich Programmierung</h2
+><h3
+>Zeitschriften mit Begutachtung</h3
+><ol
+style="list-style-type:decimal"
+><li
+>
+        Peter Thiemann.
+        Drawing Syntax Diagrams in Haskell.
+        <em
+>Software---Practice and Experience</em
+>, 27(8):967-982, August 1997.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Peter Thiemann.
+        Combinators for Program Generation.
+        <em
+>Journal of Functional Programming</em
+>, 9(5):483-525, September, 1999.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Michael Sperber und Peter Thiemann.
+        Generation of LR Parsers by Partial Evaluation.
+        <em
+>ACM Transactions on Programming Languages and Systems</em
+>, 22(2):224-264,
+        März 2000.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Philip Wadler und Peter Thiemann.
+        The marriage of effects and monads.
+        <em
+>ACM Transactions on Computational Logic</em
+>, to appear 2001.
+      </li
+></ol
+><h3
+>Tagungsbeiträge mit Begutachtung</h3
+><ol
+style="list-style-type:decimal"
+><li
+>
+        Thiemann, Peter: <em
+>Terminated References and Automatic Parallelization for
+          State Transformers</em
+>.
+        In Reddy, Uday S. (Hrsg.): <em
+>ACM SIGPLAN
+          Workshop on State in Programming Languages</em
+>, San Francisco, CA,
+        Januar 1995. University of Illinois.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Sperber, Michael und Peter Thiemann: <em
+>The Essence of </em
+><em
+>LR</em
+><em
+>
+          Parsing</em
+>.
+        In Scherlis, William (Hrsg.): <em
+>Proceedings of the ACM SIGPLAN Symposium on Partial Evaluation and
+          Semantics-Based Program Manipulation PEPM '95</em
+>, S. 146--155, La
+        Jolla, CA, Juni 1995. ACM Press.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter: <em
+>Polymorphic Typing and Unboxed Values Revisited</em
+>.
+        In Peyton Jones, Simon (Hrsg.): <em
+>Proc. Functional Programming Languages and Computer Architecture 1995</em
+>,
+        S. 24--35, La Jolla, CA, Juni 1995. ACM Press, New
+        York.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter: <em
+>Data Compression in </em
+><em
+>Haskell</em
+><em
+> with Imperative
+          Extensions---A Case Study</em
+>.
+        In Hudak, Paul (Hrsg.): <em
+>Proc. of the
+          Haskell Workshop</em
+>, S. 137--150, La Jolla, CA, Juni
+        1995.
+        Yale University Research Report YALEU/DCS/RR-1075.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter: <em
+>Towards a Denotational Semantics for Concurrent State
+          Transformers</em
+>.
+        In Takeichi, Masato (Hrsg.): <em
+>Fuji Workshop on Functional and
+          Logic Programming</em
+>, Fuji Susono, Japan, Juli 1995. World
+        Scientific Press, Singapore, S.
+        19--33.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter und Robert Glück: <em
+>The Generation of a
+          Higher-Order Online Partial Evaluator</em
+>.
+        In Takeichi, Masato (Hrsg.): <em
+>Fuji Workshop on Functional and
+          Logic Programming</em
+>, Fuji Susono, Japan, Juli 1995. World
+        Scientific Press, Singapore, S.
+        239--253.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Sperber, Michael, Robert Glück und Peter Thiemann: <em
+>Bootstrapping Higher-Order Program Transformers from Interpreters</em
+>.
+        In <em
+>Proc. 11th Annual ACM Symposium on Applied Computing,
+          SAC (SAC '96)</em
+>, S. 408--413, Philadelphia, PA, Februar
+        1996. ACM.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter: <em
+>Cogen in Six Lines</em
+>.
+        In Dybvig, R. Kent (Hrsg.): <em
+>Proc. ACM SIGPLAN International Conference on Functional Programming 1996</em
+>,
+        S. 180--189, Philadelphia,
+        PA, Mai 1996. ACM Press, New York.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Sperber, Michael und Peter Thiemann: <em
+>Realistic Compilation
+          by Partial Evaluation</em
+>.
+        In <em
+>Proc. of the ACM SIGPLAN '96 Conference on
+          Programming Language Design and Implementation</em
+>, S. 206--214,
+        Philadelphia, PA, USA, 
+        Mai 1996. ACM Press.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter: <em
+>Towards Partial Evaluation of Full </em
+><em
+>Scheme</em
+>.
+        In Kiczales, Gregor (Hrsg.): <em
+>Reflection'96</em
+>, S. 95--106, San Francisco, CA, USA, April 1996.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter und Michael Sperber: <em
+>Polyvariant Expansion
+          and Compilergenerators</em
+>.
+        In <em
+>PSI-96: Andrei Ershov Second International
+          Memorial Conference, Perspectives of System Informatics</em
+>, Novosibirsk,
+        Russia, Juni 1996.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Chin, Wei-Ngan, Khoo Siau-Chen und Thiemann, Peter: <em
+>Synchronization Analyses for Multiple Recursion Parameters</em
+>. 
+        In Danvy, Olivier, Glück, Robert und
+        Thiemann, Peter (Hrsg.): <em
+>Partial Evaluation, Proceedings of a Dagstuhl Seminar</em
+>, S.
+        33--53, Lecture Notes in Computer Science, Band 1110, Schloß Dagstuhl,
+        Germany, Februar 1996. Springer-Verlag.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter: <em
+>Implementing Memoization for Partial Evaluation</em
+>.
+        In Kuchen, Herbert und Doaitse Swierstra
+        (Hrsg.): <em
+>Programming Languages, Implementations, Logics, and
+          Programs (PliLP '96)</em
+>, Bd. 1140 Reihe <em
+>Lecture
+          Notes in Computer Science</em
+>, Aachen, Germany, September 1996.
+        Springer-Verlag.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter: <em
+>A Unified Framework for Binding-Time Analysis</em
+>.
+        In <em
+>Colloquium on Formal Approaches in Software
+          Engineering (FASE/TAPSOFT '97)</em
+>, Bd. 1214 Reihe <em
+>Lecture
+          Notes in Computer Science</em
+>, Lille, France, April 1997.
+        Springer-Verlag.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Sperber, Michael und Peter Thiemann: <em
+>Two for the Price of
+          One: Composing Partial Evaluation and Compilation</em
+>. 
+        In <em
+>Proc. of the ACM SIGPLAN '97 Conference on
+          Programming Language Design and Implementation</em
+>, S. 215--225,
+        Las Vegas, NV, USA, 
+        Juni 1997. ACM Press.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter: <em
+>Correctness of a Region-Based Binding-Time Analysis</em
+>.
+        In Michael Mislove
+        (Hrsg.): <em
+>Mathematical Foundations of Programming Semantics
+          (MFPS XIII)</em
+>, Bd. 6 Reihe <em
+>Electronic
+          Notes in Theoretical Computer Science</em
+>, Pittsburgh, PA, USA, März 1997.
+        Elsevier Science.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Dussart, Dirk, John Hughes, und Peter Thiemann: <em
+>Type
+          Specialisation for Imperative Languages</em
+>. 
+        In <em
+>Proc. of the ACM SIGPLAN '97 International
+          Conference on Functional Programming, ICFP'97</em
+>, S. 204--216,
+        Amsterdam, The Netherlands, 
+        Juni 1997. ACM Press.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Sperber, Michael, Herbert Klaeren und Peter
+        Thiemann: <em
+>Distributed Partial Evaluation</em
+>. 
+        In <em
+>Proc. of the Second International
+          Symposium on Parallel Symbolic Computation, PASCO'97</em
+>,
+        S. 80--87, 
+        Maui, Hawaii, 
+        Juli 1997.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Lawall, Julia und Peter Thiemann: <em
+>Sound Specialization in
+          the Presence of Computational Effects</em
+>. 
+        In <em
+>Theoretical Aspects of Computer Software (TACS
+          '97)</em
+>, Bd. 1281 Reihe <em
+>Lecture 
+          Notes in Computer Science</em
+>,
+        S. 165--190, 
+        Sendai, Japan, September 1997.
+        Springer-Verlag.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter und Michael Sperber: <em
+>Program Generation With Class</em
+>. 
+        In <em
+>GI-Arbeitstagung Programmiersprachen</em
+>, Aachen,
+        Germany, September 1997. 
+        Springer-Verlag.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Barthe, Gilles und
+        John Hatcliff und Peter Thiemann:
+        <em
+>Monadic Type Systems: Pure Type Systems for Impure Settings (Preliminary
+          Report)</em
+>.
+        In <em
+>Proceedings of HOOTS'97</em
+>,
+        Bd. 10 Reihe <em
+>Electronic 
+          Notes in Theoretical Computer Science</em
+>, 1998.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Jagannathan, Suresh und Peter Thiemann und
+        Stephen Weeks und Andrew Wright: <em
+>Single and Loving it:
+          Must Alias-Analysis for Higher-Order Languages</em
+>. In
+        <em
+>Proceedings of the 25th Annual ACM Symposium on Principles of
+          Programming Languages</em
+>,
+        S. 329--341, 
+        San Diego, CA, USA, Januar 1998. ACM
+        Press.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter: <em
+>A Generic Framework for Specialization</em
+>.
+        In <em
+>European Symposium on Programming, ESOP '98</em
+>,
+        Bd. 1381 Reihe <em
+>Lecture 
+          Notes in Computer Science</em
+>,
+        S. 267--281, 
+        Lisboa, Portugal, April 1998.
+        Springer-Verlag.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter: <em
+>Formalizing Resource Allocation</em
+>.
+        In <em
+>Types in Compilation, TIC '98</em
+>,
+        Bd. 1473 Reihe <em
+>Lecture 
+          Notes in Computer Science</em
+>, Kyoto, Japan, März 1998.
+        Springer-Verlag.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Sperber, Michael und Peter Thiemann: <em
+>ML and the Address
+          Operator</em
+>.
+        In <em
+>The 1998 ACM SIGPLAN Workshop on ML</em
+>,
+        Baltimore, Maryland, USA, September
+        1998.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Helsen, Simon und Peter Thiemann: <em
+>Two Flavors of Offline Partial
+          Evaluation</em
+>. 
+        In <em
+>Asian Computing Science Conference,
+          ASIAN'98</em
+>, Bd. 1538 Reihe <em
+>Lecture 
+          Notes in Computer Science</em
+>,
+        S. 188--205, 
+        Manila, The Phillipines, Dezember 1998.
+        Springer-Verlag.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter: <em
+>Interpreting Specialization in Type Theory</em
+>.
+        In <em
+>Proceedings of the ACM SIGPLAN Workshop on
+          Partial Evaluation and Semantics-Based Program Manipulation, PEPM
+          '99</em
+>,
+        S. 30--43, 
+        San Antonio, Texas, USA, Januar 1999.
+        brICS Notes Series NS-99-1.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter: <em
+>ML-Style Typing, Lambda Lifting, and Partial Evaluation</em
+>.
+        In <em
+>Proceedings of the Latin American Conference on
+          Functional Programming, CLAPF '99</em
+>,
+        Recife, Brasilien, März 1999.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter: <em
+>Higher-Order Code Splicing</em
+>.
+        In <em
+>European Symposium on Programming, ESOP '99</em
+>,
+        Bd. 1576 Reihe
+        <em
+>Lecture Notes in Computer Science</em
+>,
+        Amsterdam, The Netherlands, März 1999.
+        Springer-Verlag.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter: <em
+>Modeling </em
+><em
+>HTML</em
+><em
+> in </em
+><em
+>Haskell</em
+>.
+        In <em
+>Practical Aspects of Declarative Languages, Proceedings of the Second International Workshop, PADL'00</em
+>,
+        Bd. 1753 Reihe <em
+>Lecture 
+          Notes in Computer Science</em
+>,
+        S. 263-277, 
+        Boston, MA, USA, Januar 2000.
+        Springer-Verlag.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter: <em
+>Compiling Adaptive Programs by Partial Evaluation</em
+>.
+        In <em
+>Compiler Construction, CC '00</em
+>,
+        Bd. 1781 Reihe <em
+>Lecture 
+          Notes in Computer Science</em
+>,
+        S. 264-278, 
+        Berlin, Germany, März 2000.
+        Springer-Verlag.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter: <em
+>An Algebraic Foundation for Adaptive Programming</em
+>.
+        In <em
+>Foundations of Software Science and Computation
+          Structures, FOSSACS 2000</em
+>,
+        Bd. 1784 Reihe <em
+>Lecture 
+          Notes in Computer Science</em
+>,
+        S. 314-328, 
+        Berlin, Germany, März 2000.
+        Springer-Verlag.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Helsen, Simon und Peter Thiemann: <em
+>Fragmental Specialization</em
+>. 
+        In <em
+>Semantics, Applications and Implementation of Program
+          Generation (SAIG'00)</em
+>, Bd. 1927 Reihe <em
+>Lecture 
+          Notes in Computer Science</em
+>,
+        Montreal, Kanada, September 2000.
+        Springer-Verlag.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Helsen, Simon und Peter Thiemann:
+        <em
+>Syntactic Type Soundness for the Region Calculus</em
+>. 
+        In <em
+>The Fourth International
+          Workshop on Higher Order Operational Techniques in Semantics,
+          HOOTS</em
+>, Bd. ? Reihe <em
+>Electronic 
+          Notes in Theoretical Computer Science</em
+>,
+        Montreal, Kanada, September 2000.
+        Elsevier Science.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Thiemann, Peter: <em
+>Enforcing Safety Properties Using Type-Specialization</em
+>.
+        In <em
+>European Symposium on Programming, ESOP 2001</em
+>,
+        Bd. 2028 Reihe
+        <em
+>Lecture Notes in Computer Science</em
+>,
+        S. 62--76, 
+        Genova, Italy, April 2001.
+        Springer-Verlag.</li
+></ol
+><h3
+>Tagungsbände</h3
+><ol
+style="list-style-type:decimal"
+><li
+>
+        Danvy, Olivier, Robert Glück und Peter Thiemann
+        (Hrsg.): <em
+>Partial Evaluation, Proceedings of a Dagstuhl
+          Seminar</em
+>, Lecture Notes in Computer 
+        Science, Band 1110, Schloß Dagstuhl, Germany, Februar 1996.
+        Springer-Verlag.<br
+></br
+>
+          <br
+></br
+>
+      </li
+><li
+>
+        Hatcliff, John, Torben Mogensen und Peter Thiemann
+        (Hrsg.): <em
+>1998 International Summerschool on Partial
+          Evaluation</em
+>, Lecture Notes in Computer 
+        Science, Band 1706, Copenhagen, Denmark, Juli 1999.
+        Springer-Verlag.
+      </li
+></ol
+><h3
+>Sonstiges</h3
+><ul
+><li
+>
+        Peter Thiemann.
+        Foundations of Offline Partial Evaluation.
+        Habilitationsschrift, Fakultät für Informatik, Universität
+        Tübingen, Mai 1996.
+      </li
+></ul
+><hr
+></hr
+><p
+>
+      <em
+>This document was translated from L<sup
+>A</sup
+>T<sub
+>E</sub
+>X by
+      <a
+shape="rect"
+href="http://pauillac.inria.fr/~maranget/hevea/index.html"
+>
+        H<sup
+>E</sup
+>V<sup
+>E</sup
+>A
+      </a
+>
+      .
+      </em
+>
+      </p
+></div
+>
+										<br
+></br
+>
+									</div
+>
+								</div
+>
+							</td
+></tr
+><tr
+><td
+colspan="1"
+rowspan="1"
+></td
+><td
+colspan="1"
+rowspan="1"
+></td
+><td
+colspan="1"
+rowspan="1"
+>
+								<div
+>
+									<div
+id="portal-footer"
+>
+										<div
+id="im-footer"
+>
+											<a
+href="imprint.html"
+shape="rect"
+title="Impressum"
+>Impressum</a
+> 
+											<a
+href="personal/index.html"
+shape="rect"
+title="Kontakt"
+>Kontakt</a
+>  
+											Last modified: <span
+id="HOLE_last_modified"
+>2007-09-05 18:34:02 +0200</span
+> 
+										</div
+>
+										<div
+id="rightSpace"
+> </div
+>
+									</div
+>
+								</div
+>
+							</td
+></tr
+></tbody
+></table
+>
+			</div
+></body
+></html
+>

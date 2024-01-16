@@ -1,0 +1,330 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="ProgLabel.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Args" rel="Chapter" href="Args.html">
+<link title="Gen" rel="Chapter" href="Gen.html">
+<link title="GenVars" rel="Chapter" href="GenVars.html">
+<link title="Gvars" rel="Chapter" href="Gvars.html">
+<link title="Inf" rel="Chapter" href="Inf.html">
+<link title="Location" rel="Chapter" href="Location.html">
+<link title="LowerUpper" rel="Chapter" href="LowerUpper.html">
+<link title="LowerUpperNeg" rel="Chapter" href="LowerUpperNeg.html">
+<link title="LUNVar" rel="Chapter" href="LUNVar.html">
+<link title="LUVar" rel="Chapter" href="LUVar.html">
+<link title="MapVar" rel="Chapter" href="MapVar.html">
+<link title="PrioQueue" rel="Chapter" href="PrioQueue.html">
+<link title="ProgLabel" rel="Chapter" href="ProgLabel.html">
+<link title="Syntax" rel="Chapter" href="Syntax.html"><link title="Syntax " rel="Section" href="Syntax.html#2_Syntax">
+<link title="Expressions " rel="Subsection" href="Syntax.html#3_Expressions">
+<link title="Serious expressions " rel="Subsection" href="Syntax.html#3_Seriousexpressions">
+<link title="Values " rel="Subsection" href="Syntax.html#3_Values">
+<link title="Variables " rel="Subsection" href="Syntax.html#3_Variables">
+<link title="Labels " rel="Subsection" href="Syntax.html#3_Labels">
+<link title="Program labels " rel="Subsection" href="Syntax.html#3_Programlabels">
+<link title="Free Variables  " rel="Subsection" href="Syntax.html#3_FreeVariables">
+<title>Syntax</title>
+</head>
+<body>
+<div class="navbar"><a href="ProgLabel.html">Previous</a>
+&nbsp;<a href="index.html">Up</a>
+&nbsp;</div>
+<center><h1>Module <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/type_Syntax.html">Syntax</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> Syntax: <code class="code">sig</code> <a href="Syntax.html">..</a> <code class="code">end</code></pre>This module contains the AST.<br>
+<hr width="100%">
+<br>
+<a name="2_Syntax"></a>
+<h2>Syntax </h2><br>
+<br><code><span class="keyword">type</span> <a name="TYPEe"></a><code class="type"></code>e = private </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">SExp</span> <span class="keyword">of</span> <code class="type"><a href="Syntax.html#TYPEs">s</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Let</span> <span class="keyword">of</span> <code class="type"><a href="Syntax.html#TYPEplab">plab</a> * Location.LSet.t option * <a href="Syntax.html#TYPEvar">var</a> * <a href="Syntax.html#TYPEs">s</a> * <a href="Syntax.html#TYPEe">e</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Mask</span> <span class="keyword">of</span> <code class="type"><a href="Syntax.html#TYPEplab">plab</a> * Location.LSet.t option * <a href="Syntax.html#TYPEe">e</a></code></code></td>
+
+</tr></table>
+
+<div class="info">
+expressions<br>
+</div>
+
+<br><code><span class="keyword">type</span> <a name="TYPEs"></a><code class="type"></code>s = private </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Val</span> <span class="keyword">of</span> <code class="type"><a href="Syntax.html#TYPEv">v</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">App</span> <span class="keyword">of</span> <code class="type"><a href="Syntax.html#TYPEplab">plab</a> * <a href="Syntax.html#TYPEv">v</a> * <a href="Syntax.html#TYPEv">v</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">New</span> <span class="keyword">of</span> <code class="type"><a href="Syntax.html#TYPEplab">plab</a> * <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Location.Loc.html#TYPEt">Location.Loc.t</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Read</span> <span class="keyword">of</span> <code class="type"><a href="Syntax.html#TYPEp">p</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Write</span> <span class="keyword">of</span> <code class="type"><a href="Syntax.html#TYPEplab">plab</a> * <a href="Syntax.html#TYPEp">p</a> * <a href="Syntax.html#TYPEv">v</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">MethodCall</span> <span class="keyword">of</span> <code class="type"><a href="Syntax.html#TYPEplab">plab</a> * <a href="Syntax.html#TYPEp">p</a> * <a href="Syntax.html#TYPEv">v</a></code></code></td>
+
+</tr></table>
+
+<div class="info">
+serious expressions<br>
+</div>
+
+<br><code><span class="keyword">type</span> <a name="TYPEv"></a><code class="type"></code>v = private </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Var</span> <span class="keyword">of</span> <code class="type"><a href="Syntax.html#TYPEplab">plab</a> * <a href="Syntax.html#TYPEvar">var</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Lam</span> <span class="keyword">of</span> <code class="type"><a href="Syntax.html#TYPEplab">plab</a> * <a href="Syntax.html#TYPEvar">var</a> * <a href="Syntax.html#TYPEvar">var</a> * <a href="Syntax.html#TYPEe">e</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Undef</span> <span class="keyword">of</span> <code class="type"><a href="Syntax.html#TYPEplab">plab</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Pointer</span> <span class="keyword">of</span> <code class="type"><a href="Syntax.html#TYPEplab">plab</a> * <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Location.P.html#TYPEt">Location.P.t</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Int</span> <span class="keyword">of</span> <code class="type"><a href="Syntax.html#TYPEplab">plab</a> * int</code></code></td>
+
+</tr></table>
+
+<div class="info">
+values<br>
+</div>
+
+<br><code><span class="keyword">type</span> <a name="TYPEp"></a><code class="type"></code>p = private </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Prop</span> <span class="keyword">of</span> <code class="type"><a href="Syntax.html#TYPEplab">plab</a> * <a href="Syntax.html#TYPEv">v</a> * <a href="Syntax.html#TYPElabel">label</a></code></code></td>
+
+</tr></table>
+
+
+<pre><span class="keyword">type</span> <a name="TYPEvar"></a><code class="type"></code>var </pre>
+<div class="info">
+variables<br>
+</div>
+
+<pre><span class="keyword">type</span> <a name="TYPElabel"></a><code class="type"></code>label </pre>
+<div class="info">
+labels<br>
+</div>
+
+<pre><span class="keyword">type</span> <a name="TYPEplab"></a><code class="type"></code>plab </pre>
+<div class="info">
+program labels<br>
+</div>
+
+<br>
+<a name="3_Expressions"></a>
+<h3>Expressions </h3><br>
+<pre><span class="keyword">val</span> <a name="VALe_sexp"></a>e_sexp : <code class="type"><a href="Syntax.html#TYPEs">s</a> -> <a href="Syntax.html#TYPEe">e</a></code></pre><div class="info">
+Creates an expression from a serious expression<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALe_let"></a>e_let : <code class="type"><a href="Syntax.html#TYPEvar">var</a> -> <a href="Syntax.html#TYPEs">s</a> -> <a href="Syntax.html#TYPEe">e</a> -> <a href="Syntax.html#TYPEe">e</a></code></pre><div class="info">
+Creates a let expression<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALe_mask"></a>e_mask : <code class="type">Location.LSet.t -> <a href="Syntax.html#TYPEe">e</a> -> <a href="Syntax.html#TYPEe">e</a></code></pre><div class="info">
+Creates a mask expression (Mask<code class="code">e</code>)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstring_of_e"></a>string_of_e : <code class="type"><a href="Syntax.html#TYPEe">e</a> -> string</code></pre><div class="info">
+Returns a string representation of an expression<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstring_of_e_with_plabs"></a>string_of_e_with_plabs : <code class="type"><a href="Syntax.html#TYPEe">e</a> -> string</code></pre><div class="info">
+Returns an expression together with it's program locations as a string<br>
+</div>
+<br>
+<a name="3_Seriousexpressions"></a>
+<h3>Serious expressions </h3><br>
+<pre><span class="keyword">val</span> <a name="VALs_val"></a>s_val : <code class="type"><a href="Syntax.html#TYPEv">v</a> -> <a href="Syntax.html#TYPEs">s</a></code></pre><div class="info">
+Creates a serious expression from a value<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALs_app"></a>s_app : <code class="type"><a href="Syntax.html#TYPEv">v</a> -> <a href="Syntax.html#TYPEv">v</a> -> <a href="Syntax.html#TYPEs">s</a></code></pre><div class="info">
+Creates a serious expression (application)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALs_new"></a>s_new : <code class="type">unit -> <a href="Syntax.html#TYPEs">s</a></code></pre><div class="info">
+Creates a serious expression (new)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALs_new_loc"></a>s_new_loc : <code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Location.Loc.html#TYPEt">Location.Loc.t</a> -> <a href="Syntax.html#TYPEs">s</a></code></pre><div class="info">
+Creates a serious expression (new) with the given 
+    abstract location<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALs_read"></a>s_read : <code class="type"><a href="Syntax.html#TYPEv">v</a> -> <a href="Syntax.html#TYPElabel">label</a> -> <a href="Syntax.html#TYPEs">s</a></code></pre><div class="info">
+Creates a serious expression (read)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALs_write"></a>s_write : <code class="type"><a href="Syntax.html#TYPEv">v</a> -> <a href="Syntax.html#TYPElabel">label</a> -> <a href="Syntax.html#TYPEv">v</a> -> <a href="Syntax.html#TYPEs">s</a></code></pre><div class="info">
+Creates a serious expression (write)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALs_mcall"></a>s_mcall : <code class="type"><a href="Syntax.html#TYPEv">v</a> -> <a href="Syntax.html#TYPElabel">label</a> -> <a href="Syntax.html#TYPEv">v</a> -> <a href="Syntax.html#TYPEs">s</a></code></pre><div class="info">
+Creates a serious expression (method call)<br>
+</div>
+<br>
+<a name="3_Values"></a>
+<h3>Values </h3><br>
+<pre><span class="keyword">val</span> <a name="VALv_var"></a>v_var : <code class="type"><a href="Syntax.html#TYPEvar">var</a> -> <a href="Syntax.html#TYPEv">v</a></code></pre><div class="info">
+Creates a value (var)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALv_lam"></a>v_lam : <code class="type"><a href="Syntax.html#TYPEvar">var</a> -> <a href="Syntax.html#TYPEvar">var</a> -> <a href="Syntax.html#TYPEe">e</a> -> <a href="Syntax.html#TYPEv">v</a></code></pre><div class="info">
+Creates a value (lambda expression)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALv_undef"></a>v_undef : <code class="type">unit -> <a href="Syntax.html#TYPEv">v</a></code></pre><div class="info">
+Creates a value (undefined)<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALv_int"></a>v_int : <code class="type">int -> <a href="Syntax.html#TYPEv">v</a></code></pre><div class="info">
+Creates an integer as a value<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstring_of_v"></a>string_of_v : <code class="type"><a href="Syntax.html#TYPEv">v</a> -> string</code></pre><div class="info">
+Returns a string representation of a value. Depending on the global
+    option with_label then the program labels are part of the result string.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstring_of_lam"></a>string_of_lam : <code class="type"><a href="Syntax.html#TYPEvar">var</a> -> <a href="Syntax.html#TYPEvar">var</a> -> <a href="Syntax.html#TYPEe">e</a> -> string</code></pre><div class="info">
+Returns a string represenation of a lambda expression<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstring_of_v_with_plabs"></a>string_of_v_with_plabs : <code class="type"><a href="Syntax.html#TYPEv">v</a> -> string</code></pre><div class="info">
+Returns a value together with it's program locations as a string<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstring_of_lam_with_plabs"></a>string_of_lam_with_plabs : <code class="type"><a href="Syntax.html#TYPEvar">var</a> -> <a href="Syntax.html#TYPEvar">var</a> -> <a href="Syntax.html#TYPEe">e</a> -> string</code></pre><div class="info">
+Returns a lambda expression together with it's program locations as a string<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstring_of_v_without_plabs"></a>string_of_v_without_plabs : <code class="type"><a href="Syntax.html#TYPEv">v</a> -> string</code></pre><div class="info">
+Returns a string representation of a value<br>
+</div>
+<br>
+<a name="3_Variables"></a>
+<h3>Variables </h3><br>
+<pre><span class="keyword">val</span> <a name="VALcreate_var"></a>create_var : <code class="type">string -> <a href="Syntax.html#TYPEvar">var</a></code></pre><div class="info">
+creates a new variable from a string<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcompare_var"></a>compare_var : <code class="type"><a href="Syntax.html#TYPEvar">var</a> -> <a href="Syntax.html#TYPEvar">var</a> -> int</code></pre><div class="info">
+compares to variables.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstring_of_var"></a>string_of_var : <code class="type"><a href="Syntax.html#TYPEvar">var</a> -> string</code></pre><div class="info">
+Returns a string representation of a variable<br>
+</div>
+<br>
+<a name="3_Labels"></a>
+<h3>Labels </h3><br>
+<pre><span class="keyword">val</span> <a name="VALcreate_label"></a>create_label : <code class="type">string -> <a href="Syntax.html#TYPElabel">label</a></code></pre><div class="info">
+creates a new label<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcompare_label"></a>compare_label : <code class="type"><a href="Syntax.html#TYPElabel">label</a> -> <a href="Syntax.html#TYPElabel">label</a> -> int</code></pre><div class="info">
+comapres to labels<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstring_of_label"></a>string_of_label : <code class="type"><a href="Syntax.html#TYPElabel">label</a> -> string</code></pre><div class="info">
+Returns a string representation of a variable<br>
+</div>
+<br>
+<a name="3_Programlabels"></a>
+<h3>Program labels </h3><br>
+<pre><span class="keyword">val</span> <a name="VALcreate_plab"></a>create_plab : <code class="type">unit -> <a href="Syntax.html#TYPEplab">plab</a></code></pre><div class="info">
+create a program label<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcompare_plab"></a>compare_plab : <code class="type"><a href="Syntax.html#TYPEplab">plab</a> -> <a href="Syntax.html#TYPEplab">plab</a> -> int</code></pre><div class="info">
+comapre to program labels<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstring_of_plab"></a>string_of_plab : <code class="type"><a href="Syntax.html#TYPEplab">plab</a> -> string</code></pre><div class="info">
+Returns a string represenation of a program label<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALe_get_plab"></a>e_get_plab : <code class="type"><a href="Syntax.html#TYPEe">e</a> -> <a href="Syntax.html#TYPEplab">plab</a></code></pre><div class="info">
+returns the program label<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALs_get_plab"></a>s_get_plab : <code class="type"><a href="Syntax.html#TYPEs">s</a> -> <a href="Syntax.html#TYPEplab">plab</a></code></pre><div class="info">
+returns the program label<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALv_get_plab"></a>v_get_plab : <code class="type"><a href="Syntax.html#TYPEv">v</a> -> <a href="Syntax.html#TYPEplab">plab</a></code></pre><div class="info">
+returns the program label<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALp_get_plab"></a>p_get_plab : <code class="type"><a href="Syntax.html#TYPEp">p</a> -> <a href="Syntax.html#TYPEplab">plab</a></code></pre><div class="info">
+returns the program label<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcollect_locs"></a>collect_locs : <code class="type"><a href="Syntax.html#TYPEe">e</a> -> Location.LSet.t</code></pre><div class="info">
+collects all locations from a program<br>
+</div>
+<br>
+<a name="3_FreeVariables"></a>
+<h3>Free Variables  </h3><br>
+<pre><span class="keyword">module</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Syntax.VarSet.html">VarSet</a>: <code class="type">ExtSSet.S</code><code class="type">  with type elt = var</code></pre><pre><span class="keyword">val</span> <a name="VALfree_e"></a>free_e : <code class="type"><a href="Syntax.html#TYPEe">e</a> -> VarSet.t</code></pre><div class="info">
+<code class="code">free_e e</code> computes the free variables of <code class="code">e</code> and 
+    returns it as a set.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALfree_s"></a>free_s : <code class="type"><a href="Syntax.html#TYPEs">s</a> -> VarSet.t</code></pre><div class="info">
+<code class="code">free_s s</code> computes the free variables of <code class="code">s</code> and 
+    returns it as a set.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALfree_v"></a>free_v : <code class="type"><a href="Syntax.html#TYPEv">v</a> -> VarSet.t</code></pre><div class="info">
+<code class="code">free_e v</code> computes the free variables of <code class="code">v</code> and 
+    returns it as a set.<br>
+</div>
+<pre><span class="keyword">module</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Syntax.LabelSet.html">LabelSet</a>: <code class="type">ProglangUtils.ExtSSet.S</code><code class="type"> </code></pre><pre><span class="keyword">module</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Syntax.LabelSetRef.html">LabelSetRef</a>: <code class="code">sig</code> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Syntax.LabelSetRef.html">..</a> <code class="code">end</code><code class="type"> 
+  with type elt = label</code></pre><pre><span class="keyword">val</span> <a name="VALset_print_with_label"></a>set_print_with_label : <code class="type">unit -> unit</code></pre><pre><span class="keyword">val</span> <a name="VALset_print_without_label"></a>set_print_without_label : <code class="type">unit -> unit</code></pre></body></html>

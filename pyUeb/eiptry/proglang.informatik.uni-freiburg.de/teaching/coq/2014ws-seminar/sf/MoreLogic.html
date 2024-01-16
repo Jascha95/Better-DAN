@@ -1,0 +1,728 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link href="coqdoc.css" rel="stylesheet" type="text/css"/>
+<title>MoreLogic</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library MoreLogic</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab312"></a><h1 class="section">More Logic</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Export</span> "Prop".<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab313"></a><h1 class="section">Existential Quantification</h1>
+
+<div class="paragraph"> </div>
+
+ Another critical logical connective is <i>existential
+    quantification</i>.  We can express it with the following
+    definition: 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="ex"><span class="id" type="inductive">ex</span></a> (<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>) (<span class="id" type="var">P</span> : <a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a>→<span class="id" type="keyword">Prop</span>) : <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="ex_intro"><span class="id" type="constructor">ex_intro</span></a> : <span class="id" type="keyword">∀</span> (<span class="id" type="var">witness</span>:<span class="id" type="var">X</span>), <span class="id" type="var">P</span> <a class="idref" href="MoreLogic.html#witness"><span class="id" type="variable">witness</span></a> → <a class="idref" href="MoreLogic.html#ex"><span class="id" type="inductive">ex</span></a> <span class="id" type="var">X</span> <span class="id" type="var">P</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+That is, <span class="inlinecode"><a class="idref" href="MoreLogic.html#ex"><span class="id" type="inductive">ex</span></a></span> is a family of propositions indexed by a type <span class="inlinecode"><a class="idref" href="Imp.html#X"><span class="id" type="definition">X</span></a></span>
+    and a property <span class="inlinecode"><a class="idref" href="UseAuto.html#P"><span class="id" type="axiom">P</span></a></span> over <span class="inlinecode"><a class="idref" href="Imp.html#X"><span class="id" type="definition">X</span></a></span>.  In order to give evidence for the
+    assertion "there exists an <span class="inlinecode"><a class="idref" href="RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> for which the property <span class="inlinecode"><a class="idref" href="UseAuto.html#P"><span class="id" type="axiom">P</span></a></span> holds"
+    we must actually name a <i>witness</i> -- a specific value <span class="inlinecode"><a class="idref" href="RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> -- and
+    then give evidence for <span class="inlinecode"><a class="idref" href="UseAuto.html#P"><span class="id" type="axiom">P</span></a></span> <span class="inlinecode"><a class="idref" href="RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>, i.e., evidence that <span class="inlinecode"><a class="idref" href="RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> has the
+    property <span class="inlinecode"><a class="idref" href="UseAuto.html#P"><span class="id" type="axiom">P</span></a></span>. 
+
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+<a name="lab314"></a><h3 class="section"> </h3>
+ Coq's <span class="inlinecode"><span class="id" type="keyword">Notation</span></span> facility can be used to introduce more
+    familiar notation for writing existentially quantified
+    propositions, exactly parallel to the built-in syntax for
+    universally quantified propositions.  Instead of writing <span class="inlinecode"><a class="idref" href="MoreLogic.html#ex"><span class="id" type="inductive">ex</span></a></span> <span class="inlinecode"><a class="idref" href="Basics.html#Playground1.nat"><span class="id" type="inductive">nat</span></a></span>
+    <span class="inlinecode"><a class="idref" href="SfLib.html#ev"><span class="id" type="inductive">ev</span></a></span> to express the proposition that there exists some number that
+    is even, for example, we can write <span class="inlinecode"><span class="id" type="tactic">∃</span></span> <span class="inlinecode"><a class="idref" href="RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<a class="idref" href="Basics.html#Playground1.nat"><span class="id" type="inductive">nat</span></a>,</span> <span class="inlinecode"><a class="idref" href="SfLib.html#ev"><span class="id" type="inductive">ev</span></a></span> <span class="inlinecode"><a class="idref" href="RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>.  (It is
+    not necessary to understand exactly how the <span class="inlinecode"><span class="id" type="keyword">Notation</span></span> definition
+    works.) 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Notation</span> <a name=":type_scope:'exists'_x_','_x"><span class="id" type="notation">"</span></a>'exists' x , p" := (<a class="idref" href="MoreLogic.html#ex"><span class="id" type="inductive">ex</span></a> <span class="id" type="var">_</span> (<span class="id" type="keyword">fun</span> <span class="id" type="var">x</span> ⇒ <span class="id" type="var">p</span>))<br/>
+&nbsp;&nbsp;(<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 200, <span class="id" type="var">x</span> <span class="id" type="var">ident</span>, <span class="id" type="tactic">right</span> <span class="id" type="keyword">associativity</span>) : <span class="id" type="var">type_scope</span>.<br/>
+<span class="id" type="keyword">Notation</span> <a name=":type_scope:'exists'_x_':'_x_','_x"><span class="id" type="notation">"</span></a>'exists' x : X , p" := (<a class="idref" href="MoreLogic.html#ex"><span class="id" type="inductive">ex</span></a> <span class="id" type="var">_</span> (<span class="id" type="keyword">fun</span> <span class="id" type="var">x</span>:<span class="id" type="var">X</span> ⇒ <span class="id" type="var">p</span>))<br/>
+&nbsp;&nbsp;(<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 200, <span class="id" type="var">x</span> <span class="id" type="var">ident</span>, <span class="id" type="tactic">right</span> <span class="id" type="keyword">associativity</span>) : <span class="id" type="var">type_scope</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab315"></a><h3 class="section"> </h3>
+ We can use the usual set of tactics for
+    manipulating existentials.  For example, to prove an
+    existential, we can <span class="inlinecode"><span class="id" type="tactic">apply</span></span> the constructor <span class="inlinecode"><a class="idref" href="MoreLogic.html#ex_intro"><span class="id" type="constructor">ex_intro</span></a></span>.  Since the
+    premise of <span class="inlinecode"><a class="idref" href="MoreLogic.html#ex_intro"><span class="id" type="constructor">ex_intro</span></a></span> involves a variable (<span class="inlinecode"><a class="idref" href="MoreLogic.html#witness"><span class="id" type="variable">witness</span></a></span>) that does
+    not appear in its conclusion, we need to explicitly give its value
+    when we use <span class="inlinecode"><span class="id" type="tactic">apply</span></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Example</span> <a name="exists_example_1"><span class="id" type="definition">exists_example_1</span></a> : <a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">n</span><a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">,</span></a> <span class="id" type="var">n</span> <a class="idref" href="Basics.html#:nat_scope:x_'+'_x"><span class="id" type="notation">+</span></a> <a class="idref" href="Basics.html#:nat_scope:x_'+'_x"><span class="id" type="notation">(</span></a><span class="id" type="var">n</span> <a class="idref" href="Basics.html#:nat_scope:x_'*'_x"><span class="id" type="notation">×</span></a> <span class="id" type="var">n</span><a class="idref" href="Basics.html#:nat_scope:x_'+'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> 6.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="MoreLogic.html#ex_intro"><span class="id" type="constructor">ex_intro</span></a> <span class="id" type="keyword">with</span> (<span class="id" type="var">witness</span>:=2).<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">reflexivity</span>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Note that we have to explicitly give the witness. 
+<div class="paragraph"> </div>
+
+<a name="lab316"></a><h3 class="section"> </h3>
+ Or, instead of writing <span class="inlinecode"><span class="id" type="tactic">apply</span></span> <span class="inlinecode"><a class="idref" href="MoreLogic.html#ex_intro"><span class="id" type="constructor">ex_intro</span></a></span> <span class="inlinecode"><span class="id" type="keyword">with</span></span> <span class="inlinecode">(<a class="idref" href="MoreLogic.html#witness"><span class="id" type="variable">witness</span></a>:=<a class="idref" href="Poly.html#MumbleBaz.e"><span class="id" type="constructor">e</span></a>)</span> all the
+    time, we can use the convenient shorthand <span class="inlinecode"><span class="id" type="tactic">∃</span></span> <span class="inlinecode"><a class="idref" href="Poly.html#MumbleBaz.e"><span class="id" type="constructor">e</span></a></span>, which means
+    the same thing. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Example</span> <a name="exists_example_1'"><span class="id" type="definition">exists_example_1'</span></a> : <a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">n</span><a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">,</span></a> <span class="id" type="var">n</span> <a class="idref" href="Basics.html#:nat_scope:x_'+'_x"><span class="id" type="notation">+</span></a> <a class="idref" href="Basics.html#:nat_scope:x_'+'_x"><span class="id" type="notation">(</span></a><span class="id" type="var">n</span> <a class="idref" href="Basics.html#:nat_scope:x_'*'_x"><span class="id" type="notation">×</span></a> <span class="id" type="var">n</span><a class="idref" href="Basics.html#:nat_scope:x_'+'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> 6.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">∃</span> 2.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">reflexivity</span>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab317"></a><h3 class="section"> </h3>
+ Conversely, if we have an existential hypothesis in the
+    context, we can eliminate it with <span class="inlinecode"><span class="id" type="tactic">inversion</span></span>.  Note the use
+    of the <span class="inlinecode"><span class="id" type="keyword">as</span>...</span> pattern to name the variable that Coq
+    introduces to name the witness value and get evidence that
+    the hypothesis holds for the witness.  (If we don't
+    explicitly choose one, Coq will just call it <span class="inlinecode"><a class="idref" href="MoreLogic.html#witness"><span class="id" type="variable">witness</span></a></span>, which
+    makes proofs confusing.) 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="exists_example_2"><span class="id" type="lemma">exists_example_2</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">n</span>,<br/>
+&nbsp;&nbsp;(<a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">m</span><a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">,</span></a> <a class="idref" href="MoreLogic.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> 4 <a class="idref" href="Basics.html#:nat_scope:x_'+'_x"><span class="id" type="notation">+</span></a> <span class="id" type="var">m</span>) →<br/>
+&nbsp;&nbsp;(<a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">o</span><a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">,</span></a> <a class="idref" href="MoreLogic.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> 2 <a class="idref" href="Basics.html#:nat_scope:x_'+'_x"><span class="id" type="notation">+</span></a> <span class="id" type="var">o</span>).<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">n</span> <span class="id" type="var">H</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span> <span class="id" type="keyword">as</span> [<span class="id" type="var">m</span> <span class="id" type="var">Hm</span>].<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">∃</span> (2 <a class="idref" href="Basics.html#:nat_scope:x_'+'_x"><span class="id" type="notation">+</span></a> <span class="id" type="var">m</span>).<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <span class="id" type="var">Hm</span>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Here is another example of how to work with existentials. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Lemma</span> <a name="exists_example_3"><span class="id" type="lemma">exists_example_3</span></a> : <br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">∃</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">(</span></a><span class="id" type="var">n</span>:<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">),</span></a> <a class="idref" href="Prop.html#even"><span class="id" type="definition">even</span></a> <a class="idref" href="MoreLogic.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">∧</span></a> <a class="idref" href="Prop.html#beautiful"><span class="id" type="inductive">beautiful</span></a> <a class="idref" href="MoreLogic.html#n"><span class="id" type="variable">n</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">∃</span> 8.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">split</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">unfold</span> <a class="idref" href="Prop.html#even"><span class="id" type="definition">even</span></a>. <span class="id" type="tactic">simpl</span>. <span class="id" type="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Prop.html#b_sum"><span class="id" type="constructor">b_sum</span></a> <span class="id" type="keyword">with</span> (<span class="id" type="var">n</span>:=3) (<span class="id" type="var">m</span>:=5).<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Prop.html#b_3"><span class="id" type="constructor">b_3</span></a>. <span class="id" type="tactic">apply</span> <a class="idref" href="Prop.html#b_5"><span class="id" type="constructor">b_5</span></a>.<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab318"></a><h4 class="section">Exercise: 1 star, optional (english_exists)</h4>
+ In English, what does the proposition 
+      ex nat (fun n =&gt; beautiful (S n))
+]] 
+    mean? 
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab319"></a><h4 class="section">Exercise: 1 star (dist_not_exists)</h4>
+ Prove that "<span class="inlinecode"><a class="idref" href="UseAuto.html#P"><span class="id" type="axiom">P</span></a></span> holds for all <span class="inlinecode"><a class="idref" href="RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>" implies "there is no <span class="inlinecode"><a class="idref" href="RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> for
+    which <span class="inlinecode"><a class="idref" href="UseAuto.html#P"><span class="id" type="axiom">P</span></a></span> does not hold." 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="dist_not_exists"><span class="id" type="lemma">dist_not_exists</span></a> : <span class="id" type="keyword">∀</span> (<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>) (<span class="id" type="var">P</span> : <a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a> → <span class="id" type="keyword">Prop</span>),<br/>
+&nbsp;&nbsp;(<span class="id" type="keyword">∀</span> <span class="id" type="var">x</span>, <a class="idref" href="MoreLogic.html#P"><span class="id" type="variable">P</span></a> <a class="idref" href="MoreLogic.html#x"><span class="id" type="variable">x</span></a>) → <a class="idref" href="Logic.html#:type_scope:'~'_x"><span class="id" type="notation">¬</span></a> <a class="idref" href="Logic.html#:type_scope:'~'_x"><span class="id" type="notation">(</span></a><a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">x</span><a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">,</span></a> <a class="idref" href="Logic.html#:type_scope:'~'_x"><span class="id" type="notation">¬</span></a> <a class="idref" href="MoreLogic.html#P"><span class="id" type="variable">P</span></a> <span class="id" type="var">x</span><a class="idref" href="Logic.html#:type_scope:'~'_x"><span class="id" type="notation">)</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+<a name="lab320"></a><h4 class="section">Exercise: 3 stars, optional (not_exists_dist)</h4>
+ (The other direction of this theorem requires the classical "law
+    of the excluded middle".) 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="not_exists_dist"><span class="id" type="lemma">not_exists_dist</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="Logic.html#excluded_middle"><span class="id" type="definition">excluded_middle</span></a> →<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">∀</span> (<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>) (<span class="id" type="var">P</span> : <a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a> → <span class="id" type="keyword">Prop</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Logic.html#:type_scope:'~'_x"><span class="id" type="notation">¬</span></a> <a class="idref" href="Logic.html#:type_scope:'~'_x"><span class="id" type="notation">(</span></a><a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">x</span><a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">,</span></a> <a class="idref" href="Logic.html#:type_scope:'~'_x"><span class="id" type="notation">¬</span></a> <a class="idref" href="MoreLogic.html#P"><span class="id" type="variable">P</span></a> <span class="id" type="var">x</span><a class="idref" href="Logic.html#:type_scope:'~'_x"><span class="id" type="notation">)</span></a> → (<span class="id" type="keyword">∀</span> <span class="id" type="var">x</span>, <a class="idref" href="MoreLogic.html#P"><span class="id" type="variable">P</span></a> <a class="idref" href="MoreLogic.html#x"><span class="id" type="variable">x</span></a>).<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+<a name="lab321"></a><h4 class="section">Exercise: 2 stars (dist_exists_or)</h4>
+ Prove that existential quantification distributes over
+    disjunction. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="dist_exists_or"><span class="id" type="lemma">dist_exists_or</span></a> : <span class="id" type="keyword">∀</span> (<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>) (<span class="id" type="var">P</span> <span class="id" type="var">Q</span> : <a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a> → <span class="id" type="keyword">Prop</span>),<br/>
+&nbsp;&nbsp;<a class="idref" href="Logic.html#:type_scope:x_'<->'_x"><span class="id" type="notation">(</span></a><a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">x</span><a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">,</span></a> <a class="idref" href="MoreLogic.html#P"><span class="id" type="variable">P</span></a> <span class="id" type="var">x</span> <a class="idref" href="Logic.html#:type_scope:x_'\/'_x"><span class="id" type="notation">∨</span></a> <a class="idref" href="MoreLogic.html#Q"><span class="id" type="variable">Q</span></a> <span class="id" type="var">x</span><a class="idref" href="Logic.html#:type_scope:x_'<->'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Logic.html#:type_scope:x_'<->'_x"><span class="id" type="notation">↔</span></a> <a class="idref" href="Logic.html#:type_scope:x_'\/'_x"><span class="id" type="notation">(</span></a><a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">x</span><a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">,</span></a> <a class="idref" href="MoreLogic.html#P"><span class="id" type="variable">P</span></a> <span class="id" type="var">x</span><a class="idref" href="Logic.html#:type_scope:x_'\/'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Logic.html#:type_scope:x_'\/'_x"><span class="id" type="notation">∨</span></a> <a class="idref" href="Logic.html#:type_scope:x_'\/'_x"><span class="id" type="notation">(</span></a><a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">x</span><a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">,</span></a> <a class="idref" href="MoreLogic.html#Q"><span class="id" type="variable">Q</span></a> <span class="id" type="var">x</span><a class="idref" href="Logic.html#:type_scope:x_'\/'_x"><span class="id" type="notation">)</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab322"></a><h1 class="section">Evidence-carrying booleans.</h1>
+
+<div class="paragraph"> </div>
+
+ So far we've seen two different forms of equality predicates:
+<span class="inlinecode"><a class="idref" href="MoreStlc.html#STLCExtended.Examples.eq"><span class="id" type="abbreviation">eq</span></a></span>, which produces a <span class="inlinecode"><span class="id" type="keyword">Prop</span></span>, and
+the type-specific forms, like <span class="inlinecode"><a class="idref" href="Basics.html#beq_nat"><span class="id" type="definition">beq_nat</span></a></span>, that produce <span class="inlinecode"><span class="id" type="var">boolean</span></span>
+values.  The former are more convenient to reason about, but
+we've relied on the latter to let us use equality tests 
+in <i>computations</i>.  While it is straightforward to write lemmas
+(e.g. <span class="inlinecode"><a class="idref" href="MoreCoq.html#beq_nat_true"><span class="id" type="lemma">beq_nat_true</span></a></span> and <span class="inlinecode"><a class="idref" href="Logic.html#beq_nat_false"><span class="id" type="lemma">beq_nat_false</span></a></span>) that connect the two forms,
+using these lemmas quickly gets tedious. 
+
+<div class="paragraph"> </div>
+
+<a name="lab323"></a><h3 class="section"> </h3>
+
+<div class="paragraph"> </div>
+
+It turns out that we can get the benefits of both forms at once 
+by using a construct called <span class="inlinecode"><a class="idref" href="MoreLogic.html#sumbool"><span class="id" type="inductive">sumbool</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="sumbool"><span class="id" type="inductive">sumbool</span></a> (<span class="id" type="var">A</span> <span class="id" type="var">B</span> : <span class="id" type="keyword">Prop</span>) : <span class="id" type="keyword">Set</span> :=<br/>
+&nbsp;| <a name="left"><span class="id" type="constructor">left</span></a> : <span class="id" type="var">A</span> → <a class="idref" href="MoreLogic.html#sumbool"><span class="id" type="inductive">sumbool</span></a> <span class="id" type="var">A</span> <span class="id" type="var">B</span> <br/>
+&nbsp;| <a name="right"><span class="id" type="constructor">right</span></a> : <span class="id" type="var">B</span> → <a class="idref" href="MoreLogic.html#sumbool"><span class="id" type="inductive">sumbool</span></a> <span class="id" type="var">A</span> <span class="id" type="var">B</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Notation</span> <a name=":type_scope:'{'_x_'}'_'+'_'{'_x_'}'"><span class="id" type="notation">"</span></a>{ A } + { B }" :=  (<a class="idref" href="MoreLogic.html#sumbool"><span class="id" type="inductive">sumbool</span></a> <span class="id" type="var">A</span> <span class="id" type="var">B</span>) : <span class="id" type="var">type_scope</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Think of <span class="inlinecode"><a class="idref" href="MoreLogic.html#sumbool"><span class="id" type="inductive">sumbool</span></a></span> as being like the <span class="inlinecode"><span class="id" type="var">boolean</span></span> type, but instead
+of its values being just <span class="inlinecode"><a class="idref" href="Basics.html#true"><span class="id" type="constructor">true</span></a></span> and <span class="inlinecode"><a class="idref" href="Basics.html#false"><span class="id" type="constructor">false</span></a></span>, they carry <i>evidence</i>
+of truth or falsity. This means that when we <span class="inlinecode"><span class="id" type="tactic">destruct</span></span> them, we
+are left with the relevant evidence as a hypothesis -- just as with <span class="inlinecode"><a class="idref" href="Logic.html#or"><span class="id" type="inductive">or</span></a></span>.
+(In fact, the definition of <span class="inlinecode"><a class="idref" href="MoreLogic.html#sumbool"><span class="id" type="inductive">sumbool</span></a></span> is almost the same as for <span class="inlinecode"><a class="idref" href="Logic.html#or"><span class="id" type="inductive">or</span></a></span>.
+The only difference is that values of <span class="inlinecode"><a class="idref" href="MoreLogic.html#sumbool"><span class="id" type="inductive">sumbool</span></a></span> are declared to be in
+<span class="inlinecode"><span class="id" type="keyword">Set</span></span> rather than in <span class="inlinecode"><span class="id" type="keyword">Prop</span></span>; this is a technical distinction 
+that allows us to compute with them.) 
+<div class="paragraph"> </div>
+
+<a name="lab324"></a><h3 class="section"> </h3>
+
+<div class="paragraph"> </div>
+
+ Here's how we can define a <span class="inlinecode"><a class="idref" href="MoreLogic.html#sumbool"><span class="id" type="inductive">sumbool</span></a></span> for equality on <span class="inlinecode"><a class="idref" href="Basics.html#Playground1.nat"><span class="id" type="inductive">nat</span></a></span>s 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="eq_nat_dec"><span class="id" type="lemma">eq_nat_dec</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">n</span> <span class="id" type="var">m</span> : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a>, <a class="idref" href="MoreLogic.html#:type_scope:'{'_x_'}'_'+'_'{'_x_'}'"><span class="id" type="notation">{</span></a><a class="idref" href="MoreLogic.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="MoreLogic.html#m"><span class="id" type="variable">m</span></a><a class="idref" href="MoreLogic.html#:type_scope:'{'_x_'}'_'+'_'{'_x_'}'"><span class="id" type="notation">}</span></a> <a class="idref" href="MoreLogic.html#:type_scope:'{'_x_'}'_'+'_'{'_x_'}'"><span class="id" type="notation">+</span></a> <a class="idref" href="MoreLogic.html#:type_scope:'{'_x_'}'_'+'_'{'_x_'}'"><span class="id" type="notation">{</span></a><a class="idref" href="MoreLogic.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="Logic.html#:type_scope:x_'<>'_x"><span class="id" type="notation">≠</span></a> <a class="idref" href="MoreLogic.html#m"><span class="id" type="variable">m</span></a><a class="idref" href="MoreLogic.html#:type_scope:'{'_x_'}'_'+'_'{'_x_'}'"><span class="id" type="notation">}</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">n</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">induction</span> <span class="id" type="var">n</span> <span class="id" type="keyword">as</span> [|<span class="id" type="var">n'</span>].<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "n = 0".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">m</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> <span class="id" type="var">m</span> <span class="id" type="keyword">as</span> [|<span class="id" type="var">m'</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "m = 0".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">left</span>. <span class="id" type="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "m = S m'".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">right</span>. <span class="id" type="tactic">intros</span> <span class="id" type="var">contra</span>. <span class="id" type="tactic">inversion</span> <span class="id" type="var">contra</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "n = S n'".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">m</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> <span class="id" type="var">m</span> <span class="id" type="keyword">as</span> [|<span class="id" type="var">m'</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "m = 0".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">right</span>. <span class="id" type="tactic">intros</span> <span class="id" type="var">contra</span>. <span class="id" type="tactic">inversion</span> <span class="id" type="var">contra</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "m = S m'".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> <span class="id" type="var">IHn'</span> <span class="id" type="keyword">with</span> (<span class="id" type="var">m</span> := <span class="id" type="var">m'</span>) <span class="id" type="keyword">as</span> [<span class="id" type="var">eq</span> | <span class="id" type="var">neq</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">left</span>. <span class="id" type="tactic">apply</span> <a class="idref" href="MoreCoq.html#f_equal"><span class="id" type="lemma">f_equal</span></a>. <span class="id" type="tactic">apply</span> <span class="id" type="var">eq</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">right</span>. <span class="id" type="tactic">intros</span> <span class="id" type="var">Heq</span>. <span class="id" type="tactic">inversion</span> <span class="id" type="var">Heq</span> <span class="id" type="keyword">as</span> [<span class="id" type="var">Heq'</span>]. <span class="id" type="tactic">apply</span> <span class="id" type="var">neq</span>. <span class="id" type="tactic">apply</span> <span class="id" type="var">Heq'</span>.<br/>
+<span class="id" type="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Read as a theorem, this says that equality on <span class="inlinecode"><a class="idref" href="Basics.html#Playground1.nat"><span class="id" type="inductive">nat</span></a></span>s is decidable:
+that is, given two <span class="inlinecode"><a class="idref" href="Basics.html#Playground1.nat"><span class="id" type="inductive">nat</span></a></span> values, we can always produce either 
+evidence that they are equal or evidence that they are not.
+Read computationally, <span class="inlinecode"><a class="idref" href="MoreLogic.html#eq_nat_dec"><span class="id" type="lemma">eq_nat_dec</span></a></span> takes two <span class="inlinecode"><a class="idref" href="Basics.html#Playground1.nat"><span class="id" type="inductive">nat</span></a></span> values and returns
+a <span class="inlinecode"><a class="idref" href="MoreLogic.html#sumbool"><span class="id" type="inductive">sumbool</span></a></span> constructed with <span class="inlinecode"><span class="id" type="tactic">left</span></span> if they are equal and <span class="inlinecode"><span class="id" type="tactic">right</span></span> 
+if they are not; this result can be tested with a <span class="inlinecode"><span class="id" type="keyword">match</span></span> or, better,
+with an <span class="inlinecode"><span class="id" type="keyword">if</span>-<span class="id" type="keyword">then</span>-<span class="id" type="keyword">else</span></span>, just like a regular <span class="inlinecode"><span class="id" type="var">boolean</span></span>. 
+(Notice that we ended this proof with <span class="inlinecode"><span class="id" type="keyword">Defined</span></span> rather than <span class="inlinecode"><span class="id" type="keyword">Qed</span></span>. 
+The only difference this makes is that the proof becomes <i>transparent</i>,
+meaning that its definition is available when Coq tries to do reductions,
+which is important for the computational interpretation.)
+
+<div class="paragraph"> </div>
+
+<a name="lab325"></a><h3 class="section"> </h3>
+
+<div class="paragraph"> </div>
+
+Here's a simple example illustrating the advantages of the <span class="inlinecode"><a class="idref" href="MoreLogic.html#sumbool"><span class="id" type="inductive">sumbool</span></a></span> form. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="override'"><span class="id" type="definition">override'</span></a> {<span class="id" type="var">X</span>: <span class="id" type="keyword">Type</span>} (<span class="id" type="var">f</span>: <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a>→<a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a>) (<span class="id" type="var">k</span>:<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a>) (<span class="id" type="var">x</span>:<a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a>) : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a>→<a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a>:=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">fun</span> (<span class="id" type="var">k'</span>:<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a>) ⇒ <span class="id" type="keyword">if</span> <a class="idref" href="MoreLogic.html#eq_nat_dec"><span class="id" type="lemma">eq_nat_dec</span></a> <a class="idref" href="MoreLogic.html#k"><span class="id" type="variable">k</span></a> <a class="idref" href="MoreLogic.html#k'"><span class="id" type="variable">k'</span></a> <span class="id" type="keyword">then</span> <a class="idref" href="MoreLogic.html#x"><span class="id" type="variable">x</span></a> <span class="id" type="keyword">else</span> <a class="idref" href="MoreLogic.html#f"><span class="id" type="variable">f</span></a> <a class="idref" href="MoreLogic.html#k'"><span class="id" type="variable">k'</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="override_same'"><span class="id" type="lemma">override_same'</span></a> : <span class="id" type="keyword">∀</span> (<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>) <span class="id" type="var">x1</span> <span class="id" type="var">k1</span> <span class="id" type="var">k2</span> (<span class="id" type="var">f</span> : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a>→<a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a>),<br/>
+&nbsp;&nbsp;<a class="idref" href="MoreLogic.html#f"><span class="id" type="variable">f</span></a> <a class="idref" href="MoreLogic.html#k1"><span class="id" type="variable">k1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="MoreLogic.html#x1"><span class="id" type="variable">x1</span></a> → <br/>
+&nbsp;&nbsp;(<a class="idref" href="MoreLogic.html#override'"><span class="id" type="definition">override'</span></a> <a class="idref" href="MoreLogic.html#f"><span class="id" type="variable">f</span></a> <a class="idref" href="MoreLogic.html#k1"><span class="id" type="variable">k1</span></a> <a class="idref" href="MoreLogic.html#x1"><span class="id" type="variable">x1</span></a>) <a class="idref" href="MoreLogic.html#k2"><span class="id" type="variable">k2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="MoreLogic.html#f"><span class="id" type="variable">f</span></a> <a class="idref" href="MoreLogic.html#k2"><span class="id" type="variable">k2</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">X</span> <span class="id" type="var">x1</span> <span class="id" type="var">k1</span> <span class="id" type="var">k2</span> <span class="id" type="var">f</span>. <span class="id" type="tactic">intros</span> <span class="id" type="var">Hx1</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">unfold</span> <a class="idref" href="MoreLogic.html#override'"><span class="id" type="definition">override'</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> (<a class="idref" href="MoreLogic.html#eq_nat_dec"><span class="id" type="lemma">eq_nat_dec</span></a> <span class="id" type="var">k1</span> <span class="id" type="var">k2</span>). &nbsp;&nbsp;<span class="id" type="var">Case</span> "k1 = k2".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">rewrite</span> &lt;- <span class="id" type="var">e</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">symmetry</span>. <span class="id" type="tactic">apply</span> <span class="id" type="var">Hx1</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "k1 &lt;&gt; k2".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">reflexivity</span>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Compare this to the more laborious proof (in MoreCoq.v) for the 
+   version of <span class="inlinecode"><a class="idref" href="Poly.html#override"><span class="id" type="definition">override</span></a></span> defined using <span class="inlinecode"><a class="idref" href="Basics.html#beq_nat"><span class="id" type="definition">beq_nat</span></a></span>, where we had to
+   use the auxiliary lemma <span class="inlinecode"><a class="idref" href="MoreCoq.html#beq_nat_true"><span class="id" type="lemma">beq_nat_true</span></a></span> to convert a fact about booleans
+   to a Prop. 
+<div class="paragraph"> </div>
+
+<a name="lab326"></a><h4 class="section">Exercise: 1 star (override_shadow')</h4>
+
+</div>
+<div class="code">
+<span class="id" type="keyword">Theorem</span> <a name="override_shadow'"><span class="id" type="lemma">override_shadow'</span></a> : <span class="id" type="keyword">∀</span> (<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>) <span class="id" type="var">x1</span> <span class="id" type="var">x2</span> <span class="id" type="var">k1</span> <span class="id" type="var">k2</span> (<span class="id" type="var">f</span> : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a>→<a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a>),<br/>
+&nbsp;&nbsp;(<a class="idref" href="MoreLogic.html#override'"><span class="id" type="definition">override'</span></a> (<a class="idref" href="MoreLogic.html#override'"><span class="id" type="definition">override'</span></a> <a class="idref" href="MoreLogic.html#f"><span class="id" type="variable">f</span></a> <a class="idref" href="MoreLogic.html#k1"><span class="id" type="variable">k1</span></a> <a class="idref" href="MoreLogic.html#x2"><span class="id" type="variable">x2</span></a>) <a class="idref" href="MoreLogic.html#k1"><span class="id" type="variable">k1</span></a> <a class="idref" href="MoreLogic.html#x1"><span class="id" type="variable">x1</span></a>) <a class="idref" href="MoreLogic.html#k2"><span class="id" type="variable">k2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> (<a class="idref" href="MoreLogic.html#override'"><span class="id" type="definition">override'</span></a> <a class="idref" href="MoreLogic.html#f"><span class="id" type="variable">f</span></a> <a class="idref" href="MoreLogic.html#k1"><span class="id" type="variable">k1</span></a> <a class="idref" href="MoreLogic.html#x1"><span class="id" type="variable">x1</span></a>) <a class="idref" href="MoreLogic.html#k2"><span class="id" type="variable">k2</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab327"></a><h1 class="section">Additional Exercises</h1>
+
+<div class="paragraph"> </div>
+
+<a name="lab328"></a><h4 class="section">Exercise: 3 stars (all_forallb)</h4>
+ Inductively define a property <span class="inlinecode"><a class="idref" href="MoreLogic.html#all"><span class="id" type="inductive">all</span></a></span> of lists, parameterized by a
+    type <span class="inlinecode"><a class="idref" href="Imp.html#X"><span class="id" type="definition">X</span></a></span> and a property <span class="inlinecode"><a class="idref" href="UseAuto.html#P"><span class="id" type="axiom">P</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="Imp.html#X"><span class="id" type="definition">X</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" type="keyword">Prop</span></span>, such that <span class="inlinecode"><a class="idref" href="MoreLogic.html#all"><span class="id" type="inductive">all</span></a></span> <span class="inlinecode"><a class="idref" href="Imp.html#X"><span class="id" type="definition">X</span></a></span> <span class="inlinecode"><a class="idref" href="UseAuto.html#P"><span class="id" type="axiom">P</span></a></span> <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.l"><span class="id" type="abbreviation">l</span></a></span>
+    asserts that <span class="inlinecode"><a class="idref" href="UseAuto.html#P"><span class="id" type="axiom">P</span></a></span> is true for every element of the list <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.l"><span class="id" type="abbreviation">l</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="all"><span class="id" type="inductive">all</span></a> (<span class="id" type="var">X</span> : <span class="id" type="keyword">Type</span>) (<span class="id" type="var">P</span> : <a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a> → <span class="id" type="keyword">Prop</span>) : <a class="idref" href="Poly.html#list"><span class="id" type="inductive">list</span></a> <span class="id" type="var">X</span> → <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<br/>
+.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Recall the function <span class="inlinecode"><a class="idref" href="MoreLogic.html#forallb"><span class="id" type="definition">forallb</span></a></span>, from the exercise
+    <span class="inlinecode"><span class="id" type="var">forall_exists_challenge</span></span> in chapter <span class="inlinecode"><span class="id" type="library">Poly</span></span>: 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Fixpoint</span> <a name="forallb"><span class="id" type="definition">forallb</span></a> {<span class="id" type="var">X</span> : <span class="id" type="keyword">Type</span>} (<span class="id" type="var">test</span> : <a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a> → <a class="idref" href="Basics.html#bool"><span class="id" type="inductive">bool</span></a>) (<span class="id" type="var">l</span> : <a class="idref" href="Poly.html#list"><span class="id" type="inductive">list</span></a> <a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a>) : <a class="idref" href="Basics.html#bool"><span class="id" type="inductive">bool</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">match</span> <a class="idref" href="MoreLogic.html#l"><span class="id" type="variable">l</span></a> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="Poly.html#::'['_']'"><span class="id" type="notation">[]</span></a> ⇒ <a class="idref" href="Basics.html#true"><span class="id" type="constructor">true</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">x</span> <a class="idref" href="Poly.html#::x_'::'_x"><span class="id" type="notation">::</span></a> <span class="id" type="var">l'</span> ⇒ <a class="idref" href="Basics.html#andb"><span class="id" type="definition">andb</span></a> (<a class="idref" href="MoreLogic.html#test"><span class="id" type="variable">test</span></a> <span class="id" type="var">x</span>) (<a class="idref" href="MoreLogic.html#forallb"><span class="id" type="definition">forallb</span></a> <a class="idref" href="MoreLogic.html#test"><span class="id" type="variable">test</span></a> <span class="id" type="var">l'</span>)<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">end</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Using the property <span class="inlinecode"><a class="idref" href="MoreLogic.html#all"><span class="id" type="inductive">all</span></a></span>, write down a specification for <span class="inlinecode"><a class="idref" href="MoreLogic.html#forallb"><span class="id" type="definition">forallb</span></a></span>,
+    and prove that it satisfies the specification. Try to make your 
+    specification as precise as possible.
+
+<div class="paragraph"> </div>
+
+    Are there any important properties of the function <span class="inlinecode"><a class="idref" href="MoreLogic.html#forallb"><span class="id" type="definition">forallb</span></a></span> which
+    are not captured by your specification? 
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+<a name="lab329"></a><h4 class="section">Exercise: 4 stars, advanced (filter_challenge)</h4>
+ One of the main purposes of Coq is to prove that programs match
+    their specifications.  To this end, let's prove that our
+    definition of <span class="inlinecode"><a class="idref" href="Poly.html#filter"><span class="id" type="definition">filter</span></a></span> matches a specification.  Here is the
+    specification, written out informally in English.
+
+<div class="paragraph"> </div>
+
+    Suppose we have a set <span class="inlinecode"><a class="idref" href="Imp.html#X"><span class="id" type="definition">X</span></a></span>, a function <span class="inlinecode"><a class="idref" href="MoreStlc.html#STLCExtended.Examples.ListTest.test"><span class="id" type="definition">test</span></a>:</span> <span class="inlinecode"><a class="idref" href="Imp.html#X"><span class="id" type="definition">X</span></a>→<a class="idref" href="Basics.html#bool"><span class="id" type="inductive">bool</span></a></span>, and a list
+    <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.l"><span class="id" type="abbreviation">l</span></a></span> of type <span class="inlinecode"><a class="idref" href="Poly.html#list"><span class="id" type="inductive">list</span></a></span> <span class="inlinecode"><a class="idref" href="Imp.html#X"><span class="id" type="definition">X</span></a></span>.  Suppose further that <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.l"><span class="id" type="abbreviation">l</span></a></span> is an "in-order
+    merge" of two lists, <span class="inlinecode"><a class="idref" href="Lists.html#l1"><span class="id" type="variable">l1</span></a></span> and <span class="inlinecode"><a class="idref" href="Lists.html#l2"><span class="id" type="variable">l2</span></a></span>, such that every item in <span class="inlinecode"><a class="idref" href="Lists.html#l1"><span class="id" type="variable">l1</span></a></span>
+    satisfies <span class="inlinecode"><a class="idref" href="MoreStlc.html#STLCExtended.Examples.ListTest.test"><span class="id" type="definition">test</span></a></span> and no item in <span class="inlinecode"><a class="idref" href="Lists.html#l2"><span class="id" type="variable">l2</span></a></span> satisfies test.  Then <span class="inlinecode"><a class="idref" href="Poly.html#filter"><span class="id" type="definition">filter</span></a></span>
+    <span class="inlinecode"><a class="idref" href="MoreStlc.html#STLCExtended.Examples.ListTest.test"><span class="id" type="definition">test</span></a></span> <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.l"><span class="id" type="abbreviation">l</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="Lists.html#l1"><span class="id" type="variable">l1</span></a></span>.
+
+<div class="paragraph"> </div>
+
+    A list <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.l"><span class="id" type="abbreviation">l</span></a></span> is an "in-order merge" of <span class="inlinecode"><a class="idref" href="Lists.html#l1"><span class="id" type="variable">l1</span></a></span> and <span class="inlinecode"><a class="idref" href="Lists.html#l2"><span class="id" type="variable">l2</span></a></span> if it contains
+    all the same elements as <span class="inlinecode"><a class="idref" href="Lists.html#l1"><span class="id" type="variable">l1</span></a></span> and <span class="inlinecode"><a class="idref" href="Lists.html#l2"><span class="id" type="variable">l2</span></a></span>, in the same order as <span class="inlinecode"><a class="idref" href="Lists.html#l1"><span class="id" type="variable">l1</span></a></span>
+    and <span class="inlinecode"><a class="idref" href="Lists.html#l2"><span class="id" type="variable">l2</span></a></span>, but possibly interleaved.  For example, 
+    <span class="inlinecode">1,4,6,2,3</span>
+    is an in-order merge of
+    <span class="inlinecode">1,6,2</span>
+    and
+    <span class="inlinecode">4,3</span>.
+    Your job is to translate this specification into a Coq theorem and
+    prove it.  (Hint: You'll need to begin by defining what it means
+    for one list to be a merge of two others.  Do this with an
+    inductive relation, not a <span class="inlinecode"><span class="id" type="keyword">Fixpoint</span></span>.)  
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+<a name="lab330"></a><h4 class="section">Exercise: 5 stars, advanced, optional (filter_challenge_2)</h4>
+ A different way to formally characterize the behavior of <span class="inlinecode"><a class="idref" href="Poly.html#filter"><span class="id" type="definition">filter</span></a></span>
+    goes like this: Among all subsequences of <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.l"><span class="id" type="abbreviation">l</span></a></span> with the property
+    that <span class="inlinecode"><a class="idref" href="MoreStlc.html#STLCExtended.Examples.ListTest.test"><span class="id" type="definition">test</span></a></span> evaluates to <span class="inlinecode"><a class="idref" href="Basics.html#true"><span class="id" type="constructor">true</span></a></span> on all their members, <span class="inlinecode"><a class="idref" href="Poly.html#filter"><span class="id" type="definition">filter</span></a></span> <span class="inlinecode"><a class="idref" href="MoreStlc.html#STLCExtended.Examples.ListTest.test"><span class="id" type="definition">test</span></a></span>
+    <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.l"><span class="id" type="abbreviation">l</span></a></span> is the longest.  Express this claim formally and prove it. 
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+<a name="lab331"></a><h4 class="section">Exercise: 4 stars, advanced (no_repeats)</h4>
+ The following inductively defined proposition... 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="appears_in"><span class="id" type="inductive">appears_in</span></a> {<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>} (<span class="id" type="var">a</span>:<a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a>) : <a class="idref" href="Poly.html#list"><span class="id" type="inductive">list</span></a> <span class="id" type="var">X</span> → <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;| <a name="ai_here"><span class="id" type="constructor">ai_here</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">l</span>, <a class="idref" href="MoreLogic.html#appears_in"><span class="id" type="inductive">appears_in</span></a> <span class="id" type="var">a</span> (<span class="id" type="var">a</span><a class="idref" href="Poly.html#::x_'::'_x"><span class="id" type="notation">::</span></a><a class="idref" href="MoreLogic.html#l"><span class="id" type="variable">l</span></a>)<br/>
+&nbsp;&nbsp;| <a name="ai_later"><span class="id" type="constructor">ai_later</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">b</span> <span class="id" type="var">l</span>, <a class="idref" href="MoreLogic.html#appears_in"><span class="id" type="inductive">appears_in</span></a> <span class="id" type="var">a</span> <a class="idref" href="MoreLogic.html#l"><span class="id" type="variable">l</span></a> → <a class="idref" href="MoreLogic.html#appears_in"><span class="id" type="inductive">appears_in</span></a> <span class="id" type="var">a</span> (<a class="idref" href="MoreLogic.html#b"><span class="id" type="variable">b</span></a><a class="idref" href="Poly.html#::x_'::'_x"><span class="id" type="notation">::</span></a><a class="idref" href="MoreLogic.html#l"><span class="id" type="variable">l</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...gives us a precise way of saying that a value <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a></span> appears at
+    least once as a member of a list <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.l"><span class="id" type="abbreviation">l</span></a></span>. 
+
+<div class="paragraph"> </div>
+
+    Here's a pair of warm-ups about <span class="inlinecode"><a class="idref" href="SfLib.html#appears_in"><span class="id" type="inductive">appears_in</span></a></span>.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="appears_in_app"><span class="id" type="lemma">appears_in_app</span></a> : <span class="id" type="keyword">∀</span> (<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>) (<span class="id" type="var">xs</span> <span class="id" type="var">ys</span> : <a class="idref" href="Poly.html#list"><span class="id" type="inductive">list</span></a> <a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a>) (<span class="id" type="var">x</span>:<a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a>), <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="MoreLogic.html#appears_in"><span class="id" type="inductive">appears_in</span></a> <a class="idref" href="MoreLogic.html#x"><span class="id" type="variable">x</span></a> (<a class="idref" href="MoreLogic.html#xs"><span class="id" type="variable">xs</span></a> <a class="idref" href="Poly.html#::x_'++'_x"><span class="id" type="notation">++</span></a> <a class="idref" href="MoreLogic.html#ys"><span class="id" type="variable">ys</span></a>) → <a class="idref" href="MoreLogic.html#appears_in"><span class="id" type="inductive">appears_in</span></a> <a class="idref" href="MoreLogic.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="MoreLogic.html#xs"><span class="id" type="variable">xs</span></a> <a class="idref" href="Logic.html#:type_scope:x_'\/'_x"><span class="id" type="notation">∨</span></a> <a class="idref" href="MoreLogic.html#appears_in"><span class="id" type="inductive">appears_in</span></a> <a class="idref" href="MoreLogic.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="MoreLogic.html#ys"><span class="id" type="variable">ys</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="app_appears_in"><span class="id" type="lemma">app_appears_in</span></a> : <span class="id" type="keyword">∀</span> (<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>) (<span class="id" type="var">xs</span> <span class="id" type="var">ys</span> : <a class="idref" href="Poly.html#list"><span class="id" type="inductive">list</span></a> <a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a>) (<span class="id" type="var">x</span>:<a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a>), <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="MoreLogic.html#appears_in"><span class="id" type="inductive">appears_in</span></a> <a class="idref" href="MoreLogic.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="MoreLogic.html#xs"><span class="id" type="variable">xs</span></a> <a class="idref" href="Logic.html#:type_scope:x_'\/'_x"><span class="id" type="notation">∨</span></a> <a class="idref" href="MoreLogic.html#appears_in"><span class="id" type="inductive">appears_in</span></a> <a class="idref" href="MoreLogic.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="MoreLogic.html#ys"><span class="id" type="variable">ys</span></a> → <a class="idref" href="MoreLogic.html#appears_in"><span class="id" type="inductive">appears_in</span></a> <a class="idref" href="MoreLogic.html#x"><span class="id" type="variable">x</span></a> (<a class="idref" href="MoreLogic.html#xs"><span class="id" type="variable">xs</span></a> <a class="idref" href="Poly.html#::x_'++'_x"><span class="id" type="notation">++</span></a> <a class="idref" href="MoreLogic.html#ys"><span class="id" type="variable">ys</span></a>).<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Now use <span class="inlinecode"><a class="idref" href="SfLib.html#appears_in"><span class="id" type="inductive">appears_in</span></a></span> to define a proposition <span class="inlinecode"><span class="id" type="var">disjoint</span></span> <span class="inlinecode"><a class="idref" href="Imp.html#X"><span class="id" type="definition">X</span></a></span> <span class="inlinecode"><a class="idref" href="Lists.html#l1"><span class="id" type="variable">l1</span></a></span> <span class="inlinecode"><a class="idref" href="Lists.html#l2"><span class="id" type="variable">l2</span></a></span>,
+    which should be provable exactly when <span class="inlinecode"><a class="idref" href="Lists.html#l1"><span class="id" type="variable">l1</span></a></span> and <span class="inlinecode"><a class="idref" href="Lists.html#l2"><span class="id" type="variable">l2</span></a></span> are
+    lists (with elements of type X) that have no elements in common. 
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, use <span class="inlinecode"><a class="idref" href="SfLib.html#appears_in"><span class="id" type="inductive">appears_in</span></a></span> to define an inductive proposition
+    <span class="inlinecode"><span class="id" type="var">no_repeats</span></span> <span class="inlinecode"><a class="idref" href="Imp.html#X"><span class="id" type="definition">X</span></a></span> <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.l"><span class="id" type="abbreviation">l</span></a></span>, which should be provable exactly when <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.l"><span class="id" type="abbreviation">l</span></a></span> is a
+    list (with elements of type <span class="inlinecode"><a class="idref" href="Imp.html#X"><span class="id" type="definition">X</span></a></span>) where every member is different
+    from every other.  For example, <span class="inlinecode"><span class="id" type="var">no_repeats</span></span> <span class="inlinecode"><a class="idref" href="Basics.html#Playground1.nat"><span class="id" type="inductive">nat</span></a></span> <span class="inlinecode">[1,2,3,4]</span> and
+    <span class="inlinecode"><span class="id" type="var">no_repeats</span></span> <span class="inlinecode"><a class="idref" href="Basics.html#bool"><span class="id" type="inductive">bool</span></a></span> <span class="inlinecode">[]</span> should be provable, while <span class="inlinecode"><span class="id" type="var">no_repeats</span></span> <span class="inlinecode"><a class="idref" href="Basics.html#Playground1.nat"><span class="id" type="inductive">nat</span></a></span>
+    <span class="inlinecode">[1,2,1]</span> and <span class="inlinecode"><span class="id" type="var">no_repeats</span></span> <span class="inlinecode"><a class="idref" href="Basics.html#bool"><span class="id" type="inductive">bool</span></a></span> <span class="inlinecode">[<a class="idref" href="Basics.html#true"><span class="id" type="constructor">true</span></a>,<a class="idref" href="Basics.html#true"><span class="id" type="constructor">true</span></a>]</span> should not be.  
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Finally, state and prove one or more interesting theorems relating
+    <span class="inlinecode"><span class="id" type="var">disjoint</span></span>, <span class="inlinecode"><span class="id" type="var">no_repeats</span></span> and <span class="inlinecode">++</span> (list append).  
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+<a name="lab332"></a><h4 class="section">Exercise: 3 stars (nostutter)</h4>
+ Formulating inductive definitions of predicates is an important
+    skill you'll need in this course.  Try to solve this exercise
+    without any help at all (except from your study group partner, if
+    you have one).
+
+<div class="paragraph"> </div>
+
+    We say that a list of numbers "stutters" if it repeats the same
+    number consecutively.  The predicate "<span class="inlinecode"><a class="idref" href="MoreLogic.html#nostutter"><span class="id" type="inductive">nostutter</span></a></span> <span class="inlinecode"><a class="idref" href="Lists.html#NatList.mylist"><span class="id" type="definition">mylist</span></a></span>" means
+    that <span class="inlinecode"><a class="idref" href="Lists.html#NatList.mylist"><span class="id" type="definition">mylist</span></a></span> does not stutter.  Formulate an inductive definition
+    for <span class="inlinecode"><a class="idref" href="MoreLogic.html#nostutter"><span class="id" type="inductive">nostutter</span></a></span>.  (This is different from the <span class="inlinecode"><span class="id" type="var">no_repeats</span></span>
+    predicate in the exercise above; the sequence <span class="inlinecode">1,4,1</span> repeats but
+    does not stutter.) 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="nostutter"><span class="id" type="inductive">nostutter</span></a>:  <a class="idref" href="Poly.html#list"><span class="id" type="inductive">list</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a> → <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;<br/>
+.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Make sure each of these tests succeeds, but you are free
+    to change the proof if the given one doesn't work for you.
+    Your definition might be different from mine and still correct,
+    in which case the examples might need a different proof.
+
+<div class="paragraph"> </div>
+
+    The suggested proofs for the examples (in comments) use a number
+    of tactics we haven't talked about, to try to make them robust
+    with respect to different possible ways of defining <span class="inlinecode"><a class="idref" href="MoreLogic.html#nostutter"><span class="id" type="inductive">nostutter</span></a></span>.
+    You should be able to just uncomment and use them as-is, but if
+    you prefer you can also prove each example with more basic
+    tactics.  
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Example</span> <a name="test_nostutter_1"><span class="id" type="definition">test_nostutter_1</span></a>:      <a class="idref" href="MoreLogic.html#nostutter"><span class="id" type="inductive">nostutter</span></a> <a class="idref" href="Poly.html#::'['_x_';'_'..'_';'_x_']'"><span class="id" type="notation">[</span></a>3<a class="idref" href="Poly.html#::'['_x_';'_'..'_';'_x_']'"><span class="id" type="notation">;</span></a>1<a class="idref" href="Poly.html#::'['_x_';'_'..'_';'_x_']'"><span class="id" type="notation">;</span></a>4<a class="idref" href="Poly.html#::'['_x_';'_'..'_';'_x_']'"><span class="id" type="notation">;</span></a>1<a class="idref" href="Poly.html#::'['_x_';'_'..'_';'_x_']'"><span class="id" type="notation">;</span></a>5<a class="idref" href="Poly.html#::'['_x_';'_'..'_';'_x_']'"><span class="id" type="notation">;</span></a>6<a class="idref" href="Poly.html#::'['_x_';'_'..'_';'_x_']'"><span class="id" type="notation">]</span></a>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Example</span> <a name="test_nostutter_2"><span class="id" type="definition">test_nostutter_2</span></a>:  <a class="idref" href="MoreLogic.html#nostutter"><span class="id" type="inductive">nostutter</span></a> <a class="idref" href="Poly.html#::'['_']'"><span class="id" type="notation">[]</span></a>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Example</span> <a name="test_nostutter_3"><span class="id" type="definition">test_nostutter_3</span></a>:  <a class="idref" href="MoreLogic.html#nostutter"><span class="id" type="inductive">nostutter</span></a> <a class="idref" href="Poly.html#::'['_x_';'_'..'_';'_x_']'"><span class="id" type="notation">[</span></a>5<a class="idref" href="Poly.html#::'['_x_';'_'..'_';'_x_']'"><span class="id" type="notation">]</span></a>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Example</span> <a name="test_nostutter_4"><span class="id" type="definition">test_nostutter_4</span></a>:      <a class="idref" href="Logic.html#not"><span class="id" type="definition">not</span></a> (<a class="idref" href="MoreLogic.html#nostutter"><span class="id" type="inductive">nostutter</span></a> <a class="idref" href="Poly.html#::'['_x_';'_'..'_';'_x_']'"><span class="id" type="notation">[</span></a>3<a class="idref" href="Poly.html#::'['_x_';'_'..'_';'_x_']'"><span class="id" type="notation">;</span></a>1<a class="idref" href="Poly.html#::'['_x_';'_'..'_';'_x_']'"><span class="id" type="notation">;</span></a>1<a class="idref" href="Poly.html#::'['_x_';'_'..'_';'_x_']'"><span class="id" type="notation">;</span></a>4<a class="idref" href="Poly.html#::'['_x_';'_'..'_';'_x_']'"><span class="id" type="notation">]</span></a>).<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+<a name="lab333"></a><h4 class="section">Exercise: 4 stars, advanced (pigeonhole principle)</h4>
+ The "pigeonhole principle" states a basic fact about counting:
+   if you distribute more than <span class="inlinecode"><a class="idref" href="MoreStlc.html#STLCExtended.Examples.n"><span class="id" type="abbreviation">n</span></a></span> items into <span class="inlinecode"><a class="idref" href="MoreStlc.html#STLCExtended.Examples.n"><span class="id" type="abbreviation">n</span></a></span> pigeonholes, some 
+   pigeonhole must contain at least two items.  As is often the case,
+   this apparently trivial fact about numbers requires non-trivial
+   machinery to prove, but we now have enough... 
+<div class="paragraph"> </div>
+
+ First a pair of useful lemmas (we already proved these for lists
+    of naturals, but not for arbitrary lists). 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="app_length"><span class="id" type="lemma">app_length</span></a> : <span class="id" type="keyword">∀</span> (<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>) (<span class="id" type="var">l1</span> <span class="id" type="var">l2</span> : <a class="idref" href="Poly.html#list"><span class="id" type="inductive">list</span></a> <a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a>),<br/>
+&nbsp;&nbsp;<a class="idref" href="Poly.html#length"><span class="id" type="definition">length</span></a> (<a class="idref" href="MoreLogic.html#l1"><span class="id" type="variable">l1</span></a> <a class="idref" href="Poly.html#::x_'++'_x"><span class="id" type="notation">++</span></a> <a class="idref" href="MoreLogic.html#l2"><span class="id" type="variable">l2</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="Poly.html#length"><span class="id" type="definition">length</span></a> <a class="idref" href="MoreLogic.html#l1"><span class="id" type="variable">l1</span></a> <a class="idref" href="Basics.html#:nat_scope:x_'+'_x"><span class="id" type="notation">+</span></a> <a class="idref" href="Poly.html#length"><span class="id" type="definition">length</span></a> <a class="idref" href="MoreLogic.html#l2"><span class="id" type="variable">l2</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="appears_in_app_split"><span class="id" type="lemma">appears_in_app_split</span></a> : <span class="id" type="keyword">∀</span> (<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>) (<span class="id" type="var">x</span>:<a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a>) (<span class="id" type="var">l</span>:<a class="idref" href="Poly.html#list"><span class="id" type="inductive">list</span></a> <a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a>),<br/>
+&nbsp;&nbsp;<a class="idref" href="MoreLogic.html#appears_in"><span class="id" type="inductive">appears_in</span></a> <a class="idref" href="MoreLogic.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="MoreLogic.html#l"><span class="id" type="variable">l</span></a> → <br/>
+&nbsp;&nbsp;<a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">l1</span><a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">,</span></a> <a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">l2</span><a class="idref" href="MoreLogic.html#:type_scope:'exists'_x_','_x"><span class="id" type="notation">,</span></a> <a class="idref" href="MoreLogic.html#l"><span class="id" type="variable">l</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <span class="id" type="var">l1</span> <a class="idref" href="Poly.html#::x_'++'_x"><span class="id" type="notation">++</span></a> <a class="idref" href="Poly.html#::x_'++'_x"><span class="id" type="notation">(</span></a><a class="idref" href="MoreLogic.html#x"><span class="id" type="variable">x</span></a><a class="idref" href="Poly.html#::x_'::'_x"><span class="id" type="notation">::</span></a><span class="id" type="var">l2</span><a class="idref" href="Poly.html#::x_'++'_x"><span class="id" type="notation">)</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Now define a predicate <span class="inlinecode"><a class="idref" href="MoreLogic.html#repeats"><span class="id" type="inductive">repeats</span></a></span> (analogous to <span class="inlinecode"><span class="id" type="var">no_repeats</span></span> in the
+   exercise above), such that <span class="inlinecode"><a class="idref" href="MoreLogic.html#repeats"><span class="id" type="inductive">repeats</span></a></span> <span class="inlinecode"><a class="idref" href="Imp.html#X"><span class="id" type="definition">X</span></a></span> <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.l"><span class="id" type="abbreviation">l</span></a></span> asserts that <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.l"><span class="id" type="abbreviation">l</span></a></span> contains
+   at least one repeated element (of type <span class="inlinecode"><a class="idref" href="Imp.html#X"><span class="id" type="definition">X</span></a></span>).  
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="repeats"><span class="id" type="inductive">repeats</span></a> {<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>} : <a class="idref" href="Poly.html#list"><span class="id" type="inductive">list</span></a> <span class="id" type="var">X</span> → <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<br/>
+.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Now here's a way to formalize the pigeonhole principle. List <span class="inlinecode"><a class="idref" href="Lists.html#l2"><span class="id" type="variable">l2</span></a></span>
+    represents a list of pigeonhole labels, and list <span class="inlinecode"><a class="idref" href="Lists.html#l1"><span class="id" type="variable">l1</span></a></span> represents
+    the labels assigned to a list of items: if there are more items
+    than labels, at least two items must have the same label.  This
+    proof is much easier if you use the <span class="inlinecode"><a class="idref" href="Logic.html#excluded_middle"><span class="id" type="definition">excluded_middle</span></a></span> hypothesis
+    to show that <span class="inlinecode"><a class="idref" href="SfLib.html#appears_in"><span class="id" type="inductive">appears_in</span></a></span> is decidable, i.e. <span class="inlinecode"><span class="id" type="keyword">∀</span></span> <span class="inlinecode"><a class="idref" href="RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>
+    <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.l"><span class="id" type="abbreviation">l</span></a>,</span> <span class="inlinecode">(<a class="idref" href="SfLib.html#appears_in"><span class="id" type="inductive">appears_in</span></a></span> <span class="inlinecode"><a class="idref" href="RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.l"><span class="id" type="abbreviation">l</span></a>)</span> <span class="inlinecode">∨</span> <span class="inlinecode">¬</span> <span class="inlinecode">(<a class="idref" href="SfLib.html#appears_in"><span class="id" type="inductive">appears_in</span></a></span> <span class="inlinecode"><a class="idref" href="RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.l"><span class="id" type="abbreviation">l</span></a>)</span>.  However, it is also
+    possible to make the proof go through <i>without</i> assuming that
+    <span class="inlinecode"><a class="idref" href="SfLib.html#appears_in"><span class="id" type="inductive">appears_in</span></a></span> is decidable; if you can manage to do this, you will
+    not need the <span class="inlinecode"><a class="idref" href="Logic.html#excluded_middle"><span class="id" type="definition">excluded_middle</span></a></span> hypothesis. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="pigeonhole_principle"><span class="id" type="lemma">pigeonhole_principle</span></a>: <span class="id" type="keyword">∀</span> (<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>) (<span class="id" type="var">l1</span>  <span class="id" type="var">l2</span>:<a class="idref" href="Poly.html#list"><span class="id" type="inductive">list</span></a> <a class="idref" href="MoreLogic.html#X"><span class="id" type="variable">X</span></a>), <br/>
+&nbsp;&nbsp;&nbsp;<a class="idref" href="Logic.html#excluded_middle"><span class="id" type="definition">excluded_middle</span></a> → <br/>
+&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">∀</span> <span class="id" type="var">x</span>, <a class="idref" href="MoreLogic.html#appears_in"><span class="id" type="inductive">appears_in</span></a> <a class="idref" href="MoreLogic.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="MoreLogic.html#l1"><span class="id" type="variable">l1</span></a> → <a class="idref" href="MoreLogic.html#appears_in"><span class="id" type="inductive">appears_in</span></a> <a class="idref" href="MoreLogic.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="MoreLogic.html#l2"><span class="id" type="variable">l2</span></a>) → <br/>
+&nbsp;&nbsp;&nbsp;<a class="idref" href="Poly.html#length"><span class="id" type="definition">length</span></a> <a class="idref" href="MoreLogic.html#l2"><span class="id" type="variable">l2</span></a> <a class="idref" href="Prop.html#::x_'<'_x"><span class="id" type="notation">&lt;</span></a> <a class="idref" href="Poly.html#length"><span class="id" type="definition">length</span></a> <a class="idref" href="MoreLogic.html#l1"><span class="id" type="variable">l1</span></a> → <br/>
+&nbsp;&nbsp;&nbsp;<a class="idref" href="MoreLogic.html#repeats"><span class="id" type="inductive">repeats</span></a> <a class="idref" href="MoreLogic.html#l1"><span class="id" type="variable">l1</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">X</span> <span class="id" type="var">l1</span>. <span class="id" type="tactic">induction</span> <span class="id" type="var">l1</span> <span class="id" type="keyword">as</span> [|<span class="id" type="var">x</span> <span class="id" type="var">l1'</span>].<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

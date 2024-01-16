@@ -1,0 +1,20 @@
+Version 0.1.2
+- corrected code that deals with constraints
+  of the form:
+    tv :=mu tv
+  for all mu and for mu = {}.
+  Generates only constraints that are 
+  necessary and that uses a fixed l \in mu.
+  The lower bound of mu is used for that
+  purpose now.
+
+Version 0.1.1
+- corrected code that normalizes types
+- corrected code that deals with constraints 
+  of the form:
+    tv :=#mu tv
+  for the special case, that is equal 
+  mu = {}.
+
+Version 0
+initial version

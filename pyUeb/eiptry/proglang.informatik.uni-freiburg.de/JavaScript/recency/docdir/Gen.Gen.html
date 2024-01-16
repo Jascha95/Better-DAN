@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index.html">
+<link rel="previous" href="Gen.TEnv.html">
+<link rel="Up" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gen.html">
+<link title="Index of types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_types.html">
+<link title="Index of exceptions" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_exceptions.html">
+<link title="Index of values" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_values.html">
+<link title="Index of modules" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_modules.html">
+<link title="Index of module types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_module_types.html">
+<link title="Args" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Args.html">
+<link title="Gen" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gen.html">
+<link title="GenVars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/GenVars.html">
+<link title="Gvars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gvars.html">
+<link title="Inf" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.html">
+<link title="Location" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Location.html">
+<link title="LowerUpper" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpper.html">
+<link title="LowerUpperNeg" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpperNeg.html">
+<link title="LUNVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUNVar.html">
+<link title="LUVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUVar.html">
+<link title="MapVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.html">
+<link title="PrioQueue" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/PrioQueue.html">
+<link title="ProgLabel" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/ProgLabel.html">
+<link title="Syntax" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Syntax.html"><title>Gen.Gen</title>
+</head>
+<body>
+<div class="navbar"><a href="Gen.TEnv.html">Previous</a>
+&nbsp;<a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gen.html">Up</a>
+&nbsp;</div>
+<center><h1>Module <a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/type_Gen.Gen.html">Gen.Gen</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> Gen: <code class="code">sig</code> <a href="Gen.Gen.html">..</a> <code class="code">end</code></pre>Module that generates the constraints for 
+    expressions, serious expressions and values<br>
+<hr width="100%">
+<pre><span class="keyword">exception</span> <a name="EXCEPTIONNoLetAnnotation"></a>NoLetAnnotation <span class="keyword">of</span> <code class="type">string</code></pre>
+<br><code><span class="keyword">type</span> <a name="TYPEresult"></a><code class="type"></code>result = {</code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>typevar&nbsp;: <code class="type">Inf.Vars.TVar.t</code>;</code></td>
+
+</tr></table>
+}
+
+
+<br><code><span class="keyword">type</span> <a name="TYPEchanged"></a><code class="type"></code>changed = {</code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>location&nbsp;: <code class="type"><a href="Inf.Type.html#TYPEphi">Inf.Type.phi</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>lenv&nbsp;: <code class="type">Inf.Vars.LEVar.t</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>tenv&nbsp;: <code class="type">TEnv.t</code>;</code></td>
+
+</tr></table>
+}
+
+
+<pre><span class="keyword">val</span> <a name="VALcreate_e"></a>create_e : <code class="type">TEnv.t -> Inf.Vars.LEVar.t -> <a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Syntax.html#TYPEe">Syntax.e</a> -> <a href="Gen.Gen.html#TYPEresult">result</a> * <a href="Gen.Gen.html#TYPEchanged">changed</a></code></pre><div class="info">
+create the constraints for an expression<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcreate_s"></a>create_s : <code class="type">TEnv.t -><br>       Inf.Vars.LEVar.t -><br>       <a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Syntax.html#TYPEs">Syntax.s</a> -> <a href="Gen.Gen.html#TYPEresult">result</a> * <a href="Inf.Type.html#TYPEphi">Inf.Type.phi</a> * Inf.Vars.LEVar.t</code></pre><div class="info">
+create the constraints for a serious expression<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcreate_v"></a>create_v : <code class="type">TEnv.t -> Inf.Vars.LEVar.t -> <a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Syntax.html#TYPEv">Syntax.v</a> -> <a href="Gen.Gen.html#TYPEresult">result</a></code></pre><div class="info">
+create the constraints for a value<br>
+</div>
+</body></html>

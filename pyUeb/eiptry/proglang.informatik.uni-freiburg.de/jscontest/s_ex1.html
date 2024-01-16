@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/2002/REC-xhtml1-20020801/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Test Framework (static version, function f and p)</title> 
+    <meta content="text/javascript" http-equiv="Content-Script-Type"/> 
+    <link type="text/css" rel="stylesheet" href="style.css"/> 
+  </head>
+  
+  <body onload="TESTS.run()">
+      <h1>Test Framework (static version, function f and p)</h1>
+      <div id="logger">
+        <div id="first">
+          <div class="clear">
+            <h2>Statistic</h2>
+            <dl id="logger_dl">
+              <dt>Number of contracts: </dt><dd id="NoC">2</dd>
+              <dt>Number of verified contracts: </dt><dd id="NovC">0</dd>
+              <dt>Number of failed contracts: </dt><dd id="NofC">0</dd>
+              <dt>Number of contracts where check exists with an error: </dt><dd id="Noce">0</dd>
+              <dt>Number of well tested contracts: </dt><dd id="Notc">2</dd>
+              <dt>Number of tests run: </dt><dd id="Not">2000</dd>
+            </dl>
+            <button>cancel all</button>
+            <button>cancel active constraint</button>
+            <button>cancel active modul</button>
+          </div>
+          
+          <div class="right">
+            <h2>Warnings</h2>
+            <code></code>
+          </div>
+        </div>
+        <h2>Module: f</h2>
+        <ul id="loggerf">
+          <li>Contract 'integer->integer' is fulfilled by value: function f(x) {
+            return 2 * x;
+            }. Tests run: <em>1000</em>
+          </li>
+        </ul>
+        <h2>Module: p</h2>
+        <ul id="loggerp">
+          <li>Contract 'integer, integer->boolean' is fulfilled by value: function p(x, y) {
+            if (x != y) {
+              if (f(x) == x + 10) {
+                return "true";
+              }
+            }
+            return false;
+            }. Tests run: <em>1000</em>
+          </li>
+        </ul>
+        <h2>Collected Counter Examples</h2>
+        <ul id="loggercex"/>
+      </div>
+  </body>
+</html>

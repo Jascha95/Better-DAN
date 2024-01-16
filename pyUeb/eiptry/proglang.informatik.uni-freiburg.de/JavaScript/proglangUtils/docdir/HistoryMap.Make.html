@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index.html">
+<link rel="next" href="HistoryMap.AddString.html">
+<link rel="Up" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/HistoryMap.html">
+<link title="Index of types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_types.html">
+<link title="Index of exceptions" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_exceptions.html">
+<link title="Index of values" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_values.html">
+<link title="Index of modules" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_modules.html">
+<link title="Index of module types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_module_types.html">
+<link title="ExtList" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtList.html">
+<link title="ExtSMap" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSMap.html">
+<link title="ExtSSet" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSSet.html">
+<link title="ExtSSetImp" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSSetImp.html">
+<link title="ExtString" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtString.html">
+<link title="ExtSQueue" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSQueue.html">
+<link title="ExtUtils" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtUtils.html">
+<link title="HiddenInts" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/HiddenInts.html">
+<link title="HistoryMap" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/HistoryMap.html">
+<link title="Log" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Log.html">
+<link title="Option" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Option.html">
+<link title="OUnit" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OUnit.html">
+<link title="OwnMap" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.html">
+<link title="Path" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Path.html">
+<link title="PrioQueues" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/PrioQueues.html">
+<link title="String_of" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/String_of.html">
+<link title="Test" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Test.html"><title>HistoryMap.Make</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/HistoryMap.html">Up</a>
+&nbsp;<a href="HistoryMap.AddString.html">Next</a>
+</div>
+<center><h1>Functor <a href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/type_HistoryMap.Make.html">HistoryMap.Make</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> Make: <div class="sig_block"><code class="code">functor (</code><code class="code">Key</code><code class="code"> : </code><code class="type"><a href="OwnMap.OrderedType.html">OwnMap.OrderedType</a></code><code class="code">) -&gt; </code><div class="sig_block"><code class="code">functor (</code><code class="code">Img</code><code class="code"> : </code><code class="type"><a href="OwnMap.OrderedType.html">OwnMap.OrderedType</a></code><code class="code">) -&gt; </code><code class="type"><a href="HistoryMap.S.html">S</a></code><code class="type"> 
+  with type key = Key.t
+  and type img = Img.t</code></div></div></pre><table border="0" cellpadding="3" width="100%">
+<tr>
+<td align="left" valign="top" width="1%%"><b>Parameters: </b></td>
+<td>
+<table class="paramstable">
+<tr>
+<td align="center" valign="top" width="15%">
+<code>Key</code></td>
+<td align="center" valign="top">:</td>
+<td><code class="type"><a href="OwnMap.OrderedType.html">OwnMap.OrderedType</a></code>
+<tr>
+<td align="center" valign="top" width="15%">
+<code>Img</code></td>
+<td align="center" valign="top">:</td>
+<td><code class="type"><a href="OwnMap.OrderedType.html">OwnMap.OrderedType</a></code>
+</table>
+</td>
+</tr>
+</table>
+<hr width="100%">
+<pre><span class="keyword">include</span> <a href="OwnMap.S.html">OwnMap.S</a></pre>
+<pre><span class="keyword">val</span> <a name="VALiter_all"></a>iter_all : <code class="type">?rev:bool -> (key -> img -> unit) -> t -> unit</code></pre><div class="info">
+<code class="code">iter_all f m</code> applies <code class="code">f</code> to all bindings in map <code class="code">m</code>. <code class="code">f</code> receives 
+      the key as first argument, and the associated value as second argument. 
+      The bindings are passed to <code class="code">f</code> in increasing order with respect to the
+      ordering over the type of the keys. All bindings are presented to f,
+      also bindings hidden by more recent bindings. 
+<p>
+
+      The hidden bindings follows the binding that hide the bindings process.
+      So if we add <code class="code">"x"</code> with image <code class="code">"xi1"</code>, then later adds
+      <code class="code">"x"</code> with image <code class="code">"xi2"</code> that hides the first binding, the 
+      tuple <code class="code">("x","xi2")</code> will passed to the function before <code class="code">("x","xi1")</code>.
+      You can change this behavior with the optional parameter <code class="code">rev</code>. Pass
+      <code class="code">false</code> here to process the hidden bindings first.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALmap_all"></a>map_all : <code class="type">?rev:bool -> (img -> img) -> t -> t</code></pre><div class="info">
+<code class="code">map_all f m</code> behaves like <code class="code">map f m</code>, except that also the hidden
+      bindings are passed to <code class="code">f</code>. 
+<p>
+
+      The hidden bindings follows the binding that hide the bindings process.
+      So if we add <code class="code">"x"</code> with image <code class="code">"xi1"</code>, then later adds
+      <code class="code">"x"</code> with image <code class="code">"xi2"</code> that hides the first binding, the 
+      tuple <code class="code">("x","xi2")</code> will passed to the function before <code class="code">("x","xi1")</code>.
+      You can change this behavior with the optional parameter <code class="code">rev</code>. Pass
+      <code class="code">false</code> here to process the hidden bindings first.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALmapi_all"></a>mapi_all : <code class="type">?rev:bool -> (key -> img -> img) -> t -> t</code></pre><div class="info">
+<code class="code">mapi_all f m</code> behaves like <code class="code">mapi f m</code>, except that also the hidden
+      bindings are passed to <code class="code">f</code>. 
+<p>
+
+      The hidden bindings follows the binding that hide the bindings process.
+      So if we add <code class="code">"x"</code> with image <code class="code">"xi1"</code>, then later adds
+      <code class="code">"x"</code> with image <code class="code">"xi2"</code> that hides the first binding, the 
+      tuple <code class="code">("x","xi2")</code> will passed to the function before <code class="code">("x","xi1")</code>.
+      You can change this behavior with the optional parameter <code class="code">rev</code>. Pass
+      <code class="code">false</code> here to process the hidden bindings first.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALfold_all"></a>fold_all : <code class="type">?rev:bool -> (key -> img -> 'a -> 'a) -> t -> 'a -> 'a</code></pre><div class="info">
+<code class="code">fold_all f m</code> behaves like <code class="code">fold f m</code>, except that also the hidden
+      bindings are passed to <code class="code">f</code>. 
+<p>
+
+      The hidden bindings follows the binding that hide the bindings process.
+      So if we add <code class="code">"x"</code> with image <code class="code">"xi1"</code>, then later adds
+      <code class="code">"x"</code> with image <code class="code">"xi2"</code> that hides the first binding, the 
+      tuple <code class="code">("x","xi2")</code> will passed to the function before <code class="code">("x","xi1")</code>.
+      You can change this behavior with the optional parameter <code class="code">rev</code>. Pass
+      <code class="code">false</code> here to process the hidden bindings first.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALto_list_all"></a>to_list_all : <code class="type">?rev:bool -> t -> (key * img) list</code></pre><div class="info">
+<code class="code">to_list_all m</code> behaves like <code class="code">to_list m</code>, except that also the
+      hidden bindings are part of the result list. 
+<p>
+
+      The hidden bindings follows the binding that hide the bindings in
+      the list. So if we add <code class="code">"x"</code> with image <code class="code">"xi1"</code>, then later adds
+      <code class="code">"x"</code> with image <code class="code">"xi2"</code> that hides the first binding, the 
+      tuple <code class="code">("x","xi2")</code> appears in front of <code class="code">("x","xi1")</code> in the list.
+      You can change this behavior with the optional parameter <code class="code">rev</code>. Pass
+      <code class="code">false</code> here to get the hidden bindings first.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcompare_all"></a>compare_all : <code class="type">t -> t -> int</code></pre><div class="info">
+<code class="code">compare_all m1 m2</code> compares two maps and respects the 
+      full history of the two maps. This function is a total 
+      ordering over maps with histories.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALequal_all"></a>equal_all : <code class="type">t -> t -> bool</code></pre><div class="info">
+<code class="code">equal m1 m2</code> tests whether the maps <code class="code">m1</code> and <code class="code">m2</code> are equal.
+      Here it resprects the full history of the two maps. So the
+      hidden bindings of the maps are importend for the result.<br>
+</div>
+</body></html>

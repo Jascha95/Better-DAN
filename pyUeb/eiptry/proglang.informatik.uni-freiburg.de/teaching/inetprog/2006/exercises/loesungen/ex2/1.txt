@@ -1,0 +1,59 @@
+Aufgabe 1
+=========
+
+(a)
+
+GET /~wehr/inetprog_test.html HTTP/1.1
+Host: www.informatik.uni-freiburg.de
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8) Gecko/20051207 Firefox/1.5
+Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Connection: keep-alive
+If-Modified-Since: Wed, 17 May 2006 09:16:00 GMT
+If-None-Match: "b10b6-6e-446ae9d0"
+Cache-Control: max-age=0
+
+HTTP/1.x 304 Not Modified
+Date: Wed, 17 May 2006 09:22:11 GMT
+Server: Apache/1.3.34 (Unix)
+Connection: Keep-Alive, Keep-Alive
+Keep-Alive: timeout=15, max=99
+Etag: "b10b6-6e-446ae9d0"
+
+
+(b)
+
+wehr@waawaa:~$ telnet www.informatik.uni-freiburg.de 80
+Trying 132.230.167.230...
+Connected to falcon.informatik.uni-freiburg.de.
+Escape character is '^]'.
+GET /~wehr/inetprog_test.html HTTP/1.1
+Host: www.informatik.uni-freiburg.de
+Range: bytes=1-83,90-
+
+HTTP/1.1 206 Partial Content
+Date: Wed, 17 May 2006 09:20:29 GMT
+Server: Apache/1.3.34 (Unix)
+Last-Modified: Wed, 17 May 2006 09:16:00 GMT
+ETag: "b10b6-6e-446ae9d0"
+Accept-Ranges: bytes
+Content-Length: 277
+Content-Type: multipart/byteranges; boundary=446aeadd447b
+  
+  
+  --446aeadd447b
+  Content-type: text/html
+  Content-range: bytes 1-83/110
+  
+  html><head><title>Testseite für Internetprogrammierung</title></head><body><p>Hello
+  --446aeadd447b
+  Content-type: text/html
+  Content-range: bytes 90-109/110
+  
+  !</p></body></html>
+  
+  --446aeadd447b--
+  Connection closed by foreign host.

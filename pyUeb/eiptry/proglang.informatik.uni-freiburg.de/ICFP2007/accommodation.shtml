@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+  <html>
+    <head>
+      <title>ICFP 2007: Accommodation</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        
+  
+
+    <link rel="stylesheet" type="text/css" href="../IFL2007/common-style.css">
+    <script language="javascript" type="text/javascript">
+      function make () {
+        var c = '@';
+        var r = arguments[0];
+        for (var i=1; i < arguments.length; i++) {
+          r = r + c + arguments[i];
+          c = '.';
+      }
+      /* new line  */
+      r = r.replace(/[A-Z]/g,'')
+      var res = '\x3Ca href="mailto:' + r + '"\x3E' + r + '\x3C/a\x3E';
+      return res;
+      }
+      
+      var ifl = make ('ADEiDLKOfDOPlPP07X', 'informatik', 'uni-freiburg', 'de');
+      var icfp = make ('SDFAicSDFAPfpDOI07POLS', 'informatik', 'uni-freiburg', 'de');
+      var berit = make ('IObrSDFAOPauSDFASOPQerXLDK', 'informatik', 'uni-freiburg', 'de');
+    </script>
+    </head>
+    
+    <body>
+
+      <div id="menu">
+          <ul>
+    <li><a href="index.shtml">Home</a></li>
+    <li><a href="registration.shtml">Registration</a></li>
+    <li><a href="accommodation.shtml">Accommodation</a></li>
+    <li><a href="travel-information.shtml">Travel Information</a></li>
+    <li><a href="conference-venue.shtml">Conference Venue</a></li>
+    <li><a href="local-information.shtml">Local Information</a></li>
+    <li><a href="schedule.shtml">Schedule</a></li>
+    <li><a href="maps.shtml">Maps</a></li>
+    <li><a href="local-organizers.shtml">Local Organizers</a></li>
+    <li class="exit">
+      <a href="http://www.informatik.uni-bonn.de/~ralf/icfp07.html">
+        General ICFP '07 Page
+        </a>
+    </li>
+  </ul>
+
+      </div>
+    <div id="wrapper">
+      <div id="content">
+        <div id="header">
+          <center>
+  <h1>
+    The 12th ACM SIGPLAN International Conference on Functional Programming
+  </h1>
+  
+  <h2>ICFP 2007</h2>
+  
+  <h2>Freiburg, Germany, 1-3 October 2007</h2>
+  
+  <h3>
+    Co-located with 
+    <a href="../IFL2007/index.html">IFL 2007</a> 
+    (September 27-29, 2007)
+  </h3>
+</center>
+
+        </div>
+        
+      <div id="mainmatter">
+        <h1>Accommodation</h1>
+            <p>
+    There is an
+    <a href="http://secure1.feratel.de/dlight/desk/vacancy/normal.jsp?LANG=en&LinkID=fit_portal_en&Properties=en_fit_portal">online system</a> for
+    hotel reservations. In the web form, you should select "Freiburg"
+    for the area and the destination field.
+  </p>
+  <p>
+    The online reservation system is provided by
+    <center>
+      <a href="http://www.freiburg-tourist.de">
+        Freiburg Incoming Touristik
+      </a> (FIT)<br>
+        Am Bischofskreuz 1<br>
+        D-79114 Freiburg<br>
+        Germany<br>
+        Phone: +49 761 / 88 581 - 145<br>
+        Fax   +49 761 / 88 581 - 149<br>
+        Email: 
+            <a href="mailto:info@freiburg-tourist.de">info@freiburg-tourist.de</a>
+    </center>
+  </p>
+  <p>
+    Should you have any problems with your hotel reservation,
+    then FIT will be glad to advise you via 
+    <a href="mailto:info@freiburg-tourist.de">email</a>
+    or on the phone (+49 761 / 88 581 - 145).
+    Their phone hotline
+    is accessible Mon - Fri, 8:30am - 8pm and Sat, 9am - 16pm.
+  </p>
+
+  
+  <p>
+    A <em>cheap alternative</em> (13 - 28 &euro;) is the
+    <a href="http://www.blackforest-hostel.de">Black Forest Hostel</a>.
+    The hostel is in walking distance from the city center and 
+    the main train 
+    station; alternatively, you can take tram no.1 to "Littenweiler", 
+    get out at "Oberlinden", and walk from there.
+  </p>
+
+  <p>
+    Are you looking for someone to share a hotel room with during ICFP /IFL 2007?
+    Then you can use
+    <a href="http://proglang.informatik.uni-freiburg.de/cgi/wiki/proglang/extern/wiki.py/RoomMate">this wiki page</a>
+    to find a room mate. You need to create an account before you can edit the page.
+  </p>
+      </div>
+
+      <div id="footer">
+            <a href="impressum.shtml">Impressum</a>,
+    Webmaster: 
+    <script type="text/javascript">
+      document.write (icfp);
+    </script><noscript>icfp2007 AT informatik DOT uni-freiburg DOT de</noscript>,
+    
+    Last modified: 2019-10-22 14:25:02
+
+      </div>
+      </div>
+      </div>
+    </body>
+  </html>

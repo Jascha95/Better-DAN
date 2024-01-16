@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index.html">
+<link rel="Up" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtUtils.html">
+<link title="Index of types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_types.html">
+<link title="Index of exceptions" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_exceptions.html">
+<link title="Index of values" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_values.html">
+<link title="Index of modules" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_modules.html">
+<link title="Index of module types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_module_types.html">
+<link title="ExtList" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtList.html">
+<link title="ExtSMap" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSMap.html">
+<link title="ExtSSet" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSSet.html">
+<link title="ExtSSetImp" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSSetImp.html">
+<link title="ExtString" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtString.html">
+<link title="ExtSQueue" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSQueue.html">
+<link title="ExtUtils" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtUtils.html">
+<link title="HiddenInts" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/HiddenInts.html">
+<link title="HistoryMap" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/HistoryMap.html">
+<link title="Log" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Log.html">
+<link title="Option" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Option.html">
+<link title="OUnit" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OUnit.html">
+<link title="OwnMap" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.html">
+<link title="Path" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Path.html">
+<link title="PrioQueues" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/PrioQueues.html">
+<link title="String_of" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/String_of.html">
+<link title="Test" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Test.html"><title>ExtUtils.Utils</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtUtils.html">Up</a>
+&nbsp;</div>
+<center><h1>Module <a href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/type_ExtUtils.Utils.html">ExtUtils.Utils</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> Utils: <code class="code">sig</code> <a href="ExtUtils.Utils.html">..</a> <code class="code">end</code></pre><hr width="100%">
+<br><code><span class="keyword">type</span> <a name="TYPEos_type"></a><code class="type"></code>os_type = </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Win32</span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Unix</span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Cygwin</span></code></td>
+
+</tr></table>
+
+<div class="info">
+Type of the two supported operation systems.<br>
+</div>
+
+<pre><span class="keyword">exception</span> <a name="EXCEPTIONError"></a>Error <span class="keyword">of</span> <code class="type">string</code></pre>
+<div class="info">
+Error type<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALget_os_type"></a>get_os_type : <code class="type"><a href="ExtUtils.Utils.html#TYPEos_type">os_type</a></code></pre><div class="info">
+returns the operation system<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALreplicate"></a>replicate : <code class="type">int -> 'a -> 'a list</code></pre><div class="info">
+<code class="code">replicate x a</code> returns <code class="code">a;a;...;a</code>, where the length 
+      of the list is <code class="code">x</code>.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALapply"></a>apply : <code class="type">('a -> 'b) -> 'a -> 'b</code></pre><div class="info">
+<code class="code">apply f x</code> runs the function <code class="code">f</code> and gives <code class="code">x</code> as parameter.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALapply'"></a>apply' : <code class="type">'a -> ('a -> 'b) -> 'b</code></pre><div class="info">
+<code class="code">apply' x f</code> runs the function <code class="code">f</code> and gives <code class="code">x</code> as parameter.<br>
+</div>
+<pre><span class="keyword">type</span> <a name="TYPEcfun"></a><code class="type">'a</code> cfun = <code class="type">'a -> 'a -> int</code> </pre>
+<div class="info">
+type of a total ordering function<br>
+</div>
+
+<pre><span class="keyword">val</span> <a name="VALcomp"></a>comp : <code class="type">'a <a href="ExtUtils.Utils.html#TYPEcfun">cfun</a></code></pre><div class="info">
+compares two values<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcompare_2_tup"></a>compare_2_tup : <code class="type">'a <a href="ExtUtils.Utils.html#TYPEcfun">cfun</a> * 'b <a href="ExtUtils.Utils.html#TYPEcfun">cfun</a> -> 'a * 'b -> 'a * 'b -> int</code></pre><div class="info">
+Returns a total ordering of tuppels with two components<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcompare_3_tup"></a>compare_3_tup : <code class="type">'a <a href="ExtUtils.Utils.html#TYPEcfun">cfun</a> * 'b <a href="ExtUtils.Utils.html#TYPEcfun">cfun</a> * 'c <a href="ExtUtils.Utils.html#TYPEcfun">cfun</a> -><br>       'a * 'b * 'c -> 'a * 'b * 'c -> int</code></pre><div class="info">
+Returns a total ordering of tuppels with three components<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALfixpoint"></a>fixpoint : <code class="type">('a -> 'a) -> 'a -> 'a</code></pre><div class="info">
+<code class="code">fixpoint f a</code> applies <code class="code">f</code> to <code class="code">a</code>, then <code class="code">f</code> to <code class="code">f a</code>, and so on, until
+      a fixpoint is reached and <code class="code">f x == x</code> for some <code class="code">x = f ... f a</code>. 
+<p>
+
+      Waring: This could yield to an infinite loop. A possibility to
+      ensure termination of this fixpoint computation is to use only monotone 
+      functions <code class="code">f</code> satisfying the ascending chain condition.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcompare_to_equal"></a>compare_to_equal : <code class="type">('a -> 'a -> int) -> 'a -> 'a -> bool</code></pre><div class="info">
+<code class="code">compare_to_equal f</code> returns a function that returns <code class="code">true</code>
+      of f a b == 0, otherwise it returns <code class="code">false</code>.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALflip"></a>flip : <code class="type">('a -> 'b -> 'c) -> 'b -> 'a -> 'c</code></pre><div class="info">
+<code class="code">flip f</code> turns the order of parameters of <code class="code">f</code>, if <code class="code">f</code> is
+      a function with two parameters.<br>
+</div>
+</body></html>

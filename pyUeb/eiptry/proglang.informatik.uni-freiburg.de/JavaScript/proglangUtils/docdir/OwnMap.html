@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="OUnit.html">
+<link rel="next" href="Path.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="ExtList" rel="Chapter" href="ExtList.html">
+<link title="ExtSMap" rel="Chapter" href="ExtSMap.html">
+<link title="ExtSSet" rel="Chapter" href="ExtSSet.html">
+<link title="ExtSSetImp" rel="Chapter" href="ExtSSetImp.html">
+<link title="ExtString" rel="Chapter" href="ExtString.html">
+<link title="ExtSQueue" rel="Chapter" href="ExtSQueue.html">
+<link title="ExtUtils" rel="Chapter" href="ExtUtils.html">
+<link title="HiddenInts" rel="Chapter" href="HiddenInts.html">
+<link title="HistoryMap" rel="Chapter" href="HistoryMap.html">
+<link title="Log" rel="Chapter" href="Log.html">
+<link title="Option" rel="Chapter" href="Option.html">
+<link title="OUnit" rel="Chapter" href="OUnit.html">
+<link title="OwnMap" rel="Chapter" href="OwnMap.html">
+<link title="Path" rel="Chapter" href="Path.html">
+<link title="PrioQueues" rel="Chapter" href="PrioQueues.html">
+<link title="String_of" rel="Chapter" href="String_of.html">
+<link title="Test" rel="Chapter" href="Test.html"><title>OwnMap</title>
+</head>
+<body>
+<div class="navbar"><a href="OUnit.html">Previous</a>
+&nbsp;<a href="index.html">Up</a>
+&nbsp;<a href="Path.html">Next</a>
+</div>
+<center><h1>Module <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/type_OwnMap.html">OwnMap</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> OwnMap: <code class="code">sig</code> <a href="OwnMap.html">..</a> <code class="code">end</code></pre>This module provides an not polymorphic map implementation.
+    It is based on the Map module of the OCaml standard library.
+    The main difference is, that the <code class="code">Make</code> functor takes two
+    arguments, one that represents the domain of the map, 
+    and the other that represents the image of the map.
+    As result you get an map that is not polymorphic in
+    the image. This allows you to restrict the possible values
+    that are allowed in the map and possibly as a result of
+    this you might get better error reports from OCaml. Of cause
+    you lost the flexibility to use one module at different places
+    with different images.
+<p>
+
+    An other advantage is, that you can add <code class="code">string_of</code> functions
+    to the module, if you needs them. <code class="code">AddString</code> allows to specify
+    the <code class="code">mapto</code> string and the <code class="code">seperator</code> string, <code class="code">AddS</code> is a simple
+    version of the functor that uses <code class="code">","</code> and <code class="code">"-&gt;"</code> for these two
+    strings.<br>
+<b>Author(s):</b> : Phillip Heidegger<br>
+<hr width="100%">
+<pre><span class="keyword">module type</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.OrderedType.html">OrderedType</a> = <code class="code">sig</code> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.OrderedType.html">..</a> <code class="code">end</code></pre><div class="info">
+The ordered type, like in the original Map module
+</div>
+<pre><span class="keyword">module type</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.StringOf.html">StringOf</a> = <code class="code">sig</code> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.StringOf.html">..</a> <code class="code">end</code></pre><div class="info">
+The module signature for types that can 
+    be converted into strings.
+</div>
+<pre><span class="keyword">module type</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.Custom.html">Custom</a> = <code class="code">sig</code> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.Custom.html">..</a> <code class="code">end</code></pre><div class="info">
+Custom string print informations for the map modules
+</div>
+<pre><span class="keyword">module type</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.S.html">S</a> = <code class="code">sig</code> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.S.html">..</a> <code class="code">end</code></pre><div class="info">
+The signature for the map, very similar to the <code class="code">Map.S</code> signature (from the
+    OCaml standard library).
+</div>
+<pre><span class="keyword">module type</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.S_Str.html">S_Str</a> = <code class="code">sig</code> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.S_Str.html">..</a> <code class="code">end</code></pre><div class="info">
+The Signature of the map together with the
+    string_of conversion function
+</div>
+<pre><span class="keyword">module</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.Make.html">Make</a>: <div class="sig_block"><code class="code">functor (</code><code class="code">Key</code><code class="code"> : </code><code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.OrderedType.html">OrderedType</a></code><code class="code">) -&gt; </code><div class="sig_block"><code class="code">functor (</code><code class="code">Img</code><code class="code"> : </code><code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.OrderedType.html">OrderedType</a></code><code class="code">) -&gt; </code><code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.S.html">S</a></code><code class="type"> 
+  with type key = Key.t
+  and type img = Img.t</code></div></div></pre><div class="info">
+The module to create a map with a fixed image
+</div>
+<pre><span class="keyword">module</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.AddString.html">AddString</a>: <div class="sig_block"><code class="code">functor (</code><code class="code">KeyS</code><code class="code"> : </code><code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.StringOf.html">StringOf</a></code><code class="code">) -&gt; </code><div class="sig_block"><code class="code">functor (</code><code class="code">ImgS</code><code class="code"> : </code><code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.StringOf.html">StringOf</a></code><code class="code">) -&gt; </code><div class="sig_block"><code class="code">functor (</code><code class="code">SCustom</code><code class="code"> : </code><code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.Custom.html">Custom</a></code><code class="code">) -&gt; </code><div class="sig_block"><code class="code">functor (</code><code class="code">Map</code><code class="code"> : </code><code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.S.html">S</a></code><code class="type">   with type img = ImgS.t and type key = KeyS.t</code><code class="code">) -&gt; </code><code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.S_Str.html">S_Str</a></code><code class="type"> 
+  with type key = Map.key
+  and type img = Map.img</code></div></div></div></div></pre><div class="info">
+This functor adds string_of function to a map.
+</div>
+<pre><span class="keyword">module</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.AddS.html">AddS</a>: <div class="sig_block"><code class="code">functor (</code><code class="code">KeyS</code><code class="code"> : </code><code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.StringOf.html">StringOf</a></code><code class="code">) -&gt; </code><div class="sig_block"><code class="code">functor (</code><code class="code">ImgS</code><code class="code"> : </code><code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.StringOf.html">StringOf</a></code><code class="code">) -&gt; </code><div class="sig_block"><code class="code">functor (</code><code class="code">Map</code><code class="code"> : </code><code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.S.html">S</a></code><code class="type">  with type img = ImgS.t and type key = KeyS.t</code><code class="code">) -&gt; </code><code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.S_Str.html">S_Str</a></code><code class="type"> 
+  with type key = Map.key
+  and type img = Map.img</code></div></div></div></pre><div class="info">
+This functor adds <code class="code">string_of</code> function to a map using
+    the default <code class="code">separator</code> "," and the <code class="code">mapsto</code> default "-&gt;"
+</div>
+</body></html>

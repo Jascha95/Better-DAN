@@ -1,0 +1,12 @@
+Thread  Account0   Account1   Account2
+        1000        1000       1000
+  0     2000         500        500
+  1     1500        1500          0
+  1                         wartet 
+  2     1000        1000       1000
+  1      500        2000        500
+  1        0        3000          0
+  1            wartet
+  2            wartet
+  0            wartet
+                     

@@ -1,0 +1,25 @@
+Aufgabe 1.2
+===========
+
+Aufgabe 1.2(a)
+--------------
+
+Ihre Antwort zu Aufgabe 1.2(a) ...
+
+
+Aufgabe 1.2(b)
+--------------
+
+Ihre Antwort zu Aufgabe 1.2(b) ...
+Laut [Ref1]_ kann man ...
+
+
+Literatur/Quellen
+-----------------
+
+.. [Knu97] Donald E. Knuth: The Art of Computer Programming, Vol. 1:
+           Fundamental Algorithms. 3rd edition. Addison-Wesley 1997
+
+.. [Ref1] Buch, URL, etc.
+
+.. [Ref2] Weiteres Buch, URL, etc.

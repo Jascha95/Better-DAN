@@ -1,0 +1,985 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link href="coqdoc.css" rel="stylesheet" type="text/css"/>
+<title>Records</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library Records</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab821"></a><h1 class="section">Records: Adding Records to STLC</h1>
+
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Export</span> <a class="idref" href="http://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Stlc.html#"><span class="id" type="library">Stlc</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab822"></a><h1 class="section">Adding Records</h1>
+
+<div class="paragraph"> </div>
+
+ We saw in chapter <span class="inlinecode"><span class="id" type="library">MoreStlc</span></span> how records can be treated as syntactic
+    sugar for nested uses of products.  This is fine for simple
+    examples, but the encoding is informal (in reality, if we really
+    treated records this way, it would be carried out in the parser,
+    which we are eliding here), and anyway it is not very efficient.
+    So it is also interesting to see how records can be treated as
+    first-class citizens of the language. 
+
+<div class="paragraph"> </div>
+
+    Recall the informal definitions we gave before: 
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+    Syntax:
+<pre>
+       t ::=                          Terms:
+           | ...
+           | {i1=t1, ..., in=tn}         record 
+           | t.i                         projection
+
+       v ::=                          Values:
+           | ...
+           | {i1=v1, ..., in=vn}         record value
+
+       T ::=                          Types:
+           | ...
+           | {i1:T1, ..., in:Tn}         record type
+</pre>
+   Reduction:
+                                 ti ==&gt; ti'                            (ST_Rcd)
+<hr/>
+  
+    {i1=v1, ..., im=vm, in=tn, ...} ==&gt; {i1=v1, ..., im=vm, in=tn', ...}
+
+<div class="paragraph"> </div>
+
+                                 t1 ==&gt; t1'
+<hr/>
+                        (ST_Proj1)
+                               t1.i ==&gt; t1'.i
+<hr/>
+                (ST_ProjRcd)
+                          {..., i=vi, ...}.i ==&gt; vi
+   Typing:
+               Gamma |- t1 : T1     ...     Gamma |- tn : Tn
+<hr/>
+         (T_Rcd)
+             Gamma |- {i1=t1, ..., in=tn} : {i1:T1, ..., in:Tn}
+
+<div class="paragraph"> </div>
+
+                       Gamma |- t : {..., i:Ti, ...}
+<hr/>
+                   (T_Proj)
+                             Gamma |- t.i : Ti
+
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab823"></a><h1 class="section">Formalizing Records</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Module</span> <a name="STLCExtendedRecords"><span class="id" type="module">STLCExtendedRecords</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab824"></a><h3 class="section">Syntax and Operational Semantics</h3>
+
+<div class="paragraph"> </div>
+
+ The most obvious way to formalize the syntax of record types would
+    be this: 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Module</span> <a name="STLCExtendedRecords.FirstTry"><span class="id" type="module">FirstTry</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="STLCExtendedRecords.FirstTry.alist"><span class="id" type="definition">alist</span></a> (<span class="id" type="var">X</span> : <span class="id" type="keyword">Type</span>) := <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#list"><span class="id" type="inductive">list</span></a> (<a class="idref" href="SfLib.html#id"><span class="id" type="inductive">id</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#:type_scope:x_'*'_x"><span class="id" type="notation">×</span></a> <a class="idref" href="Records.html#X"><span class="id" type="variable">X</span></a>).<br/>
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="STLCExtendedRecords.FirstTry.ty"><span class="id" type="inductive">ty</span></a> : <span class="id" type="keyword">Type</span> :=<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.FirstTry.TBase"><span class="id" type="constructor">TBase</span></a>     : <a class="idref" href="SfLib.html#id"><span class="id" type="inductive">id</span></a> → <a class="idref" href="Records.html#ty"><span class="id" type="inductive">ty</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.FirstTry.TArrow"><span class="id" type="constructor">TArrow</span></a>    : <a class="idref" href="Records.html#ty"><span class="id" type="inductive">ty</span></a> → <a class="idref" href="Records.html#ty"><span class="id" type="inductive">ty</span></a> → <a class="idref" href="Records.html#ty"><span class="id" type="inductive">ty</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.FirstTry.TRcd"><span class="id" type="constructor">TRcd</span></a>      : (<a class="idref" href="Records.html#STLCExtendedRecords.FirstTry.alist"><span class="id" type="definition">alist</span></a> <a class="idref" href="Records.html#ty"><span class="id" type="inductive">ty</span></a>) → <a class="idref" href="Records.html#ty"><span class="id" type="inductive">ty</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Unfortunately, we encounter here a limitation in Coq: this type
+    does not automatically give us the induction principle we expect
+ the induction hypothesis in the <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.FirstTry.TRcd"><span class="id" type="constructor">TRcd</span></a></span> case doesn't give us
+    any information about the <span class="inlinecode"><a class="idref" href="Norm.html#ty"><span class="id" type="inductive">ty</span></a></span> elements of the list, making it
+    useless for the proofs we want to do.  
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+<span class="id" type="keyword">End</span> <a class="idref" href="Records.html#STLCExtendedRecords.FirstTry"><span class="id" type="module">FirstTry</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+It is possible to get a better induction principle out of Coq, but
+    the details of how this is done are not very pretty, and it is not
+    as intuitive to use as the ones Coq generates automatically for
+    simple <span class="inlinecode"><span class="id" type="keyword">Inductive</span></span> definitions.
+
+<div class="paragraph"> </div>
+
+    Fortunately, there is a different way of formalizing records that
+    is, in some ways, even simpler and more natural: instead of using
+    the existing <span class="inlinecode"><a class="idref" href="Poly.html#list"><span class="id" type="inductive">list</span></a></span> type, we can essentially include its
+    constructors ("nil" and "cons") in the syntax of types. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="STLCExtendedRecords.ty"><span class="id" type="inductive">ty</span></a> : <span class="id" type="keyword">Type</span> :=<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.TBase"><span class="id" type="constructor">TBase</span></a> : <a class="idref" href="SfLib.html#id"><span class="id" type="inductive">id</span></a> → <a class="idref" href="Records.html#ty"><span class="id" type="inductive">ty</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.TArrow"><span class="id" type="constructor">TArrow</span></a> : <a class="idref" href="Records.html#ty"><span class="id" type="inductive">ty</span></a> → <a class="idref" href="Records.html#ty"><span class="id" type="inductive">ty</span></a> → <a class="idref" href="Records.html#ty"><span class="id" type="inductive">ty</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.TRNil"><span class="id" type="constructor">TRNil</span></a> : <a class="idref" href="Records.html#ty"><span class="id" type="inductive">ty</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.TRCons"><span class="id" type="constructor">TRCons</span></a> : <a class="idref" href="SfLib.html#id"><span class="id" type="inductive">id</span></a> → <a class="idref" href="Records.html#ty"><span class="id" type="inductive">ty</span></a> → <a class="idref" href="Records.html#ty"><span class="id" type="inductive">ty</span></a> → <a class="idref" href="Records.html#ty"><span class="id" type="inductive">ty</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Tactic Notation</span> "T_cases" <span class="id" type="var">tactic</span>(<span class="id" type="tactic">first</span>) <span class="id" type="var">ident</span>(<span class="id" type="var">c</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">first</span>;<br/>
+&nbsp;&nbsp;[ <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "TBase" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "TArrow"<br/>
+&nbsp;&nbsp;| <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "TRNil" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "TRCons" ].<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Similarly, at the level of terms, we have constructors <span class="inlinecode"><a class="idref" href="RecordSub.html#trnil"><span class="id" type="constructor">trnil</span></a></span>
+ the empty record -- and <span class="inlinecode"><a class="idref" href="RecordSub.html#trcons"><span class="id" type="constructor">trcons</span></a></span>, which adds a single field to
+    the front of a list of fields. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="STLCExtendedRecords.tm"><span class="id" type="inductive">tm</span></a> : <span class="id" type="keyword">Type</span> :=<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.tvar"><span class="id" type="constructor">tvar</span></a> : <a class="idref" href="SfLib.html#id"><span class="id" type="inductive">id</span></a> → <a class="idref" href="Records.html#tm"><span class="id" type="inductive">tm</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.tapp"><span class="id" type="constructor">tapp</span></a> : <a class="idref" href="Records.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="Records.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="Records.html#tm"><span class="id" type="inductive">tm</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.tabs"><span class="id" type="constructor">tabs</span></a> : <a class="idref" href="SfLib.html#id"><span class="id" type="inductive">id</span></a> → <a class="idref" href="Records.html#STLCExtendedRecords.ty"><span class="id" type="inductive">ty</span></a> → <a class="idref" href="Records.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="Records.html#tm"><span class="id" type="inductive">tm</span></a><br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.tproj"><span class="id" type="constructor">tproj</span></a> : <a class="idref" href="Records.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="SfLib.html#id"><span class="id" type="inductive">id</span></a> → <a class="idref" href="Records.html#tm"><span class="id" type="inductive">tm</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.trnil"><span class="id" type="constructor">trnil</span></a> :  <a class="idref" href="Records.html#tm"><span class="id" type="inductive">tm</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> : <a class="idref" href="SfLib.html#id"><span class="id" type="inductive">id</span></a> → <a class="idref" href="Records.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="Records.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="Records.html#tm"><span class="id" type="inductive">tm</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Tactic Notation</span> "t_cases" <span class="id" type="var">tactic</span>(<span class="id" type="tactic">first</span>) <span class="id" type="var">ident</span>(<span class="id" type="var">c</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">first</span>;<br/>
+&nbsp;&nbsp;[ <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "tvar" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "tapp" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "tabs"<br/>
+&nbsp;&nbsp;| <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "tproj" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "trnil" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "trcons" ].<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Some variables, for examples... 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Notation</span> <a name="STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a> := (<a class="idref" href="SfLib.html#Id"><span class="id" type="constructor">Id</span></a> 0).<br/>
+<span class="id" type="keyword">Notation</span> <a name="STLCExtendedRecords.f"><span class="id" type="abbreviation">f</span></a> := (<a class="idref" href="SfLib.html#Id"><span class="id" type="constructor">Id</span></a> 1).<br/>
+<span class="id" type="keyword">Notation</span> <a name="STLCExtendedRecords.g"><span class="id" type="abbreviation">g</span></a> := (<a class="idref" href="SfLib.html#Id"><span class="id" type="constructor">Id</span></a> 2).<br/>
+<span class="id" type="keyword">Notation</span> <a name="STLCExtendedRecords.l"><span class="id" type="abbreviation">l</span></a> := (<a class="idref" href="SfLib.html#Id"><span class="id" type="constructor">Id</span></a> 3).<br/>
+<span class="id" type="keyword">Notation</span> <a name="STLCExtendedRecords.A"><span class="id" type="abbreviation">A</span></a> := (<a class="idref" href="Records.html#STLCExtendedRecords.TBase"><span class="id" type="constructor">TBase</span></a> (<a class="idref" href="SfLib.html#Id"><span class="id" type="constructor">Id</span></a> 4)).<br/>
+<span class="id" type="keyword">Notation</span> <a name="STLCExtendedRecords.B"><span class="id" type="abbreviation">B</span></a> := (<a class="idref" href="Records.html#STLCExtendedRecords.TBase"><span class="id" type="constructor">TBase</span></a> (<a class="idref" href="SfLib.html#Id"><span class="id" type="constructor">Id</span></a> 5)).<br/>
+<span class="id" type="keyword">Notation</span> <a name="STLCExtendedRecords.k"><span class="id" type="abbreviation">k</span></a> := (<a class="idref" href="SfLib.html#Id"><span class="id" type="constructor">Id</span></a> 6).<br/>
+<span class="id" type="keyword">Notation</span> <a name="STLCExtendedRecords.i1"><span class="id" type="abbreviation">i1</span></a> := (<a class="idref" href="SfLib.html#Id"><span class="id" type="constructor">Id</span></a> 7).<br/>
+<span class="id" type="keyword">Notation</span> <a name="STLCExtendedRecords.i2"><span class="id" type="abbreviation">i2</span></a> := (<a class="idref" href="SfLib.html#Id"><span class="id" type="constructor">Id</span></a> 8).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode">{</span> <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.i1"><span class="id" type="abbreviation">i1</span></a>:<a class="idref" href="RecordSub.html#Examples.A"><span class="id" type="abbreviation">A</span></a></span> <span class="inlinecode">}</span> 
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode">{</span> <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.i1"><span class="id" type="abbreviation">i1</span></a>:<a class="idref" href="RecordSub.html#Examples.A"><span class="id" type="abbreviation">A</span></a>→<a class="idref" href="RecordSub.html#Examples.B"><span class="id" type="abbreviation">B</span></a>,</span> <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.i2"><span class="id" type="abbreviation">i2</span></a>:<a class="idref" href="RecordSub.html#Examples.A"><span class="id" type="abbreviation">A</span></a></span> <span class="inlinecode">}</span> 
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab825"></a><h3 class="section">Well-Formedness</h3>
+
+<div class="paragraph"> </div>
+
+ Generalizing our abstract syntax for records (from lists to the
+    nil/cons presentation) introduces the possibility of writing
+    strange types like this 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="STLCExtendedRecords.weird_type"><span class="id" type="definition">weird_type</span></a> := <a class="idref" href="Records.html#STLCExtendedRecords.TRCons"><span class="id" type="constructor">TRCons</span></a> <a class="idref" href="Imp.html#X"><span class="id" type="definition">X</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.A"><span class="id" type="abbreviation">A</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.B"><span class="id" type="abbreviation">B</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+where the "tail" of a record type is not actually a record type! 
+<div class="paragraph"> </div>
+
+ We'll structure our typing judgement so that no ill-formed types
+    like <span class="inlinecode"><a class="idref" href="Records.html#STLCExtendedRecords.weird_type"><span class="id" type="definition">weird_type</span></a></span> are assigned to terms.  To support this, we
+    define <span class="inlinecode"><a class="idref" href="RecordSub.html#record_ty"><span class="id" type="inductive">record_ty</span></a></span> and <span class="inlinecode"><a class="idref" href="RecordSub.html#record_tm"><span class="id" type="inductive">record_tm</span></a></span>, which identify record types
+    and terms, and <span class="inlinecode"><a class="idref" href="RecordSub.html#well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a></span> which rules out the ill-formed
+    types. 
+<div class="paragraph"> </div>
+
+ First, a type is a record type if it is built with just <span class="inlinecode"><a class="idref" href="RecordSub.html#TRNil"><span class="id" type="constructor">TRNil</span></a></span>
+    and <span class="inlinecode"><a class="idref" href="RecordSub.html#TRCons"><span class="id" type="constructor">TRCons</span></a></span> at the outermost level. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="STLCExtendedRecords.record_ty"><span class="id" type="inductive">record_ty</span></a> : <a class="idref" href="Records.html#STLCExtendedRecords.ty"><span class="id" type="inductive">ty</span></a> → <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.RTnil"><span class="id" type="constructor">RTnil</span></a> : <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#record_ty"><span class="id" type="inductive">record_ty</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.TRNil"><span class="id" type="constructor">TRNil</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.RTcons"><span class="id" type="constructor">RTcons</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">i</span> <span class="id" type="var">T1</span> <span class="id" type="var">T2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#record_ty"><span class="id" type="inductive">record_ty</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.TRCons"><span class="id" type="constructor">TRCons</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <a class="idref" href="Records.html#T1"><span class="id" type="variable">T1</span></a> <a class="idref" href="Records.html#T2"><span class="id" type="variable">T2</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Similarly, a term is a record term if it is built with <span class="inlinecode"><a class="idref" href="RecordSub.html#trnil"><span class="id" type="constructor">trnil</span></a></span>
+    and <span class="inlinecode"><a class="idref" href="RecordSub.html#trcons"><span class="id" type="constructor">trcons</span></a></span> 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="STLCExtendedRecords.record_tm"><span class="id" type="inductive">record_tm</span></a> : <a class="idref" href="Records.html#STLCExtendedRecords.tm"><span class="id" type="inductive">tm</span></a> → <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.rtnil"><span class="id" type="constructor">rtnil</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#record_tm"><span class="id" type="inductive">record_tm</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.trnil"><span class="id" type="constructor">trnil</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.rtcons"><span class="id" type="constructor">rtcons</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">i</span> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#record_tm"><span class="id" type="inductive">record_tm</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <a class="idref" href="Records.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Records.html#t2"><span class="id" type="variable">t2</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Note that <span class="inlinecode"><a class="idref" href="RecordSub.html#record_ty"><span class="id" type="inductive">record_ty</span></a></span> and <span class="inlinecode"><a class="idref" href="RecordSub.html#record_tm"><span class="id" type="inductive">record_tm</span></a></span> are not recursive -- they
+    just check the outermost constructor.  The <span class="inlinecode"><a class="idref" href="RecordSub.html#well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a></span>
+    property, on the other hand, verifies that the whole type is well
+    formed in the sense that the tail of every record (the second
+    argument to <span class="inlinecode"><a class="idref" href="RecordSub.html#TRCons"><span class="id" type="constructor">TRCons</span></a></span>) is a record.
+
+<div class="paragraph"> </div>
+
+    Of course, we should also be concerned about ill-formed terms, not
+    just types; but typechecking can rules those out without the help
+    of an extra <span class="inlinecode"><span class="id" type="var">well_formed_tm</span></span> definition because it already
+    examines the structure of terms.   LATER : should they fill in part of this as an exercise?  We
+    didn't give rules for it above 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="STLCExtendedRecords.well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a> : <a class="idref" href="Records.html#STLCExtendedRecords.ty"><span class="id" type="inductive">ty</span></a> → <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.wfTBase"><span class="id" type="constructor">wfTBase</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">i</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.TBase"><span class="id" type="constructor">TBase</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a>)<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.wfTArrow"><span class="id" type="constructor">wfTArrow</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">T1</span> <span class="id" type="var">T2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a> <a class="idref" href="Records.html#T1"><span class="id" type="variable">T1</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a> <a class="idref" href="Records.html#T2"><span class="id" type="variable">T2</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Records.html#T1"><span class="id" type="variable">T1</span></a> <a class="idref" href="Records.html#T2"><span class="id" type="variable">T2</span></a>)<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.wfTRNil"><span class="id" type="constructor">wfTRNil</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.TRNil"><span class="id" type="constructor">TRNil</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.wfTRCons"><span class="id" type="constructor">wfTRCons</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">i</span> <span class="id" type="var">T1</span> <span class="id" type="var">T2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a> <a class="idref" href="Records.html#T1"><span class="id" type="variable">T1</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a> <a class="idref" href="Records.html#T2"><span class="id" type="variable">T2</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.record_ty"><span class="id" type="inductive">record_ty</span></a> <a class="idref" href="Records.html#T2"><span class="id" type="variable">T2</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.TRCons"><span class="id" type="constructor">TRCons</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <a class="idref" href="Records.html#T1"><span class="id" type="variable">T1</span></a> <a class="idref" href="Records.html#T2"><span class="id" type="variable">T2</span></a>).<br/>
+
+<br/>
+<span class="id" type="keyword">Hint Constructors</span> <a class="idref" href="Records.html#record_ty"><span class="id" type="inductive">record_ty</span></a> <a class="idref" href="Records.html#record_tm"><span class="id" type="inductive">record_tm</span></a> <a class="idref" href="Records.html#well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab826"></a><h3 class="section">Substitution</h3>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Fixpoint</span> <a name="STLCExtendedRecords.subst"><span class="id" type="definition">subst</span></a> (<span class="id" type="var">x</span>:<a class="idref" href="SfLib.html#id"><span class="id" type="inductive">id</span></a>) (<span class="id" type="var">s</span>:<a class="idref" href="Records.html#STLCExtendedRecords.tm"><span class="id" type="inductive">tm</span></a>) (<span class="id" type="var">t</span>:<a class="idref" href="Records.html#STLCExtendedRecords.tm"><span class="id" type="inductive">tm</span></a>) : <a class="idref" href="Records.html#STLCExtendedRecords.tm"><span class="id" type="inductive">tm</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">match</span> <a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;| <a class="idref" href="Records.html#STLCExtendedRecords.tvar"><span class="id" type="constructor">tvar</span></a> <span class="id" type="var">y</span> ⇒ <span class="id" type="keyword">if</span> <a class="idref" href="SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <span class="id" type="var">y</span> <span class="id" type="keyword">then</span> <a class="idref" href="Records.html#s"><span class="id" type="variable">s</span></a> <span class="id" type="keyword">else</span> <a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a><br/>
+&nbsp;&nbsp;| <a class="idref" href="Records.html#STLCExtendedRecords.tabs"><span class="id" type="constructor">tabs</span></a> <span class="id" type="var">y</span> <span class="id" type="var">T</span> <span class="id" type="var">t1</span> ⇒  <a class="idref" href="Records.html#STLCExtendedRecords.tabs"><span class="id" type="constructor">tabs</span></a> <span class="id" type="var">y</span> <span class="id" type="var">T</span> (<span class="id" type="keyword">if</span> <a class="idref" href="SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <span class="id" type="var">y</span> <span class="id" type="keyword">then</span> <span class="id" type="var">t1</span> <span class="id" type="keyword">else</span> (<a class="idref" href="Records.html#subst"><span class="id" type="definition">subst</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Records.html#s"><span class="id" type="variable">s</span></a> <span class="id" type="var">t1</span>))<br/>
+&nbsp;&nbsp;| <a class="idref" href="Records.html#STLCExtendedRecords.tapp"><span class="id" type="constructor">tapp</span></a> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span> ⇒ <a class="idref" href="Records.html#STLCExtendedRecords.tapp"><span class="id" type="constructor">tapp</span></a> (<a class="idref" href="Records.html#subst"><span class="id" type="definition">subst</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Records.html#s"><span class="id" type="variable">s</span></a> <span class="id" type="var">t1</span>) (<a class="idref" href="Records.html#subst"><span class="id" type="definition">subst</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Records.html#s"><span class="id" type="variable">s</span></a> <span class="id" type="var">t2</span>)<br/>
+&nbsp;&nbsp;| <a class="idref" href="Records.html#STLCExtendedRecords.tproj"><span class="id" type="constructor">tproj</span></a> <span class="id" type="var">t1</span> <span class="id" type="var">i</span> ⇒ <a class="idref" href="Records.html#STLCExtendedRecords.tproj"><span class="id" type="constructor">tproj</span></a> (<a class="idref" href="Records.html#subst"><span class="id" type="definition">subst</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Records.html#s"><span class="id" type="variable">s</span></a> <span class="id" type="var">t1</span>) <span class="id" type="var">i</span><br/>
+&nbsp;&nbsp;| <a class="idref" href="Records.html#STLCExtendedRecords.trnil"><span class="id" type="constructor">trnil</span></a> ⇒ <a class="idref" href="Records.html#STLCExtendedRecords.trnil"><span class="id" type="constructor">trnil</span></a><br/>
+&nbsp;&nbsp;| <a class="idref" href="Records.html#STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> <span class="id" type="var">i</span> <span class="id" type="var">t1</span> <span class="id" type="var">tr1</span> ⇒ <a class="idref" href="Records.html#STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> <span class="id" type="var">i</span> (<a class="idref" href="Records.html#subst"><span class="id" type="definition">subst</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Records.html#s"><span class="id" type="variable">s</span></a> <span class="id" type="var">t1</span>) (<a class="idref" href="Records.html#subst"><span class="id" type="definition">subst</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Records.html#s"><span class="id" type="variable">s</span></a> <span class="id" type="var">tr1</span>)<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Notation</span> <a name="STLCExtendedRecords.::'['_x_':='_x_']'_x"><span class="id" type="notation">"</span></a>'[' x ':=' s ']' t" := (<a class="idref" href="Records.html#STLCExtendedRecords.subst"><span class="id" type="definition">subst</span></a> <span class="id" type="var">x</span> <span class="id" type="var">s</span> <span class="id" type="var">t</span>) (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 20).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab827"></a><h3 class="section">Reduction</h3>
+
+<div class="paragraph"> </div>
+
+ Next we define the values of our language.  A record is a value if
+    all of its fields are. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="STLCExtendedRecords.value"><span class="id" type="inductive">value</span></a> : <a class="idref" href="Records.html#STLCExtendedRecords.tm"><span class="id" type="inductive">tm</span></a> → <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.v_abs"><span class="id" type="constructor">v_abs</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">T11</span> <span class="id" type="var">t12</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#value"><span class="id" type="inductive">value</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Records.html#T11"><span class="id" type="variable">T11</span></a> <a class="idref" href="Records.html#t12"><span class="id" type="variable">t12</span></a>)<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.v_rnil"><span class="id" type="constructor">v_rnil</span></a> : <a class="idref" href="Records.html#value"><span class="id" type="inductive">value</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.trnil"><span class="id" type="constructor">trnil</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.v_rcons"><span class="id" type="constructor">v_rcons</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">i</span> <span class="id" type="var">v1</span> <span class="id" type="var">vr</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#value"><span class="id" type="inductive">value</span></a> <a class="idref" href="Records.html#v1"><span class="id" type="variable">v1</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#value"><span class="id" type="inductive">value</span></a> <a class="idref" href="Records.html#vr"><span class="id" type="variable">vr</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#value"><span class="id" type="inductive">value</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <a class="idref" href="Records.html#v1"><span class="id" type="variable">v1</span></a> <a class="idref" href="Records.html#vr"><span class="id" type="variable">vr</span></a>).<br/>
+
+<br/>
+<span class="id" type="keyword">Hint Constructors</span> <a class="idref" href="Records.html#value"><span class="id" type="inductive">value</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Utility functions for extracting one field from record type or
+    term: 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Fixpoint</span> <a name="STLCExtendedRecords.Tlookup"><span class="id" type="definition">Tlookup</span></a> (<span class="id" type="var">i</span>:<a class="idref" href="SfLib.html#id"><span class="id" type="inductive">id</span></a>) (<span class="id" type="var">Tr</span>:<a class="idref" href="Records.html#STLCExtendedRecords.ty"><span class="id" type="inductive">ty</span></a>) : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#option"><span class="id" type="inductive">option</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.ty"><span class="id" type="inductive">ty</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">match</span> <a class="idref" href="Records.html#Tr"><span class="id" type="variable">Tr</span></a> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;| <a class="idref" href="Records.html#STLCExtendedRecords.TRCons"><span class="id" type="constructor">TRCons</span></a> <span class="id" type="var">i'</span> <span class="id" type="var">T</span> <span class="id" type="var">Tr'</span> ⇒ <span class="id" type="keyword">if</span> <a class="idref" href="SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <span class="id" type="var">i'</span> <span class="id" type="keyword">then</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" type="constructor">Some</span></a> <span class="id" type="var">T</span> <span class="id" type="keyword">else</span> <a class="idref" href="Records.html#Tlookup"><span class="id" type="definition">Tlookup</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <span class="id" type="var">Tr'</span><br/>
+&nbsp;&nbsp;| <span class="id" type="var">_</span> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#None"><span class="id" type="constructor">None</span></a><br/>
+&nbsp;&nbsp;<span class="id" type="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Fixpoint</span> <a name="STLCExtendedRecords.tlookup"><span class="id" type="definition">tlookup</span></a> (<span class="id" type="var">i</span>:<a class="idref" href="SfLib.html#id"><span class="id" type="inductive">id</span></a>) (<span class="id" type="var">tr</span>:<a class="idref" href="Records.html#STLCExtendedRecords.tm"><span class="id" type="inductive">tm</span></a>) : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#option"><span class="id" type="inductive">option</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.tm"><span class="id" type="inductive">tm</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">match</span> <a class="idref" href="Records.html#tr"><span class="id" type="variable">tr</span></a> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;| <a class="idref" href="Records.html#STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> <span class="id" type="var">i'</span> <span class="id" type="var">t</span> <span class="id" type="var">tr'</span> ⇒ <span class="id" type="keyword">if</span> <a class="idref" href="SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <span class="id" type="var">i'</span> <span class="id" type="keyword">then</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" type="constructor">Some</span></a> <span class="id" type="var">t</span> <span class="id" type="keyword">else</span> <a class="idref" href="Records.html#tlookup"><span class="id" type="definition">tlookup</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <span class="id" type="var">tr'</span><br/>
+&nbsp;&nbsp;| <span class="id" type="var">_</span> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#None"><span class="id" type="constructor">None</span></a><br/>
+&nbsp;&nbsp;<span class="id" type="keyword">end</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The <span class="inlinecode"><a class="idref" href="Norm.html#step"><span class="id" type="inductive">step</span></a></span> function uses the term-level lookup function (for the
+    projection rule), while the type-level lookup is needed for
+    <span class="inlinecode"><a class="idref" href="Norm.html#has_type"><span class="id" type="inductive">has_type</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Reserved Notation</span> "t1 '==&gt;' t2" (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 40).<br/>
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="STLCExtendedRecords.step"><span class="id" type="inductive">step</span></a> : <a class="idref" href="Records.html#STLCExtendedRecords.tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="Records.html#STLCExtendedRecords.tm"><span class="id" type="inductive">tm</span></a> → <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.ST_AppAbs"><span class="id" type="constructor">ST_AppAbs</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">T11</span> <span class="id" type="var">t12</span> <span class="id" type="var">v2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.value"><span class="id" type="inductive">value</span></a> <a class="idref" href="Records.html#v2"><span class="id" type="variable">v2</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.tapp"><span class="id" type="constructor">tapp</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Records.html#T11"><span class="id" type="variable">T11</span></a> <a class="idref" href="Records.html#t12"><span class="id" type="variable">t12</span></a>) <a class="idref" href="Records.html#v2"><span class="id" type="variable">v2</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::'['_x_':='_x_']'_x"><span class="id" type="notation">[</span></a><a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::'['_x_':='_x_']'_x"><span class="id" type="notation">:=</span></a><a class="idref" href="Records.html#v2"><span class="id" type="variable">v2</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::'['_x_':='_x_']'_x"><span class="id" type="notation">]</span></a><a class="idref" href="Records.html#t12"><span class="id" type="variable">t12</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">)</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.ST_App1"><span class="id" type="constructor">ST_App1</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">t1</span> <span class="id" type="var">t1'</span> <span class="id" type="var">t2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Records.html#t1'"><span class="id" type="variable">t1'</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Records.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Records.html#t2"><span class="id" type="variable">t2</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Records.html#t1'"><span class="id" type="variable">t1'</span></a> <a class="idref" href="Records.html#t2"><span class="id" type="variable">t2</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">)</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.ST_App2"><span class="id" type="constructor">ST_App2</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">v1</span> <span class="id" type="var">t2</span> <span class="id" type="var">t2'</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.value"><span class="id" type="inductive">value</span></a> <a class="idref" href="Records.html#v1"><span class="id" type="variable">v1</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#t2"><span class="id" type="variable">t2</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Records.html#t2'"><span class="id" type="variable">t2'</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Records.html#v1"><span class="id" type="variable">v1</span></a> <a class="idref" href="Records.html#t2"><span class="id" type="variable">t2</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Records.html#v1"><span class="id" type="variable">v1</span></a> <a class="idref" href="Records.html#t2'"><span class="id" type="variable">t2'</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">)</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.ST_Proj1"><span class="id" type="constructor">ST_Proj1</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">t1</span> <span class="id" type="var">t1'</span> <span class="id" type="var">i</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Records.html#t1'"><span class="id" type="variable">t1'</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.tproj"><span class="id" type="constructor">tproj</span></a> <a class="idref" href="Records.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.tproj"><span class="id" type="constructor">tproj</span></a> <a class="idref" href="Records.html#t1'"><span class="id" type="variable">t1'</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">)</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.ST_ProjRcd"><span class="id" type="constructor">ST_ProjRcd</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">tr</span> <span class="id" type="var">i</span> <span class="id" type="var">vi</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.value"><span class="id" type="inductive">value</span></a> <a class="idref" href="Records.html#tr"><span class="id" type="variable">tr</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.tlookup"><span class="id" type="definition">tlookup</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <a class="idref" href="Records.html#tr"><span class="id" type="variable">tr</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" type="constructor">Some</span></a> <a class="idref" href="Records.html#vi"><span class="id" type="variable">vi</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.tproj"><span class="id" type="constructor">tproj</span></a> <a class="idref" href="Records.html#tr"><span class="id" type="variable">tr</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Records.html#vi"><span class="id" type="variable">vi</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.ST_Rcd_Head"><span class="id" type="constructor">ST_Rcd_Head</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">i</span> <span class="id" type="var">t1</span> <span class="id" type="var">t1'</span> <span class="id" type="var">tr2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Records.html#t1'"><span class="id" type="variable">t1'</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <a class="idref" href="Records.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Records.html#tr2"><span class="id" type="variable">tr2</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <a class="idref" href="Records.html#t1'"><span class="id" type="variable">t1'</span></a> <a class="idref" href="Records.html#tr2"><span class="id" type="variable">tr2</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">)</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.ST_Rcd_Tail"><span class="id" type="constructor">ST_Rcd_Tail</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">i</span> <span class="id" type="var">v1</span> <span class="id" type="var">tr2</span> <span class="id" type="var">tr2'</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.value"><span class="id" type="inductive">value</span></a> <a class="idref" href="Records.html#v1"><span class="id" type="variable">v1</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#tr2"><span class="id" type="variable">tr2</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Records.html#tr2'"><span class="id" type="variable">tr2'</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <a class="idref" href="Records.html#v1"><span class="id" type="variable">v1</span></a> <a class="idref" href="Records.html#tr2"><span class="id" type="variable">tr2</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <a class="idref" href="Records.html#v1"><span class="id" type="variable">v1</span></a> <a class="idref" href="Records.html#tr2'"><span class="id" type="variable">tr2'</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">)</span></a><br/>
+<br/>
+<span class="id" type="keyword">where</span> <a name="STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">"</span></a>t1 '==&gt;' t2" := (<a class="idref" href="Records.html#step"><span class="id" type="inductive">step</span></a> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span>).<br/>
+
+<br/>
+<span class="id" type="keyword">Tactic Notation</span> "step_cases" <span class="id" type="var">tactic</span>(<span class="id" type="tactic">first</span>) <span class="id" type="var">ident</span>(<span class="id" type="var">c</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">first</span>;<br/>
+&nbsp;&nbsp;[ <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "ST_AppAbs" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "ST_App1" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "ST_App2"<br/>
+&nbsp;&nbsp;| <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "ST_Proj1" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "ST_ProjRcd"<br/>
+&nbsp;&nbsp;| <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "ST_Rcd_Head" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "ST_Rcd_Tail" ].<br/>
+
+<br/>
+<span class="id" type="keyword">Notation</span> <a name="STLCExtendedRecords.multistep"><span class="id" type="abbreviation">multistep</span></a> := (<a class="idref" href="http://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Smallstep.html#multi"><span class="id" type="inductive">multi</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.step"><span class="id" type="inductive">step</span></a>).<br/>
+<span class="id" type="keyword">Notation</span> <a name="STLCExtendedRecords.::x_'==>*'_x"><span class="id" type="notation">"</span></a>t1 '==&gt;*' t2" := (<a class="idref" href="Records.html#STLCExtendedRecords.multistep"><span class="id" type="abbreviation">multistep</span></a> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span>) (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 40).<br/>
+
+<br/>
+<span class="id" type="keyword">Hint Constructors</span> <a class="idref" href="Records.html#step"><span class="id" type="inductive">step</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab828"></a><h3 class="section">Typing</h3>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Definition</span> <span class="id" type="keyword">context</span> := <a class="idref" href="SfLib.html#partial_map"><span class="id" type="definition">partial_map</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.ty"><span class="id" type="inductive">ty</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next we define the typing rules.  These are nearly direct
+    transcriptions of the inference rules shown above.  The only major
+    difference is the use of <span class="inlinecode"><a class="idref" href="RecordSub.html#well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a></span>.  In the informal
+    presentation we used a grammar that only allowed well formed
+    record types, so we didn't have to add a separate check.
+
+<div class="paragraph"> </div>
+
+    We'd like to set things up so that that whenever <span class="inlinecode"><a class="idref" href="Norm.html#has_type"><span class="id" type="inductive">has_type</span></a></span> <span class="inlinecode"><a class="idref" href="SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> <span class="inlinecode"><a class="idref" href="ImpParser.html#t"><span class="id" type="variable">t</span></a></span>
+    <span class="inlinecode"><a class="idref" href="Basics.html#T"><span class="id" type="variable">T</span></a></span> holds, we also have <span class="inlinecode"><a class="idref" href="RecordSub.html#well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a></span> <span class="inlinecode"><a class="idref" href="Basics.html#T"><span class="id" type="variable">T</span></a></span>.  That is, <span class="inlinecode"><a class="idref" href="Norm.html#has_type"><span class="id" type="inductive">has_type</span></a></span>
+    never assigns ill-formed types to terms.  In fact, we prove this
+    theorem below.
+
+<div class="paragraph"> </div>
+
+    However, we don't want to clutter the definition of <span class="inlinecode"><a class="idref" href="Norm.html#has_type"><span class="id" type="inductive">has_type</span></a></span>
+    with unnecessary uses of <span class="inlinecode"><a class="idref" href="RecordSub.html#well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a></span>.  Instead, we place
+    <span class="inlinecode"><a class="idref" href="RecordSub.html#well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a></span> checks only where needed - where an inductive
+    call to <span class="inlinecode"><a class="idref" href="Norm.html#has_type"><span class="id" type="inductive">has_type</span></a></span> won't already be checking the well-formedness
+    of a type.
+
+<div class="paragraph"> </div>
+
+    For example, we check <span class="inlinecode"><a class="idref" href="RecordSub.html#well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a></span> <span class="inlinecode"><a class="idref" href="Basics.html#T"><span class="id" type="variable">T</span></a></span> in the <span class="inlinecode"><a class="idref" href="Norm.html#T_Var"><span class="id" type="constructor">T_Var</span></a></span> case,
+    because there is no inductive <span class="inlinecode"><a class="idref" href="Norm.html#has_type"><span class="id" type="inductive">has_type</span></a></span> call that would 
+    enforce this.  Similarly, in the <span class="inlinecode"><a class="idref" href="Norm.html#T_Abs"><span class="id" type="constructor">T_Abs</span></a></span> case, we require a
+    proof of <span class="inlinecode"><a class="idref" href="RecordSub.html#well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a></span> <span class="inlinecode"><a class="idref" href="http://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Stlc.html#T11"><span class="id" type="variable">T11</span></a></span> because the inductive call to
+    <span class="inlinecode"><a class="idref" href="Norm.html#has_type"><span class="id" type="inductive">has_type</span></a></span> only guarantees that <span class="inlinecode"><a class="idref" href="http://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Stlc.html#T12"><span class="id" type="variable">T12</span></a></span> is well-formed.
+
+<div class="paragraph"> </div>
+
+    In the rules you must write, the only necessary <span class="inlinecode"><a class="idref" href="RecordSub.html#well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a></span>
+    check comes in the <span class="inlinecode"><a class="idref" href="MoreStlc.html#STLCExtended.tnil"><span class="id" type="constructor">tnil</span></a></span> case.  
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Reserved Notation</span> "Gamma '|-' t '\in' T" (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 40).<br/>
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="STLCExtendedRecords.has_type"><span class="id" type="inductive">has_type</span></a> : <span class="id" type="keyword">context</span> → <a class="idref" href="Records.html#STLCExtendedRecords.tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="Records.html#STLCExtendedRecords.ty"><span class="id" type="inductive">ty</span></a> → <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.T_Var"><span class="id" type="constructor">T_Var</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">x</span> <span class="id" type="var">T</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" type="constructor">Some</span></a> <a class="idref" href="Records.html#T"><span class="id" type="variable">T</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a> <a class="idref" href="Records.html#T"><span class="id" type="variable">T</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#T"><span class="id" type="variable">T</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.T_Abs"><span class="id" type="constructor">T_Abs</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">x</span> <span class="id" type="var">T11</span> <span class="id" type="var">T12</span> <span class="id" type="var">t12</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a> <a class="idref" href="Records.html#T11"><span class="id" type="variable">T11</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="SfLib.html#extend"><span class="id" type="definition">extend</span></a> <a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Records.html#T11"><span class="id" type="variable">T11</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#t12"><span class="id" type="variable">t12</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#T12"><span class="id" type="variable">T12</span></a> → <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Records.html#T11"><span class="id" type="variable">T11</span></a> <a class="idref" href="Records.html#t12"><span class="id" type="variable">t12</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Records.html#T11"><span class="id" type="variable">T11</span></a> <a class="idref" href="Records.html#T12"><span class="id" type="variable">T12</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.T_App"><span class="id" type="constructor">T_App</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">T1</span> <span class="id" type="var">T2</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Records.html#T1"><span class="id" type="variable">T1</span></a> <a class="idref" href="Records.html#T2"><span class="id" type="variable">T2</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> → <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#t2"><span class="id" type="variable">t2</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#T1"><span class="id" type="variable">T1</span></a> → <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Records.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Records.html#t2"><span class="id" type="variable">t2</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#T2"><span class="id" type="variable">T2</span></a><br/>
+&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.T_Proj"><span class="id" type="constructor">T_Proj</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">i</span> <span class="id" type="var">t</span> <span class="id" type="var">Ti</span> <span class="id" type="var">Tr</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#Tr"><span class="id" type="variable">Tr</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.Tlookup"><span class="id" type="definition">Tlookup</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <a class="idref" href="Records.html#Tr"><span class="id" type="variable">Tr</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" type="constructor">Some</span></a> <a class="idref" href="Records.html#Ti"><span class="id" type="variable">Ti</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.tproj"><span class="id" type="constructor">tproj</span></a> <a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#Ti"><span class="id" type="variable">Ti</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.T_RNil"><span class="id" type="constructor">T_RNil</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">Gamma</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.trnil"><span class="id" type="constructor">trnil</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#STLCExtendedRecords.TRNil"><span class="id" type="constructor">TRNil</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.T_RCons"><span class="id" type="constructor">T_RCons</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">i</span> <span class="id" type="var">t</span> <span class="id" type="var">T</span> <span class="id" type="var">tr</span> <span class="id" type="var">Tr</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#T"><span class="id" type="variable">T</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#tr"><span class="id" type="variable">tr</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#Tr"><span class="id" type="variable">Tr</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.record_ty"><span class="id" type="inductive">record_ty</span></a> <a class="idref" href="Records.html#Tr"><span class="id" type="variable">Tr</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.record_tm"><span class="id" type="inductive">record_tm</span></a> <a class="idref" href="Records.html#tr"><span class="id" type="variable">tr</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Records.html#tr"><span class="id" type="variable">tr</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.TRCons"><span class="id" type="constructor">TRCons</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <a class="idref" href="Records.html#T"><span class="id" type="variable">T</span></a> <a class="idref" href="Records.html#Tr"><span class="id" type="variable">Tr</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a><br/>
+<br/>
+<span class="id" type="keyword">where</span> <a name="STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">"</span></a>Gamma '|-' t '\in' T" := (<a class="idref" href="Records.html#has_type"><span class="id" type="inductive">has_type</span></a> <span class="id" type="var">Gamma</span> <span class="id" type="var">t</span> <span class="id" type="var">T</span>).<br/>
+
+<br/>
+<span class="id" type="keyword">Hint Constructors</span> <a class="idref" href="Records.html#has_type"><span class="id" type="inductive">has_type</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Tactic Notation</span> "has_type_cases" <span class="id" type="var">tactic</span>(<span class="id" type="tactic">first</span>) <span class="id" type="var">ident</span>(<span class="id" type="var">c</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">first</span>;<br/>
+&nbsp;&nbsp;[ <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "T_Var" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "T_Abs" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "T_App"<br/>
+&nbsp;&nbsp;| <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "T_Proj" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "T_RNil" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "T_RCons" ].<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab829"></a><h2 class="section">Examples</h2>
+
+<div class="paragraph"> </div>
+
+<a name="lab830"></a><h4 class="section">Exercise: 2 stars (examples)</h4>
+ Finish the proofs. 
+<div class="paragraph"> </div>
+
+ Feel free to use Coq's automation features in this proof.
+    However, if you are not confident about how the type system works,
+    you may want to carry out the proof first using the basic
+    features (<span class="inlinecode"><span class="id" type="tactic">apply</span></span> instead of <span class="inlinecode"><span class="id" type="tactic">eapply</span></span>, in particular) and then
+    perhaps compress it using automation. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLCExtendedRecords.typing_example_2"><span class="id" type="lemma">typing_example_2</span></a> : <br/>
+&nbsp;&nbsp;<a class="idref" href="SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.tapp"><span class="id" type="constructor">tapp</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.TRCons"><span class="id" type="constructor">TRCons</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.i1"><span class="id" type="abbreviation">i1</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.A"><span class="id" type="abbreviation">A</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.A"><span class="id" type="abbreviation">A</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="Records.html#STLCExtendedRecords.TRCons"><span class="id" type="constructor">TRCons</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.i2"><span class="id" type="abbreviation">i2</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.B"><span class="id" type="abbreviation">B</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.B"><span class="id" type="abbreviation">B</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.TRNil"><span class="id" type="constructor">TRNil</span></a>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="Records.html#STLCExtendedRecords.tproj"><span class="id" type="constructor">tproj</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a>) <a class="idref" href="Records.html#STLCExtendedRecords.i2"><span class="id" type="abbreviation">i2</span></a>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="Records.html#STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.i1"><span class="id" type="abbreviation">i1</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.A"><span class="id" type="abbreviation">A</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a>)) <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="Records.html#STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.i2"><span class="id" type="abbreviation">i2</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.B"><span class="id" type="abbreviation">B</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.trnil"><span class="id" type="constructor">trnil</span></a>))<a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.B"><span class="id" type="abbreviation">B</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.B"><span class="id" type="abbreviation">B</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Before starting to prove this fact (or the one above!), make sure
+    you understand what it is saying. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Example</span> <a name="STLCExtendedRecords.typing_nonexample"><span class="id" type="definition">typing_nonexample</span></a> : <br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">¬</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">T</span><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">,</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="SfLib.html#extend"><span class="id" type="definition">extend</span></a> <a class="idref" href="SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.TRCons"><span class="id" type="constructor">TRCons</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.i2"><span class="id" type="abbreviation">i2</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.A"><span class="id" type="abbreviation">A</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.A"><span class="id" type="abbreviation">A</span></a>) <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.TRNil"><span class="id" type="constructor">TRNil</span></a>)<a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.i1"><span class="id" type="abbreviation">i1</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.B"><span class="id" type="abbreviation">B</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a>)) (<a class="idref" href="Records.html#STLCExtendedRecords.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a>)<a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#T"><span class="id" type="variable">T</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Example</span> <a name="STLCExtendedRecords.typing_nonexample_2"><span class="id" type="definition">typing_nonexample_2</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">y</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">¬</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">T</span><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">,</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="SfLib.html#extend"><span class="id" type="definition">extend</span></a> <a class="idref" href="SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Records.html#y"><span class="id" type="variable">y</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.A"><span class="id" type="abbreviation">A</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.tapp"><span class="id" type="constructor">tapp</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.TRCons"><span class="id" type="constructor">TRCons</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.i1"><span class="id" type="abbreviation">i1</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.A"><span class="id" type="abbreviation">A</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.TRNil"><span class="id" type="constructor">TRNil</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="Records.html#STLCExtendedRecords.tproj"><span class="id" type="constructor">tproj</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.a"><span class="id" type="abbreviation">a</span></a>) <a class="idref" href="Records.html#STLCExtendedRecords.i1"><span class="id" type="abbreviation">i1</span></a>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="Records.html#STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.i1"><span class="id" type="abbreviation">i1</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Records.html#y"><span class="id" type="variable">y</span></a>) (<a class="idref" href="Records.html#STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.i2"><span class="id" type="abbreviation">i2</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Records.html#y"><span class="id" type="variable">y</span></a>) <a class="idref" href="Records.html#STLCExtendedRecords.trnil"><span class="id" type="constructor">trnil</span></a>))<a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#T"><span class="id" type="variable">T</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab831"></a><h2 class="section">Properties of Typing</h2>
+
+<div class="paragraph"> </div>
+
+ The proofs of progress and preservation for this system are
+    essentially the same as for the pure simply typed lambda-calculus,
+    but we need to add some technical lemmas involving records. 
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab832"></a><h3 class="section">Well-Formedness</h3>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLCExtendedRecords.wf_rcd_lookup"><span class="id" type="lemma">wf_rcd_lookup</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">i</span> <span class="id" type="var">T</span> <span class="id" type="var">Ti</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a> <a class="idref" href="Records.html#T"><span class="id" type="variable">T</span></a> →<br/>
+&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.Tlookup"><span class="id" type="definition">Tlookup</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <a class="idref" href="Records.html#T"><span class="id" type="variable">T</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" type="constructor">Some</span></a> <a class="idref" href="Records.html#Ti"><span class="id" type="variable">Ti</span></a> →<br/>
+&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a> <a class="idref" href="Records.html#Ti"><span class="id" type="variable">Ti</span></a>.<br/>
+<span class="id" type="keyword">Proof</span> <span class="id" type="keyword">with</span> <span class="id" type="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">i</span> <span class="id" type="var">T</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">T_cases</span> (<span class="id" type="tactic">induction</span> <span class="id" type="var">T</span>) <span class="id" type="var">Case</span>; <span class="id" type="tactic">intros</span>; <span class="id" type="tactic">try</span> <span class="id" type="tactic">solve</span> <span class="id" type="tactic">by</span> <span class="id" type="tactic">inversion</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "TRCons".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>. <span class="id" type="tactic">subst</span>. <span class="id" type="tactic">unfold</span> <a class="idref" href="Records.html#STLCExtendedRecords.Tlookup"><span class="id" type="definition">Tlookup</span></a> <span class="id" type="keyword">in</span> <span class="id" type="var">H0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> (<a class="idref" href="SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <span class="id" type="var">i</span> <span class="id" type="var">i0</span>)...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H0</span>. <span class="id" type="tactic">subst</span>... <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLCExtendedRecords.step_preserves_record_tm"><span class="id" type="lemma">step_preserves_record_tm</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">tr</span> <span class="id" type="var">tr'</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.record_tm"><span class="id" type="inductive">record_tm</span></a> <a class="idref" href="Records.html#tr"><span class="id" type="variable">tr</span></a> →<br/>
+&nbsp;&nbsp;<a class="idref" href="Records.html#tr"><span class="id" type="variable">tr</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Records.html#tr'"><span class="id" type="variable">tr'</span></a> →<br/>
+&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.record_tm"><span class="id" type="inductive">record_tm</span></a> <a class="idref" href="Records.html#tr'"><span class="id" type="variable">tr'</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">tr</span> <span class="id" type="var">tr'</span> <span class="id" type="var">Hrt</span> <span class="id" type="var">Hstp</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">Hrt</span>; <span class="id" type="tactic">subst</span>; <span class="id" type="tactic">inversion</span> <span class="id" type="var">Hstp</span>; <span class="id" type="tactic">subst</span>; <span class="id" type="tactic">auto</span>.<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLCExtendedRecords.has_type__wf"><span class="id" type="lemma">has_type__wf</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">t</span> <span class="id" type="var">T</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#T"><span class="id" type="variable">T</span></a> → <a class="idref" href="Records.html#STLCExtendedRecords.well_formed_ty"><span class="id" type="inductive">well_formed_ty</span></a> <a class="idref" href="Records.html#T"><span class="id" type="variable">T</span></a>.<br/>
+<span class="id" type="keyword">Proof</span> <span class="id" type="keyword">with</span> <span class="id" type="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">t</span> <span class="id" type="var">T</span> <span class="id" type="var">Htyp</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">has_type_cases</span> (<span class="id" type="tactic">induction</span> <span class="id" type="var">Htyp</span>) <span class="id" type="var">Case</span>...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_App".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">IHHtyp1</span>...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_Proj".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">eapply</span> <a class="idref" href="Records.html#STLCExtendedRecords.wf_rcd_lookup"><span class="id" type="lemma">wf_rcd_lookup</span></a>...<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab833"></a><h3 class="section">Field Lookup</h3>
+
+<div class="paragraph"> </div>
+
+ Lemma: If <span class="inlinecode"><a class="idref" href="RecordSub.html#empty"><span class="id" type="definition">empty</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="Lists.html#v"><span class="id" type="variable">v</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="Basics.html#T"><span class="id" type="variable">T</span></a></span> and <span class="inlinecode"><a class="idref" href="RecordSub.html#Tlookup"><span class="id" type="definition">Tlookup</span></a></span> <span class="inlinecode"><a class="idref" href="RecordSub.html#Examples.i"><span class="id" type="abbreviation">i</span></a></span> <span class="inlinecode"><a class="idref" href="Basics.html#T"><span class="id" type="variable">T</span></a></span> returns <span class="inlinecode"><a class="idref" href="Poly.html#Some"><span class="id" type="constructor">Some</span></a></span> <span class="inlinecode"><a class="idref" href="Records.html#Ti"><span class="id" type="variable">Ti</span></a></span>,
+     then <span class="inlinecode"><a class="idref" href="RecordSub.html#tlookup"><span class="id" type="definition">tlookup</span></a></span> <span class="inlinecode"><a class="idref" href="RecordSub.html#Examples.i"><span class="id" type="abbreviation">i</span></a></span> <span class="inlinecode"><a class="idref" href="Lists.html#v"><span class="id" type="variable">v</span></a></span> returns <span class="inlinecode"><a class="idref" href="Poly.html#Some"><span class="id" type="constructor">Some</span></a></span> <span class="inlinecode"><a class="idref" href="Records.html#ti"><span class="id" type="variable">ti</span></a></span> for some term <span class="inlinecode"><a class="idref" href="Records.html#ti"><span class="id" type="variable">ti</span></a></span> such
+     that <span class="inlinecode"><a class="idref" href="RecordSub.html#empty"><span class="id" type="definition">empty</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="Records.html#ti"><span class="id" type="variable">ti</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="Records.html#Ti"><span class="id" type="variable">Ti</span></a></span>.
+
+<div class="paragraph"> </div>
+
+    Proof: By induction on the typing derivation <span class="inlinecode"><span class="id" type="var">Htyp</span></span>.  Since
+      <span class="inlinecode"><a class="idref" href="RecordSub.html#Tlookup"><span class="id" type="definition">Tlookup</span></a></span> <span class="inlinecode"><a class="idref" href="RecordSub.html#Examples.i"><span class="id" type="abbreviation">i</span></a></span> <span class="inlinecode"><a class="idref" href="Basics.html#T"><span class="id" type="variable">T</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="Poly.html#Some"><span class="id" type="constructor">Some</span></a></span> <span class="inlinecode"><a class="idref" href="Records.html#Ti"><span class="id" type="variable">Ti</span></a></span>, <span class="inlinecode"><a class="idref" href="Basics.html#T"><span class="id" type="variable">T</span></a></span> must be a record type, this and
+      the fact that <span class="inlinecode"><a class="idref" href="Lists.html#v"><span class="id" type="variable">v</span></a></span> is a value eliminate most cases by inspection,
+      leaving only the <span class="inlinecode"><a class="idref" href="RecordSub.html#T_RCons"><span class="id" type="constructor">T_RCons</span></a></span> case.
+
+<div class="paragraph"> </div>
+
+      If the last step in the typing derivation is by <span class="inlinecode"><a class="idref" href="RecordSub.html#T_RCons"><span class="id" type="constructor">T_RCons</span></a></span>, then
+      <span class="inlinecode"><a class="idref" href="ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="RecordSub.html#trcons"><span class="id" type="constructor">trcons</span></a></span> <span class="inlinecode"><span class="id" type="var">i0</span></span> <span class="inlinecode"><a class="idref" href="ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode"><a class="idref" href="Records.html#tr"><span class="id" type="variable">tr</span></a></span> and <span class="inlinecode"><a class="idref" href="Basics.html#T"><span class="id" type="variable">T</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="RecordSub.html#TRCons"><span class="id" type="constructor">TRCons</span></a></span> <span class="inlinecode"><span class="id" type="var">i0</span></span> <span class="inlinecode"><a class="idref" href="Basics.html#T"><span class="id" type="variable">T</span></a></span> <span class="inlinecode"><a class="idref" href="Records.html#Tr"><span class="id" type="variable">Tr</span></a></span> for some <span class="inlinecode"><span class="id" type="var">i0</span></span>,
+      <span class="inlinecode"><a class="idref" href="ImpParser.html#t"><span class="id" type="variable">t</span></a></span>, <span class="inlinecode"><a class="idref" href="Records.html#tr"><span class="id" type="variable">tr</span></a></span>, <span class="inlinecode"><a class="idref" href="Basics.html#T"><span class="id" type="variable">T</span></a></span> and <span class="inlinecode"><a class="idref" href="Records.html#Tr"><span class="id" type="variable">Tr</span></a></span>.
+
+<div class="paragraph"> </div>
+
+      This leaves two possiblities to consider - either <span class="inlinecode"><span class="id" type="var">i0</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="RecordSub.html#Examples.i"><span class="id" type="abbreviation">i</span></a></span> or
+      not.
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> If <span class="inlinecode"><a class="idref" href="RecordSub.html#Examples.i"><span class="id" type="abbreviation">i</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" type="var">i0</span></span>, then since <span class="inlinecode"><a class="idref" href="RecordSub.html#Tlookup"><span class="id" type="definition">Tlookup</span></a></span> <span class="inlinecode"><a class="idref" href="RecordSub.html#Examples.i"><span class="id" type="abbreviation">i</span></a></span> <span class="inlinecode">(<a class="idref" href="RecordSub.html#TRCons"><span class="id" type="constructor">TRCons</span></a></span> <span class="inlinecode"><span class="id" type="var">i0</span></span> <span class="inlinecode"><a class="idref" href="Basics.html#T"><span class="id" type="variable">T</span></a></span> <span class="inlinecode"><a class="idref" href="Records.html#Tr"><span class="id" type="variable">Tr</span></a>)</span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="Poly.html#Some"><span class="id" type="constructor">Some</span></a></span>
+        <span class="inlinecode"><a class="idref" href="Records.html#Ti"><span class="id" type="variable">Ti</span></a></span> we have <span class="inlinecode"><a class="idref" href="Basics.html#T"><span class="id" type="variable">T</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="Records.html#Ti"><span class="id" type="variable">Ti</span></a></span>.  It follows that <span class="inlinecode"><a class="idref" href="ImpParser.html#t"><span class="id" type="variable">t</span></a></span> itself satisfies
+        the theorem.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> On the other hand, suppose <span class="inlinecode"><a class="idref" href="RecordSub.html#Examples.i"><span class="id" type="abbreviation">i</span></a></span> <span class="inlinecode">≠</span> <span class="inlinecode"><span class="id" type="var">i0</span></span>.  Then 
+        Tlookup i T = Tlookup i Tr
+        and 
+        tlookup i t = tlookup i tr,
+        so the result follows from the induction hypothesis. <font size=-2>&#9744;</font> 
+</li>
+</ul>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLCExtendedRecords.lookup_field_in_value"><span class="id" type="lemma">lookup_field_in_value</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">v</span> <span class="id" type="var">T</span> <span class="id" type="var">i</span> <span class="id" type="var">Ti</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.value"><span class="id" type="inductive">value</span></a> <a class="idref" href="Records.html#v"><span class="id" type="variable">v</span></a> →<br/>
+&nbsp;&nbsp;<a class="idref" href="SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#v"><span class="id" type="variable">v</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#T"><span class="id" type="variable">T</span></a> →<br/>
+&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.Tlookup"><span class="id" type="definition">Tlookup</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <a class="idref" href="Records.html#T"><span class="id" type="variable">T</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" type="constructor">Some</span></a> <a class="idref" href="Records.html#Ti"><span class="id" type="variable">Ti</span></a> →<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">ti</span><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">,</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.tlookup"><span class="id" type="definition">tlookup</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <a class="idref" href="Records.html#v"><span class="id" type="variable">v</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" type="constructor">Some</span></a> <a class="idref" href="Records.html#ti"><span class="id" type="variable">ti</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">∧</span></a> <a class="idref" href="SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#ti"><span class="id" type="variable">ti</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#Ti"><span class="id" type="variable">Ti</span></a>.<br/>
+<span class="id" type="keyword">Proof</span> <span class="id" type="keyword">with</span> <span class="id" type="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">v</span> <span class="id" type="var">T</span> <span class="id" type="var">i</span> <span class="id" type="var">Ti</span> <span class="id" type="var">Hval</span> <span class="id" type="var">Htyp</span> <span class="id" type="var">Hget</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">remember</span> (@<a class="idref" href="SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.ty"><span class="id" type="inductive">ty</span></a>) <span class="id" type="keyword">as</span> <span class="id" type="var">Gamma</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">has_type_cases</span> (<span class="id" type="tactic">induction</span> <span class="id" type="var">Htyp</span>) <span class="id" type="var">Case</span>; <span class="id" type="tactic">subst</span>; <span class="id" type="tactic">try</span> <span class="id" type="tactic">solve</span> <span class="id" type="tactic">by</span> <span class="id" type="tactic">inversion</span>...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_RCons".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">simpl</span> <span class="id" type="keyword">in</span> <span class="id" type="var">Hget</span>. <span class="id" type="tactic">simpl</span>. <span class="id" type="tactic">destruct</span> (<a class="idref" href="SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <span class="id" type="var">i</span> <span class="id" type="var">i0</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "i is first".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">simpl</span>. <span class="id" type="tactic">inversion</span> <span class="id" type="var">Hget</span>. <span class="id" type="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">∃</span> <span class="id" type="var">t</span>...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "get tail".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> <span class="id" type="var">IHHtyp2</span> <span class="id" type="keyword">as</span> [<span class="id" type="var">vi</span> [<span class="id" type="var">Hgeti</span> <span class="id" type="var">Htypi</span>]]...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">Hval</span>... <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab834"></a><h3 class="section">Progress</h3>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="STLCExtendedRecords.progress"><span class="id" type="lemma">progress</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">t</span> <span class="id" type="var">T</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#T"><span class="id" type="variable">T</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.value"><span class="id" type="inductive">value</span></a> <a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'\/'_x"><span class="id" type="notation">∨</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">t'</span><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">,</span></a> <a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Records.html#t'"><span class="id" type="variable">t'</span></a>.<br/>
+<span class="id" type="keyword">Proof</span> <span class="id" type="keyword">with</span> <span class="id" type="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">t</span> <span class="id" type="var">T</span> <span class="id" type="var">Ht</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">remember</span> (@<a class="idref" href="SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.ty"><span class="id" type="inductive">ty</span></a>) <span class="id" type="keyword">as</span> <span class="id" type="var">Gamma</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">generalize</span> <span class="id" type="tactic">dependent</span> <span class="id" type="var">HeqGamma</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">has_type_cases</span> (<span class="id" type="tactic">induction</span> <span class="id" type="var">Ht</span>) <span class="id" type="var">Case</span>; <span class="id" type="tactic">intros</span> <span class="id" type="var">HeqGamma</span>; <span class="id" type="tactic">subst</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_Var".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_Abs".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">left</span>...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_App".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">right</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> <span class="id" type="var">IHHt1</span>; <span class="id" type="tactic">subst</span>...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "t1 is a value".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> <span class="id" type="var">IHHt2</span>; <span class="id" type="tactic">subst</span>...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SSCase</span> "t2 is a value".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>; <span class="id" type="tactic">subst</span>; <span class="id" type="tactic">try</span> (<span class="id" type="tactic">solve</span> <span class="id" type="tactic">by</span> <span class="id" type="tactic">inversion</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">∃</span> (<a class="idref" href="Records.html#STLCExtendedRecords.::'['_x_':='_x_']'_x"><span class="id" type="notation">[</span></a><span class="id" type="var">x</span><a class="idref" href="Records.html#STLCExtendedRecords.::'['_x_':='_x_']'_x"><span class="id" type="notation">:=</span></a><span class="id" type="var">t2</span><a class="idref" href="Records.html#STLCExtendedRecords.::'['_x_':='_x_']'_x"><span class="id" type="notation">]</span></a><span class="id" type="var">t12</span>)...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SSCase</span> "t2 steps".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> <span class="id" type="var">H0</span> <span class="id" type="keyword">as</span> [<span class="id" type="var">t2'</span> <span class="id" type="var">Hstp</span>]. <span class="id" type="tactic">∃</span> (<a class="idref" href="Records.html#STLCExtendedRecords.tapp"><span class="id" type="constructor">tapp</span></a> <span class="id" type="var">t1</span> <span class="id" type="var">t2'</span>)...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "t1 steps".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> <span class="id" type="var">H</span> <span class="id" type="keyword">as</span> [<span class="id" type="var">t1'</span> <span class="id" type="var">Hstp</span>]. <span class="id" type="tactic">∃</span> (<a class="idref" href="Records.html#STLCExtendedRecords.tapp"><span class="id" type="constructor">tapp</span></a> <span class="id" type="var">t1'</span> <span class="id" type="var">t2</span>)...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_Proj".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">right</span>. <span class="id" type="tactic">destruct</span> <span class="id" type="var">IHHt</span>...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "rcd is value".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> (<a class="idref" href="Records.html#STLCExtendedRecords.lookup_field_in_value"><span class="id" type="lemma">lookup_field_in_value</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">H0</span> <span class="id" type="var">Ht</span> <span class="id" type="var">H</span>) <span class="id" type="keyword">as</span> [<span class="id" type="var">ti</span> [<span class="id" type="var">Hlkup</span> <span class="id" type="var">_</span>]].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">∃</span> <span class="id" type="var">ti</span>...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "rcd_steps".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> <span class="id" type="var">H0</span> <span class="id" type="keyword">as</span> [<span class="id" type="var">t'</span> <span class="id" type="var">Hstp</span>]. <span class="id" type="tactic">∃</span> (<a class="idref" href="Records.html#STLCExtendedRecords.tproj"><span class="id" type="constructor">tproj</span></a> <span class="id" type="var">t'</span> <span class="id" type="var">i</span>)...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_RNil".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">left</span>...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_RCons".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> <span class="id" type="var">IHHt1</span>...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "head is a value".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> <span class="id" type="var">IHHt2</span>; <span class="id" type="tactic">try</span> <span class="id" type="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SSCase</span> "tail is a value".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">left</span>...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SSCase</span> "tail steps".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">right</span>. <span class="id" type="tactic">destruct</span> <span class="id" type="var">H2</span> <span class="id" type="keyword">as</span> [<span class="id" type="var">tr'</span> <span class="id" type="var">Hstp</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">∃</span> (<a class="idref" href="Records.html#STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> <span class="id" type="var">i</span> <span class="id" type="var">t</span> <span class="id" type="var">tr'</span>)...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "head steps".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">right</span>. <span class="id" type="tactic">destruct</span> <span class="id" type="var">H1</span> <span class="id" type="keyword">as</span> [<span class="id" type="var">t'</span> <span class="id" type="var">Hstp</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">∃</span> (<a class="idref" href="Records.html#STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> <span class="id" type="var">i</span> <span class="id" type="var">t'</span> <span class="id" type="var">tr</span>)... <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab835"></a><h3 class="section">Context Invariance</h3>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="STLCExtendedRecords.appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> : <a class="idref" href="SfLib.html#id"><span class="id" type="inductive">id</span></a> → <a class="idref" href="Records.html#STLCExtendedRecords.tm"><span class="id" type="inductive">tm</span></a> → <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.afi_var"><span class="id" type="constructor">afi_var</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a>)<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.afi_app1"><span class="id" type="constructor">afi_app1</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Records.html#t1"><span class="id" type="variable">t1</span></a> → <a class="idref" href="Records.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Records.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Records.html#t2"><span class="id" type="variable">t2</span></a>)<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.afi_app2"><span class="id" type="constructor">afi_app2</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Records.html#t2"><span class="id" type="variable">t2</span></a> → <a class="idref" href="Records.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Records.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Records.html#t2"><span class="id" type="variable">t2</span></a>)<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.afi_abs"><span class="id" type="constructor">afi_abs</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">T11</span> <span class="id" type="var">t12</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#y"><span class="id" type="variable">y</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'<>'_x"><span class="id" type="notation">≠</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a>  →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Records.html#t12"><span class="id" type="variable">t12</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Records.html#y"><span class="id" type="variable">y</span></a> <a class="idref" href="Records.html#T11"><span class="id" type="variable">T11</span></a> <a class="idref" href="Records.html#t12"><span class="id" type="variable">t12</span></a>)<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.afi_proj"><span class="id" type="constructor">afi_proj</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">t</span> <span class="id" type="var">i</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.tproj"><span class="id" type="constructor">tproj</span></a> <a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a>)<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.afi_rhead"><span class="id" type="constructor">afi_rhead</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">i</span> <span class="id" type="var">ti</span> <span class="id" type="var">tr</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Records.html#ti"><span class="id" type="variable">ti</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <a class="idref" href="Records.html#ti"><span class="id" type="variable">ti</span></a> <a class="idref" href="Records.html#tr"><span class="id" type="variable">tr</span></a>)<br/>
+&nbsp;&nbsp;| <a name="STLCExtendedRecords.afi_rtail"><span class="id" type="constructor">afi_rtail</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">i</span> <span class="id" type="var">ti</span> <span class="id" type="var">tr</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Records.html#tr"><span class="id" type="variable">tr</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> (<a class="idref" href="Records.html#STLCExtendedRecords.trcons"><span class="id" type="constructor">trcons</span></a> <a class="idref" href="Records.html#i"><span class="id" type="variable">i</span></a> <a class="idref" href="Records.html#ti"><span class="id" type="variable">ti</span></a> <a class="idref" href="Records.html#tr"><span class="id" type="variable">tr</span></a>).<br/>
+
+<br/>
+<span class="id" type="keyword">Hint Constructors</span> <a class="idref" href="Records.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLCExtendedRecords.context_invariance"><span class="id" type="lemma">context_invariance</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">Gamma'</span> <span class="id" type="var">t</span> <span class="id" type="var">S</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#S"><span class="id" type="variable">S</span></a>  →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">∀</span> <span class="id" type="var">x</span>, <a class="idref" href="Records.html#STLCExtendedRecords.appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a> → <a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="Records.html#Gamma'"><span class="id" type="variable">Gamma'</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a>)  →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#Gamma'"><span class="id" type="variable">Gamma'</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#S"><span class="id" type="variable">S</span></a>.<br/>
+<span class="id" type="keyword">Proof</span> <span class="id" type="keyword">with</span> <span class="id" type="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span>. <span class="id" type="tactic">generalize</span> <span class="id" type="tactic">dependent</span> <span class="id" type="var">Gamma'</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">has_type_cases</span> (<span class="id" type="tactic">induction</span> <span class="id" type="var">H</span>) <span class="id" type="var">Case</span>; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">Gamma'</span> <span class="id" type="var">Heqv</span>...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_Var".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Records.html#STLCExtendedRecords.T_Var"><span class="id" type="constructor">T_Var</span></a>... <span class="id" type="tactic">rewrite</span> &lt;- <span class="id" type="var">Heqv</span>...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_Abs".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Records.html#STLCExtendedRecords.T_Abs"><span class="id" type="constructor">T_Abs</span></a>... <span class="id" type="tactic">apply</span> <span class="id" type="var">IHhas_type</span>. <span class="id" type="tactic">intros</span> <span class="id" type="var">y</span> <span class="id" type="var">Hafi</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">unfold</span> <a class="idref" href="SfLib.html#extend"><span class="id" type="definition">extend</span></a>. <span class="id" type="tactic">destruct</span> (<a class="idref" href="SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <span class="id" type="var">x</span> <span class="id" type="var">y</span>)...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_App".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Records.html#STLCExtendedRecords.T_App"><span class="id" type="constructor">T_App</span></a> <span class="id" type="keyword">with</span> <span class="id" type="var">T1</span>...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_RCons".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Records.html#STLCExtendedRecords.T_RCons"><span class="id" type="constructor">T_RCons</span></a>... <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLCExtendedRecords.free_in_context"><span class="id" type="lemma">free_in_context</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">t</span> <span class="id" type="var">T</span> <span class="id" type="var">Gamma</span>,<br/>
+&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#T"><span class="id" type="variable">T</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">T'</span><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">,</span></a> <a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" type="constructor">Some</span></a> <a class="idref" href="Records.html#T'"><span class="id" type="variable">T'</span></a>.<br/>
+<span class="id" type="keyword">Proof</span> <span class="id" type="keyword">with</span> <span class="id" type="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">x</span> <span class="id" type="var">t</span> <span class="id" type="var">T</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">Hafi</span> <span class="id" type="var">Htyp</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">has_type_cases</span> (<span class="id" type="tactic">induction</span> <span class="id" type="var">Htyp</span>) <span class="id" type="var">Case</span>; <span class="id" type="tactic">inversion</span> <span class="id" type="var">Hafi</span>; <span class="id" type="tactic">subst</span>...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_Abs".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> <span class="id" type="var">IHHtyp</span> <span class="id" type="keyword">as</span> [<span class="id" type="var">T'</span> <span class="id" type="var">Hctx</span>]... <span class="id" type="tactic">∃</span> <span class="id" type="var">T'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">unfold</span> <a class="idref" href="SfLib.html#extend"><span class="id" type="definition">extend</span></a> <span class="id" type="keyword">in</span> <span class="id" type="var">Hctx</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">rewrite</span> <a class="idref" href="SfLib.html#neq_id"><span class="id" type="axiom">neq_id</span></a> <span class="id" type="keyword">in</span> <span class="id" type="var">Hctx</span>...<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab836"></a><h3 class="section">Preservation</h3>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLCExtendedRecords.substitution_preserves_typing"><span class="id" type="lemma">substitution_preserves_typing</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">x</span> <span class="id" type="var">U</span> <span class="id" type="var">v</span> <span class="id" type="var">t</span> <span class="id" type="var">S</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="SfLib.html#extend"><span class="id" type="definition">extend</span></a> <a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Records.html#U"><span class="id" type="variable">U</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#S"><span class="id" type="variable">S</span></a>  →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#v"><span class="id" type="variable">v</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#U"><span class="id" type="variable">U</span></a>   →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::'['_x_':='_x_']'_x"><span class="id" type="notation">[</span></a><a class="idref" href="Records.html#x"><span class="id" type="variable">x</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::'['_x_':='_x_']'_x"><span class="id" type="notation">:=</span></a><a class="idref" href="Records.html#v"><span class="id" type="variable">v</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::'['_x_':='_x_']'_x"><span class="id" type="notation">]</span></a><a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a><a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#S"><span class="id" type="variable">S</span></a>.<br/>
+<span class="id" type="keyword">Proof</span> <span class="id" type="keyword">with</span> <span class="id" type="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">x</span> <span class="id" type="var">U</span> <span class="id" type="var">v</span> <span class="id" type="var">t</span> <span class="id" type="var">S</span> <span class="id" type="var">Htypt</span> <span class="id" type="var">Htypv</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">generalize</span> <span class="id" type="tactic">dependent</span> <span class="id" type="var">Gamma</span>. <span class="id" type="tactic">generalize</span> <span class="id" type="tactic">dependent</span> <span class="id" type="var">S</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">t_cases</span> (<span class="id" type="tactic">induction</span> <span class="id" type="var">t</span>) <span class="id" type="var">Case</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">S</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">Htypt</span>; <span class="id" type="tactic">simpl</span>; <span class="id" type="tactic">inversion</span> <span class="id" type="var">Htypt</span>; <span class="id" type="tactic">subst</span>...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "tvar".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">simpl</span>. <span class="id" type="tactic">rename</span> <span class="id" type="var">i</span> <span class="id" type="var">into</span> <span class="id" type="var">y</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> (<a class="idref" href="SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <span class="id" type="var">x</span> <span class="id" type="var">y</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "x=y".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">unfold</span> <a class="idref" href="SfLib.html#extend"><span class="id" type="definition">extend</span></a> <span class="id" type="keyword">in</span> <span class="id" type="var">H0</span>. <span class="id" type="tactic">rewrite</span> <a class="idref" href="SfLib.html#eq_id"><span class="id" type="lemma">eq_id</span></a> <span class="id" type="keyword">in</span> <span class="id" type="var">H0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H0</span>; <span class="id" type="tactic">subst</span>. <span class="id" type="tactic">clear</span> <span class="id" type="var">H0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">eapply</span> <a class="idref" href="Records.html#STLCExtendedRecords.context_invariance"><span class="id" type="lemma">context_invariance</span></a>...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">x</span> <span class="id" type="var">Hcontra</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> (<a class="idref" href="Records.html#STLCExtendedRecords.free_in_context"><span class="id" type="lemma">free_in_context</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">S</span> <a class="idref" href="SfLib.html#empty"><span class="id" type="definition">empty</span></a> <span class="id" type="var">Hcontra</span>) <span class="id" type="keyword">as</span> [<span class="id" type="var">T'</span> <span class="id" type="var">HT'</span>]...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">HT'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "x&lt;&gt;y".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Records.html#STLCExtendedRecords.T_Var"><span class="id" type="constructor">T_Var</span></a>... <span class="id" type="tactic">unfold</span> <a class="idref" href="SfLib.html#extend"><span class="id" type="definition">extend</span></a> <span class="id" type="keyword">in</span> <span class="id" type="var">H0</span>. <span class="id" type="tactic">rewrite</span> <a class="idref" href="SfLib.html#neq_id"><span class="id" type="axiom">neq_id</span></a> <span class="id" type="keyword">in</span> <span class="id" type="var">H0</span>...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "tabs".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">rename</span> <span class="id" type="var">i</span> <span class="id" type="var">into</span> <span class="id" type="var">y</span>. <span class="id" type="tactic">rename</span> <span class="id" type="var">t</span> <span class="id" type="var">into</span> <span class="id" type="var">T11</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Records.html#STLCExtendedRecords.T_Abs"><span class="id" type="constructor">T_Abs</span></a>...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> (<a class="idref" href="SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <span class="id" type="var">x</span> <span class="id" type="var">y</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "x=y".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">eapply</span> <a class="idref" href="Records.html#STLCExtendedRecords.context_invariance"><span class="id" type="lemma">context_invariance</span></a>...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">x</span> <span class="id" type="var">Hafi</span>. <span class="id" type="tactic">unfold</span> <a class="idref" href="SfLib.html#extend"><span class="id" type="definition">extend</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> (<a class="idref" href="SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <span class="id" type="var">y</span> <span class="id" type="var">x</span>)...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "x&lt;&gt;y".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <span class="id" type="var">IHt</span>. <span class="id" type="tactic">eapply</span> <a class="idref" href="Records.html#STLCExtendedRecords.context_invariance"><span class="id" type="lemma">context_invariance</span></a>...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">z</span> <span class="id" type="var">Hafi</span>. <span class="id" type="tactic">unfold</span> <a class="idref" href="SfLib.html#extend"><span class="id" type="definition">extend</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> (<a class="idref" href="SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <span class="id" type="var">y</span> <span class="id" type="var">z</span>)...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">subst</span>. <span class="id" type="tactic">rewrite</span> <a class="idref" href="SfLib.html#neq_id"><span class="id" type="axiom">neq_id</span></a>...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "trcons".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Records.html#STLCExtendedRecords.T_RCons"><span class="id" type="constructor">T_RCons</span></a>... <span class="id" type="tactic">inversion</span> <span class="id" type="var">H7</span>; <span class="id" type="tactic">subst</span>; <span class="id" type="tactic">simpl</span>...<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="STLCExtendedRecords.preservation"><span class="id" type="lemma">preservation</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">t</span> <span class="id" type="var">t'</span> <span class="id" type="var">T</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#T"><span class="id" type="variable">T</span></a>  →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Records.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Records.html#t'"><span class="id" type="variable">t'</span></a>  →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Records.html#t'"><span class="id" type="variable">t'</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Records.html#T"><span class="id" type="variable">T</span></a>.<br/>
+<span class="id" type="keyword">Proof</span> <span class="id" type="keyword">with</span> <span class="id" type="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">t</span> <span class="id" type="var">t'</span> <span class="id" type="var">T</span> <span class="id" type="var">HT</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">remember</span> (@<a class="idref" href="SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Records.html#STLCExtendedRecords.ty"><span class="id" type="inductive">ty</span></a>) <span class="id" type="keyword">as</span> <span class="id" type="var">Gamma</span>. <span class="id" type="tactic">generalize</span> <span class="id" type="tactic">dependent</span> <span class="id" type="var">HeqGamma</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">generalize</span> <span class="id" type="tactic">dependent</span> <span class="id" type="var">t'</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">has_type_cases</span> (<span class="id" type="tactic">induction</span> <span class="id" type="var">HT</span>) <span class="id" type="var">Case</span>; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">t'</span> <span class="id" type="var">HeqGamma</span> <span class="id" type="var">HE</span>; <span class="id" type="tactic">subst</span>; <span class="id" type="tactic">inversion</span> <span class="id" type="var">HE</span>; <span class="id" type="tactic">subst</span>...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_App".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">HE</span>; <span class="id" type="tactic">subst</span>...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "ST_AppAbs".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Records.html#STLCExtendedRecords.substitution_preserves_typing"><span class="id" type="lemma">substitution_preserves_typing</span></a> <span class="id" type="keyword">with</span> <span class="id" type="var">T1</span>...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">HT1</span>...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_Proj".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> (<a class="idref" href="Records.html#STLCExtendedRecords.lookup_field_in_value"><span class="id" type="lemma">lookup_field_in_value</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">H2</span> <span class="id" type="var">HT</span> <span class="id" type="var">H</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">as</span> [<span class="id" type="var">vi</span> [<span class="id" type="var">Hget</span> <span class="id" type="var">Htyp</span>]].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">rewrite</span> <span class="id" type="var">H4</span> <span class="id" type="keyword">in</span> <span class="id" type="var">Hget</span>. <span class="id" type="tactic">inversion</span> <span class="id" type="var">Hget</span>. <span class="id" type="tactic">subst</span>...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_RCons".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Records.html#STLCExtendedRecords.T_RCons"><span class="id" type="constructor">T_RCons</span></a>... <span class="id" type="tactic">eapply</span> <a class="idref" href="Records.html#STLCExtendedRecords.step_preserves_record_tm"><span class="id" type="lemma">step_preserves_record_tm</span></a>...<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">End</span> <a class="idref" href="Records.html#STLCExtendedRecords"><span class="id" type="module">STLCExtendedRecords</span></a>.<br/>
+
+<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

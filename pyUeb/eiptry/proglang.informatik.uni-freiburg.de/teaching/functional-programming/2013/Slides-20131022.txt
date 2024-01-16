@@ -1,0 +1,582 @@
+Functional Programming
+
+(adapted from Dave Sands)
+
+Why learn functional programming?
+
+* Functional programming will make you think differently about programming 
+
+  – mainstream programming is all about state and how to transform state 
+  – functional programming is all about values and how to construct values using functions 
+
+*  Whether you use it later or not, it will make you a better programmer
+
+
+
+
+
+Why Haskell?
+
+• Haskell is a very high-level language (many details taken care of automatically). 
+
+• Haskell is expressive and concise (can achieve a lot with a little effort). 
+
+• Haskell is good at handling complex data and combining components. 
+
+• Haskell is a high-productivity language (prioritise programmer-time over computer-time)
+
+
+
+
+>>> Haskell Demo
+
+* Let's say we want to buy a game in the USA and we have to 
+  convert its price from USD to EUR
+
+* A ::definition:: gives a name to a value
+* Names are case-sensitive, must start with lowercase letter
+* Definitions are put in a text file ending in .hs
+
+Examples.hs:
+%%%%%%%%%%%%%%%%%%%%
+dollarRate = 1.3671
+%%%%%%%%%%%%%%%%%%%%
+
+
+
+>>> Using the definition
+
+* Starting the GHCi Haskell interpreter (loads the file)
+
+   shell> ghci
+GHCi, version 7.4.2: http://www.haskell.org/ghc/  :? for help
+Loading package ghc-prim ... linking ... done.
+Loading package integer-gmp ... linking ... done.
+Loading package base ... linking ... done.
+   Prelude> :l Examples.hs
+
+* Use the definition
+
+  Main> dollarRate
+  Main> 53 * dollarRate
+
+
+
+
+
+
+>>> A Function to convert Euros to USD
+
+Examples.hs
+%%%%%%%%%%%%%%%%%%%%
+-- convert euros to USD
+usd x = x * dollarRate
+%%%%%%%%%%%%%%%%%%%%
+
+* first line: comment
+* ::usd:: function name (defined)
+* ::x::    argument name (defined)
+* ::x * dollarRate:: expression to compute the result
+
+
+
+
+>>> Using the function
+
+* load into GHCi
+  Main> usd 1
+  Main> usd 73
+
+
+
+
+
+
+
+
+
+
+
+>>> Converting Back
+
+*Main> euro (usd 73)
+73.0
+*Main> euro (usd 1)
+1.0
+*Main> usd (euro 100)
+100.0
+
+
+
+
+
+
+
+
+>>> Automated Testing
+
+* Define a function to perform the test for us!
+
+%%%%%%%%%%%%%%%%%%%%
+prop_EuroUSD x = euro (usd x) == x
+%%%%%%%%%%%%%%%%%%%%
+
+*    ==   is the equality operator
+
+*Main> prop_EuroUSD 79
+True
+*Main> prop_EuroUSD 1
+True
+
+
+>>> Writing Properties 
+
+•  Convention: functions names beginning with
+  ”prop_” are properties we expect to be True 
+
+•  Writing properties in files 
+  – Tells us how functions should behave 
+  – Tells us what has been tested 
+  – Lets us repeat tests after changing a definition 
+
+
+
+
+
+
+>>> Automatic Testing
+
+•  Testing accounts for more than half the cost of a software project 
+
+•  We employ a widely used Haskell library for automatic random testing
+
+%%%%%%%%%%%%%%%%%%%%
+import Test.QuickCheck
+%%%%%%%%%%%%%%%%%%%%
+
+* add imports in file before all definitions
+
+
+
+
+
+>>> Running Tests
+
+*Main> quickCheck prop_EuroUSD
+*** Failed! Falsifiable (after 10 tests and 1 shrink): 
+7.0
+
+* Runs 100 randomly chosen tests
+* Result: it's wrong!
+* Property fails for input 7.0
+
+*Main> usd 7
+9.5697
+*Main> euro 9.5697
+6.999999999999999
+
+
+
+>>> The Problem: Floating Point Arithmetic
+
+•  There is a very tiny difference between the initial and final values 
+
+*Main> euro (usd 7) - 7
+-8.881784197001252e-16
+
+•  Calculations are only performed to about 15 significant figures 
+•  The property is wrong! 
+
+
+
+
+
+
+
+>>> Fixing the Problem
+
+•  NEVER use equality with floating point numbers!
+•  The result should be nearly the same 
+•  The difference should be small – smaller than 10E-15
+
+
+
+
+
+
+
+
+
+
+
+>>> Comparing Values
+
+*Main> 2<3
+True
+*Main> 3<2
+False
+
+
+
+
+
+
+
+
+
+
+>>> Defining "Nearly Equal"
+
+•  We can define new operators with names made up of symbols
+
+%%%%%%%%%%%%%%%%%%%%
+x ~== y = x - y < 10e-15
+%%%%%%%%%%%%%%%%%%%%
+
+*Main> 3 ~== 3.0000001
+True
+*Main> 3 ~== 4
+True
+
+
+
+
+>>> Fixing the Definition
+
+* abs computes the absolute value
+
+*Main> abs 3
+3
+*Main> abs (-3)
+3
+
+%%%%%%%%%%%%%%%%%%%%
+x ~== y = abs (x - y) < 10e-15
+%%%%%%%%%%%%%%%%%%%%
+
+*Main> 3 ~== 4
+False
+
+>>> Fixing the Property
+
+%%%%%%%%%%%%%%%%%%%%
+prop_EuroUSD' = euro (usd x) ~== x
+%%%%%%%%%%%%%%%%%%%%
+
+*Main> prop_EuroUSD' 3
+True
+*Main> prop_EuroUSD' 56
+True
+*Main> prop_EuroUSD' 77
+True
+
+... but it's still wrong because the approximate equality must take the absolute size of the argument into account!
+
+An improved definition that survives 100 tests:
+
+%%%%%%%%%%%%%%%%%%%%
+x ~== y = abs (x - y) < 10e-15 * abs x
+%%%%%%%%%%%%%%%%%%%%
+
+
+>>> Name the Price
+
+•  Let’s define a name for the price of the game we want 
+
+%%%%%%%%%%%%%%%%%%%%
+price = 79
+%%%%%%%%%%%%%%%%%%%%
+
+*Main> euro price
+
+<interactive>:57:6:
+    Couldn't match expected type `Double' with actual type `Integer'
+    In the first argument of `euro', namely `price'
+    In the expression: euro price
+    In an equation for `it': it = euro price
+
+
+>>> Every Value has a Type
+
+•  The :i command prints information about a name
+
+*Main> :i price
+price :: Integer
+  	-- Defined at ...
+*Main> :i dollarRate
+dollarRate :: Double
+  	-- Defined at ...
+
+
+
+
+
+
+>>> More Types
+
+*Main> :i True
+data Bool = ... | True 	-- Defined in `GHC.Types'
+*Main> :i False
+data Bool = False | ... 	-- Defined in `GHC.Types'
+*Main> :i euro
+euro :: Double -> Double
+  	-- Defined at...
+*Main> :i prop_EuroUSD'
+prop_EuroUSD' :: Double -> Bool
+  	-- Defined at...
+
+* True and False are ::data constructors::
+
+
+
+
+>>> Types Matter
+
+•  Types determine how computations are performed
+•  A type annotation specifies which type to use
+
+*Main> 123456789*123456789 :: Double
+1.524157875019052e16
+*Main> 123456789*123456789 :: Integer
+15241578750190521
+
+•  Double: double precision floating point numbers
+•  Integer: exact computation
+•  GHCi must know the type of each expression before computing it.
+
+
+
+
+>>> Type Checking
+
+•  Infers (works out) the type of every expression 
+
+•  Checks that all types match – before running the program
+
+
+
+
+
+
+
+
+
+
+
+>>> Our Example
+
+*Main> :i price
+price :: Integer
+  	-- Defined at...
+*Main> :i euro
+euro :: Double -> Double
+  	-- Defined at...
+*Main> euro price
+
+<interactive>:70:6:
+    Couldn't match expected type `Double' with actual type `Integer'
+    In the first argument of `euro', namely `price'
+    In the expression: euro price
+    In an equation for `it': it = euro price
+
+
+
+>>> Why did it work before?
+
+•  Numeric literals are ::overloaded::
+•  Giving the number a name fixes its type
+
+*Main> euro 79
+57.78655548240802
+*Main> 79 :: Integer
+79
+*Main> 79 :: Double
+79.0
+*Main> price :: Integer
+79
+*Main> price :: Double
+
+<interactive>:76:1:
+    Couldn't match expected type `Double' with actual type `Integer'
+    In the expression: price :: Double
+    In an equation for `it': it = price :: Double
+
+
+
+>>> Fixing the Problem
+
+•  A definition can be given a type signature which specifies its type 
+
+%%%%%%%%%%%%%%%%%%%%
+-- price of the game in USD
+price' :: Double
+price' = 79
+%%%%%%%%%%%%%%%%%%%%
+
+*Main> :i price'
+price' :: Double
+  	-- Defined at...
+*Main> euro price'
+57.78655548240802
+
+
+
+>>> Always Specify Type Signatures!
+
+•  They help the reader (and you) understand the program 
+•  They serve as a starting point for implementation
+•  The type checker can find your errors more easily, by checking that definitions have the types you say 
+•  Type error messages will be easier to understand 
+•  Sometimes they are necessary (as for price) 
+
+
+
+
+
+
+
+
+>>> Example with Type Signatures
+
+%%%%%%%%%%%%%%%%%%%%
+dollarRate :: Double
+dollarRate = 1.3671
+
+usd, euro :: Double -> Double
+usd x = x*dollarRate
+euro x = x/dollarRate
+
+prop_EuroUSD' :: Double -> Bool
+prop_EuroUSD' x = euro (usd x) ~== x
+%%%%%%%%%%%%%%%%%%%%
+
+
+
+>>> Function Definition by Cases and Recursion
+
+• Example: Absolute Value
+
+•  Find the absolute value of a number 
+  – If x is positive, result is x 
+  – If x is negative, result is -x 
+
+%%%%%%%%%%%%%%%%%%%%
+-- returns the absolute value of x
+absolute :: Integer -> Integer
+absolute x | x >= 0 = x
+absolute x | x < 0  = - x
+%%%%%%%%%%%%%%%%%%%%
+
+>>> Alternative Notation
+
+%%%%%%%%%%%%%%%%%%%%
+absolute x | x >= 0 = x
+                | x < 0  = -x
+%%%%%%%%%%%%%%%%%%%%
+
+... or using if-then-else
+
+%%%%%%%%%%%%%%%%%%%%
+absolute x = if x >= 0 then x else -x
+%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+>>> Recursion
+
+•  First example of a recursive function 
+   – Compute x^n (without using the built-in x^n)
+
+%%%%%%%%%%%%%%%%%%%%
+-- compute x to n-th power
+power x 0         = 1
+power x n | n > 0 = x * power x (n - 1)
+%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+>>> Recursion
+
+•  Reduce a problem (e.g. power x n) to a smaller problem of the same kind 
+•  So that we eventually reach a ”smallest” base case 
+•  Solve base case separately 
+•  Build up solutions from smaller solutions
+
+
+
+
+
+
+
+
+
+
+>>> Example: Counting Intersections
+
+•  Consider n non-parallel lines in the plane.
+•  How many intersections (at most)?
+
+
+
+
+
+
+
+
+
+
+
+
+>>> The Solution
+
+•  Always pick the base case as simple as possible! 
+
+%%%%%%%%%%%%%%%%%%%%
+-- max number of intersections of n lines
+intersect :: Integer -> Integer
+intersect 0   = 0
+intersect n | n > 0 = intersect (n - 1) + n - 1
+%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+
+Summary:
+- A *definition* gives a name to a value
+- Names are case-sensitive, must start with lowercase letter
+- Definitions are put in a text file ending in .hs
+- Comments start with "--" and extend to the end of the line
+- Function definitions have the form "f x1 x2 ... = e" where
+  - f is the name of the function
+  - x1, x2, ... are the names of the formal parameters
+  - e is the body of the function, an expression to compute the result
+- Operators
+   - arithmetic: + - * / 
+   - comparison: ==   /=   <   > etc
+- Automated Testing with QuickCheck
+  - Define a property as a  function "prop_..." of type T -> Bool
+  - import Testing.QuickCheck -- in the source file
+  - Test by executing "quickCheck prop_..."
+- Floating point arithmetic
+  - Do not test floating point numbers for equality!
+  - Approximately 15 significant decimal digits
+  - Test equality with relative check < 10E-15
+- Types
+   - Every value has a type
+   - Numeric literals are overloaded (can be, e.g., Integer or Double)
+   - Naming a value fixes its type (according to Haskell's rules)
+   - Argument type of function and actual type of argument must match
+   - Type Double: double precision floating point numbers
+   - Type Integer: exact computation
+   - Type signature specifies the desired type (overrides Haskell's rules)
+   - Always specify type signatures!
+- Function definition by cases and recursion
+  - Paraphrasing the mathematical definition

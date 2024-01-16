@@ -1,0 +1,58 @@
+Vorlage Aufgaben Typklassen:
+
+Aufgabe 1:
+
+showNumber :: Int -> String
+
+
+Aufgabe 2: 
+
+
+data Farbe = Gelb | Blau | Grün  
+
+class Mischmal m where
+	mischen :: m -> m -> m
+	ismischbar :: m -> m -> Bool
+	analyse :: m -> [m]
+	anzeigen :: m -> String
+	anzeigenL :: [m] -> [String]
+	anzeigenL [] = []
+	anzeigenL (x:xs) = (anzeigen x):(anzeigenL xs)
+
+instance Mischmal Farbe where
+      mischen Blau Gelb = Grün
+	mischen Gelb Blau = Grün
+	
+	ismischbar Blau Gelb = True
+	ismischbar Gelb Blau = True
+	ismischbar a b = False
+	
+	analyse Grün = [Gelb, Blau]
+	analyse a = []
+	
+      anzeigen Gelb = "gelb"
+	anzeigen Blau = "blau"
+	anzeigen Grün = "grün"
+
+
+Aufgabe 3:
+
+Betrachte Bsp. Mischen auf den Folien
+
+
+
+
+Aufgabe 4:
+
+data Einheit    = Celsius    |
+                  Fahrenheit |
+                  Kelvin             
+data Temperatur = Temp Float Einheit 
+
+umrechnen :: Temperatur -> Einheit -> Temperatur
+umrechnen (Temp t Celsius)Kelvin    = Temp(t + 273.15)Kelvin
+umrechnen (Temp t Kelvin)Fahrenheit = Temp(t * 9/5 - 459.67)Fahrenheit
+
+
+
+

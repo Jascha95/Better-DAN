@@ -1,0 +1,255 @@
+                   __________________________________
+
+                            DATENTYPEN (II)
+
+                    Peter Thiemann, Luminous Fennell
+                   __________________________________
+
+
+1 Where were we ...
+===================
+
+  Modelling a card game:
+  - [X] Suits
+  - [X] Ranks
+  - [X] Comparison of ranks
+  - [X] (generate ranks)
+  - Cards
+  - Hands of cards
+  - Choose a winning card
+
+
+2 Cards
+=======
+
+  A card has a *suit* and a *rank*.
+
+
+3 Cards
+=======
+
+  A card has a *suit* and a *rank*.
+  ,----
+  | data Card = Card Rank Suit
+  |   deriving (Show, Eq)
+  `----
+
+  - single constructor with two parameters
+  - (in principle, a tuple)
+  - `rank', `suit' are *selector functions*
+
+
+4 Cards
+=======
+
+  Quick test, to see how cards work:
+
+
+5 Cards
+=======
+
+  Quick test, to see how cards work:
+  ,----
+  | Main> color (suit (Card King Diamonds))
+  | Red
+  `----
+
+
+6 Cards
+=======
+
+  Selector functions are very common.
+
+  Abbreviation:
+  ,----
+  | data Card = Card { rank :: Rank, suit :: Suit }
+  |  deriving (Show)
+  `----
+
+  Usage stays the same:
+
+  ,----
+  | Main> color (suit (Card King Diamonds))
+  | Red
+  `----
+
+
+7 Comparing Cards
+=================
+
+  A card *beats* another card, if it has the same suit, but a higher
+  rank
+
+  ,----
+  | cardBeats :: Card -> Card -> Bool
+  | cardBeats givenCard c = suit givenCard == suit c
+  |                         && rankBeats (rank givenCard)
+  |                                      (rank c)
+  `----
+
+
+8 Hands of Cards
+================
+
+
+9 Hands of Cards
+================
+
+  ,----
+  | type Hand = [Card]
+  | 
+  | chooseCard :: Card -> Hand -> Card
+  | chooseCard givenCard h = undefined
+  `----
+
+
+10 Hands of Cards
+=================
+
+  ,----
+  | type Hand = [Card]
+  | 
+  | chooseCard :: Card -> Hand -> Card
+  | chooseCard givenCard [] = ?? 
+  | chooseCard givenCard (x:xs) = undefined
+  `----
+
+  What should we return in case of the ``empty hand''?
+
+
+11 Hands of Cards
+=================
+
+  Alternatively, define Hands in a way that they are never empty.
+
+
+12 Hands of Cards
+=================
+
+  Alternatively, define Hands in a way that they are never empty.
+
+  ,----
+  | data Hand = Last Card | Next Card Hand
+  |   deriving (Show, Eq)
+  `----
+
+  - Recursive datatype definition
+  - `Last Card' is the *base case*
+
+
+13 Hands of Cards
+=================
+
+  - A Hand is never empty
+  - Thus we can always obtain a card
+
+
+14 Hands of Cards
+=================
+
+  - A Hand is never empty
+  - Thus we can always obtain a card
+
+  ,----
+  | topCard :: Hand -> Card
+  | topCard (Last c)  = c
+  | topCard (Next c _) = c
+  `----
+
+
+15 chooseCard
+=============
+
+  ,----
+  | -- choose a beating card, if possible
+  | chooseCard :: Card -> Hand -> Card
+  | chooseCard = undefined
+  `----
+
+
+16 chooseCard
+=============
+
+  ,----
+  | -- choose a beating card, if possible
+  | chooseCard :: Card -> Hand -> Card
+  | chooseCard gc (Last c) = c -- may beat, or not
+  | chooseCard gc (Next c h) | cardBeats gc c = c
+  |                          | otherwise      = chooseCard gc h
+  `----
+
+
+17 chooseCard
+=============
+
+  ,----
+  | -- choose a beating card, if possible
+  | chooseCard :: Card -> Hand -> Card
+  | chooseCard gc (Last c) = c -- may beat, or not
+  | chooseCard gc (Next c h) | cardBeats gc c = c
+  |                          | otherwise      = chooseCard gc h
+  `----
+
+  Let's test it:
+  ,----
+  | prop_chooseCard c h = undefined
+  `----
+
+
+18 Testing chooseCard
+=====================
+
+
+19 Testing chooseCard
+=====================
+
+  ,----
+  | prop_chooseCard c h = cardBeats c (chooseCard c (h))
+  `----
+
+  The above property is false!
+
+  ,----
+  | Main> quickCheck $ prop_chooseCard (Card Ace Spades) ex_hand1
+  | Failed!
+  `----
+
+
+20 handBeats
+============
+
+
+21 handBeats
+============
+
+  ,----
+  | prop_chooseCard c h = not (handBeats c h) || cardBeats c (chooseCard c (h))
+  `----
+
+
+22 handBeats
+============
+
+  ,----
+  | prop_chooseCard c h = not (handBeats c h) || cardBeats c (chooseCard c (h))
+  | 
+  | handBeats :: Card -> Hand -> Bool
+  | handBeats givenCard (Last c) = cardBeats givenCard c 
+  | handBeats givenCard (Next c h) = cardBeats givenCard c || handBeats c h
+  `----
+
+
+23 handBeats (Alternative)
+==========================
+
+
+24 handBeats (Alternative)
+==========================
+
+  ,----
+  | handBeats' :: Card -> Hand -> Bool
+  | handBeats' givenCard h = not $ null $ filter (cardBeats givenCard) (toCardList h)
+  | 
+  | toCardList (Last c) = [c]
+  | toCardList (Next c h) = c:toCardList h
+  `----

@@ -1,0 +1,542 @@
+>>> Lists
+
+>> reminder:
+
+* list: *container data type* for arbitrarily many elements
+* lists are *homogeneous*: all elements have the same type
+* order matters: two lists are equal if they contain the same elements in the same order
+* Syntax
+[ ]   -- empty list
+(x : xs)  -- list with head x and tail xs, x :: a and xs :: [a]
+(1 : (2 : (3 : []))) == (1 : 2 : 3 : []) == [1, 2, 3]
+['h', 'e', 'l', 'l', 'o']  == "hello"
+
+type String = [Char]
+
+
+
+
+>>> In principle, lists could be defined using data
+
+data List = Empty  |  Add ??? List
+
+* Cannot put a concrete type for ??? because List should be available for all types
+
+
+
+
+
+
+
+
+
+
+
+>>> Solution: define a *parametric type*
+
+
+data List a = Empty | Add a (List a)
+
+* definition includes a *type parameter* 'a'
+* can be used where a type is expected on the rhs
+* each use of the 'List a' datatype instantiates 'a' to a type
+
+Add 3 (Add 2 Empty) :: List Int
+Add 'x' (Add 'y' Empty) :: List Char
+
+
+
+
+
+
+
+>>> Haskell lists
+
+*** attention pseudocode:
+
+data [a] = [ ]   |     a : [a]
+
+
+
+
+
+
+
+
+
+
+
+
+>>> Further predefined datatypes
+
+alist = [("xxx", 1), ("zzz", 2)]
+lookup :: String -> [(String, Int)] -> Maybe Int
+lookup "xxx" alist == Just 1
+lookup "zzz" alist == Just 2
+lookup "bbb" alist == Nothing
+
+* Maybe: 
+
+data Maybe a = Nothing | Just a 	-- Defined in `GHC.Types'
+
+* Either
+
+data Either a b = Left a | Right b 	-- Defined in `GHC.Types'
+
+f_either :: Int -> Either Int Char
+f_either n = if even n then n `div` 2 else char n
+
+* Ordering: expresses the result of a comparison
+
+data Ordering = LT | EQ | GT 	-- Defined in `GHC.Types'
+
+
+
+
+
+
+
+
+
+
+
+
+>>> Parametric types => parametric functions
+
+* functions that work on parametric types are often applicable to all instances of the type
+* ==> *polymorphic functions*
+* their type contains type parameters
+* examples for polymorphic functions on lists (from Prelude):
+
+filter :: (a -> Bool) -> [a] -> [a]
+reverse :: [a] -> [a]        -- reverses the order of elements in a list
+(++) :: [a] -> [a] -> [a]   -- list concatenation 
+
+concat :: [[a]] -> [a]        -- list flattening
+take :: Int -> [a] -> [a]   -- prefix of length n
+drop :: Int -> [a] -> [a]   -- drop prefix of length n
+
+zip :: [a] -> [b] -> [(a, b)]  -- zip two lists together
+
+
+>>> Restricted polymorphism
+
+* some functions work on parametric types, but are only applicable to some instances
+* their type contains type parameters and *type predicates* (or type constraints)
+* examples for type constraints:
+
+Eq a => ...     -- type a must have an equality
+Ord a => ...   -- type a must have an ordering
+Num a => ... -- type a has numeric operators
+
+
+
+
+
+
+
+
+>>> Example: a sorting function for lists
+
+qsort :: [a] -> [a]
+
+
+* use "where"
+
+
+* each constraint mentions a *type class*
+* a type class specifies a set of operations for a type
+* type classes form a hierarchy
+* many type classes are predefined in Haskell
+
+
+
+
+
+>>> Example type class
+
+-- class declaration: define the name of the class, its operations, and their types
+-- (from Prelude)
+-- expected to be an equivalence relation
+class Eq a where
+  (==) :: a -> a -> Bool
+  (/=) :: a -> a -> Bool
+
+  x /= y  = not (x == y)  -- default declaration
+
+-- instance declaration: specify if a type belongs to a class
+instance Eq Int where
+  x == y  =  primEqInt x y
+
+instance Eq Char where
+  x == y  =  primEqInt (ord x) (ord y)
+
+-- to test equality of a list, we need to test elements for equality
+instance Eq a => Eq [a] where
+  [] == []  =  True
+  (x:xs) == (y:ys)  =  x == y && xs == ys
+  _ == _  = False
+
+
+* what about (/=) ?
+
+
+>>> Example building a type class hierarchy
+
+* only things that have an equality test can be ordered
+
+class Eq a => Ord a where
+  (<) :: a -> a -> Bool
+  (<=) :: a -> a -> Bool
+
+-- requires Eq Int
+instance Ord Int where
+  x < y  =  primLtInt x y
+
+instance (Ord a, Ord b) => Ord (a, b) where
+  (x1, x2) < (y1, y2)  =  x1 < x2 || x1 == x2 && y1 < y2
+
+instance Ord a => Ord [a] where
+  [] < [] = False
+  [] < ys = True
+  (x:xs) < (y:ys) = x < y || x == y && xs < ys
+
+
+>>> Deriving
+
+instance Ord Rank where
+  (<)  =  rankBeats
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+>>> Higher-Order Functions
+
+* A *higher-order function* takes a function as a parameter.
+* Defining feature of functional programming
+* Part of the behavior of a h-o function can be controlled by the caller
+* Many similar function definitions can be replaced by a single h-o function
+
+Examples
+
+even :: Int -> Bool
+
+map even [1..9]
+filter even [1..9]
+
+filter :: (a -> Bool) -> [a] -> [a]
+
+
+* type of map
+
+map :: (a -> b) -> [a]  -> [b ]
+
+map even [1..9]
+-- map :: (Int -> Bool) -> [Int] -> [Bool]
+map ord "hello"
+-- map :: (Char -> Int) -> [Char] -> [Int]
+map not [False, True]
+-- map :: (Bool -> Bool) -> [Bool] -> [Bool]
+
+
+
+
+
+
+
+
+
+>>> Derive a h-o function from similar function definitions
+
+sum :: [Int] -> Int
+product :: [Int] -> Int
+and :: [Bool] -> Bool
+concat :: [[a]] -> [a]
+
+* what's common?
+-- sum [1,2,3] == 6
+sum [] = 0
+sum (x:xs) = x + sum xs
+
+-- product [1..5] == 120
+product [] = 1
+product (x:xs) = x * product xs
+
+-- and [True, True] == True
+and [] = True
+and (x:xs) = x && and xs
+
+-- common pattern: foldr
+foldr :: (a -> b -> b) -> b -> [a] -> b
+foldr op n [] = n
+foldr op n (x:xs) = x `op` foldr op n xs
+
+sum xs = foldr (+) 0 xs
+product xs = foldr (*) 1 xs
+and xs = foldr (&&) True xs
+
+
+>>> Intuition for foldr:
+
+r = foldr op n xs
+
+xs == x1  :  (x2  :  (x3 :  ....  :   (xn  :  [])...))
+
+r   == x1 `op` (x2 `op` (x3 `op`  ....  `op`   (xn `op`  n)...))
+
+-- action of foldr:
+-- replace (:) by `op`
+-- replace [] by n
+
+
+>>> Quiz
+
+
+foldr (:) [] xs == xs
+
+foldr (:) ys xs == xs ++ ys
+
+let snoc x xs = xs ++ [x] in
+foldr snoc [] xs
+== reverse xs
+
+
+
+
+
+
+
+>>> Lambda Expressions
+
+* users of h-o function often define single-use functions
+* they can be expressed with a *lambda expression* without naming them
+
+foldr (\ x xs -> xs ++ [x]) [] xs
+
+* the argument is the same function as snoc, but without naming it
+
+
+
+
+
+
+
+
+>>> Unlines
+
+unlines :: [String] -> String
+
+unlines ["xxx", "yyy",  "zzz"] == "xxx\nyyy\nzzz\n"
+
+-- foldr :: (a -> b -> b) -> b -> [a] -> b
+unlines xs = foldr (\ s r -> s ++ "\n" ++ r ) [] xs
+
+unlines xs = foldr f n xs
+	where f s r = s ++ "\n" ++ r
+	      	  n = []
+
+
+>>> takeLine
+
+takeLine :: String -> String
+
+takeLine "xxx\nzzz" == "xxx"
+
+takeLine [] = []
+takeLine (x:xs) | x /= '\n' = x : takeLine xs
+                       | otherwise = []
+
+
+
+
+
+
+
+
+>>> Generalizing takeLine to takeWhile 
+
+takeWhile :: (a -> Bool) -> [a] -> [a]
+takeWhile p [] = []
+takeWhile p (x:xs) | p x = x : takeWhile p xs
+	    	   | otherwise = []
+
+takeLine == takeWhile (\ x -> x /= '\n')
+              == takeWhile (/= '\n')
+
+
+
+
+
+
+
+
+
+
+
+>>> Operator sections
+
+add1 = \x -> 1+x
+
+add1' = (1+)
+add1'' = (+1)
+
+map (+1) ...
+filter (<0) ...
+takeWhile (/='\n') ...
+
+
+
+
+
+
+
+>>> Defining lines
+
+-- recall
+takeWhile :: (a -> Bool) -> [a] -> [a]
+dropWhile :: (a -> Bool) -> [a] -> [a]
+
+-- takeWhile p xs ++ dropWhile p xs == xs
+
+-- break input string at each '\n' 
+-- generally: break a list into segments of elements with a common property
+lines :: String -> [String]
+
+
+
+
+
+
+
+
+>>> Properties 
+
+* Wanted: a property that connects takeWhile and dropWhile
+
+
+prop_takeWhile_dropWhile = undefined
+
+
+
+
+
+
+
+
+
+
+
+
+>>> Generalized lines
+
+segments :: (a -> Bool) -> [a] -> [[a]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>> Comma Separated Values
+
+Many programs store information in CSV format:
+
+1,morning,8:45,42.3,5
+
+-- commaSep "1,morning,8:45,42.3,5" == ["1", "morning", "8:45", "5"]
+commaSep :: String -> [String]
+
+
+
+
+
+
+
+
+
+>>> words: split a string into words
+
+* words are separated by one or more white space characters
+
+mywords :: String -> [String]
+mywords = undefined
+
+
+
+
+
+
+
+
+
+
+
+>>> Partial Applications
+
+* Functions need not be applied to all arguments
+* ok to apply to fewer arguments (a *partial application*)
+* the resulting value takes the remaining arguments
+
+mysum = undefined
+
+mysum [1,2,3]
+
+>>> Typing partial applications
+
+f :: Int -> Bool -> String -> Bool
+
+* bracketing of function types and function application
+
+
+>>> Example: count words
+
+Convert an input string into a string that lists the words from the input in alphabetical
+order along with a count of how many times each word occurred.
+
+Example
+* input: "hello world hello dolly"
+* output "dolly: 1\nhello: 2\nworld: 1\n"
+
+** groupBy
+** map is a functor
+
+
+
+
+
+
+>>> Wrap up: Higher-Order Functions
+
+* enable naming of common code patterns -> avoid repetition
+* generalizing: abstract the differences between uses of the pattern -> high flexibility
+* lambda expressions, sections, partial applications, function composition enable
+  the creation of functions without requiring a separate definition
+* many standard patterns available in Prelude
+
+** many of these are easy to reinvent -> not necessary to memorize
+** however, studying them gives useful inspiration for problem solving -> speeds up programming
+   "standing on the shoulders of giants"
+
+
+

@@ -1,0 +1,984 @@
+/* transfered formating options for old pages */
+table.infos tr td { 
+  padding-right: 10px;
+  padding-left: 2px;
+  padding-bottom: 3px;
+  padding-top: 3px;
+  vertical-align: top;
+}
+
+div.border table, table.border { 
+  border-collapse: collapse;
+  border-spacing: 0px;
+  border-left: 0;
+  border-top: 1px gray dashed ;
+  border-bottom: 1px gray dashed  ;
+  border-right: 1px gray dashed ; 
+}
+
+div.border table tr th , table.border tr.head th { 
+    border-bottom: 1px gray dashed ; 
+}
+
+div.border table tr th , div.border table tr td, table.border tr th, table.border tr td {
+  border-left: 1px gray dashed ;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+table.border tr td.right, table.border tr th.right { 
+  text-align: right;
+}
+
+table.border tr td.center, table.border tr th.center { 
+  text-align: center;
+}
+
+table.border tr.insert td { 
+  border-bottom: 1px gray dashed ; 
+  border-top: 1px gray dashed ; 
+}
+
+table.border tr.line td { 
+  border-top: 1px gray dashed ; 
+}
+
+table.borders { 
+  border-collapse: collapse;
+  border-spacing: 0px;
+  border-left: 1px gray solid;
+  border-top: 1px gray solid ;
+  border-bottom: 1px gray solid  ;
+  border-right: 1px gray solid ; 
+}
+
+table.borders tr.head th { 
+  border-bottom: 1px gray solid ; 
+}
+
+table.borders tr th, table.borders tr td { 
+  border: 1px gray solid ;
+}
+
+
+/* Links, die mit http: beginnnen, sind normalerweise externe Links,
+   d.h. wir fuegen das externalLink.gif hinzu */
+a[href^="http:"] { 
+  background: url(../images/externalLink.gif) no-repeat right top;
+  padding-right: 10px;
+}
+
+/* Links, die mit http: anfangen, sind aber nicht alle extern, hier
+   die Liste der Ausnahmen. */
+a[href^="http://proglang"], 
+a[href^="http://www.informatik.uni-freiburg.de"],
+a[href^="http://lipoa.informatik.uni-freiburg.de"],
+a[href^="http://www.uni-freiburg.de"] { 
+  background-image: none;
+  padding-right: 0;
+}
+
+/* Pdf Links und Ps Links mit Symbol versehen */
+a[href$=".pdf"] {
+  background: url(../images/pdf.gif) no-repeat right;
+  padding-right: 20px;
+}
+a[href$=".ps"] {
+  background: url(../images/ps.gif) no-repeat right;
+  padding-right: 20px;
+}
+
+/* Sprachlinks ohne passende Endung verstecken */
+a.lang { 
+  display:none;
+}
+
+/* Falls img innerhalb des Links, das das Symbol schon
+   einbindet, Symbol wieder entfernen, damit "Doppelsymbol"
+   nicht vorkommt. */
+a[href$=".pdf"]>img[src$=".gif"], a[href$=".ps"]>img[src$=".gif"] { 
+  display: none;
+ }
+
+a.noimg { 
+  background: none;
+  padding-right: 0;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  background: #ffffff /*url(img/iif_logo.gif) no-repeat top left*/;
+  /*background: white url(img/iif_logo.gif) no-repeat top left;*/
+  color: #404040;
+  font-family: "Trebuchet MS", "Lucida Grande", lucida, verdana, arial, sans-serif;
+	font-size: 13px;
+	}
+:not(pre) {
+  font-family: "Trebuchet MS", "Lucida Grande", lucida, verdana, arial, sans-serif;font-size: 13px;
+}
+/* Added on Template chenge START  */
+    /* box layout over full size */
+    div.full { 
+      clear: both;
+    }
+
+    /* box layout over 65% on the left */
+    div.left {  
+      border: 0;
+      float: left;
+      margin: 0;
+      padding: 0;
+      max-width: 46em;
+      width: 65%;
+      display: inline;
+    }
+
+    div.left33 {   
+      border: 0;
+      float: left;
+      margin: 0;
+      padding: 0;
+      width: 33%;
+    }
+
+    div.right65 { 
+      float: right;
+      width: 65%;
+      max-width: 46em;
+      display: inline;
+    }
+
+    /* box layout over 33% on the right */
+    div.right {  
+      float: right;
+      width: 33%;
+    }
+
+    /* box layout over 30% on the left */
+    div.left3 {  
+      float: left;
+      width: 25%;
+    }
+
+    /* box layout over 30% on the right */
+    div.right3 {  
+      float: right;
+      width: 25%;
+    }
+
+    /* box layout over 30% on the left */
+    div.center3 { 
+      width: 45%;
+      float: left;
+      display: inline;
+      margin: 1% 2%;
+    }
+
+    div.centered p { 
+      text-align: center;
+    }
+    
+/* Added on Template chenge END  */
+
+a:link {
+	text-decoration: none;
+/*	font-weight: bold;*/
+	color:  /*#ccc;*/#567;
+	outline: none;
+	}
+a:visited {
+	text-decoration: none;
+/*	font-weight: bold;*/
+	color:  /*#ccc;*/#567;
+	outline: none;
+	}
+a:hover[href] {
+	color: #ccc;
+	text-decoration: underline;
+}
+a:active[href] {
+	text-decoration: none;
+/*	font-weight: bold;*/
+	color:  /*#ccc;*/#567;
+	outline: none;
+	}
+a:focus[href] {
+	text-decoration: none;
+/*	font-weight: bold;*/
+	color:  /*#ccc;*/#567;
+	outline: none;
+	}
+
+h1, h2, h3, p {
+    margin: 0;
+    padding: 0;
+}
+p {	text-align:justify;
+}
+
+img {
+    border: 0;
+}
+
+/* Klassen */
+.nowrap {
+	white-space: nowrap;
+/* must be combined with nobr in html for ie5win */
+}
+
+.gruen {
+    color:#678444;
+    border: 1px solid #ccc;
+    background-color: #f7f8f7;
+}
+.gruen a {color:#677454;} .gruen a:hover {color:#abc888;}    
+
+.blau {
+    /*color:#345;*/
+    background-color:#e0e8ef;   
+    border: 1px solid #79b; 
+}    
+.blau a {color:#678;} .blau a:hover{color:#abc;}
+ 
+.blass {
+    color:#405540;    
+    border: 1px solid #ccc;
+    background-color: #f7f8f7;
+}
+.blass a {color:#90989f;} .blass a:hover {color:#a0a8af;}    
+ 
+.def {
+  color: #404040;
+}
+.def a         { /*font-size: 13px;*/ text-decoration:none;}
+.def a:link    { color:#2a6ebb; }
+.def a:visited { color:#2a6ebb; }
+.def a:hover[href]   { color:#2a6ebb; text-decoration:underline; }
+.def a:active[href]  { color:#2a6ebb; text-decoration:underline; }
+.def a:focus[href]   { color:#2a6ebb; text-decoration:underline; }
+.def h1, h2, h3, h4, h5, h6 {
+  color: #373534;
+  margin-top: 0.75em;
+  margin-right: 0pt;
+  margin-bottom: 0.25em;
+  margin-left: 0pt;
+}
+.def h2, h3, h4, h5, h6 {
+  font-family: Arial,sans-serif;
+}
+
+.def h1 {
+  font-family: "Times New Roman",serif;
+  font-size: 160%;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #cacac8;
+  font-weight: normal;
+}
+
+.def h2 { 
+  font-size: 125%;
+}
+
+.def h2.line { 
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #cacac8;
+}
+
+.def h3 {
+  font-size: 120%;
+}
+
+.def p {
+	background-color: transparent;
+	/*text-align: justify;       removed on template change*/ 
+	text-indent: 0;
+	line-height: 140%;
+}
+ 
+
+#header h2 {
+	/*font-family:'Trebuchet MS',sans-serif;*/
+	font-size: 18px;line-height:22px;
+	border: none;padding:0;margin:0;color:black;
+}
+#header h1 {
+	/*font-family:'Trebuchet MS',sans-serif;*/
+	font-size: 24px;line-height:26px;
+	font-weight: bold;border: none;padding:0;margin:0;color:black;
+}
+
+/* L A Y O U T */
+#header {
+	margin: 105px 0px 0px 0px;
+	padding: 5px 0 5px 250px;
+	background: white /*url(/img/uni.gif) no-repeat right*/;
+	color: #456;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	clear: both;
+}
+#tab {
+	table-layout:fixed;
+	width:100px;
+}
+#content {
+	padding: 10px;
+	/*background: white url(/img/bglogo-pale.gif) no-repeat top right;*/
+	/*border: 1px solid #e0e0e0;*/
+	width: 730px;
+	min-height: 270px;
+	}
+
+#menu { 
+	vertical-align:top;
+	margin-top:70px;
+	margin-left:10px;
+	padding: 0px;
+	border: 0px solid #79b;
+	width: 160px; 
+}
+#buch {
+	width:100%;
+	text-align:center;
+	margin-top:30px;
+}
+#footer {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: transparent;
+    /*background: url(/Template/transpurple.png);*/
+    color: #f0f0f0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    font-size: x-small;
+    width: 100%;
+    clear: both;
+    text-align: center;
+}
+#lastmodified {
+    margin: 0px 0px 5px 270px;
+    clear:both;
+    font-size:10px;
+}
+/* End L A Y O U T */
+dt {
+    font-weight:bold;
+    padding:5px;
+}
+dd {
+    padding-left:100px;
+    
+}
+hr { width:80%; color:black; margin-top:25px;margin-bottom:25px;
+}
+table {
+    width:100%;
+}
+td {
+    padding:3px; 
+    margin:0;
+    /*line-height:22px;*/text-align:left;
+    vertical-align:middle;
+}
+td.uebersch {
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    padding:20px 5px 2px 5px;
+    margin:0;
+}
+.nam {
+    width:130px;
+    padding-left:20px;
+}
+.inp {
+    width:100px;
+    font-style: italic;
+    padding:0px 10px;
+}
+.err {
+    padding:0px 10px;
+    color: #933;
+}
+/*Added on template's change START */
+.centered { 
+      text-align: center;
+}   
+/*Added on template's change END */
+ 
+* input {
+    color:#405540;    
+    border: 1px solid #ccc;
+    background-color: /*#f7f8f7*/#fff;
+    margin:0px;padding:1px 3px;
+    /*font-family: "Trebuchet MS";*/ font-size:12px; font-weight: bold;font-style:normal;
+}    
+input.submit {
+    color:#405540;    
+    border: 1px solid #ccc;
+    background-color: #f7f8f7;
+    font-size:13px;
+    margin:0;
+}
+
+#msg {
+	margin: 10px 0;
+	padding: 10px;
+	background-color: #e0e8ef;
+	color: blue;;
+	border-top: 1px solid blue;
+	border-bottom: 1px solid blue;
+	/*font-size: medium;*/
+	clear: both;
+}
+#error {
+	margin: 10px 0;
+	padding: 10px;
+	background-color: #efe8e0;
+	color: red;
+	border-top: 1px solid red;
+	border-bottom: 1px solid red;
+	/*font-size: medium;*/
+	clear: both;
+} 
+table {
+font-size: 100%;
+}
+a {
+color: #2a6ebb;
+background-color: transparent;
+}
+
+#hilfe {
+      border: 1px solid green;
+}
+
+#wrapper {
+width: 1001px;
+margin: 0;
+padding: 0 0 20px 0;
+}
+#wrapperTable {
+border-collapse:collapse;
+border-spacing:0;
+width:1001px !important;
+}
+#leftwrapperTable {
+background: #ffffff;
+vertical-align: top;
+margin:0;
+padding:0;
+}
+#leftcolumnWrapper {
+width: 180px;
+float: left;
+margin: 0 0 0 1px;
+padding: 0;
+}
+#rightSpaceGrey {
+background-color: #f2f3f1;
+height: 0px;
+}
+#rightSpace {
+background-color: #e2e1dd;
+height: 20px;
+}
+#leftTopSpace {
+background: #ffffff;
+height: 116px;
+}
+#logowrapperTable {
+background: #ffffff;
+vertical-align: top;
+margin:0;
+padding:0;
+}
+#rightwrapperTable {
+background: #f2f3f1;
+vertical-align:top;
+margin:0;
+padding:0;
+}
+#logocolumnWrapper {
+width: 66px;
+margin: 0;
+padding: 0;
+}
+#logoWrapper {
+height: 200px;
+margin: 0;
+padding: 0;
+}
+#rightcolumnWrapper {
+width: 754px;
+float: right;
+margin: 0;
+padding: 0;
+}
+#portal-header {
+background: #004a99 url(siegel-93x55.png) no-repeat scroll left bottom;
+margin: 0;
+padding: 0 0 0 197px;
+height: 116px;
+overflow: hidden;
+}
+#logo-resource {
+background: #004a99 url(sub-logo.gif) no-repeat scroll left bottom;
+display: table-cell;
+vertical-align: middle;
+height: 116px;
+/*width: 197px;*/
+padding: 0 0 0 197px;
+overflow: hidden;
+}
+#title-resource {
+border: none;
+left:444px;
+width: 360px;
+margin:0;
+padding:0;
+position:absolute;
+top:36px;
+}
+#title-resource table {
+border: 0;
+width: 360px;
+height: 54px;
+}
+#title-uni {
+left:448px;
+width: 540px;
+position:absolute;
+top:94px;
+}
+#title-uni a {
+color:#FFFFFF;
+font-family: "Times New Roman", serif;
+font-size:14px;
+}
+#red-bar {
+background: #ffffff url(red-bar-17x4.gif) no-repeat scroll left top;
+float: none;
+clear: both;
+height: 4px;
+margin: 0;
+border: 0;
+padding: 0;
+}
+#sections-breadcrumbs {
+  background-color: #e2e1dd;
+  height: 20px;
+}
+#leftGreyBar {
+background-color: #cacac8;
+height: 4px;
+}
+#leftUpperSpace {
+height:81px;
+}
+#portal-languageselector {
+color: #ffffff;
+margin: 10px 0 0 -0.2em;
+padding: 0;
+font-size: 12px;
+line-height: normal;
+float:left;
+}
+#portal-languageselector ul {
+margin: 0;
+}
+#portal-languageselector li a {
+background-color: transparent;
+border: 0;
+font-size: 1em;
+color: #ffffff;
+height: auto;
+padding: 0 0.2em;
+text-decoration: none;
+}
+#portal-languageselector li.selected a {
+background-color: transparent;
+color: #ffffff;
+border: 0;
+text-decoration: underline;
+}
+#portal-languageselector li a:hover {
+background-color: transparent;
+color: #ffffff;
+border: 0;
+text-decoration: underline;
+}
+#portal-globalnav {
+background-color: #cacac8;
+padding: 0 17px 0 17px;
+line-height: normal;
+float: none;
+clear: both;
+}
+#portal-globalnav ul {
+margin: 0;
+height: 1.6em;
+border-collapse: collapse;
+border-color: #ffffff;
+border-width: 0 0 0 1px;
+border-style: solid;
+background-color: #cacac8;
+}
+#portal-globalnav li {
+display: block;
+float: left;
+height: 1.6em;
+line-height: 1.6em;
+text-align: left;
+margin: 0;
+margin-bottom: 0;
+}
+#portal-globalnav li a {
+display: block;
+background-color: #cacac8;
+font-size: 1.2em;
+border-collapse: collapse;
+border-color: #ffffff;
+border-width: 0 1px 0 0;
+border-style: solid;
+margin: 0;
+}
+#portal-globalnav li.selected a {
+background-color: #004a99;
+border-color: #ffffff;
+border-width: 0 1px 0 0;
+border-style: solid;
+color: #ffffff;
+}
+#portal-globalnav li a:hover {
+background-color: #004a99;
+border-color: #ffffff;
+border-width: 0 1px 0 0;
+border-style: solid;
+color: #ffffff;
+}
+#portal-footer {
+border: none;
+margin: 0;
+padding: 0;
+}
+#im-footer {
+  /*margin: 0 0 -1px 0;*/
+  margin: 0 0 0 0;
+  /*padding: 8px 17px 5px 17px;*/
+  padding: 5px 17px 5px 20px;
+  background-color: #004a99;
+  color: #ffffff;
+}
+#im-footer a {
+color: #fff;
+}
+#im-footer a:hover {
+color: #fff;
+text-decoration: underline;
+}
+#im-footer a:visited {
+color: #fff;
+}
+#portal-siteactions {
+float: left;
+padding-top: 0;
+margin: 0;
+}
+#portal-siteactions li {
+display: inline;
+}
+#portal-siteactions li a {
+background-color: transparent;
+border: 0;
+color: #ffffff;
+height: auto;
+padding: 2px;
+margin-right: 0;
+text-decoration: none;
+text-transform: none;
+}
+#portal-siteactions li.selected a {
+background-color: transparent;
+color: #ffffff;
+border: 0;
+text-decoration: underline;
+}
+#portal-siteactions li a:hover {
+background-color: transparent;
+color: #ffffff;
+border: 0;
+text-decoration: underline;
+}
+#portal-siteactions a {
+margin: 0 15px 0 0;
+}
+
+
+
+.resource {
+font-size: 24px;
+color: #fff;
+font-family: "Times New Roman", serif;
+font-weight: normal;
+line-height: 1.0em;
+}
+.fr {
+float: right;
+}
+.cover, .hiddenStructure {
+left: -1000px;
+overflow: hidden;
+position: absolute;
+top: -1000px;
+}
+
+/* */
+#breadcrumbs-you-are-here,#breadcrumbs-last-text {
+font-size: 12px;
+}
+#portal-breadcrumbs {
+  border: none;
+  margin-left: 20px;
+  margin-right: 10px;
+  padding: 0;
+  font-size: 12px;
+  /* font-size: 1em; */
+  /* height: 2em; */
+}
+#portal-breadcrumbs a:link {
+/*color: #2a6ebb;*/
+color: #000000;
+background: transparent;
+font-size: 12px;
+}
+#portal-breadcrumbs a:visited {
+/*color: #2a6ebb;*/
+color: #000000;
+background: transparent;
+font-size: 12px;
+}
+#portal-breadcrumbs a:hover {
+text-decoration: underline;
+}
+.breadcrumbSeparator {
+font-size: 1.2em;
+color: #2a6ebb;
+}
+.breadcrumbSeparator.last {
+color: #373534;
+}
+
+
+/* - navtree.css - */
+@media screen {
+/* http://ztest3.ruf.uni-freiburg.de/faw/portal_css/navtree.css?original=1 */
+/* */
+/* */
+/* */
+.portletNavigationTree {
+width: 180px;
+font-family: Arial, sans-serif;
+font-size: 1.105em;
+line-height: 1.105em;
+padding: 0;
+margin: 0 0 21px 0;
+background-color: #ffffff;
+border-bottom: none;
+overflow: hidden;
+}
+.portletNavigationTree .portletItem {
+border-left: none;
+border-right: none;
+}
+.portletNavigationTree dt {
+display: none;
+}
+.portletNavigationTree ul,
+.portletNavigationTree ul li,
+.portletNavigationTree dd,
+.portletNavigationTree div {
+margin: 0;
+padding: 0;
+}
+.portletNavigationTree ul li {
+margin: 0;
+border-bottom: 1px solid #fff;
+list-style: none;
+}
+.portletNavigationTree ul li.navTreeLastItem {
+border-bottom: none;
+}
+.portletNavigationTree li.navTreeItem a {
+font-family: Arial, sans-serif;
+font-weight: normal;
+font-size: 0.9em;
+display: block;
+width: auto;
+padding: 3px 0;
+margin: 0;
+text-decoration: none;
+color: #373534;
+background: #cacac8;
+}
+/* */
+.portletNavigationTree ul.navTreeLevel0 a {
+padding-left: 4px;
+}
+.portletNavigationTree ul.navTreeLevel0 a:hover {
+background: #004a99;
+color: #fff;
+}
+.portletNavigationTree ul.navTreeLevel0 a.navTreeCurrentItem {
+background: #004a99 !important;
+color: #fff;
+margin-left: 0px;
+padding-left: 4px;
+}
+.portletNavigationTree ul.navTreeLevel0 li {
+background: url(navigationLevel0.gif) repeat-y left top #cacac8;
+padding-left: 4px;
+}
+/* */
+.portletNavigationTree ul.navTreeLevel1 {
+border-top: 1px solid #fff;
+margin: 0 0 0 0px;
+}
+.portletNavigationTree ul.navTreeLevel1 a {
+background: #d6d6d4;
+color: #373534;
+padding-left: 4px;
+}
+.portletNavigationTree ul.navTreeLevel1 a:hover {
+background: #2a6ebb;
+color: #fff;
+}
+.portletNavigationTree ul.navTreeLevel1 li {
+background: url(navigationLevel1.gif) repeat-y 0px top;
+}
+.portletNavigationTree ul.navTreeLevel1 a.navTreeCurrentItem {
+background: #2a6ebb !important;
+color: #fff;
+margin-left: 0px;
+}
+.portletNavigationTree ul.navTreeLevel1 li.navTreeLastItem {
+border-bottom: 1px solid #fff;
+}
+/* */
+.portletNavigationTree ul.navTreeLevel2 {
+border-top: 1px solid #fff;
+margin: 0;
+}
+.portletNavigationTree ul.navTreeLevel2 a {
+background: #e2e1dd;
+margin-left: 0px;
+padding-left: 4px;
+}
+.portletNavigationTree ul.navTreeLevel2 a:hover {
+background: #6e99d4;
+color: #fff;
+}
+.portletNavigationTree ul.navTreeLevel2 li {
+background: url(navigationLevel2.gif) repeat-y left top;
+}
+.portletNavigationTree ul.navTreeLevel2 li.navTreeLastItem {
+border: none;
+}
+.portletNavigationTree ul.navTreeLevel2 a.navTreeCurrentItem {
+background: #6e99d4 !important;
+color: #fff !important;
+}
+.portletNavigationTree ul.navTreeLevel2 a.navTreeItemInPath {
+background: #6e99d4 !important;
+color: #fff !important;
+}
+/* */
+.portlet_sections {
+width: 180px;
+font-size: 1.2em;
+line-height: 1.2em;
+padding: 0;
+margin: 0 0 1.5em 0;
+background-color: #ffffff;
+border-bottom: none;
+overflow: hidden;
+}
+#leftcolumnWrapper .portlet_sections .portletItem {
+border: 0;
+padding: 0;
+}
+/* */
+.portlet_sections ul,
+.portlet_sections ul li,
+.portlet_sections dd,
+.portlet_sections div {
+margin: 0;
+padding: 0;
+}
+.portlet_sections ul li {
+margin: 0;
+border-bottom: 1px solid #fff;
+list-style: none;
+}
+.portlet_sections li.plain a {
+display: block;
+width: auto;
+padding: 3px 0;
+margin: 0;
+text-decoration: none;
+color: #373534;
+background: #cacac8;
+}
+.portlet_sections li.selected a {
+display:block;
+width: auto;
+padding: 3px 0;
+margin: 0;
+text-decoration: none;
+color: #fff !important;
+background: #004a99 !important;
+}
+.portlet_sections ul.sections a {
+padding-left: 4px;
+}
+.portlet_sections ul.sections a:hover {
+background: #004a99;
+color: #fff;
+}
+.portlet_sections ul.sections li {
+background: url(http://proglang.informatik.uni-freiburg.de/include/navigation-portaltabs.gif) repeat-y left top #cacac8;
+padding-left: 4px;
+}
+.portlet_sections .sectionSeparator {
+display: none;
+}
+/* */
+.portletNavigationTree .state-published {
+color: #373534 !important;
+}
+.portletNavigationTree a.state-published:hover,
+.portletNavigationTree a.state-published.navTreeCurrentItem {
+color: #ffffff !important;
+}
+.portlet_sections .state-published {
+color: #373534 !important;
+}
+.portlet_sections a.state-published:hover,
+.portlet_sections a.state-published.navTreeCurrentItem {
+color: #ffffff !important;
+}
+/* */
+ul.visualNoMarker,
+ol.visualNoMarker {
+list-style-type: none;
+list-style-image: none;
+margin: 0.5em 0 0 0;
+line-height: 1em;
+}
+
+
+}

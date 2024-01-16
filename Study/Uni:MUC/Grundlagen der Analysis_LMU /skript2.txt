@@ -1,0 +1,198 @@
+2. Stetige Funktionen
+=====================
+
+
+2.1 Funktionsbegriff:
+---------------------
+
+Eine Funktion f:RR->RR ordnet jeder Zahl x:RR eine Zahl f(x):RR
+zu. Der Graph der Funktion ist die Menge der Paare {(x,f(x)) |
+x:RR}. Zeichnet man den Graphen in ein Koordinatensystem, so befindet
+sich ueber jedem x-Wert genau ein y-Wert (y=f(x)).
+
+Beispiele:
+
+* Identische Funktion id(x)=x. Graph: um 45-Grad geneigte
+  Ursprungsgerade.
+* Betragsfunktion abs(x)=|x|. Graph: Zwei symmetrische Halbgeraden,
+  die sich im Ursprung beruehren.
+* Quadratfunktion sq(x)=x^2. Graph: Normalparabel.
+* Sinusfunktion, Exponentialfunktion,
+* Stueckweise definierte Funktionen:
+
+            / x^2, falls x>10
+           |
+   f(x) = <   2, falls x=10
+           |
+	    \ -x^2, sonst
+	    
+
+* Die floor-Funktion: floor(x) = groesste ganze Zahl <=x. 
+
+Es gibt auch Funktionen, die nicht an allen Argumenten x:RR definiert
+sind. Sind D,W Teilmengen von RR so schreibt man f:D->W, wenn f jedem
+x:D einen Wert y=f(x) in W zuordnet. D heisst Definitionsmenge /
+-bereich von f und W Wertemenge / -bereich.
+
+Beispiele:
+
+* f(x) = 1/x. Hier z.B. D = RR \ {0}, W = RR \ {0}. Graph: Hyperbel.
+* f(x) = sqrt(x) (Wurzel). Hier z.B. D = RR^+_0.
+* f(x) = ln(x) (Logarithmus). Hier z.B. D  = RR^+
+* Jede Folge ist eine Funktion mit Definitionsbereich NN
+
+In der Regel ruehrt D =/= RR daher, dass der Funktionsterm nicht
+sinnvoll ausserhalb von D definiert werden kann, aber man kann den
+Definitionsbereich auch willkuerlich einschraenken.
+
+* D = RR^+_0 \ {47} und f:D -> RR und f(x) = x, fuer x:D.
+
+
+Funktionen gibt es auch mit Definitions- und Wertebereichen, die nicht
+Teilmengen von R sind, so gibt es zweistellige Funktionen mit
+Definitionsbereich RR x RR oder einer Teilmenge davon, oder auf
+Modulo-Zahlen definierte Funktionen. Definitions- und Wertebereich
+koennen auch ganz andere Mengen sein, wie die aller Teilmengen von NN,
+aller Listen von natuerlichen Zahlen, aller Folgen, aller
+TeilnehmerInnen dieser Veranstaltung... Im folgenden sind aber, wenn
+nichts anderes gesagt ist, Funktionen immer auf einer Teilmenge der
+reellen Zahlen definiert und liefern reelle Zahlen zurueck.
+
+
+2.2 Monotonie und Umkehrfunktion
+--------------------------------
+
+Eine Funktion f ist monoton steigend, wenn aus x<y folgt f(x)<=f(y).
+Sie ist monoton fallend, wenn aus x<y folgt f(x)>=f(y).
+Sie ist streng monoton steigend, wenn aus x<y folgt f(x)<f(x),
+analog definiert man streng monoton fallend.
+
+Die Funktionen x^2 , sqrt(x), ln(x), floor(x) sind monoton steigend,
+die ersten drei sogar streng.
+
+NB: Strenggenommen muesste man schreiben, die Funktionen sq, sqrt,
+floor, wobei sq(x)=x^2, etc sind ... Der Ausdruck x^2 ist naemlich
+eigentlich keine Funktion, sondern ein Term. Es hat sich aber
+eingebuergert, ueber diese Ungenauigkeit wegen der besseren Lesbarkeit
+hinwegzugehen.
+
+Die Funktion 1/x eingeschraenkt auf RR^+ ist streng monoton fallend.
+
+Der Graph einer streng monoton steigenden Funktion steigt von links
+nach rechts gelesen an. Der Graph einer monoton steigenden Funktion
+darf auch streckenweise liegenbleiben.
+
+Ist eine Funktion f:D->W streng monoton steigend, oder streng monoton
+fallend, und ist W so klein gewaehlt, dass tatsaechlich jedes Element
+von W auch als Funktionswert auftritt, so gibt es eine eindeutig
+bestimmte Funktion g:W->D, die f umkehrt, sodass also gilt g(f(x)) =
+x. Man nennt g die Umkehrfunktion von f.
+
+Beispiel f(x)=x^2 D=RR^+_0, W=RR^+_0. g(x)=sqrt(x).
+Achtung: Nimmt man D=RR, so ist f nicht monoton.
+
+Die Umkehrfunktion g ist eindeutig bestimmt und jeweils auch streng
+monoton steigend oder fallend. Ausserdem ist f die Umkehrfunktion von
+g. Man schreibt ueblicherweise f^(-1) fuer die Umkehrfunktion. Man
+erhaelt den Graphen der Umkehrfunktion aus dem Graphen von f durch
+Spiegelung an der 45 Grad steilen Ursprungsgeraden.
+
+
+2.3 Grenzwerte von Funktionen
+-----------------------------
+
+
+Ist f:D->W eine Funktion und a:RR ein Punkt, der zwar nicht in D
+liegen muss, aber doch D beliebig nahe kommt (formal: fuer jedes
+epsilon>0 existiert a':D mit |a-a'|<=epsilon "Beruehrpunkt"). Man
+schreibt dann
+
+lim f(x) = b
+x->a
+
+falls fuer jede Folge (x_n)_n mit x_n : D \ {a} und
+lim x_n = a gilt lim f(x_n) = b.
+n->oo           n->oo
+
+Die Funktionswerte f(x_n) streben also gegen b, sofern die
+Argumentfolge (x_n)_n gegen a strebt.
+
+Man betrachtet auch den Fall, wo a=oo oder a=-oo ist. Hier muss der
+Definitionsbereich beliebig grosse, bzw beliebig kleine Elemente
+enthalten (a=oo: fuer alle N:RR existiert a':D mit a'>=N. Und a=-oo:
+fuer alle N:RR existiert a':D mit a'<=N)
+
+Beispiele:
+
+lim x^2+7 = a^2+7  und Analoges gilt fuer beliebige Polynome
+x->a
+
+lim 1/x = 0
+x->oo
+
+lim x^2+7 = oo   /* analog zur bestimmten Divergenz von Folgen */
+x->oo
+
+lim   (x-1)/(x^2-1) = lim 1/(x+1) = 1/2
+x->1                  x->1
+
+Grenzwerte muessen nicht existieren, z.B. lim 1/x oder lim sin(1/x)
+                                          x->0         x->0
+					  
+Manchmal schraenkt man bei der Limesbildung die Funktion auf Werte >a
+oder <a ein. Man naehert sich also dem Punkt von oben oder
+unten. Dafuer schreibt man dann
+
+lim f(x)   /* Annaeherung von oben */
+x->a+ 
+
+lim f(x)   /* Annaeherung von unten */
+x->a-
+
+Es gilt z.B.
+
+lim floor(x) = 1  aber lim floor(x) = 0  und lim floor(x) existiert nicht. 
+x->1+                  x->1-                 x->1
+
+lim 1/x = oo     und lim 1/x = -oo
+x->0+                x->0-
+
+Bemerkung:
+
+Ist       lim f(x)=b, so folgt lim f(x) = lim f(x) = b
+          x->a                 x->a+      x->a-
+
+Gilt lim f(x) = lim f(x) = b, so ist lim f(x) = b
+     x->a+      x->a-                x->a
+
+
+
+2.4 Stetigkeit von Funktionen
+-----------------------------
+
+Eine Funktion f:D->W ist im Punkt a:D stetig, wenn lim f(x) = f(a).  
+                                                   x->a
+
+Beispiele:
+
+f(x)=x^2 ist ueberall stetig.
+Die floor Funktion ist an allen nicht-ganzzahligen Punkten stetig. 
+Die Betragsfunktion ist ueberall stetig.
+Die Funktionen sin, cos, tan, exp, ln, sind ueberall (in ihrem
+Definitionsbereich!) stetig.
+
+Stetigkeitssaetze:
+
+Sind f,g an einem Punkt a stetig, so auch f+g, f*g, f/g /* wenn g(a)=/=0*/,
+f o g, also die Funktion h mit h(x)=f(g(x)), ...
+
+Bemerkung (epsilon-delta Charakterisierung der Stetigkeit):
+
+f:D->W ist im Punkt a:D genau dann stetig, wenn fuer jedes epsilon>0
+ein delta>0 existiert, sodass fuer alle x mit |x-a|<=delta gilt
+|f(x)-f(a)|<=epsilon.
+
+Fuer jede geforderte Genauigkeit epsilon gibt es eine Umgebung von a,
+innerhalb derer alle Funktionswerte hoechstens epsilon von f(a)
+abweichen.
+

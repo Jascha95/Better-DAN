@@ -1,0 +1,259 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+  <html>
+  <head>
+    <title>IFL 2007: Registration</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      
+  
+
+    <link rel="stylesheet" type="text/css" href="common-style.css">
+    <script language="javascript" type="text/javascript">
+      function make () {
+        var c = '@';
+        var r = arguments[0];
+        for (var i=1; i < arguments.length; i++) {
+          r = r + c + arguments[i];
+          c = '.';
+      }
+      /* new line  */
+      r = r.replace(/[A-Z]/g,'')
+      var res = '\x3Ca href="mailto:' + r + '"\x3E' + r + '\x3C/a\x3E';
+      return res;
+      }
+      
+      var ifl = make ('ADEiDLKOfDOPlPP07X', 'informatik', 'uni-freiburg', 'de');
+      var icfp = make ('SDFAicSDFAPfpDOI07POLS', 'informatik', 'uni-freiburg', 'de');
+      var berit = make ('IObrSDFAOPauSDFASOPQerXLDK', 'informatik', 'uni-freiburg', 'de');
+    </script>
+  </head>
+  
+  <body>
+    
+    <div id="menu">
+        <ul>
+    <li><a href="index.shtml">Home</a></li>
+    <li><a href="cfp.shtml">Call for Papers</a></li>
+    <li><a href="cfp.shtml#landin">Peter Landin Prize</a></li>
+    <li><a href="committee.shtml">Programme Committee</a></li>
+    <li><a href="proceedings.shtml">Proceedings</a></li>
+    <li><a href="dates.shtml">Important Dates</a></li>
+    <li><a href="submission.shtml">Submission</a></li>
+    <li><a href="schedule.shtml">Schedule</a></li>
+    <li><a href="registration.shtml">Registration</a></li>
+    <li><a href="accommodation.shtml">Accommodation</a></li>
+    <li><a href="travel-information.shtml">Travel Information</a></li>
+    <li><a href="conference-venue.shtml">Conference Venue</a></li>
+    <li><a href="local-information.shtml">Local Information</a></li>
+    <li><a href="maps.shtml">Maps</a></li>
+    <li><a href="organizers.shtml">Organisers</a></li>
+  </ul>
+
+    </div>
+    <div id="wrapper">    
+    <div id="content">
+      <div id="header">
+        <center>
+  <h1>19th International Symposium on Implementation and 
+    Application of Functional Languages
+  </h1>
+  
+  <h2>IFL 2007</h2>
+  
+  <h2>Freiburg, Germany, 27-29 September 2007</h2>
+  
+  <h3>
+    Co-located with 
+    <a href="http://www.informatik.uni-bonn.de/~ralf/icfp07.html">ICFP 2007</a> 
+    (1-3 October 2007)
+  </h3>
+</center>
+
+      </div>
+      
+      <div id="mainmatter">
+          <h1>Registration</h1>
+          <p>
+            The early registration deadline for IFL 2007 has expired on
+            1 September 2007. For <em>late registrations</em>, please
+            proceed as follows:
+          <ol>
+            <li>Write an email to
+              <script type="text/javascript">
+                document.write (ifl);
+              </script><noscript>ifl07 AT informatik DOT uni-freiburg DOT de</noscript>
+              stating the you want to participate in IFL 2007. The email
+              should contain your full name, your affiliation,
+              your email address, and (possibly)
+              your dietary restrictions.</li>
+            <li>Pay the registration fee by cash once you arrive at
+              the conference venue. The late registration fee is
+              <em>85 Euro</em>. There is no reduction for late registrations.
+          </ol>
+        </p>
+          <p>
+            The registration fee includes
+          <ul>
+            <li>draft proceedings,</li>
+            <li>official LNCS proceedings,</li>
+            <li>drinks and light refreshments during all coffee breaks,</li>
+            <li>lunches on all three days,</li>
+            <li>public transport tickets (see below),</li>
+            <li>excursion and banquet dinner.</li>
+          </ul>
+          </p>
+          <p>
+            Additional social event packages (excursion and banquet
+            dinner) for accompanying persons are available for 60
+            Euro. Please note the number of additional social event
+            packages available is limited.  
+          </p>
+          <h2><a name="public-transport"></a>Public transport tickets
+            <img src="images/new.gif">
+          </h2>
+
+          <p>
+            The registration fee includes 8 tickets for Freiburg's
+            public transportation system. You get these tickets from
+            the 
+          <center>
+            <a href="http://www.suedbadenbus.de/kontakt/freiburg.html">
+              SBG-Kunden-Center</a><br />
+            Busbahnhof/Bismarckallee 1<br />
+            79098 Freiburg<br />
+            Phone: +49 761 36803-88<br />
+            Fax: +49 761 36803-89<br />
+            E-Mail: <a href="mailto:kc-freiburg@suedbadenbus.de">kc-freiburg@suedbadenbus.de</a><br />
+            Opening hours:
+            Mon - Fri, 7:30am - 5:30pm and Sat, 8am - 1pm
+          </center>
+        </p>
+        <p>
+            The "SBG-Kunden-Center" is located at
+            track 1 of Freiburg's main station, next to the
+            Inter-City Hotel and the bus terminal. Please keep
+            in mind that you have to stamp your ticket before
+            entering the "Breisgau S-Bahn" (which brings you
+            from the main station to the conference venue).
+          </p>
+          <h2><i>Old Information</i></h2>
+          <p>
+            The fee for <em>early registrations</em> is <em>75 Euro</em>.
+            It must be paid into the following
+            account:
+          </p>
+          <center>
+            <table>
+              <tbody>
+                <tr>
+                  <td>IBAN</td><td>DE47 6005 0101 7438 5009 55</td>
+                </tr>
+                <tr>
+                  <td>BIC / SWIFT Code</td><td>SOLA DE ST</td>
+                </tr>
+                <tr>
+                  <td>Name of bank</td><td>Baden-Württembergische Bank</td>
+                </tr>
+                <tr>
+                  <td>Account holder</td><td>
+                    Albert-Ludwigs-Universität Freiburg,
+                    Fahnenbergplatz, 79098 Freiburg, Germany
+                  </td>
+                </tr>
+                <tr>
+                  <td>Reason for payment</td>
+                  <td>In favour of BA 556321,
+                    IFL 2007, 
+                    <i>
+                      FIRST-NAME
+                      LAST-NAME 
+                      EMAIL-ADDRESS
+                    </i>
+                  </td>
+                </tr>
+                <tr><td></td></tr>
+                <tr>
+                  <td colspan="2">
+                    <i>For national transfers:</i>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Kontonummer</td><td>7438500955</td>
+                </tr>
+                <tr>
+                  <td>Bankleitzahl</td><td>600 501 01</td>
+                </tr>
+                <tr>
+                  <td>Name der Bank</td><td>Baden-Württembergische Bank</td>
+                </tr>
+                <tr>
+                  <td>Kontoinhaber</td><td>
+                    Albert-Ludwigs-Universität Freiburg,
+                    Fahnenbergplatz, 79098 Freiburg
+                  </td>
+                </tr>
+                <tr>
+                  <td>Verwendungszweck</td>
+                  <td>Zu Gunsten des BA 556321, 
+                    IFL 2007, 
+                    <i>
+                      VORNAME
+                      NACHNAME
+                      EMAILADRESSE
+                    </i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </center>
+          <p>
+            <i>Note:</i> Charges for bank transfers from countries of the EU
+            to Germany are not higher than charges for
+            national bank transfers,
+            provided you use the "EU-Standard-Bank-Transfer"
+            supplying your own IBAN and
+            the IBAN and the BIC of our account above.
+            Please make sure that any transfer costs 
+            are assigned to the originator and not to the receiver
+            of the transfer.
+            Should you have problems paying via bank transfer,
+            please contact us
+            (<script type="text/javascript">
+              document.write (ifl);
+            </script><noscript>ifl07 AT informatik DOT uni-freiburg DOT de</noscript>)
+            so that we can arrange individual payment options.
+          </p>
+          <p>
+            Based on a grant from the 
+            <a href="http://www.dfg.de/">German Research Foundation</a>,
+            <em>full time students</em> and <em>participants whose home
+            institutes do not pay daily allowances</em> are exempted
+            from the registration fee.
+            If you want to be exempted from the registration fee,
+            you need a written, official confirmation 
+            indicating that you are a full time student or that
+            your home institute does not pay daily allowances.
+            Please fax a copy of the confirmation to
+            +49 761 203 8052 (directly after registering)
+            and present the original
+            confirmation upon arrival. 
+          </p>
+          <p>
+            <i>Note:</i> No exemption
+            is available for late registrations.
+          </p>
+      </div>
+
+      <div id="footer">
+            <a href="impressum.shtml">Impressum</a>,
+    Webmaster: 
+    <script type="text/javascript">
+      document.write (ifl);
+    </script><noscript>ifl07 AT informatik DOT uni-freiburg DOT de</noscript>,
+    
+    Last modified: 2019-10-22 14:25:02
+
+      </div>
+    </div>
+    </div>
+  </body>
+</html>

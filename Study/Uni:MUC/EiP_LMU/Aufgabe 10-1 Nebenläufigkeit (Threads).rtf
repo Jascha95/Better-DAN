@@ -1,0 +1,51 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf200
+{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww8820\viewh18000\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs30 \cf0 A10-1. \
+\
+Start fuert thread \'fcber run auf als methode.\
+\
+sync sorgt f\'fcr Abwechslung der Ausf\'fchrung;\
+sicherstelung dass nur ein thread darauf zugreift\
+Th1 = zugriff \'fcber locked erst dann wieder frei f\'fcr andere threads\
+\
+c) \
+erster thread erh\'e4lt dass log; die anderen m\'fcssen wartne \
+bis er ihn bearbeitet hat \
+\
+d)\
+die zweiter wartet; lock gilt nur f\'fcr ein objekt; tats\'e4chlich f\'fcr A nur 1 log\
+\
+e)\
+wartend  = \
+blockiert = \
+wait = wenn eine bedingung auf dem objekt nicht erf\'fcllt werden kann. warten auf anderen thread damit while-schleife\uc0\u8800 \
+\
+\
+f)\
+\
+hat das log,kann nicht weiter, gibt log wieder frei = wait\
+sync methode mit while durch sleep wird das log nicht frei gegeben,wartet nur eine gewisse zeit und macht weida=sleep\
+\
+g)\
+Race Condition = \
+Deadlock = kein thread kommt weiter weil alle log\'b4s gehalten werden\
+\
+A10-2\
+\
+a)\
+\
+A 10-3 \
+\
+a)\
+nach dem 2mal kommt nicht dass selbe raus 999\
+mit synchronized bei static aber \'97>\
+in ein objekt geben 1 addieren \
+\
+private static int  nextvalue () \{\
+synchronized (lock) \{\
+return lock.currentValue ();\} }

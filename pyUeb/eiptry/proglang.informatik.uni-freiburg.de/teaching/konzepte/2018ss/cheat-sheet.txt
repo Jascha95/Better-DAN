@@ -1,0 +1,45 @@
+* visit LogicGaps.agda
+* type C-c C-l to compile
+> syntax highlighting appears, list of goals at the bottom
+* move to first goal indicated by { }0
+** use C-c C-f (forward) and C-c C-b (backward) to navigate goals
+** use C-c C-, to inspect the current goal
+** use C-c C-? to return to the list of goals
+
+* entering special characters using Agda's latex-input-mode (unless you have a unicode keyboard ;-)
+** ⊤  \top
+** ⊥ \bot
+** ∧ \wedge
+** ∨ \vee
+** ⟨ \langle
+** ⟩ \rangle
+** ∀ \forall \all
+** → \to \r (but -> will also do the job)
+** λ \lambda or \Gl
+** ¬ \neg
+** ₁ \_1 (analogously for other numeric subscripts)
+** ↔ \leftrightarrow \<->
+** ℕ \bn
+** ≡ \equiv
+** ≤ \le
+** × \times \x
+** ↑ \u
+
+* introduce pattern matching in a function definition
+** entire right hand side must be a goal
+** position cursor in goal
+** type the parameter name(s) on which to pattern match into the goal
+** use C-c C-c to introduce patterns on the left hand side
+
+* fill a goal automatically
+** position cursor in goal
+** use C-c C-a to fill in
+> check! the result will be type correct, but it may not be what you want
+> Agda may fail to fill it in: it performs a backtracking search with a time limit
+> If Agda fails, you will have to massage the goal by yourself.
+
+* check a partial solution
+** position cursor in goal of type G
+** type in an expression of type G1 -> G2 -> ... -> Gn -> G (where n>=0)
+** use C-c C-r to refine
+> if successful, results in n new goals of type G1, ..., Gn

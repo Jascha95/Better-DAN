@@ -1,0 +1,8 @@
+
+BookManager: Remote Interface
+BookManagerHome: Home Interface
+BookManagerLocal: Local Interface
+BookManagerLocalHome: Local Home Interface
+BookManagerSession: Session Layer
+BookManagerUtil: Auxiliary methods for creating instances
+

@@ -1,0 +1,31 @@
+In dieser Aufgabe soll ein Wörterbuch `wb` durch eine Liste von Paaren
+(Tupel der Länge 2) realisiert werden.
+Jedes Paar besteht dabei aus einem Schlüssel und einem Wert: `(key, value)`.
+
+1. [5 Punkte] Implementieren sie die Funktion `search(key, wb: list)`,
+die einen Eintrag im Wörterbuch anhand des Schlüssels sucht und
+den zugehörigen Wert zurück gibt.
+
+2. [5 Punkte] Implementieren sie die Funktion `remove(key, wb: list)`,
+die einen Eintrag im Wörterbuch anhand des Schlüssels entfernt und
+das gekürzte Wörterbuch zurück gibt.
+
+3. [5 Punkte] Implementieren sie die Funktion `insert(key, value, wb: list) -> list`,
+die einen neuen Eintrag zu dem Wörterbuch hinzufügt und dieses zurück gibt.
+Achten Sie hierbei darauf, dass jeder Schlüssel im Wörterbuch einmalig sein
+muss.
+
+Beispiel:
+[code]
+>>> wb = []
+>>> wb = insert('Name', 'Kevin', wb)
+>>> wb = insert('Age', 8, wb)
+>>> wb = insert('Home', 'Winnetka', wb)
+>>> print(wb)
+[('Name', 'Kevin'), ('Age', 8), ('Home', 'Winnetka')]
+>>> wb = remove('Age', wb)
+>>> print(wb)
+[('Name', 'Kevin'), ('Home', 'Winnetka')]
+>>> search('Home')
+'Winnetka'
+[/code]

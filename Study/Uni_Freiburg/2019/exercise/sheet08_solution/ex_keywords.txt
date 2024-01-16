@@ -1,0 +1,13 @@
+[20]
+Schreiben Sie eine Funktion `keywords`, die als Argumente ein Zeichen c (str) und einen Text s (str) nimmt
+und eine Liste von Teilstrings zurückgibt, die zwischen zwei Vorkommnissen von c in s auftreten.
+
+Sie dürfen dabei annehmen, dass das Zeichen c eine gerade Anzahl oft in s vorkommt.
+
+Beispiele:
+[code]
+>>> keywords('*', 'some text *keyword 1* more text *keyword 2* still text')
+['keyword 1', 'keyword 2']
+>>> keywords('/', 'empty keywords, like //, are also possible.')
+['']
+[/code]

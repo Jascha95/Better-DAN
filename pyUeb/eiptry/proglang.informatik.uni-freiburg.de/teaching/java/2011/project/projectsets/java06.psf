@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<psf version="2.0">
+<provider id="org.eclipse.team.svn.core.svnnature">
+<project reference="1.0.1,https://proglang.informatik.uni-freiburg.de/svn/java06/game/trunk,game06,4027bf22b3a800101e75816f1b3642a9;https://proglang.informatik.uni-freiburg.de/svn/java06/game;https://proglang.informatik.uni-freiburg.de/svn/java06/game;branches;tags;trunk;true;95f60caf-ade4-692e-d839-bd8c0f81f6cd;https://proglang.informatik.uni-freiburg.de/svn/java06;;false;;;0"/>
+<project reference="1.0.1,https://proglang.informatik.uni-freiburg.de/svn/java06/svnplayground/trunk,svnplayground06,60c2655cb3a800101e75816f1b3642a9;https://proglang.informatik.uni-freiburg.de/svn/java06/svnplayground;https://proglang.informatik.uni-freiburg.de/svn/java06/svnplayground;branches;tags;trunk;true;95f60caf-ade4-692e-d839-bd8c0f81f6cd;https://proglang.informatik.uni-freiburg.de/svn/java06;;false;;;0"/>
+</provider>
+</psf>

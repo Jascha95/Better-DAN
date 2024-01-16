@@ -1,0 +1,156 @@
+<html><head>
+<link rel="stylesheet" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index.html">
+<link title="Index of types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_types.html">
+<link title="Index of exceptions" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_exceptions.html">
+<link title="Index of values" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_values.html">
+<link title="Index of modules" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_modules.html">
+<link title="Index of module types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_module_types.html">
+<link title="Args" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Args.html">
+<link title="Gen" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gen.html">
+<link title="GenVars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/GenVars.html">
+<link title="Gvars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gvars.html">
+<link title="Inf" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.html">
+<link title="Location" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Location.html">
+<link title="LowerUpper" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpper.html">
+<link title="LowerUpperNeg" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpperNeg.html">
+<link title="LUNVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUNVar.html">
+<link title="LUVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUVar.html">
+<link title="MapVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.html">
+<link title="PrioQueue" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/PrioQueue.html">
+<link title="ProgLabel" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/ProgLabel.html">
+<link title="Syntax" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Syntax.html"><title>Syntax</title>
+</head>
+<body>
+<code class="code"><span class="keyword">sig</span><br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;e&nbsp;=&nbsp;<span class="keyword">private</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">SExp</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Syntax</span>.s<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Let</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Syntax</span>.plab&nbsp;*&nbsp;<span class="constructor">Location</span>.<span class="constructor">LSet</span>.t&nbsp;option&nbsp;*&nbsp;<span class="constructor">Syntax</span>.var&nbsp;*&nbsp;<span class="constructor">Syntax</span>.s&nbsp;*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Syntax</span>.e<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Mask</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Syntax</span>.plab&nbsp;*&nbsp;<span class="constructor">Location</span>.<span class="constructor">LSet</span>.t&nbsp;option&nbsp;*&nbsp;<span class="constructor">Syntax</span>.e<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;s&nbsp;=&nbsp;<span class="keyword">private</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Val</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Syntax</span>.v<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">App</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Syntax</span>.plab&nbsp;*&nbsp;<span class="constructor">Syntax</span>.v&nbsp;*&nbsp;<span class="constructor">Syntax</span>.v<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">New</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Syntax</span>.plab&nbsp;*&nbsp;<span class="constructor">Location</span>.<span class="constructor">Loc</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Read</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Syntax</span>.p<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Write</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Syntax</span>.plab&nbsp;*&nbsp;<span class="constructor">Syntax</span>.p&nbsp;*&nbsp;<span class="constructor">Syntax</span>.v<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">MethodCall</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Syntax</span>.plab&nbsp;*&nbsp;<span class="constructor">Syntax</span>.p&nbsp;*&nbsp;<span class="constructor">Syntax</span>.v<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;v&nbsp;=&nbsp;<span class="keyword">private</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Var</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Syntax</span>.plab&nbsp;*&nbsp;<span class="constructor">Syntax</span>.var<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Lam</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Syntax</span>.plab&nbsp;*&nbsp;<span class="constructor">Syntax</span>.var&nbsp;*&nbsp;<span class="constructor">Syntax</span>.var&nbsp;*&nbsp;<span class="constructor">Syntax</span>.e<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Undef</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Syntax</span>.plab<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Pointer</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Syntax</span>.plab&nbsp;*&nbsp;<span class="constructor">Location</span>.<span class="constructor">P</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Int</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Syntax</span>.plab&nbsp;*&nbsp;int<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;p&nbsp;=&nbsp;<span class="keyword">private</span>&nbsp;<span class="constructor">Prop</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Syntax</span>.plab&nbsp;*&nbsp;<span class="constructor">Syntax</span>.v&nbsp;*&nbsp;<span class="constructor">Syntax</span>.label<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;var<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;label<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;plab<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;e_sexp&nbsp;:&nbsp;<span class="constructor">Syntax</span>.s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.e<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;e_let&nbsp;:&nbsp;<span class="constructor">Syntax</span>.var&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.e<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;e_mask&nbsp;:&nbsp;<span class="constructor">Location</span>.<span class="constructor">LSet</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.e<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;string_of_e&nbsp;:&nbsp;<span class="constructor">Syntax</span>.e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;string_of_e_with_plabs&nbsp;:&nbsp;<span class="constructor">Syntax</span>.e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;s_val&nbsp;:&nbsp;<span class="constructor">Syntax</span>.v&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.s<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;s_app&nbsp;:&nbsp;<span class="constructor">Syntax</span>.v&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.v&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.s<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;s_new&nbsp;:&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.s<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;s_new_loc&nbsp;:&nbsp;<span class="constructor">Location</span>.<span class="constructor">Loc</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.s<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;s_read&nbsp;:&nbsp;<span class="constructor">Syntax</span>.v&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.label&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.s<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;s_write&nbsp;:&nbsp;<span class="constructor">Syntax</span>.v&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.label&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.v&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.s<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;s_mcall&nbsp;:&nbsp;<span class="constructor">Syntax</span>.v&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.label&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.v&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.s<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;v_var&nbsp;:&nbsp;<span class="constructor">Syntax</span>.var&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.v<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;v_lam&nbsp;:&nbsp;<span class="constructor">Syntax</span>.var&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.var&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.v<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;v_undef&nbsp;:&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.v<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;v_int&nbsp;:&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.v<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;string_of_v&nbsp;:&nbsp;<span class="constructor">Syntax</span>.v&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;string_of_lam&nbsp;:&nbsp;<span class="constructor">Syntax</span>.var&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.var&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;string_of_v_with_plabs&nbsp;:&nbsp;<span class="constructor">Syntax</span>.v&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;string_of_lam_with_plabs&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Syntax</span>.var&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.var&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;string_of_v_without_plabs&nbsp;:&nbsp;<span class="constructor">Syntax</span>.v&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;create_var&nbsp;:&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.var<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;compare_var&nbsp;:&nbsp;<span class="constructor">Syntax</span>.var&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.var&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;string_of_var&nbsp;:&nbsp;<span class="constructor">Syntax</span>.var&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;create_label&nbsp;:&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.label<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;compare_label&nbsp;:&nbsp;<span class="constructor">Syntax</span>.label&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.label&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;string_of_label&nbsp;:&nbsp;<span class="constructor">Syntax</span>.label&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;create_plab&nbsp;:&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.plab<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;compare_plab&nbsp;:&nbsp;<span class="constructor">Syntax</span>.plab&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.plab&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;string_of_plab&nbsp;:&nbsp;<span class="constructor">Syntax</span>.plab&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;e_get_plab&nbsp;:&nbsp;<span class="constructor">Syntax</span>.e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.plab<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;s_get_plab&nbsp;:&nbsp;<span class="constructor">Syntax</span>.s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.plab<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;v_get_plab&nbsp;:&nbsp;<span class="constructor">Syntax</span>.v&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.plab<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;p_get_plab&nbsp;:&nbsp;<span class="constructor">Syntax</span>.p&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.plab<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;collect_locs&nbsp;:&nbsp;<span class="constructor">Syntax</span>.e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Location</span>.<span class="constructor">LSet</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">VarSet</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;elt&nbsp;=&nbsp;var<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;is_empty&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;mem&nbsp;:&nbsp;elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;add&nbsp;:&nbsp;elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;add_list&nbsp;:&nbsp;elt&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;singleton&nbsp;:&nbsp;elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;remove&nbsp;:&nbsp;elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;union&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;inter&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;diff&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;compare&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;equal&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;subset&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;iter&nbsp;:&nbsp;(elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;fold&nbsp;:&nbsp;(elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>a)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;for_all&nbsp;:&nbsp;(elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;exists&nbsp;:&nbsp;(elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;filter&nbsp;:&nbsp;(elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;partition&nbsp;:&nbsp;(elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;*&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;cardinal&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;elements&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;elt&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;min_elt&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;elt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;max_elt&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;elt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;choose&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;elt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;choose'&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;elt&nbsp;option<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;split&nbsp;:&nbsp;elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;*&nbsp;bool&nbsp;*&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;from_list&nbsp;:&nbsp;elt&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;string_of&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;string_of_complex&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?start_char:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;?end_char:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;free_e&nbsp;:&nbsp;<span class="constructor">Syntax</span>.e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.<span class="constructor">VarSet</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;free_s&nbsp;:&nbsp;<span class="constructor">Syntax</span>.s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.<span class="constructor">VarSet</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;free_v&nbsp;:&nbsp;<span class="constructor">Syntax</span>.v&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Syntax</span>.<span class="constructor">VarSet</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">LabelSet</span>&nbsp;:&nbsp;<span class="constructor">ProglangUtils</span>.<span class="constructor">ExtSSet</span>.<span class="constructor">S</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">LabelSetRef</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;elt&nbsp;=&nbsp;label<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;create&nbsp;:&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;is_empty&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;mem&nbsp;:&nbsp;elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;add&nbsp;:&nbsp;elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;add_list&nbsp;:&nbsp;elt&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;singleton&nbsp;:&nbsp;elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;remove&nbsp;:&nbsp;elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;compare&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;equal&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;subset&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;iter&nbsp;:&nbsp;(elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;fold&nbsp;:&nbsp;(elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>a)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;for_all&nbsp;:&nbsp;(elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;exists&nbsp;:&nbsp;(elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;filter&nbsp;:&nbsp;(elt&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;cardinal&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;elements&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;elt&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;min_elt&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;elt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;max_elt&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;elt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;choose&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;elt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;from_list&nbsp;:&nbsp;elt&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;string_of&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;string_of_complex&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?start_char:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;?end_char:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;laset&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">LabelSet</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;set_print_with_label&nbsp;:&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;set_print_without_label&nbsp;:&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+<span class="keyword">end</span></code></body></html>

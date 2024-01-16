@@ -1,0 +1,342 @@
+                   __________________________________
+
+                               AUSWERTUNG
+
+                    Peter Thiemann, Luminous Fennell
+                   __________________________________
+
+
+Table of Contents
+_________________
+
+1 Was ist Auswertung?
+2 Werte in Haskell
+3 Einschub: Currying
+4 Auswertungsmodell: Beta-Reduktion
+5 Auswertungsmodell: Beta-Reduktion
+6 Auswertungsmodell: Beta-Reduktion
+7 Auswertungsmodell: Beta-Reduktion
+8 Einschub: Funktions-Definitionen
+9 Einschub: Funktions-Definitionen
+10 Auswertungsstrategien
+11 Auswertungsstrategien: Unterschiede
+12 Auswertungsstrategien: LO > LI
+13 Undefined
+14 Strikt, Nicht-Strikt
+15 Strikt, Nicht-Strikt: Beispiele
+16 Strikt, Nicht-Strikt: Beispiele
+17 Vorteile von Nicht-Strikter Funktionen
+18 Vorteile von Nicht-Strikter Funktionen
+
+
+
+
+
+1 Was ist Auswertung?
+=====================
+
+  - Ein Haskell- *Ausdruck* steht für einen *Wert*
+    ,----
+    | 39 + 3               -- Wert: 42
+    | 
+    | [1,2,3] ++ [4,5]     -- Wert: [1,2,3,4,5]
+    | 
+    | if True              -- Wert: Just 4 
+    | then Just 4
+    | else Nothing
+    | 
+    | let f x = x * 2 + 1  -- Wert: 7
+    | in f 3
+    `----
+
+  - Die *Auswertung* ist der Vorgang, der einen Ausdruck in seinen Wert
+    überführt.
+
+  - (Besser gesagt: in eine Normalform für seinen Wert)
+
+
+2 Werte in Haskell
+==================
+
+  auch: ,,Weak-Head-Normal-Form'' (WHNF)
+
+  - Werte der *Basistypen* `Int', `Char', ...:
+    ,----
+    | 42, 'a', 4.5
+    `----
+
+  - *Funktionen*: `\x -> ...'
+
+  - Partiell oder vollständig angewendete *Konstruktoren*:
+    ,----
+    | Just 5, Nothing, Left [1, 2, 3], (5:)...
+    `----
+
+  - *Tupel*: (5, 4)
+
+
+3 Einschub: Currying
+====================
+
+  Warum sind nur einstellige Funktionen Werte?
+
+  `\x y z -> e'
+
+  ist äquivalent zu
+
+  `\x -> \y -> \z -> e'
+
+
+4 Auswertungsmodell: Beta-Reduktion
+===================================
+
+  In (rein) funktionalen Sprachen ist das wichtigste Mittel zur
+  Berechnung die *Anwendung von Funktionen*. Diese wird mittels
+  *Beta-Reduktion* ausgewertet:
+
+  ,----
+  |   (\x -> e) e' ====> e[x->e']
+  | 
+  | Bsp.
+  | 
+  |  (\x -> x*x) 4 ====> 4 * 4
+  `----
+
+
+5 Auswertungsmodell: Beta-Reduktion
+===================================
+
+  In (rein) funktionalen Sprachen ist das wichtigste Mittel zur
+  Berechnung die *Anwendung von Funktionen*. Diese wird mittels
+  *Beta-Reduktion* ausgewertet:
+
+
+  ,----
+  |             e1 ====> e1'             
+  |         --------------------           
+  |         e1 e2  =====> e1' e2          
+  | 
+  | 
+  |        (\y -> y) (\x -> x * x) ====> (\x -> x * x)
+  | --------------------------------------------------
+  | ((\y -> y) (\x -> x * x)) (2+2) ====> (\x -> x * x) (2+2)
+  `----
+
+
+6 Auswertungsmodell: Beta-Reduktion
+===================================
+
+  In (rein) funktionalen Sprachen ist das wichtigste Mittel zur
+  Berechnung die *Anwendung von Funktionen*. Diese wird mittels
+  *Beta-Reduktion* ausgewertet:
+
+  ,----
+  |          e2 ====> e2'          
+  |      --------------------      
+  |      e1 e2  =====> e1 e2'      
+  | 
+  | 
+  |       2 + 2 ====> 4
+  | -----------------------------------------
+  | (\x -> x * x) (2+2) ====> (\x -> x * x) 4
+  `----
+
+
+7 Auswertungsmodell: Beta-Reduktion
+===================================
+
+  - Ein Ausdruck `e' wird so lange mit Beta-Reduktion ausgewertet, bis
+    er zu einem Wert geworden ist.
+
+
+8 Einschub: Funktions-Definitionen
+==================================
+
+  Beta-Reduktion ist idealisiert... es gibt noch weitere
+  Reduktionsregeln:
+
+  ,----
+  | square x = x*x
+  | 
+  | fac x = if x == 0 then 1 else x * fac (x - 1)
+  `----
+
+  Wird übersetzt zu:
+
+  ,----
+  | square = \x -> x*x
+  | 
+  | fac = \ x -> if x == 0 then 1 else x * fac (x - 1)
+  `----
+
+
+9 Einschub: Funktions-Definitionen
+==================================
+
+  ,----
+  |      f = e wurde definiert
+  |     ------------------------
+  |         f  ====> e
+  | 
+  | square ====> \x -> x*x
+  | 
+  |    fac ====> if x == 0 then 1 else x * fac (x-1)
+  `----
+
+  plus weitere Regeln für
+  - if-then-else,
+  - Pattern-Matching, ...
+
+
+10 Auswertungsstrategien
+========================
+
+  - In welcher Reihenfolge sollen die Regeln angewendet werden?
+
+  - keine Reduktion innerhalb von Lambda-Ausdrücken!
+
+  - Auswertung ist immer noch nicht eindeutig:
+
+    - *Leftmost-Innermost* (LI):
+      ,----
+      | (\x -> x*x) (12 - 1) ====>
+      | (\x -> x*x) 11       ====>
+      | 11 * 11              ====> 121
+      `----
+
+    - *Leftmost-Outermost* (LO):
+      ,----
+      | (\x -> x*x) (12 - 1) ====>
+      | (12 - 1) * (12 - 1)  ====>
+      | 11 * (12 - 1)        ====>
+      | 11 * 11              ====> 121
+      `----
+
+    - ...
+
+
+11 Auswertungsstrategien: Unterschiede
+======================================
+
+  ,----
+  | unless i t e = if not i then t else e
+  | f x        = f (x + 1)
+  `----
+
+  - LI: ,,sehr eifrig.. manchmal voreilig''.
+    ,----
+    | unless False 0 (f 0)       ====>
+    | unless False 0 (f (0 + 1)) ====>
+    | unless False 0 (f 1)       ====>
+    | unless False 0 (f (1 + 1)) ====> ...
+    `----
+
+  - LO: ,,bedächtig... manchmal langsam''.
+    ,----
+    | unless False 0 (f 0)           ====>*
+    | if not False then 0 else f 0 ====>*
+    | if True then 0 else f 0      ====> 0
+    `----
+
+
+12 Auswertungsstrategien: LO > LI
+=================================
+
+  - LI terminiert ==> LO terminiert (und liefert denselben Wert)
+
+  - Beweis:
+    - Vorlesung: Essentials of Programming Languages
+    - siehe Programmiersprachen-Literatur
+
+  - Umkehrung gilt *nicht*
+
+  - *In Haskell gilt LO*
+
+
+13 Undefined
+============
+
+  - Manche Ausdrücken terminieren auch mit LO nicht.
+    ,----
+    | f x = f (x + 1)
+    | 
+    | f 0 ====> f (0 + 1) ====>
+    |   f (0 + 1 + 1) ====>
+    |    f (0 + 1 + 1 + 1) ====> ...
+    `----
+
+  - Der Wert solcher Ausdrücke ist:
+    - ,,nicht definiert''
+    - undefined
+    - ,,bottom'', _|_
+
+
+14 Strikt, Nicht-Strikt
+=======================
+
+  Eine Funktion `f' heißt /strikt/ gdw gilt:
+
+  ,----
+  | f _|_ ==== _|_
+  `----
+
+  - `====' ist ,,Äquivalenz''
+
+  - ,,wenn das Argument `e' von `f' nicht terminiert, dann terminiert
+    auch die Berechnung `f e' nicht''
+
+
+15 Strikt, Nicht-Strikt: Beispiele
+==================================
+
+  - Unter LI sind *alle* Funktionen strikt in (deswegen auch: ,,strikte
+    Auswertung'')
+
+  - Unter LO:
+    - Ganzahl- oder Fließkommazahl-Basisoperationen:
+      - strikt: `(e+), (e-), (+e)', ...
+      - wir sagen: `(+)' ist strikt in beiden Parametern strikt.
+    - `(&&)' und `(||)'
+      - strikt im ersten Parameter
+      - nicht-strikt im zweiten
+    - `null'
+      - strikt
+    - `const 0'
+      - nicht strikt
+
+
+16 Strikt, Nicht-Strikt: Beispiele
+==================================
+
+  - (++) (strikt im ersten Parameter)
+  - map (strikt im zweiten Parameter)
+  - ($), Funktionsapplikation (strikt im ersten Parameter)
+  - (.) (strikt in erstem Parameter)
+
+
+17 Vorteile von Nicht-Strikter Funktionen
+=========================================
+
+  Man kann Kontrollstrukturen innerhalb der Sprache definieren:
+
+  ,----
+  | unless, (&&), (||)
+  `----
+
+  Beispiel: Rekursive anonyme Funktionen
+
+
+18 Vorteile von Nicht-Strikter Funktionen
+=========================================
+
+  Man kann Kontrollstrukturen innerhalb der Sprache definieren:
+
+  ,----
+  | unless, (&&), (||)
+  | 
+  | mkRec :: (((a -> b) -> a -> b) -> (a -> b)
+  | mkRec f = f (mkRec f)
+  | 
+  | fix :: (a -> a) -> a
+  | fix f = f (fix f)
+  `----

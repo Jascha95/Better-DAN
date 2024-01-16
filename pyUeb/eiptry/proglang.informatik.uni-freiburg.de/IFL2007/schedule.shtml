@@ -1,0 +1,594 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+  <html>
+  <head>
+    <title>IFL 2007: Schedule</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      
+  
+
+    <link rel="stylesheet" type="text/css" href="common-style.css">
+    <script language="javascript" type="text/javascript">
+      function make () {
+        var c = '@';
+        var r = arguments[0];
+        for (var i=1; i < arguments.length; i++) {
+          r = r + c + arguments[i];
+          c = '.';
+      }
+      /* new line  */
+      r = r.replace(/[A-Z]/g,'')
+      var res = '\x3Ca href="mailto:' + r + '"\x3E' + r + '\x3C/a\x3E';
+      return res;
+      }
+      
+      var ifl = make ('ADEiDLKOfDOPlPP07X', 'informatik', 'uni-freiburg', 'de');
+      var icfp = make ('SDFAicSDFAPfpDOI07POLS', 'informatik', 'uni-freiburg', 'de');
+      var berit = make ('IObrSDFAOPauSDFASOPQerXLDK', 'informatik', 'uni-freiburg', 'de');
+    </script>
+  </head>
+  <body>
+
+    <div id="menu">
+        <ul>
+    <li><a href="index.shtml">Home</a></li>
+    <li><a href="cfp.shtml">Call for Papers</a></li>
+    <li><a href="cfp.shtml#landin">Peter Landin Prize</a></li>
+    <li><a href="committee.shtml">Programme Committee</a></li>
+    <li><a href="proceedings.shtml">Proceedings</a></li>
+    <li><a href="dates.shtml">Important Dates</a></li>
+    <li><a href="submission.shtml">Submission</a></li>
+    <li><a href="schedule.shtml">Schedule</a></li>
+    <li><a href="registration.shtml">Registration</a></li>
+    <li><a href="accommodation.shtml">Accommodation</a></li>
+    <li><a href="travel-information.shtml">Travel Information</a></li>
+    <li><a href="conference-venue.shtml">Conference Venue</a></li>
+    <li><a href="local-information.shtml">Local Information</a></li>
+    <li><a href="maps.shtml">Maps</a></li>
+    <li><a href="organizers.shtml">Organisers</a></li>
+  </ul>
+
+    </div>
+    <div id="wrapper">
+    <div id="content">
+      <div id="header">
+        <center>
+  <h1>19th International Symposium on Implementation and 
+    Application of Functional Languages
+  </h1>
+  
+  <h2>IFL 2007</h2>
+  
+  <h2>Freiburg, Germany, 27-29 September 2007</h2>
+  
+  <h3>
+    Co-located with 
+    <a href="http://www.informatik.uni-bonn.de/~ralf/icfp07.html">ICFP 2007</a> 
+    (1-3 October 2007)
+  </h3>
+</center>
+
+      </div>
+
+
+<div id="mainmatter">
+
+
+<h1>Schedule</h1>
+
+
+<p>
+Every talk is 25 minutes including questions.
+</p>
+
+<p>
+Here is a <a href="schedule.pdf">PDF version</a> of the schedule for printing.
+</p>
+
+<table>
+<col width="0*" align="right">
+<col align="left">
+<thead>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td></td>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+<td colspan="2" align="left"><big><strong>THURSDAY, 27th September</strong></big><br></td>
+</tr>
+
+<tr>
+<td><strong>8:00-8:50</strong></td>
+<td><strong>Registration</strong></td>
+</tr>
+
+<tr>
+<td><strong>8:50-9:00</strong></td>
+<td><strong>Welcome</strong></td>
+</tr>
+
+<tr>
+<td><strong>9:00-10:40</strong></td>
+<td><strong>Session: Compilation I</strong> (<i>Sven-Bodo Scholz</i>)</td>
+</tr>
+
+<tr>
+<td>9:00</td>
+<td><i>Marco T Morazan, Ulrik Schultz</i>
+<br>
+Call Graphs, Dominator Trees, and Lambda Lifting
+</td>
+</tr>
+
+<tr>
+<td>9:25</td>
+<td><i>Marc Feeley</i>
+<br>Speculative Inlining of Predefined Procedures in an R5RS Scheme to C Compiler
+</td>
+</tr>
+
+<tr>
+<td>9:50</td>
+<td><i>Atze Dijkstra, Jeroen Fokker, Doaitse Swierstra</i>
+<br>The Structure of the Essential Haskell compiler, or Coping with Compiler Complexity
+</td>
+</tr>
+
+<tr>
+<td>10:15</td>
+<td><i>Neil Mitchell, Colin Runciman</i>
+<br>Supero: Making Haskell Faster
+</td>
+</tr>
+
+<tr>
+<td><strong>10:40-11:20</strong></td>
+<td><strong>Coffee Break</strong></td>
+</tr>
+
+
+<tr>
+<td><strong>11:20-13:00</strong></td>
+<td><strong>Session: Applications I</strong> (<i>Ken Friis Larsen</i>)</td>
+</tr>
+
+<tr>
+<td>11:20</td>
+<td><i>Colin Runciman, David Duke, Rita Borgo, Malcolm Wallace</i>
+<br>Polytopes &amp; Polytypes: Generic Isosurfacing &amp; Functional Programming
+</td>
+</tr>
+
+<tr>
+<td>11:45</td>
+<td><i>Erik Zuurbier, Rinus Plasmeijer</i>
+<br>Car Damage Subrogation Workflow &mdash; an iTask exercise
+</td>
+</tr>
+
+<tr>
+<td>12:10</td>
+<td><i>Rinus Plasmeijer, Jan Martin Jansen, Pieter Koopman, Peter Achten</i>
+<br>Transparent Ajax and Client-Site Evaluation of iTasks
+</td>
+</tr>
+
+<tr>
+<td>12:35</td>
+<td><i>Baltasar Tranc&oacute;n y Widemann, David L. Parnas</i>
+<br>Tabular Expressions and Total Functional Programming
+</td>
+</tr>
+
+<tr>
+<td><strong>13:00-14:00</strong></td>
+<td><strong>Lunch</strong></td>
+</tr>
+
+
+<tr>
+<td><strong>14:00-15:40</strong></td>
+<td><strong>Session: Parallelism I</strong> (<i>Zolt&aacute;n Horvath</i>)</td>
+</tr>
+
+<tr>
+<td>14:00</td>
+<td><i>Mercedes Hidalgo-Herrero, Yolanda Ortega-Mall&eacute;n</i>
+<br>
+To be or not to be ... lazy
+</td>
+</tr>
+
+<tr>
+<td>14:25</td>
+<td><i>Phil Trinder, Abyd Al Zain, Kevin Hammond</i>
+<br>Evaluating and Using a Grid-Enabled Parallel Haskell
+</td>
+</tr>
+
+<tr>
+<td>14:50</td>
+<td><i>Jost Berthold, Mischa Dieterle, Rita Loogen, Steffen Priebe</i>
+<br>Functional Master-Worker Skeletons
+</td>
+</tr>
+
+<tr>
+<td>15:15</td>
+<td><i>Matthew Naylor, Colin Runciman</i>
+<br>The Reduceron: Widening the von Neumann Bottleneck for Graph Reduction using an FPGA
+</td>
+</tr>
+
+<tr>
+<td><strong>15:40-16:20</strong></td>
+<td><strong>Coffee Break</strong></td>
+</tr>
+
+<tr>
+<td><strong>16:20-18:00</strong></td>
+<td><strong>Session: Types I</strong> (<i>Glenn Strong</i>)</td>
+</tr>
+
+<tr>
+<td>16:20</td>
+<td><i>Marko van Eekelen, Olha Shkaravska</i>
+<br>Static Inference of Non-Monotonic Polynomial Sized Types
+</td>
+</tr>
+
+<tr>
+<td>16:45</td>
+<td><i>Dirk Kleeblatt</i>
+<br>Checking Dependent Types Efficiently
+</td>
+</tr>
+
+<tr>
+<td>17:10</td>
+<td><i>Edsko de Vries, Rinus Plasmeijer, David Abrahamson</i>
+<br>Uniqueness Typing Simplified
+</td>
+</tr>
+
+
+<tr>
+<td>17:35</td>
+<td><i>Mikolaj Konarski</i>
+<br>The Simple Category of Modules
+</td>
+</tr>
+
+
+
+
+
+
+<tr>
+<td colspan="2" align="left"><big><strong>FRIDAY, 28th September</strong></big><br></td>
+</tr>
+
+<tr>
+<td><strong>8:30-9:00</strong></td>
+<td><strong>Registration</strong></td>
+</tr>
+
+<tr>
+<td><strong>9:00-10:40</strong></td>
+<td><strong>Session: Contracts</strong> (<i>Manuel Chakravarty</i>)</td>
+</tr>
+
+<tr>
+<td>9:00</td>
+<td><i>Dana Na Xu, Simon Peyton Jones, Koen Claessen</i>
+<br>Static Contract Checking for Haskell
+</td>
+</tr>
+
+<tr>
+<td>9:25</td>
+<td><i>Robert Bruce Findler, Shu-yu Guo, Anne Rogers</i>
+<br>Lazy Contract Checking for Immutable Data Structures
+</td>
+</tr>
+
+<tr>
+<td>9:50</td>
+<td><i>Stephan Herhut, Sven-Bodo Scholz, Robert Bernecky, Clemens Grelck, Kai Trojahner</i>
+<br>From Contracts Towards Dependent Types: Proofs by Partial Evaluation
+</td>
+</tr>
+
+<tr>
+<td>10:15</td>
+<td><i>M&aacute;t&eacute; Tejfel, Tam&aacute;s Kozsik, Zolt&aacute;n Horv&aacute;th</i>
+<br>An Interpretation of Temporal Properties in Functional Programs
+</td>
+</tr>
+
+<tr>
+<td><strong>10:40-11:20</strong></td>
+<td><strong>Coffee Break</strong></td>
+</tr>
+
+
+<tr>
+<td><strong>11:20-13:00</strong></td>
+<td><strong>Session: Algorithms &amp; Data Structures</strong> (<i>Rita Loogen</i>)</td>
+</tr>
+
+<tr>
+<td>11:20</td>
+<td><i>Malcolm Wallace</i>
+<br>Partial Parsing: Combining Choice with Commitment
+</td>
+</tr>
+
+<tr>
+<td>11:45</td>
+<td><i>Steffen Mazanek, Mark Minas</i>
+<br>
+Graph Parser Combinators
+</td>
+</tr>
+
+<tr>
+<td>12:10</td>
+<td><i>Frank Huch, Sebastian Fischer</i>
+<br>Efficient, Modular Tries
+</td>
+</tr>
+
+<tr>
+<td>12:35</td>
+<td><i>Sebastian Fischer, Frank Huch</i>
+<br>Generic Programming Combinators
+</td>
+</tr>
+
+<tr>
+<td><strong>13:00-14:10</strong></td>
+<td><strong>Lunch and meeting of steering committee</strong></td>
+</tr>
+
+
+<tr>
+<td><strong>14:10-16:00</strong></td>
+<td><strong>Session: Foundations</strong> (<i>Doaitse Swierstra</i>)</td>
+</tr>
+
+<tr>
+<td>14:10</td>
+<td>Announcements for IFL 2008</td>
+</tr>
+
+<tr>
+<td>14:20</td>
+<td><i>Olivier Danvy</i>
+<br>Amortizing the Cost of Commuting Conversions when Beta-Reducing Monadic Normal Forms and A-Normal Forms
+</td>
+</tr>
+
+<tr>
+<td>14:45</td>
+<td><i>Jos&eacute; Almeida, Ian Mackie, Jorge Sousa Pinto, Miguel Vila&ccedil;a</i>
+<br>
+Encoding Iterators in Interaction Nets
+</td>
+</tr>
+
+<tr>
+<td>15:10</td>
+<td><i>Chunxu Liu, Greg Michaelson</i>
+<br>HW-Hume in Isabelle
+</td>
+</tr>
+
+<tr>
+<td>15:35</td>
+<td><i>Salvador Lucas, Ricardo Pe&ntilde;a</i>
+<br>
+Termination and Complexity Bounds for SAFE programs
+</td>
+</tr>
+
+<tr>
+<td><strong>16:00-</strong></td>
+<td><strong>Excursion to Breisach and Symposium Dinner including Peter Landin Prize Presentation</strong></td>
+</tr>
+
+<tr>
+<td colspan="2" align="left"><big><strong>SATURDAY, 29th September</strong></big><br></td>
+</tr>
+
+<tr>
+<td><strong>8:30-9:00</strong></td>
+<td><strong>Registration</strong></td>
+</tr>
+
+
+<tr>
+<td><strong>9:00-10:40</strong></td>
+<td><strong>Session: Applications II</strong> (<i>Peter Achten</i>)</td>
+</tr>
+
+<tr>
+<td>9:00</td>
+<td><i>Michael Nissen, Ken Friis Larsen</i>
+<br>FunSETL &mdash Functional Reporting for ERP Systems
+</td>
+</tr>
+
+<tr>
+<td>9:25</td>
+<td><i>Clemens Grelck, Frank Penczek</i>
+<br>On Implementing S-Net
+</td>
+</tr>
+
+<tr>
+<td>9:50</td>
+<td><i>Olivier Michel, Jean-Louis Giavitto</i>
+<br>Incremental Extension of a Domain Specific Language Interpreter
+</td>
+</tr>
+
+<tr>
+<td>10:15</td>
+<td><i>Oleg Lobachev</i>
+<br>Towards an Implementation of a Computer Algebra System in a Functional Programming Language
+</td>
+</tr>
+
+<tr>
+<td><strong>10:40-11:20</strong></td>
+<td><strong>Coffee Break</strong></td>
+</tr>
+
+<tr>
+<td><strong>11:20-13:00</strong></td>
+<td><strong>Session: Program Development</strong> (<i>Malcolm Wallace</i>)</td>
+</tr>
+
+<tr>
+<td>11:20</td>
+<td><i>Huiqing Li, Simon Thompson</i>
+<br>
+Testing Erlang Refactorings with QuickCheck
+</td>
+</tr>
+
+<tr>
+<td>11:45</td>
+<td><i>Christopher Brown, Simon Thompson</i>
+<br>Splitting and Merging Program Refactorings
+</td>
+</tr>
+
+<tr>
+<td>12:10</td>
+<td><i>Bernd Bra&szlig;el, Holger Siegel</i>
+<br>Debugging Lazy Functional Programs by Asking the Oracle
+</td>
+</tr>
+
+<tr>
+<td>12:35</td>
+<td><i>&Aacute;d&aacute;m Sipos, Zolt&aacute;n Porkol&aacute;b, Norbert Pataki, Vikt&oacute;ria Zs&oacute;k</i>
+<br>Meta&lt;Fun&gt; &mdash; Towards a Functional-Style Interface for C++ Template Metaprograms
+</td>
+</tr>
+
+
+<tr>
+<td><strong>13:00-14:00</strong></td>
+<td><strong>Lunch</strong></td>
+</tr>
+
+
+
+<tr>
+<td><strong>14:00-15:40</strong></td>
+<td><strong>Session: Compilation &amp; Parallelism</strong> (<i>Marc Feeley</i>)</td>
+</tr>
+
+
+<tr>
+<td>14:00</td>
+<td><i>Peter Jonsson, Johan Nordlander</i>
+<br>Positive Supercompilation for a Higher Order Call-By-Value Language
+</td>
+</tr>
+
+<tr>
+<td>14:25</td>
+<td><i>Andreas Koltes, John O'Donnell</i>
+<br>Circuit Parallelism in Haskell Programs
+</td>
+</tr>
+
+<tr>
+<td>14:50</td>
+<td><i>Martin Sulzmann, Edmund Lam</i>
+<br>Haskell - Join - Rules
+</td>
+</tr>
+
+<tr>
+<td>15:15</td>
+<td><i>Kevin Hammond</i>
+<br>Lightweight Multithreading for Effective Exploitation of Multicore Architectures using Hume
+</td>
+</tr>
+
+<tr>
+<td><strong>15:40-16:20</strong></td>
+<td><strong>Coffee Break</strong></td>
+</tr>
+
+
+<tr>
+<td><strong>16:20-18:00</strong></td>
+<td><strong>Session: Types II</strong> (<i>Michel Mauny</i>)</td>
+</tr>
+
+<tr>
+<td>16:20</td>
+<td><i>Martin Sulzmann, Kenny Zhuo Ming Lu</i>
+<br>XHaskell - Adding Regular Expression Types to Haskell
+</td>
+</tr>
+
+<tr>
+<td>16:45</td>
+<td><i>Tom Schrijvers, Martin Sulzmann, Simon Peyton Jones, Manuel Chakravarty</i>
+<br>Towards Open Type Functions for Haskell
+</td>
+</tr>
+
+<tr>
+<td>17:10</td>
+<td><i>Pieter Koopman, Peter Achten, Rinus Plasmeijer</i>
+<br>On the Validation of Specifications used in Model-Based Testing
+</td>
+</tr>
+
+<tr>
+<td>17:35</td>
+<td><i>Glenn Strong</i>
+<br>Approaches to Subtyping in Functional Languages
+</td>
+</tr>
+
+
+</tbody>
+</table>
+
+        <p>
+          All sessions take place in room 101-00-026, which is located in building 101 of the
+          <a href="http://www.faw.uni-freiburg.de/index_e.html">
+            Faculty of Applied Sciences
+          </a>
+          of the
+          <a href="http://www.uni-freiburg.de/index_en.php">
+            University of Freiburg.
+          </a>
+        </p>
+      </div>
+
+      <div id="footer">
+            <a href="impressum.shtml">Impressum</a>,
+    Webmaster: 
+    <script type="text/javascript">
+      document.write (ifl);
+    </script><noscript>ifl07 AT informatik DOT uni-freiburg DOT de</noscript>,
+    
+    Last modified: 2019-10-22 14:25:02
+
+      </div>
+    </div>
+    </div>
+  </body>
+  </html>

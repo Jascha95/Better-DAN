@@ -1,0 +1,6 @@
+name = "proglangUtils"
+version = "0.0.17"
+description = "OCaml bindings for the proglang utils"
+requires = ""
+archive(byte) = "proglangUtils.cma"
+archive(native) = "proglangUtils.cmxa"

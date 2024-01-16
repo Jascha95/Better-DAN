@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="PrioQueue.html">
+<link rel="next" href="Syntax.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Args" rel="Chapter" href="Args.html">
+<link title="Gen" rel="Chapter" href="Gen.html">
+<link title="GenVars" rel="Chapter" href="GenVars.html">
+<link title="Gvars" rel="Chapter" href="Gvars.html">
+<link title="Inf" rel="Chapter" href="Inf.html">
+<link title="Location" rel="Chapter" href="Location.html">
+<link title="LowerUpper" rel="Chapter" href="LowerUpper.html">
+<link title="LowerUpperNeg" rel="Chapter" href="LowerUpperNeg.html">
+<link title="LUNVar" rel="Chapter" href="LUNVar.html">
+<link title="LUVar" rel="Chapter" href="LUVar.html">
+<link title="MapVar" rel="Chapter" href="MapVar.html">
+<link title="PrioQueue" rel="Chapter" href="PrioQueue.html">
+<link title="ProgLabel" rel="Chapter" href="ProgLabel.html">
+<link title="Syntax" rel="Chapter" href="Syntax.html"><title>ProgLabel</title>
+</head>
+<body>
+<div class="navbar"><a href="PrioQueue.html">Previous</a>
+&nbsp;<a href="index.html">Up</a>
+&nbsp;<a href="Syntax.html">Next</a>
+</div>
+<center><h1>Module <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/type_ProgLabel.html">ProgLabel</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> ProgLabel: <code class="code">sig</code> <a href="ProgLabel.html">..</a> <code class="code">end</code></pre>Module that provides types, values and function
+    for the program labels.<br>
+<hr width="100%">
+<pre><span class="keyword">type</span> <a name="TYPEt"></a><code class="type"></code>t </pre>
+<div class="info">
+a program label<br>
+</div>
+
+<pre><span class="keyword">val</span> <a name="VALcreate_new"></a>create_new : <code class="type">unit -> <a href="ProgLabel.html#TYPEt">t</a></code></pre><div class="info">
+create a new program label.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcompare"></a>compare : <code class="type"><a href="ProgLabel.html#TYPEt">t</a> -> <a href="ProgLabel.html#TYPEt">t</a> -> int</code></pre><div class="info">
+Compares to program labels.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstring_of"></a>string_of : <code class="type"><a href="ProgLabel.html#TYPEt">t</a> -> string</code></pre><div class="info">
+Returns a string representation of a program label<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALreset"></a>reset : <code class="type">unit -> unit</code></pre><div class="info">
+IMPORTENT: Do only use this function for tests.
+    It resets the internal state. So the invariant, 
+    that every program label created by <code class="code">create_new</code>
+    is unique is lost after calling this method.<br>
+</div>
+</body></html>

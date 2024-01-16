@@ -1,0 +1,488 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+  <html>
+  <head>
+    <title>ICFP 2007: Local Information</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      
+  
+
+    <link rel="stylesheet" type="text/css" href="../IFL2007/common-style.css">
+    <script language="javascript" type="text/javascript">
+      function make () {
+        var c = '@';
+        var r = arguments[0];
+        for (var i=1; i < arguments.length; i++) {
+          r = r + c + arguments[i];
+          c = '.';
+      }
+      /* new line  */
+      r = r.replace(/[A-Z]/g,'')
+      var res = '\x3Ca href="mailto:' + r + '"\x3E' + r + '\x3C/a\x3E';
+      return res;
+      }
+      
+      var ifl = make ('ADEiDLKOfDOPlPP07X', 'informatik', 'uni-freiburg', 'de');
+      var icfp = make ('SDFAicSDFAPfpDOI07POLS', 'informatik', 'uni-freiburg', 'de');
+      var berit = make ('IObrSDFAOPauSDFASOPQerXLDK', 'informatik', 'uni-freiburg', 'de');
+    </script>
+  </head>
+  
+  <body>
+
+    <div id="menu">
+        <ul>
+    <li><a href="index.shtml">Home</a></li>
+    <li><a href="registration.shtml">Registration</a></li>
+    <li><a href="accommodation.shtml">Accommodation</a></li>
+    <li><a href="travel-information.shtml">Travel Information</a></li>
+    <li><a href="conference-venue.shtml">Conference Venue</a></li>
+    <li><a href="local-information.shtml">Local Information</a></li>
+    <li><a href="schedule.shtml">Schedule</a></li>
+    <li><a href="maps.shtml">Maps</a></li>
+    <li><a href="local-organizers.shtml">Local Organizers</a></li>
+    <li class="exit">
+      <a href="http://www.informatik.uni-bonn.de/~ralf/icfp07.html">
+        General ICFP '07 Page
+        </a>
+    </li>
+  </ul>
+
+    </div>
+    <div id="wrapper">
+    <div id="content">
+      <div id="header">
+        <center>
+  <h1>
+    The 12th ACM SIGPLAN International Conference on Functional Programming
+  </h1>
+  
+  <h2>ICFP 2007</h2>
+  
+  <h2>Freiburg, Germany, 1-3 October 2007</h2>
+  
+  <h3>
+    Co-located with 
+    <a href="../IFL2007/index.html">IFL 2007</a> 
+    (September 27-29, 2007)
+  </h3>
+</center>
+
+      </div>
+      
+      <div id="mainmatter">
+
+        <p class="printable">
+          <a href="local-information.pdf">Printable PDF</a>
+        </p>
+          <h1>Local Information</h1>
+  <p>
+    <a href="http://www.freiburg.de/servlet/PB/menu/1140679_l2/index.html">
+      Freiburg
+    </a> is located
+    in the South Western tip of Germany, close to the
+    borders of France and Switzerland. The city
+    with its 214,000 inhabitants is often called
+    the capital of the black forest.
+    Popular opinion says that it is the sunniest city in Germany.
+    Freiburg offers a lot of attractions and a rich cultural life.
+  </p>
+  <p>
+    The 
+    <a href="http://www.uni-freiburg.de/index_en.php">
+      Albert-Ludwigs-Universität Freiburg
+    </a>
+    is one of the oldest universities in Germany.
+    Founded in 1457, it celebrates its 
+    <a href="http://www.jubilaeum.uni-freiburg.de/anniversary-2007?set_language=en">550th anniversary</a>
+    this year.
+  </p>
+
+  <h2>Restaurants, Cafes, and Pubs</h2>
+  <table class="restaurants">
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Address</td>
+        <td>Category</td>
+        <td>Kind</td>
+        <td>Note</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="http://www.colombi.de/">Colombi</a></td>
+        <td>Rotteckring&nbsp;16</td>
+        <td>Upper</td>
+        <td>Restaurant</td>
+      </tr>
+      <tr>
+        <td>
+          <a href="http://www.dattler.de/">Schlossberg-Restaurant Dattler</a>
+        </td>
+        <td>Am Schlossberg 1</td>
+        <td>Upper</td>
+        <td>Restaurant</td>
+      </tr>
+      <tr>
+        <td>Greiffenegg Schlössle</td>
+        <td>Schloßbergring&nbsp;3</td>
+        <td>Middle</td>
+        <td>Restaurant</td>
+      </tr>
+      <tr>
+        <td>
+          <a href="http://www.hotel-oberkirch.de">Oberkirchs Weinstube</a>
+        </td>
+        <td>Münsterplatz&nbsp;22</td>
+        <td>Middle</td>
+        <td>Restaurant</td>
+        <td>Traditional Baden cuisine</td>
+      </tr>
+      <tr>
+        <td>Kastaniengarten</td>
+        <td>Schloßbergring&nbsp;3</td>
+        <td>Lower</td>
+        <td>Beer Garden</td>
+      </tr>
+      <tr>
+        <td><a href="http://www.omas-kueche.de">Omas Küche</a></td>
+        <td>Hildastr.&nbsp;66</td>
+        <td>Middle</td>
+        <td>Restaurant</td>
+        <td>Baden and international cuisine</td>
+      </tr>
+      <tr>
+        <td>Onkel WOK</td>
+        <td>Bertoldstr.&nbsp;53</td>
+        <td>Lower</td>
+        <td>Fast Food</td>
+        <td>Chinese cuisine</td>
+      </tr>
+      <tr>
+        <td><a href="http://www.feierling.de">Feierling</a></td>
+        <td>Gerberau&nbsp;46</td>
+        <td>Lower</td>
+        <td>Pub</td>
+        <td>Own brewery with unfiltered beer</td>
+      </tr>
+      <tr>
+        <td>
+          <a href="http://www.stadtindianer.de/schlappen/default.htm">
+            Schlappen
+          </a>
+        </td>
+        <td>Löwenstr.&nbsp;2</td>
+        <td>Lower</td>
+        <td>Pub</td>
+        <td>Often visited by students, 
+          extensive whiskey list, big and favorable servings
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="http://www.warsteiner-galerie.de">Warsteiner Galerie</a>
+        </td>
+        <td>Milchstr. 7</td>
+        <td>Lower</td>
+        <td>Pub</td>
+        <td>Tapas, Spanish wines</td>
+      </tr>
+      <tr>
+        <td>Persepolis</td>
+        <td>Habsburgerstr. 89</td>
+        <td>Middle</td>
+        <td>Restaurant</td>
+        <td>Persian cuisine</td>
+      </tr>
+      <tr>
+        <td><a href="http://www.cafe-legere.com/">Café Légère</a></td>
+        <td>Niemensstr.8</td>
+        <td>Lower</td>
+        <td>Pub</td>
+      </tr>
+      <tr>
+        <td>
+          <a href="http://www.sushibar-freiburg.de/html/index.html">
+            Sushi Bar
+          </a>
+        </td>
+        <td>Am Augustinerplatz 2</td>
+        <td>Middle</td>
+        <td>Restaurant</td>
+        <td>Sushi</td>
+      </tr>
+      <tr>
+        <td>Jaipur</td>
+        <td>Gerberau 5</td>
+        <td>Middle</td>
+        <td>Restaurant</td>
+        <td>Indian cuisine</td>
+      </tr>
+      <tr>
+        <td>Pizzeria Laubfrosch</td>
+        <td>Kaiser-Joseph-Str. 273</td>
+        <td>Lower</td>
+        <td>Restaurant</td>
+        <td>Italian cuisine</td>
+      </tr>
+      <tr>
+        <td><a href="http://www.firenze-freiburg.de/">Pizzeria Firenze</a></td>
+        <td>Friedrichring 5</td>
+        <td>Lower</td>
+        <td>Restaurant</td>
+        <td>Italian cuisine</td>
+      </tr>        
+    </tbody>
+  </table>
+  <p>All restaurants, cafes, and pubs are marked on the
+    <a href="http://maps.google.com/maps/ms?ie=UTF8&amp;hl=en&amp;msa=0&amp;om=1&amp;msid=112565914073914710272.0000011293bc4c0bc450c&amp;ll=47.999169,7.86046&amp;spn=0.041064,0.078621&amp;z=14">map</a>.
+
+  <h2>Sights</h2>
+  <div class="sights">
+  <h3>The Cathedral</h3> 
+    <p>
+        <img src="../IFL2007/images/cathedral.jpg">
+    The "Münster Unserer Lieben Frau"
+    (Cathedral of our Beloved Lady) was modeled after the Minster
+    in Basel. Work began around 1200 on the site of an old parish
+    church from the 12th century. The choir, the Late Romanesque
+    transom, the nave and the flanking towers were completed before
+    the death of the last Zähringer duke, Bertold V (1218).  In
+    1220, the plans were revised and construction continued in the
+    Modern Gothic style, which at that time had reached its zenith
+    in France.  The west tower - the "most beautiful tower of
+    Christianity"- was finished in 1330. Cathedral reached
+    completion.  It is likely that the new building of the Late
+    Gothic chancel was designed by the cathedral master workman
+    Johannes von Gmünd. The cornerstone was laid in 1354. The
+    chancel was not fully finished until 1513, due to political and
+    economic problems in the city and poor management.  The
+    Cathedral achieved its present form at the beginning of the 16th
+    century.  If you have the guts to climb the Cathedral tower,
+    you'll be rewarded with a breathtaking view.
+    </p>
+
+    <h3>Kornhaus</h3> 
+      <p>
+      <img src="../IFL2007/images/kornhaus.jpg"> 
+      The "Kornhaus"
+      (granary) on the north-west side of the Cathedral Square was
+      built in 1498 as a place to hold dances and to store and sell
+      grains. In 1944, the Kornhaus was destroyed down to the ground
+      walls. It was rebuilt in its original form (1969-71) under the
+      direction of the architect Herbert Dörr. Today, the house is an
+      arcade with shops, a café, restaurants and office space. The
+      main point of interest is the attractive stair-step shaped front
+      gable with its attic windows. Formerly, items stored in the
+      Kornhaus were heaved out of the storage rooms through these
+      windows.
+      </p>
+
+    <h3>Historisches Kaufhaus (Historic Merchants' Hall)</h3>
+        <p>
+        <img src="../IFL2007/images/kaufhaus.jpg">
+        The "Historisches Kaufhaus" (Historical Merchant Hall) was
+        built in the 16th century. It served as the administrative
+        headquarters for Freiburg's market, customs, and finance
+        offices.  At this time, trade was growing rapidly in the city
+        and the duties paid by the merchants who passed through
+        Freiburg were an ever-increasing source of
+        income. Additionally, the merchant house provided a place to
+        store goods.  The Historisches Kaufhaus survived both world
+        wars almost undamaged. History has it that on the night of the
+        city's bombing in World War II (1944), the landlord from the
+        adjacent Weinstube saved the Kaufhaus in an unusual
+        manner. Karl Oberkirch extinguished the flying sparks of a
+        fire by dousing them with his wine.  Today, the building is
+        mostly used for classical music concerts and receptions.
+      </p>
+
+      <h3>Martinstor and Schwabentor (two gates)</h3>
+      <p>
+        <img src="../IFL2007/images/gate.jpg">
+        The "Martinstor" (Martin's Gate) belongs to Freiburg's first
+        city fortifications built at the beginning of the 13th
+        century. It is older than the other remaining fortification
+        tower gate, the "Schwabentor" (originally there were four
+        towers). The Martinstor was joined on the land side to the
+        city wall. The defence passage was six meters above the
+        ground. A twelve meter wide and five meter deep bridged moat
+        was located outside the tower.
+      </p>
+
+    <h3>Colombi Palace (Museum of Early and Pre-History)</h3>
+      <p>
+        <img src="../IFL2007/images/colombi.jpg">
+        Georg Jakob Schneider built the "Colombischlößle" (Colombi
+        Mansion) for the Countess Zea Bermudez y Colombi and her
+        daughters between 1859 and 1861. The house is situated on the
+        former "Saint Louis" bastion, which was torn down in 1744/45.
+        The new "Villa Colombi" was designed in the English Gothic and
+        Tudor styles. The Colombi Mansion became the permanent
+        property of Freiburg in 1899. Since then, it has served as the
+        home of various institutions. From 1947-1952, Land President
+        Leo Wohleb ran the Office of the State of Baden from the
+        mansion. In 1983, the Colombi Mansion became the site for the
+        Museum für Ur- und Frühgeschichte (Museum for Pre- and Early
+        history).  The small vineyard which looks out onto the
+        Eisenbahnstraße is the remainder of the "Glacis-Reben" (type
+        of grapevine) planted in 1745 on the ruins of the Baroque
+        fortifications.
+      </p>
+
+    <h3>Schlossberg (Fortification Ruins) / Lookout Tower</h3>
+      <p>
+        <img src="../IFL2007/images/schlossberg.jpg">
+          The Schlossberg (Castle Hill) in the middle of Freiburg served
+          from 1677 to 1744 as a fortress for the French
+          conquerors. Today, the hill with its wonderful views over
+          Freiburg and Dreisamtal (valley of the River Dreisam) is a
+          very popular destination for excursions. Special attractions
+          are the 35 meter high, recently newly-built lookout tower and
+          the beer garden of the Restaurant Greiffeneggschlössle.
+      </p>
+
+      <p>All sights are marked on the
+        <a href="http://maps.google.com/maps/ms?ie=UTF8&amp;hl=en&amp;msa=0&amp;om=1&amp;msid=112565914073914710272.0000011293bc4c0bc450c&amp;ll=47.999169,7.86046&amp;spn=0.041064,0.078621&amp;z=14">map</a>.
+
+    </div>
+  <h2>Museums</h2>
+    <div class="sights">
+      <h3>Adelhauser Museum Natural History and Ethnology</h3>
+      <p>
+        <img src="../IFL2007/images/adelhauser_museum.jpg">
+          The Adelhauser Museum with its natural history and ethnology
+          departments offers fascinating insights into the cultural
+          history of foreign countries and the special features of our
+          geographic region: In ethnology, this is conveyed by means of
+          everyday objects, as well as art and ritual objects from
+          Africa, Asia, Indian America and the South Seas.
+          In natural history, one can gain interesting information about
+          glistening gemstones, minerals and ores, meteorites, rocks and
+          fossils as well as many insects, birds and mammals. Be enchanted
+          by numerous treasures from the history of the people and their
+          world created over a century.
+      </p>
+      <p class="contact">
+        Gerberau 32, 79098 Freiburg.
+        Phone: +49 761 / 201 - 2566,
+        <a href="http://www.museen.freiburg.de/daten/frameset.php?navi_param%5Bmuseum%5D=1&museum_id=ahm">Website</a>.
+      </p>
+
+      <h3>Augustinermuseum</h3>
+      <p>
+        <img src="../IFL2007/images/augustinermuseum.jpg">
+          In the middle of Freiburg's Old Town you will find the
+          largest museum of South Baden, the "Augustiner-museum". The
+          former cloistral building of the "Augustiner-Eremiten" with
+          its Gothic cloister and its high church room creates an
+          impressive atmosphere.  With its valuable collection of art
+          and culture of the Upper Rhine area, reaching from the
+          mediaeval times to the 20th century, the Augustinermuseum is
+          of national importance.  Due to some constructional work,
+          part of the museum is closed at the moment, but most of the
+          collections are nevertheless accessible.
+      </p>
+      <p class="contact">
+        Gerberau 15, 79098 Freiburg.
+        Phone: +49 761 / 201 - 2531,
+        <a href="http://www.museen.freiburg.de/daten/frameset.php?navi_param%5Bmuseum%5D=1&museum_id=aug">Website</a>.
+      </p>
+
+      <h3>Museum of Ancient and Prehistoric History</h3>
+      <p>
+        <img src="../IFL2007/images/museum_ancient.jpg">
+        Female statuettes from the Old Stone Age, Celtic rulers'
+        graves, Roman deities, Alemannic jewellery - the Museum
+        of Ancient and Prehistoric History vividly guides through the
+        history epochs of the Upper and High Rhine. Impressive
+        accounts give insights into the culture, religion and everyday
+        life.  
+      </p>
+      <p class="contact">
+        Rotteckring 5, 79098 Freiburg.
+        Phone: +49 761 / 201 - 2574,
+        <a href="http://www.museen.freiburg.de/daten/frameset.php?navi_param%5Bmuseum%5D=1&museum_id=muf">Website</a>
+      </p>
+
+      <h3>Museum of Modern Art</h3>
+      <p>
+        <img src="../IFL2007/images/museum_modern.jpg">
+        Modern and contemporary pertaining to the region - the
+        Museum of Modern Art pursues this maxim. The museum presents
+        an outlook on the significant art movements of the past
+        hundred years from Expressionism at the start of the century
+        via the New Objectivity of the twenties, the abstract painting
+        of the fifties up to the present-day developments.  
+      </p>
+      <p class="contact">
+        Marienstr. 10a, 79098 Freiburg.
+        Phone: +49 761 / 201 - 2581,
+        <a href="http://www.museen.freiburg.de/daten/frameset.php?navi_param[museum]=1&museum_id=mnk">Website</a>.
+      </p>
+
+      <h3>Uni-Museum</h3>
+      <p>
+        In its new location, more than just the history and tradition
+        of the University of Freiburg is now presented. The main focus
+        is on the research work and teachings from the beginning of
+        the 15th century to the present day. As a modern university
+        with over 21,000 students, it today covers virtually all areas
+        of the Arts, Sciences, Applied Sciences and Medicine. Through
+        events, stagings and experiences, a forum has emerged in the
+        Uni-Museum where new teaching and learning units can be
+        presented and an entertaining dialogue with society, culture
+        and business can develop.
+      </p>
+      <p class="contact">
+        Bertoldstraße 17, 79085 Freiburg.
+        Phone: + 49 761 / 203-3835,
+        <a href="http://www.uniseum.de/">Website</a>.
+      </p>
+
+      <p>All sights are marked on the
+        <a href="http://maps.google.com/maps/ms?ie=UTF8&amp;hl=en&amp;msa=0&amp;om=1&amp;msid=112565914073914710272.0000011293bc4c0bc450c&amp;ll=47.999169,7.86046&amp;spn=0.041064,0.078621&amp;z=14">map</a>.
+
+      <p class="copyright">
+        All pictures: &copy; Freiburg Wirtschaft Touristik und Messe 
+        GmbH &amp; Co. KG / Foto: Karl-Heinz Raach.<br>
+        All texts: Courtesy of Benjamin Greschbach, 
+          <a href="http://www.telematik.uni-freiburg.de/">IIG Telematik</a>.
+      </p>
+    </div>
+
+
+  <h2>Links</h2>
+  <ul>
+    <li>
+      <a href="http://www.weather-forecast.com/locations/Freiburgimbreisgau.shtml">
+        Weather forecast for freiburg
+      </a>
+    </li>
+    <li>
+      <a href="http://www.freiburg-home.com/freiburg/">
+        Unofficial Freiburg website for English speaking visitors
+      </a>
+    </li>
+    <li>
+      <a href="http://en.wikipedia.org/wiki/Freiburg">Wikipedia entry</a>
+    </li>
+  </ul>
+
+
+      </div>
+
+      <div id="footer">
+            <a href="impressum.shtml">Impressum</a>,
+    Webmaster: 
+    <script type="text/javascript">
+      document.write (icfp);
+    </script><noscript>icfp2007 AT informatik DOT uni-freiburg DOT de</noscript>,
+    
+    Last modified: 2019-10-22 14:25:02
+
+      </div>
+    </div>
+    </div>
+  </body>
+  </html>

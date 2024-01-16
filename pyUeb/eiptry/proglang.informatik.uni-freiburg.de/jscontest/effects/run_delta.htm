@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>JSConTest - Test Framework - Basic</title>
+    <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="lib2/jscontest.js"></script>
+    <script type="text/javascript" src="lib2/jscontest.contracts.js"></script>
+    <script type="text/javascript" src="lib2/jscontest.cexp.js"></script>
+    <script type="text/javascript" src="lib2/jscontest.statistic.js"></script>
+    <script type="text/javascript" src="lib2/jscontest.tests.js"></script>
+    <script type="text/javascript" src="lib2/jscontest.events.js"></script>
+    <script type="text/javascript" src="lib2/jscontest.effects.js"></script>
+
+    <script type="text/javascript" src="lib2/jscontest.events.handler.simple.js"></script>
+    <script type="text/javascript" src="lib2/jscontest.events.handler.data.js"></script>
+   <script type="text/javascript" src="lib2/jscontest.treeView.js"></script>
+
+    <script type="text/javascript" src="deltablue_generators.js"></script>
+    <script type="text/javascript" src="base.js"></script>
+    <script type="text/javascript" src="deltablue.test.js"></script>
+   <script type="text/javascript">
+       planner = new Planner();      
+    </script>
+
+	<!-- Required CSS -->
+	<link type="text/css" rel="stylesheet" href="http://yui.yahooapis.com/2.8.1/build/treeview/assets/skins/sam/treeview.css">
+	<!-- Optional CSS for for date editing with Calendar-->
+	<link type="text/css" rel="stylesheet" href="http://yui.yahooapis.com/2.8.1/build/calendar/assets/skins/sam/calendar.css">
+	 
+	<!-- Dependency source file --> 
+	<script src="http://yui.yahooapis.com/2.8.1/build/yahoo-dom-event/yahoo-dom-event.js" ></script>
+	<!-- Optional dependency source file --> 
+	<script src="http://yui.yahooapis.com/2.8.1/build/animation/animation-min.js" type="text/javascript"></script>
+	<!-- Optional dependency source file for date editing with Calendar--> 
+	<script src="http://yui.yahooapis.com/2.8.1/build/calendar/calendar-min.js" ></script>
+	<!-- Optional dependency source file to decode contents of yuiConfig markup attribute--> 
+	<script src="http://yui.yahooapis.com/2.8.1/build/json/json-min.js" ></script>
+	 
+	<!-- TreeView source file --> 
+	<script src="http://yui.yahooapis.com/2.8.1/build/treeview/treeview-min.js" ></script>
+  
+  </head>
+
+  <body>
+    <h1>JSConTest - Test Framework - DeltaBlue</h1>
+    
+    <p>One-way constraint solver, originally written in Smalltalk by John Maloney and Mario Wolczko (<i>880 lines</i>)
+ 	</p>
+
+    <p>
+        Please klick run to execute the benchmark with effect
+ 	monitoring enabled. Your browser will need some time to
+ 	finish. The expected result is, that after the execution
+        the benchmark is executed once. Therefor the test framework
+        reports one successful test case for the function deltaBlue.
+        The contract for the function is simple, just undefined ->
+        undefined.
+    </p>
+
+    <form>
+      <input type="button" name="run" value="run"
+        onclick="JSConTest.tests.run()">
+    </form>		
+    
+	<div style="background-color: #999;">
+		<h2>Error log:</h2>
+		<p id="checker" style="color: #A00;"></p>
+	</div>
+    <div id="effects"></div>    
+    <div id="logger"></div>
+    
+
+    <script type="text/javascript">
+    	function fail(s) {
+    		document.getElementById("checker").innerHTML += s + "<br />";
+    	}
+        var dl = JSConTest.events.handler.simple.create('logger',"ul");
+        JSConTest.events.register(dl);
+        JSConTest.events.register(JSConTest.events.handler.data.create("checker"));  
+
+        // @FOR-PETER: register your effect event handler
+        try {
+          var effect_div = document.getElementById('effects');
+          JSConTest.events.register(JSConTest.events.handler.effects.create(effect_div));
+        } catch (e) {
+        }
+    </script>    
+  </body>
+</html>

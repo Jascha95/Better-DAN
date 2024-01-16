@@ -1,0 +1,5 @@
+Seit der Einführung des Gregorianischen Kalenders in 1582 liegt prinzipiell ein Schaltjahr vor, wenn die Jahreszahl durch vier teilbar ist. Ausnahme: ist die Jahreszahl durch einhundert, aber nicht durch vierhundert teilbar, so handelt es sich doch um ein normales Jahr.
+
+Eine Jahreszahl ist eine ganze Zahl größer als 1582. Für alle Funktionen ist ein Docstring erforderlich. Falls möglich muss eine Typsignatur angegeben werden.
+
+Implementieren Sie eine Funktion `leap`, die eine Jahreszahl `year` als Parameter nimmt und zurückgibt ob es sich um ein Schaltjahr handelt.

@@ -1,0 +1,109 @@
+/* Global Styles */
+html {
+    padding: 5vw;
+    background: #FDF2E9;
+}
+
+/* Header Styles */
+header {
+    background: #A93226;
+    padding: 1em;
+    width: 100%;
+    color: #F5CBA7;
+}
+
+/* Footer Styles */
+footer {
+    width: 100%;
+    font-family: cursive;
+    text-align: center;
+    background: #909497;
+    color: lightgrey;
+    margin-top: 2em;
+    padding: 1em;
+   
+}
+
+/* h1 style */
+h1 {
+    text-align: center;
+    font-size: xxx-large;
+}
+
+/* Paragraph Styles */
+p {
+    font-family: "Gill Sans", sans-serif;
+}
+
+/* to display image centered we put it inside a container and center its elements*/
+#img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Image Styles */
+img {
+    width: 90%;
+}
+
+/* move lines closer together */
+.examples {
+    line-height: 0.2;
+}
+
+/* Example Styles */
+.example-sent {
+    margin-left: 6vw;
+    font-style: italic;
+}
+
+.translation {
+    margin-left: 6vw;
+}
+
+/* Lead Styles */
+.lead {
+    font-weight: bold;
+    font-size: 3vh;
+    text-align: justify;
+    font-family: serif;
+}
+
+/* Publication Data Styles */
+.publication-data {
+    display: inline;
+    font-weight: bold;
+    font-family: serif;
+}
+/* author specific style */
+.author {
+    float: left;
+}
+/* date specific style */
+.date-published {
+    float: right;
+}
+
+/* Language Styles */
+span:lang(it),
+span:lang(fr),
+span:lang(de),
+:lang(gsw) {
+    font-style: italic;
+}
+
+/* swiss-german styles */
+:lang(gsw) {
+    color: royalblue;
+}
+
+h2 span:lang(gsw) {
+    color: black;
+}
+
+p.example-sent span:lang(gsw) {
+    color: black;
+    font-weight: bold;
+}
+

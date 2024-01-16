@@ -1,0 +1,37 @@
+# Ein Beispielmakefile für Übungsblatt 0. Geht davon aus, dass
+# 1) fibonacci() aus Aufgabe 0 in fibonacci.c steht
+# 2) der Test aus Aufgabe 3 in fibonaccitest.c steht (welches ein #include "fibonacci.c" enthält)
+# 3) golden() aus Aufdgabe 1 und das Programm aus aufgabe 2 in golden.c stehen (welches ein #include "fibonacci.c" enthält)
+
+# Wer bereits jetzt sinnvoll Header (.h) verwenden will (wie es ab Blatt 1 verlangt ist), muss das Makefile entsprechend abändern.
+# Wer die Aufgaben und Funktionen anders auf Dateien aufteilt, ebenso.
+# Es muss aber auf jeden Fall die Ziele all, clean, compile, test und checkstyle geben.
+
+CC = gcc
+CFLAGS = --std=c11 -pedantic
+
+.PHONY: all clean compile test style all
+
+# Erstelle alle Binärdateien und führe alle Tests aus.
+all: compile test
+
+# Lösche alle erstellten Dateien
+clean:
+	rm -f fibonaccitest golden
+
+# Kompiliere alle Dateien
+compile: fibonaccitest golden
+
+fibonaccitest: fibonaccitest.c fibonacci.c
+	$(CC) $(CFLAGS) fibonaccitest.c -o fibonaccitest
+
+golden: golden.c fibonacci.c
+	$(CC) $(CFLAGS) golden.c -o golden
+
+# Führe Tests aus
+test:
+	./fibonaccitest
+
+# Überprüfe Einhaltung des Google C++ Style Guide (tut auf Blatt 0 noch nichts, da der erst ab Blatt 1 einzuhalten ist)
+checkstyle:
+

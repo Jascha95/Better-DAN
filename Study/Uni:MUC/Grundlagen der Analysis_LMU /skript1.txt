@@ -1,0 +1,271 @@
+
+1 Folgen und Reihen
+===================
+
+
+1.1 Grenzwert einer Folge
+-------------------------
+
+lim    1/n = 0
+n->oo
+
+lim     1/(n+1) = 0
+n->oo
+
+lim   n/(n+1) = lim (n+1-1)/(n+1) = lim 1 - 1/(n+1) = 1
+n->oo           n->oo               n->oo
+
+
+lim    n / 2^n   = 0
+n->oo
+
+
+Formal: Eine Folge (a_n)_n ist eine Funktion NN->RR, also fuer jedes
+n:NN eine reelle Zahl a_n. Man schreibt
+
+                           lim a_n = a, 
+                          n->oo
+
+
+falls fuer jedes epsilon>0 ein N:NN existiert, so dass |a_n - a| <=
+epsilon fuer alle n>N. "Fuer genuegend grosses n kommen die
+Folgenglieder dem Grenzwert beliebig nahe.". Man sagt, a sei der
+Grenzwert oder Limes der Folge (a_n)_n.
+
+Wir beweisen, dass lim 1/n = 0: 
+                  n->oo
+
+Sei epsilon>0 vorgegeben. Waehle N so, dass epsilon > 1/N Dann ist
+|1/n| < 1/N < epsilon fuer alle n>N.
+
+Wir beweisen, dass lim n/2^n = 0
+                   n->oo
+
+Fuer n>3 ist n^2 <= 2^n. (gilt fuer n=4. Falls fuer festes n gueltig,
+dann auch fuer n+1: (n+1)^2 = n^2+2n+1 <= 2^n+2n+1 <= 2^n + 2^n =
+2^(n+1)).  Sei jetzt epsilon>0 vorgegeben. Waehle N so dass
+1/N<epsilon und N>3.  Wenn n>N, dann ist n/2^n <= n/ n^2 = 1/n <
+epsilon.
+
+Alternativ: 0 <= lim n/2^n <= lim n/n^2 = 0
+                n->oo        n->oo
+
+
+Achtung: Ein Grenzwert muss nicht existieren, z.B.
+
+   lim  (-1)^n existiert nicht
+   n->oo
+
+ lim  n  existiert auch nicht, aber man kann schreiben  lim n = oo
+n->oo                                                  n->oo
+
+und sagt, die Folge (a_n)_n mit a_n=n divergiert bestimmt gegen
+oo. Hingegen divergiert die Folge ((-1)^n)_n unbestimmt, wie man sagt.
+
+Grenzwerte vertauschen mit den Grundrechenarten und anderen
+Operationen, so gilt zum Beispiel
+
+ lim  1+1/n = 1 und  lim 2^(1/n) = 2^0 = 1.
+n->oo               n->oo
+
+
+
+1.2 Summen
+----------
+
+Ist (a_k)_k eine Folge und n,N : NN, so definiert man
+
+       N
+      __
+      >  a_k  := a_n + a_(n+1) + ... + a_N
+      --
+     k=n
+
+meistens ist n=0 oder n=1. Wir schreiben auch
+sum(a_k,k=n..N). Natuerlich koennen die Indizes (also k) auch anders
+heissen.
+
+sum(k,k=n..n) = a_n
+
+sum(k,k=n..N) =  0  für n > N nach Konvention
+
+
+Es gilt:
+
+sum(k,k=1..n) = 1 + 2 + 3 + ... + n = n*(n+1) / 2
+
+sum(q^k,k=0..n) = (q^(n+1) - 1) / (q - 1)
+
+sum(k^2,k=1..n) =  1/6*n(n+1)(2n+1)
+
+Nicht immer kann man eine "geschlossene Form" finden, z.B. laesst sich
+sum(1/k, k=1..n) nicht wesentlich vereinfachen. Man nennt den Wert
+dieser Summe die *n-te harmonische Zahl*, geschrieben H_n.
+
+
+
+1.3 Teleskopsummen
+------------------
+
+Ist (a_n)_n eine Folge, und gilt b_n = a_n - a_(n-1) fuer n>0, so folgt
+sum(b_n,n=1..N) = 
+a_1 - a_0 + a_2 - a_1 + a_3 - a_2 + ... + a_N - a_(N-1) = a_N - a_0.
+
+Solch eine Summe heisst Teleskopsumme.
+
+Man kann damit interessante Summenformeln herleiten:
+
+n^3 - (n-1)^3 = 3n^2-3n+1 (binomische Formel)
+
+Also gilt:
+
+sum(3k^2-3k+1,k=1..n) = n^3
+
+Es folgt
+
+sum(3k^2-3k,k=1..n) = n^3 - n
+sum(3k^2,k=1..n) = n^3 - n + 3/2 n(n+1)
+sum(k^2,k=1..n) = 1/3(n^3 - n + 3/2 n(n+1)) = 1/6*n(n+1)(2n+1)
+
+Weiteres Beispiel:
+
+q^n-q^(n-1) = q^(n-1)*(q-1).
+
+Also gilt:
+
+sum(q^(k-1)*(q-1),k=1..n) = q^n - 1
+
+Es folgt
+
+sum(q^(k-1),k=1..n) = (q^n-1)/(q-1)
+sum(q^k,k=0..n-1) = (q^n-1)/(q-1)    /* Umbenennung der Laufvariablen */
+sum(q^k,k=0..n) = (q^n-1)/(q-1) + q^n = (q^(n+1) - 1) / (q - 1)
+
+Und noch ein Beispiel:
+
+1/(k*(k+1)) = 1/k - 1/(k+1)     /* a_k = - 1/(k+1) */
+
+Also ist sum(1/(k*(k+1)),k=1..n) = 1 - 1/(k+1)
+
+
+
+1.4 Reihen
+----------
+
+Ist (a_k)_k eine Folge, so definiert man
+
+   
+      oo               n
+      __              __
+      >  a_k  := lim  >  a_k
+      --         n->oo--
+     k=n              k=n
+
+und schreibt wie immer auch sum(a_k,k=n..oo). Ein Ausdruck dieser Form
+heisst Reihe.
+
+Wie jeder Grenzwert kann solch eine Reihe auch (bestimmt oder
+unbestimmt divergieren).
+
+Beispiele:
+
+sum(q^n,n=0..oo) = 1/(1-q), falls |q| < 1 (q kann auch negativ sein)
+sum(q^n,n=0..oo) = oo (bestimmte Divergenz),
+      falls q >= 1
+sum(q^n,n=0..oo) divergiert unbestimmt, wenn q <= -1
+
+Illustration: 
+1 + 1/2 + 1/4 + 1/8 + ... = 2            /* q = 1/2 */
+1 + 1 + 1 + 1 +... = oo                         /* q = 1 */
+1 - 1/2 + 1/4 - 1/8 + 1/16 + ... = 2/3   /* q = -1/2 */
+1 - 1 + 1 - 1 + 1 - 1 + ...  divergiert unbestimmt
+
+Ist sum(a_n,n=0..oo) eine Reihe, dann heissen die Summen
+sum(a_n,n=0..N) fuer festes N *Partialsummen* der Reihe. Die Reihe ist
+also definiert als Grenzwert der Partialsummen.
+
+Weitere Beispiele:
+
+Dezimalbrueche: 3,14159 ... = 3 + 1*1/10 + 4*1/100 + ...
+sum(d_k*10^(-k),k=0..oo) = x, falls d_k die k-te Dezimalstelle von x:[0,10]
+ist. 
+
+sum(1/k,k=1..oo) = oo (Harmonische Reihe)
+sum(1/k*(k+1),k=1..oo) = 1   /* Partialsummen bilden Teleskope */
+
+Eine Reihe sum(a_k,k=n..oo) konvergiert absolut, wenn auch die Reihe
+sum(|a_k|,k=n..oo) konvergiert.
+
+Wenn eine Reihe absolut konvergiert, so duerfen ihre Glieder
+umgeordnet werden. Konvergiert eine Reihe zwar, aber nicht absolut, so
+kann sich durch Umordnung der Glieder der Grenzwert veraendern, die
+Umordnung ist also hier im allgemeinen unzulaessig.
+
+Beispiel:
+
+sum((-1)^(n+1) * 1/n,n=1..oo) = 1 - 1/2 + 1/3 - 1/4 + ... konvergiert (s.u.)
+
+aber die Konvergenz ist nicht absolut, denn sum(1/n,n=1..oo)
+divergiert. Durch Umordnung kann ein beliebiger anderer Grenzwert
+erreicht werden, z.B. 47: Nehmt erst so viele positive Reihenglieder
+bis man etwas ueber 47 liegt, dann wieder soviele negative, bis man
+etwas drunterliegt und so weiter.
+
+
+
+1.5 Konvergenzkriterien fuer Reihen
+-----------------------------------
+
+Majorantenkriterium:
+
+Sei sum(c_k,k=n..oo) eine konvergente Reihe mit lauter nichtnegativen
+Gliedern und gilt |a_k| <= c_k, so konvergiert auch sum(a_k,k=n..oo)
+absolut.
+
+Beispielanwendung: 1/k^2 <= 2/k*(k+1), also konvergiert die Reihe
+sum(1/k^2,k=1..oo) absolut. Den Wert der Reihe kann man so aber nicht
+bestimmen, man weiss nur, *dass* es ihn gibt. Zur Information: Es ist
+sum(1/k^2,k=1..oo)=pi^2/6. 
+
+      
+Quotientenkriterium:
+
+Sei sum(a_k,k=n..oo) eine Reihe und 0 <= q < 1 eine Zahl, sodass gilt:
+
+|a_(k+1)/a_k| <= q
+
+fuer alle k bis auf endlich viele Ausnahmen am Anfang ("fast ueberall").
+
+Dann konvergiert die Reihe absolut. 
+
+/* Das Quotientenkriterium ergibt sich aus dem Majorantenkriterium mit
+der geometrischen Reihe als Majorante */
+
+Beispiel:
+
+sum(1/k!,k=1..oo). Es ist k! / (k+1)! = 1/(k+1) <= 1/2 fuer k>0, also
+konvergiert die Reihe. /* Der Grenzwert ist e=2.71828... */
+
+NB k! = 1*2*3*4*...*k ("k Fakultaet").
+
+Ebenso konvergiert sum(x^k/k!,k=1..oo) absolut fuer alle x:RR. Der
+Grenzwert ist e^x. ("Exponentialreihe"). Bemerkung: Man kann
+unmittelbar aus dieser Reihendarstellung beweisen, dass e^(x+y) =
+e^x*e^y etc.
+
+NR: Hier ist |a_(k+1)/a_k| = |x/(k+1)| < 0.99 fuer k gross genug.
+Erste paar Reihenglieder extra behandeln.
+
+Leibnizsches Kriterium:
+
+Seien a_k >= 0 und a_k >= a_(k+1) (Folge faellt monoton) und
+lim(a_k,k->oo) = 0 (Nullfolge). Dann konvergiert die Reihe
+sum((-1)^k*a_k,k=n..oo).
+
+Beispiel: Die Reihe sum((-1)^(k+1)*1/k,k=1..oo) konvergiert. Ueber den
+Grenzwert macht das Kriterium wie immer keine Aussage. Hier ist er
+ln(2).
+
+Weitere Kriterien: Cauchy-Kriterium, Wurzelkriterium.
+
+

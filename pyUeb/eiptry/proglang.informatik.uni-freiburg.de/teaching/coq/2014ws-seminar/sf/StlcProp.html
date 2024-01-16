@@ -1,0 +1,1369 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/coqdoc.css" rel="stylesheet" type="text/css"/>
+<title>StlcProp</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library StlcProp</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab701"></a><h1 class="section">StlcProp: Properties of STLC</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Export</span> <a class="idref" href="Stlc.html#"><span class="id" type="library">Stlc</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Module</span> <a name="STLCProp"><span class="id" type="module">STLCProp</span></a>.<br/>
+<span class="id" type="keyword">Import</span> <span class="id" type="var">STLC</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In this chapter, we develop the fundamental theory of the Simply
+    Typed Lambda Calculus -- in particular, the type safety
+    theorem. 
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab702"></a><h1 class="section">Canonical Forms</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLCProp.canonical_forms_bool"><span class="id" type="lemma">canonical_forms_bool</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">t</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> →<br/>
+&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.value"><span class="id" type="inductive">value</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> →<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'\/'_x"><span class="id" type="notation">(</span></a><a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="Stlc.html#STLC.ttrue"><span class="id" type="constructor">ttrue</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'\/'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'\/'_x"><span class="id" type="notation">∨</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'\/'_x"><span class="id" type="notation">(</span></a><a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="Stlc.html#STLC.tfalse"><span class="id" type="constructor">tfalse</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'\/'_x"><span class="id" type="notation">)</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">t</span> <span class="id" type="var">HT</span> <span class="id" type="var">HVal</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">HVal</span>; <span class="id" type="tactic">intros</span>; <span class="id" type="tactic">subst</span>; <span class="id" type="tactic">try</span> <span class="id" type="tactic">inversion</span> <span class="id" type="var">HT</span>; <span class="id" type="tactic">auto</span>.<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLCProp.canonical_forms_fun"><span class="id" type="lemma">canonical_forms_fun</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">t</span> <span class="id" type="var">T1</span> <span class="id" type="var">T2</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Stlc.html#STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="StlcProp.html#T1"><span class="id" type="variable">T1</span></a> <a class="idref" href="StlcProp.html#T2"><span class="id" type="variable">T2</span></a><a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> →<br/>
+&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.value"><span class="id" type="inductive">value</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> →<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">x</span> <span class="id" type="var">u</span><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">,</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="StlcProp.html#T1"><span class="id" type="variable">T1</span></a> <a class="idref" href="StlcProp.html#u"><span class="id" type="variable">u</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">t</span> <span class="id" type="var">T1</span> <span class="id" type="var">T2</span> <span class="id" type="var">HT</span> <span class="id" type="var">HVal</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">HVal</span>; <span class="id" type="tactic">intros</span>; <span class="id" type="tactic">subst</span>; <span class="id" type="tactic">try</span> <span class="id" type="tactic">inversion</span> <span class="id" type="var">HT</span>; <span class="id" type="tactic">subst</span>; <span class="id" type="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">∃</span> <span class="id" type="var">x0</span>. <span class="id" type="tactic">∃</span> <span class="id" type="var">t0</span>. <span class="id" type="tactic">auto</span>.<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab703"></a><h1 class="section">Progress</h1>
+
+<div class="paragraph"> </div>
+
+ As before, the <i>progress</i> theorem tells us that closed, well-typed
+    terms are not stuck: either a well-typed term is a value, or it
+    can take an evaluation step.  The proof is a relatively
+    straightforward extension of the progress proof we saw in the
+    <span class="inlinecode"><span class="id" type="keyword">Types</span></span> chapter. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="STLCProp.progress"><span class="id" type="lemma">progress</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">t</span> <span class="id" type="var">T</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="StlcProp.html#T"><span class="id" type="variable">T</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.value"><span class="id" type="inductive">value</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'\/'_x"><span class="id" type="notation">∨</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">t'</span><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">,</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="StlcProp.html#t'"><span class="id" type="variable">t'</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<i>Proof</i>: by induction on the derivation of <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span>.
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> The last rule of the derivation cannot be <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_Var"><span class="id" type="constructor">T_Var</span></a></span>, since a
+      variable is never well typed in an empty context.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> The <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_True"><span class="id" type="constructor">T_True</span></a></span>, <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_False"><span class="id" type="constructor">T_False</span></a></span>, and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_Abs"><span class="id" type="constructor">T_Abs</span></a></span> cases are trivial, since in
+      each of these cases we know immediately that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> is a value.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> If the last rule of the derivation was <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_App"><span class="id" type="constructor">T_App</span></a></span>, then <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span>
+      <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span>, and we know that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> are also well typed in the
+      empty context; in particular, there exists a type <span class="inlinecode"><a class="idref" href="StlcProp.html#T2"><span class="id" type="variable">T2</span></a></span> such that
+      <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="StlcProp.html#T2"><span class="id" type="variable">T2</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> and <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="StlcProp.html#T2"><span class="id" type="variable">T2</span></a></span>.  By the induction
+      hypothesis, either <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> is a value or it can take an evaluation
+      step.
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> If <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> is a value, we now consider <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span>, which by the other
+          induction hypothesis must also either be a value or take an
+          evaluation step.
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> Suppose <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> is a value.  Since <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> is a value with an
+              arrow type, it must be a lambda abstraction; hence <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span>
+              <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> can take a step by <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#ST_AppAbs"><span class="id" type="constructor">ST_AppAbs</span></a></span>.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Otherwise, <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> can take a step, and hence so can <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span>
+              <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> by <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#ST_App2"><span class="id" type="constructor">ST_App2</span></a></span>.
+
+<div class="paragraph"> </div>
+
+
+</li>
+</ul>
+
+</li>
+<li> If <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> can take a step, then so can <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> by <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#ST_App1"><span class="id" type="constructor">ST_App1</span></a></span>.
+
+<div class="paragraph"> </div>
+
+
+</li>
+</ul>
+
+</li>
+<li> If the last rule of the derivation was <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_If"><span class="id" type="constructor">T_If</span></a></span>, then <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" type="keyword">if</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span>
+      <span class="inlinecode"><span class="id" type="keyword">then</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> <span class="inlinecode"><span class="id" type="keyword">else</span></span> <span class="inlinecode"><a class="idref" href="Smallstep.html#t3"><span class="id" type="variable">t3</span></a></span>, where <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> has type <span class="inlinecode"><span class="id" type="library">Bool</span></span>.  By the IH, <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span>
+      either is a value or takes a step.
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> If <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> is a value, then since it has type <span class="inlinecode"><span class="id" type="library">Bool</span></span> it must be
+          either <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span> or <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a></span>.  If it is <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span>, then <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> steps
+          to <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span>; otherwise it steps to <span class="inlinecode"><a class="idref" href="Smallstep.html#t3"><span class="id" type="variable">t3</span></a></span>.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Otherwise, <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> takes a step, and therefore so does <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> (by
+          <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#ST_If"><span class="id" type="constructor">ST_If</span></a></span>).
+
+</li>
+</ul>
+
+</li>
+</ul>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Proof</span> <span class="id" type="keyword">with</span> <span class="id" type="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">t</span> <span class="id" type="var">T</span> <span class="id" type="var">Ht</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">remember</span> (@<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Stlc.html#STLC.ty"><span class="id" type="inductive">ty</span></a>) <span class="id" type="keyword">as</span> <span class="id" type="var">Gamma</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">has_type_cases</span> (<span class="id" type="tactic">induction</span> <span class="id" type="var">Ht</span>) <span class="id" type="var">Case</span>; <span class="id" type="tactic">subst</span> <span class="id" type="var">Gamma</span>...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_Var".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_App".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">right</span>. <span class="id" type="tactic">destruct</span> <span class="id" type="var">IHHt1</span>...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "t1 is a value".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> <span class="id" type="var">IHHt2</span>...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SSCase</span> "t2 is also a value".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">assert</span> (<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">x0</span> <span class="id" type="var">t0</span><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">,</span></a> <span class="id" type="var">t1</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="StlcProp.html#x0"><span class="id" type="variable">x0</span></a> <span class="id" type="var">T11</span> <a class="idref" href="StlcProp.html#t0"><span class="id" type="variable">t0</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">eapply</span> <a class="idref" href="StlcProp.html#STLCProp.canonical_forms_fun"><span class="id" type="lemma">canonical_forms_fun</span></a>; <span class="id" type="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> <span class="id" type="var">H1</span> <span class="id" type="keyword">as</span> [<span class="id" type="var">x0</span> [<span class="id" type="var">t0</span> <span class="id" type="var">Heq</span>]]. <span class="id" type="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">∃</span> (<a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">[</span></a><span class="id" type="var">x0</span><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">:=</span></a><span class="id" type="var">t2</span><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">]</span></a><span class="id" type="var">t0</span>)...<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SSCase</span> "t2 steps".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H0</span> <span class="id" type="keyword">as</span> [<span class="id" type="var">t2'</span> <span class="id" type="var">Hstp</span>]. <span class="id" type="tactic">∃</span> (<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <span class="id" type="var">t1</span> <span class="id" type="var">t2'</span>)...<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "t1 steps".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span> <span class="id" type="keyword">as</span> [<span class="id" type="var">t1'</span> <span class="id" type="var">Hstp</span>]. <span class="id" type="tactic">∃</span> (<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <span class="id" type="var">t1'</span> <span class="id" type="var">t2</span>)...<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_If".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">right</span>. <span class="id" type="tactic">destruct</span> <span class="id" type="var">IHHt1</span>...<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "t1 is a value".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> (<a class="idref" href="StlcProp.html#STLCProp.canonical_forms_bool"><span class="id" type="lemma">canonical_forms_bool</span></a> <span class="id" type="var">t1</span>); <span class="id" type="tactic">subst</span>; <span class="id" type="tactic">eauto</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "t1 also steps".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span> <span class="id" type="keyword">as</span> [<span class="id" type="var">t1'</span> <span class="id" type="var">Hstp</span>]. <span class="id" type="tactic">∃</span> (<a class="idref" href="Stlc.html#STLC.tif"><span class="id" type="constructor">tif</span></a> <span class="id" type="var">t1'</span> <span class="id" type="var">t2</span> <span class="id" type="var">t3</span>)...<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab704"></a><h4 class="section">Exercise: 3 stars, optional (progress_from_term_ind)</h4>
+ Show that progress can also be proved by induction on terms
+    instead of induction on typing derivations. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="STLCProp.progress'"><span class="id" type="lemma">progress'</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">t</span> <span class="id" type="var">T</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="StlcProp.html#T"><span class="id" type="variable">T</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.value"><span class="id" type="inductive">value</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'\/'_x"><span class="id" type="notation">∨</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">t'</span><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">,</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="StlcProp.html#t'"><span class="id" type="variable">t'</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">t</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">t_cases</span> (<span class="id" type="tactic">induction</span> <span class="id" type="var">t</span>) <span class="id" type="var">Case</span>; <span class="id" type="tactic">intros</span> <span class="id" type="var">T</span> <span class="id" type="var">Ht</span>; <span class="id" type="tactic">auto</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab705"></a><h1 class="section">Preservation</h1>
+
+<div class="paragraph"> </div>
+
+ The other half of the type soundness property is the preservation
+    of types during reduction.  For this, we need to develop some
+    technical machinery for reasoning about variables and
+    substitution.  Working from top to bottom (the high-level property
+    we are actually interested in to the lowest-level technical lemmas
+    that are needed by various cases of the more interesting proofs),
+    the story goes like this:
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> The <i>preservation theorem</i> is proved by induction on a typing
+        derivation, pretty much as we did in the <span class="inlinecode"><span class="id" type="keyword">Types</span></span> chapter.  The
+        one case that is significantly different is the one for the
+        <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#ST_AppAbs"><span class="id" type="constructor">ST_AppAbs</span></a></span> rule, which is defined using the substitution
+        operation.  To see that this step preserves typing, we need to
+        know that the substitution itself does.  So we prove a...
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <i>substitution lemma</i>, stating that substituting a (closed)
+        term <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span> for a variable <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> in a term <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> preserves the type
+        of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span>.  The proof goes by induction on the form of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> and
+        requires looking at all the different cases in the definition
+        of substitition.  This time, the tricky cases are the ones for
+        variables and for function abstractions.  In both cases, we
+        discover that we need to take a term <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span> that has been shown
+        to be well-typed in some context <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> and consider the same
+        term <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span> in a slightly different context <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a></span>.  For this
+        we prove a...
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <i>context invariance</i> lemma, showing that typing is preserved
+        under "inessential changes" to the context <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> -- in
+        particular, changes that do not affect any of the free
+        variables of the term.  For this, we need a careful definition
+        of
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> the <i>free variables</i> of a term -- i.e., the variables occuring
+        in the term that are not in the scope of a function
+        abstraction that binds them.
+
+</li>
+</ul>
+
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab706"></a><h2 class="section">Free Occurrences</h2>
+
+<div class="paragraph"> </div>
+
+ A variable <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <i>appears free in</i> a term <i>t</i> if <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> contains some
+    occurrence of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> that is not under an abstraction labeled <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>.  For example: 
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span> appears free, but <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> does not, in <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a>→<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span> 
+
+</li>
+<li> both <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span> appear free in <span class="inlinecode">(\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a>→<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>)</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> 
+
+</li>
+<li> no variables appear free in <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a>→<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a>.</span> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span>  
+</li>
+</ul>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="STLCProp.appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> : <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#id"><span class="id" type="inductive">id</span></a> → <a class="idref" href="Stlc.html#STLC.tm"><span class="id" type="inductive">tm</span></a> → <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;| <a name="STLCProp.afi_var"><span class="id" type="constructor">afi_var</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="StlcProp.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a>)<br/>
+&nbsp;&nbsp;| <a name="STLCProp.afi_app1"><span class="id" type="constructor">afi_app1</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="StlcProp.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="StlcProp.html#t1"><span class="id" type="variable">t1</span></a> → <a class="idref" href="StlcProp.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> (<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="StlcProp.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="StlcProp.html#t2"><span class="id" type="variable">t2</span></a>)<br/>
+&nbsp;&nbsp;| <a name="STLCProp.afi_app2"><span class="id" type="constructor">afi_app2</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="StlcProp.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="StlcProp.html#t2"><span class="id" type="variable">t2</span></a> → <a class="idref" href="StlcProp.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> (<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="StlcProp.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="StlcProp.html#t2"><span class="id" type="variable">t2</span></a>)<br/>
+&nbsp;&nbsp;| <a name="STLCProp.afi_abs"><span class="id" type="constructor">afi_abs</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">T11</span> <span class="id" type="var">t12</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="StlcProp.html#y"><span class="id" type="variable">y</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'<>'_x"><span class="id" type="notation">≠</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a>  →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="StlcProp.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="StlcProp.html#t12"><span class="id" type="variable">t12</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="StlcProp.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> (<a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="StlcProp.html#y"><span class="id" type="variable">y</span></a> <a class="idref" href="StlcProp.html#T11"><span class="id" type="variable">T11</span></a> <a class="idref" href="StlcProp.html#t12"><span class="id" type="variable">t12</span></a>)<br/>
+&nbsp;&nbsp;| <a name="STLCProp.afi_if1"><span class="id" type="constructor">afi_if1</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span> <span class="id" type="var">t3</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="StlcProp.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="StlcProp.html#t1"><span class="id" type="variable">t1</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="StlcProp.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> (<a class="idref" href="Stlc.html#STLC.tif"><span class="id" type="constructor">tif</span></a> <a class="idref" href="StlcProp.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="StlcProp.html#t2"><span class="id" type="variable">t2</span></a> <a class="idref" href="StlcProp.html#t3"><span class="id" type="variable">t3</span></a>)<br/>
+&nbsp;&nbsp;| <a name="STLCProp.afi_if2"><span class="id" type="constructor">afi_if2</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span> <span class="id" type="var">t3</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="StlcProp.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="StlcProp.html#t2"><span class="id" type="variable">t2</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="StlcProp.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> (<a class="idref" href="Stlc.html#STLC.tif"><span class="id" type="constructor">tif</span></a> <a class="idref" href="StlcProp.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="StlcProp.html#t2"><span class="id" type="variable">t2</span></a> <a class="idref" href="StlcProp.html#t3"><span class="id" type="variable">t3</span></a>)<br/>
+&nbsp;&nbsp;| <a name="STLCProp.afi_if3"><span class="id" type="constructor">afi_if3</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span> <span class="id" type="var">t3</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="StlcProp.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="StlcProp.html#t3"><span class="id" type="variable">t3</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="StlcProp.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> (<a class="idref" href="Stlc.html#STLC.tif"><span class="id" type="constructor">tif</span></a> <a class="idref" href="StlcProp.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="StlcProp.html#t2"><span class="id" type="variable">t2</span></a> <a class="idref" href="StlcProp.html#t3"><span class="id" type="variable">t3</span></a>).<br/>
+
+<br/>
+<span class="id" type="keyword">Tactic Notation</span> "afi_cases" <span class="id" type="var">tactic</span>(<span class="id" type="tactic">first</span>) <span class="id" type="var">ident</span>(<span class="id" type="var">c</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">first</span>;<br/>
+&nbsp;&nbsp;[ <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "afi_var"<br/>
+&nbsp;&nbsp;| <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "afi_app1" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "afi_app2" <br/>
+&nbsp;&nbsp;| <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "afi_abs" <br/>
+&nbsp;&nbsp;| <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "afi_if1" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "afi_if2" <br/>
+&nbsp;&nbsp;| <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "afi_if3" ].<br/>
+
+<br/>
+<span class="id" type="keyword">Hint Constructors</span> <a class="idref" href="StlcProp.html#appears_free_in"><span class="id" type="inductive">appears_free_in</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A term in which no variables appear free is said to be <i>closed</i>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="STLCProp.closed"><span class="id" type="definition">closed</span></a> (<span class="id" type="var">t</span>:<a class="idref" href="Stlc.html#STLC.tm"><span class="id" type="inductive">tm</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">∀</span> <span class="id" type="var">x</span>, <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">¬</span></a> <a class="idref" href="StlcProp.html#STLCProp.appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab707"></a><h2 class="section">Substitution</h2>
+
+<div class="paragraph"> </div>
+
+ We first need a technical lemma connecting free variables and
+    typing contexts.  If a variable <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> appears free in a term <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span>,
+    and if we know <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> is well typed in context <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span>, then it must
+    be the case that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> assigns a type to <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLCProp.free_in_context"><span class="id" type="lemma">free_in_context</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">t</span> <span class="id" type="var">T</span> <span class="id" type="var">Gamma</span>,<br/>
+&nbsp;&nbsp;&nbsp;<a class="idref" href="StlcProp.html#STLCProp.appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;<a class="idref" href="StlcProp.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="StlcProp.html#T"><span class="id" type="variable">T</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">T'</span><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">,</span></a> <a class="idref" href="StlcProp.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" type="constructor">Some</span></a> <a class="idref" href="StlcProp.html#T'"><span class="id" type="variable">T'</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<i>Proof</i>: We show, by induction on the proof that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> appears free
+      in <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span>, that, for all contexts <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span>, if <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> is well typed
+      under <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span>, then <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> assigns some type to <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>.
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> If the last rule used was <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#afi_var"><span class="id" type="constructor">afi_var</span></a></span>, then <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>, and from
+        the assumption that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> is well typed under <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> we have
+        immediately that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> assigns a type to <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> If the last rule used was <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#afi_app1"><span class="id" type="constructor">afi_app1</span></a></span>, then <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>
+        appears free in <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span>.  Since <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> is well typed under <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span>,
+        we can see from the typing rules that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> must also be, and
+        the IH then tells us that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> assigns <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> a type.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Almost all the other cases are similar: <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> appears free in a
+        subterm of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span>, and since <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> is well typed under <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span>, we
+        know the subterm of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> in which <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> appears is well typed
+        under <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> as well, and the IH gives us exactly the
+        conclusion we want.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> The only remaining case is <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#afi_abs"><span class="id" type="constructor">afi_abs</span></a></span>.  In this case <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">=</span>
+        <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<span class="id" type="var">T11.t12</span></span>, and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> appears free in <span class="inlinecode"><a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span>; we also know that
+        <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> is different from <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span>.  The difference from the previous
+        cases is that whereas <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> is well typed under <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span>, its
+        body <span class="inlinecode"><a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span> is well typed under <span class="inlinecode">(<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a>,</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a>)</span>, so the IH
+        allows us to conclude that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> is assigned some type by the
+        extended context <span class="inlinecode">(<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a>,</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a>)</span>.  To conclude that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span>
+        assigns a type to <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>, we appeal to lemma <span class="inlinecode"><a class="idref" href="Stlc.html#STLC.PartialMap.extend_neq"><span class="id" type="lemma">extend_neq</span></a></span>, noting
+        that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span> are different variables. 
+</li>
+</ul>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">x</span> <span class="id" type="var">t</span> <span class="id" type="var">T</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">H</span> <span class="id" type="var">H0</span>. <span class="id" type="tactic">generalize</span> <span class="id" type="tactic">dependent</span> <span class="id" type="var">Gamma</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">generalize</span> <span class="id" type="tactic">dependent</span> <span class="id" type="var">T</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">afi_cases</span> (<span class="id" type="tactic">induction</span> <span class="id" type="var">H</span>) <span class="id" type="var">Case</span>; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span>; <span class="id" type="tactic">try</span> <span class="id" type="tactic">solve</span> [<span class="id" type="tactic">inversion</span> <span class="id" type="var">H0</span>; <span class="id" type="tactic">eauto</span>].<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "afi_abs".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H1</span>; <span class="id" type="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <span class="id" type="var">IHappears_free_in</span> <span class="id" type="keyword">in</span> <span class="id" type="var">H7</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">rewrite</span> <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#extend_neq"><span class="id" type="lemma">extend_neq</span></a> <span class="id" type="keyword">in</span> <span class="id" type="var">H7</span>; <span class="id" type="tactic">assumption</span>.<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we'll need the fact that any term <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> which is well typed in
+    the empty context is closed -- that is, it has no free variables. 
+<div class="paragraph"> </div>
+
+<a name="lab708"></a><h4 class="section">Exercise: 2 stars, optional (typable_empty__closed)</h4>
+
+</div>
+<div class="code">
+<span class="id" type="keyword">Corollary</span> <a name="STLCProp.typable_empty__closed"><span class="id" type="lemma">typable_empty__closed</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">t</span> <span class="id" type="var">T</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="StlcProp.html#T"><span class="id" type="variable">T</span></a>  →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="StlcProp.html#STLCProp.closed"><span class="id" type="definition">closed</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+ Sometimes, when we have a proof <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span>, we will need to
+    replace <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> by a different context <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a></span>.  When is it safe
+    to do this?  Intuitively, it must at least be the case that
+    <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a></span> assigns the same types as <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> to all the variables
+    that appear free in <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span>. In fact, this is the only condition that
+    is needed. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLCProp.context_invariance"><span class="id" type="lemma">context_invariance</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">Gamma'</span> <span class="id" type="var">t</span> <span class="id" type="var">T</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="StlcProp.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="StlcProp.html#T"><span class="id" type="variable">T</span></a>  →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">∀</span> <span class="id" type="var">x</span>, <a class="idref" href="StlcProp.html#STLCProp.appears_free_in"><span class="id" type="inductive">appears_free_in</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> → <a class="idref" href="StlcProp.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="StlcProp.html#T"><span class="id" type="variable">T</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<i>Proof</i>: By induction on the derivation of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span>.
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> If the last rule in the derivation was <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_Var"><span class="id" type="constructor">T_Var</span></a></span>, then <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>
+        and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span>.  By assumption, <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> as well, and
+        hence <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> by <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_Var"><span class="id" type="constructor">T_Var</span></a></span>.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> If the last rule was <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_Abs"><span class="id" type="constructor">T_Abs</span></a></span>, then <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a>.</span> <span class="inlinecode"><a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span>, with <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span>
+        <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="Stlc.html#T12"><span class="id" type="variable">T12</span></a></span> and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a>,</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="Stlc.html#T12"><span class="id" type="variable">T12</span></a></span>.  The induction
+        hypothesis is that for any context <span class="inlinecode"><span class="id" type="var">Gamma''</span></span>, if <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a>,</span>
+        <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a></span> and <span class="inlinecode"><span class="id" type="var">Gamma''</span></span> assign the same types to all the free
+        variables in <span class="inlinecode"><a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span>, then <span class="inlinecode"><a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span> has type <span class="inlinecode"><a class="idref" href="Stlc.html#T12"><span class="id" type="variable">T12</span></a></span> under <span class="inlinecode"><span class="id" type="var">Gamma''</span></span>.
+        Let <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a></span> be a context which agrees with <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> on the
+        free variables in <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span>; we must show <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a>.</span> <span class="inlinecode"><a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span>
+        <span class="inlinecode"><a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="Stlc.html#T12"><span class="id" type="variable">T12</span></a></span>.
+
+<div class="paragraph"> </div>
+
+        By <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_Abs"><span class="id" type="constructor">T_Abs</span></a></span>, it suffices to show that <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a>,</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span>
+        <span class="inlinecode"><a class="idref" href="Stlc.html#T12"><span class="id" type="variable">T12</span></a></span>.  By the IH (setting <span class="inlinecode"><span class="id" type="var">Gamma''</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a>,</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a></span>), it
+        suffices to show that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a>,</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a></span> and <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a>,</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a></span> agree
+        on all the variables that appear free in <span class="inlinecode"><a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span>.  
+
+<div class="paragraph"> </div>
+
+        Any variable occurring free in <span class="inlinecode"><a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span> must either be <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span>, or
+        some other variable.  <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a>,</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a></span> and <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a>,</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a></span>
+        clearly agree on <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span>.  Otherwise, we note that any variable
+        other than <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span> which occurs free in <span class="inlinecode"><a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span> also occurs free in
+        <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a>.</span> <span class="inlinecode"><a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span>, and by assumption <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> and <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a></span>
+        agree on all such variables, and hence so do <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a>,</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a></span>
+        and <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a>,</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a></span>.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> If the last rule was <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_App"><span class="id" type="constructor">T_App</span></a></span>, then <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span>, with <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> <span class="inlinecode">|-</span>
+        <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="StlcProp.html#T2"><span class="id" type="variable">T2</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="StlcProp.html#T2"><span class="id" type="variable">T2</span></a></span>.  One induction
+        hypothesis states that for all contexts <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a></span>, if <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a></span>
+        agrees with <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> on the free variables in <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span>, then <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span>
+        has type <span class="inlinecode"><a class="idref" href="StlcProp.html#T2"><span class="id" type="variable">T2</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> under <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a></span>; there is a similar IH for
+        <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span>.  We must show that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> also has type <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> under
+        <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a></span>, given the assumption that <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a></span> agrees with
+        <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> on all the free variables in <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span>.  By <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_App"><span class="id" type="constructor">T_App</span></a></span>, it
+        suffices to show that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> each have the same type
+        under <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a></span> as under <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span>.  However, we note that all
+        free variables in <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> are also free in <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span>, and similarly
+        for free variables in <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span>; hence the desired result follows
+        by the two IHs.
+
+</li>
+</ul>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Proof</span> <span class="id" type="keyword">with</span> <span class="id" type="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">generalize</span> <span class="id" type="tactic">dependent</span> <span class="id" type="var">Gamma'</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">has_type_cases</span> (<span class="id" type="tactic">induction</span> <span class="id" type="var">H</span>) <span class="id" type="var">Case</span>; <span class="id" type="tactic">intros</span>; <span class="id" type="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_Var".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.T_Var"><span class="id" type="constructor">T_Var</span></a>. <span class="id" type="tactic">rewrite</span> &lt;- <span class="id" type="var">H0</span>...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_Abs".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.T_Abs"><span class="id" type="constructor">T_Abs</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <span class="id" type="var">IHhas_type</span>. <span class="id" type="tactic">intros</span> <span class="id" type="var">x1</span> <span class="id" type="var">Hafi</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">unfold</span> <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#extend"><span class="id" type="definition">extend</span></a>. <span class="id" type="tactic">destruct</span> (<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <span class="id" type="var">x0</span> <span class="id" type="var">x1</span>)...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_App".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.T_App"><span class="id" type="constructor">T_App</span></a> <span class="id" type="keyword">with</span> <span class="id" type="var">T11</span>...<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Now we come to the conceptual heart of the proof that reduction
+    preserves types -- namely, the observation that <i>substitution</i>
+    preserves types.
+
+<div class="paragraph"> </div>
+
+    Formally, the so-called <i>Substitution Lemma</i> says this: suppose we
+    have a term <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> with a free variable <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>, and suppose we've been
+    able to assign a type <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> to <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> under the assumption that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> has
+    some type <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a></span>.  Also, suppose that we have some other term <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a></span> and
+    that we've shown that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a></span> has type <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a></span>.  Then, since <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a></span> satisfies
+    the assumption we made about <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> when typing <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span>, we should be
+    able to substitute <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a></span> for each of the occurrences of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> in <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span>
+    and obtain a new term that still has type <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span>. 
+<div class="paragraph"> </div>
+
+ <i>Lemma</i>: If <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a>,<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> and <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a></span>, then <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> <span class="inlinecode">|-</span>
+    <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a>]<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLCProp.substitution_preserves_typing"><span class="id" type="lemma">substitution_preserves_typing</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">x</span> <span class="id" type="var">U</span> <span class="id" type="var">t</span> <span class="id" type="var">v</span> <span class="id" type="var">T</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#extend"><span class="id" type="definition">extend</span></a> <a class="idref" href="StlcProp.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="StlcProp.html#U"><span class="id" type="variable">U</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="StlcProp.html#T"><span class="id" type="variable">T</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="StlcProp.html#v"><span class="id" type="variable">v</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="StlcProp.html#U"><span class="id" type="variable">U</span></a>   →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="StlcProp.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">[</span></a><a class="idref" href="StlcProp.html#x"><span class="id" type="variable">x</span></a><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">:=</span></a><a class="idref" href="StlcProp.html#v"><span class="id" type="variable">v</span></a><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">]</span></a><a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="StlcProp.html#T"><span class="id" type="variable">T</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+One technical subtlety in the statement of the lemma is that we
+    assign <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a></span> the type <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a></span> in the <i>empty</i> context -- in other words,
+    we assume <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a></span> is closed.  This assumption considerably simplifies
+    the <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_Abs"><span class="id" type="constructor">T_Abs</span></a></span> case of the proof (compared to assuming <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span>
+    <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a></span>, which would be the other reasonable assumption at this point)
+    because the context invariance lemma then tells us that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a></span> has
+    type <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a></span> in any context at all -- we don't have to worry about
+    free variables in <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a></span> clashing with the variable being introduced
+    into the context by <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_Abs"><span class="id" type="constructor">T_Abs</span></a></span>.
+
+<div class="paragraph"> </div>
+
+    <i>Proof</i>: We prove, by induction on <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span>, that, for all <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> and
+    <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span>, if <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a>,<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> and <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a></span>, then <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> <span class="inlinecode">|-</span>
+    <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a>]<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span>.
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> If <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> is a variable, there are two cases to consider, depending
+        on whether <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> is <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> or some other variable.
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> If <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>, then from the fact that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a>,</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> we
+            conclude that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span>.  We must show that <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a>]<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a></span> has
+            type <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> under <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span>, given the assumption that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a></span> has
+            type <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> under the empty context.  This follows from
+            context invariance: if a closed term has type <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> in the
+            empty context, it has that type in any context.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> If <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> is some variable <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span> that is not equal to <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>, then
+            we need only note that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span> has the same type under <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a>,</span>
+            <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a></span> as under <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span>.
+
+<div class="paragraph"> </div>
+
+
+</li>
+</ul>
+
+</li>
+<li> If <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> is an abstraction <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a>.</span> <span class="inlinecode"><a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span>, then the IH tells us,
+        for all <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a></span> and <span class="inlinecode"><a class="idref" href="StlcProp.html#T'"><span class="id" type="variable">T'</span></a></span>, that if <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a>,<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="StlcProp.html#T'"><span class="id" type="variable">T'</span></a></span>
+        and <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a></span>, then <span class="inlinecode"><a class="idref" href="StlcProp.html#Gamma'"><span class="id" type="variable">Gamma'</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a>]<a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="StlcProp.html#T'"><span class="id" type="variable">T'</span></a></span>.
+
+<div class="paragraph"> </div>
+
+        The substitution in the conclusion behaves differently,
+        depending on whether <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span> are the same variable name.
+
+<div class="paragraph"> </div>
+
+        First, suppose <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span>.  Then, by the definition of
+        substitution, <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a>]<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span>, so we just need to show <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> <span class="inlinecode">|-</span>
+        <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span>.  But we know <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a>,<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span>, and since the
+        variable <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span> does not appear free in <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a>.</span> <span class="inlinecode"><a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span>, the
+        context invariance lemma yields <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span>.
+
+<div class="paragraph"> </div>
+
+        Second, suppose <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode">≠</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span>.  We know <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a>,<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a>,<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span>
+        <span class="inlinecode"><a class="idref" href="Stlc.html#T12"><span class="id" type="variable">T12</span></a></span> by inversion of the typing relation, and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a>,<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a>,<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a></span>
+        <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="Stlc.html#T12"><span class="id" type="variable">T12</span></a></span> follows from this by the context invariance
+        lemma, so the IH applies, giving us <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a>,<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a>]<a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span>
+        <span class="inlinecode"><a class="idref" href="Stlc.html#T12"><span class="id" type="variable">T12</span></a></span>.  By <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_Abs"><span class="id" type="constructor">T_Abs</span></a></span>, <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a>.</span> <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a>]<a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a>→<a class="idref" href="Stlc.html#T12"><span class="id" type="variable">T12</span></a></span>, and
+        by the definition of substitution (noting that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode">≠</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span>),
+        <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a>.</span> <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a>]<a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a>→<a class="idref" href="Stlc.html#T12"><span class="id" type="variable">T12</span></a></span> as required.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> If <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> is an application <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span>, the result follows
+        straightforwardly from the definition of substitution and the
+        induction hypotheses.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> The remaining cases are similar to the application case.
+
+</li>
+</ul>
+
+<div class="paragraph"> </div>
+
+    Another technical note: This proof is a rare case where an
+    induction on terms, rather than typing derivations, yields a
+    simpler argument.  The reason for this is that the assumption
+    <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#extend"><span class="id" type="definition">extend</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Auto.html#U"><span class="id" type="variable">U</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> is not completely generic, in
+    the sense that one of the "slots" in the typing relation -- namely
+    the context -- is not just a variable, and this means that Coq's
+    native induction tactic does not give us the induction hypothesis
+    that we want.  It is possible to work around this, but the needed
+    generalization is a little tricky.  The term <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span>, on the other
+    hand, <i>is</i> completely generic. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Proof</span> <span class="id" type="keyword">with</span> <span class="id" type="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">x</span> <span class="id" type="var">U</span> <span class="id" type="var">t</span> <span class="id" type="var">v</span> <span class="id" type="var">T</span> <span class="id" type="var">Ht</span> <span class="id" type="var">Ht'</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">generalize</span> <span class="id" type="tactic">dependent</span> <span class="id" type="var">Gamma</span>. <span class="id" type="tactic">generalize</span> <span class="id" type="tactic">dependent</span> <span class="id" type="var">T</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">t_cases</span> (<span class="id" type="tactic">induction</span> <span class="id" type="var">t</span>) <span class="id" type="var">Case</span>; <span class="id" type="tactic">intros</span> <span class="id" type="var">T</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">H</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>; <span class="id" type="tactic">subst</span>; <span class="id" type="tactic">simpl</span>...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "tvar".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">rename</span> <span class="id" type="var">i</span> <span class="id" type="var">into</span> <span class="id" type="var">y</span>. <span class="id" type="tactic">destruct</span> (<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <span class="id" type="var">x</span> <span class="id" type="var">y</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "x=y".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">rewrite</span> <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#extend_eq"><span class="id" type="lemma">extend_eq</span></a> <span class="id" type="keyword">in</span> <span class="id" type="var">H2</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H2</span>; <span class="id" type="tactic">subst</span>. <span class="id" type="tactic">clear</span> <span class="id" type="var">H2</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">eapply</span> <a class="idref" href="StlcProp.html#STLCProp.context_invariance"><span class="id" type="lemma">context_invariance</span></a>... <span class="id" type="tactic">intros</span> <span class="id" type="var">x</span> <span class="id" type="var">Hcontra</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> (<a class="idref" href="StlcProp.html#STLCProp.free_in_context"><span class="id" type="lemma">free_in_context</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">T</span> <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty"><span class="id" type="definition">empty</span></a> <span class="id" type="var">Hcontra</span>) <span class="id" type="keyword">as</span> [<span class="id" type="var">T'</span> <span class="id" type="var">HT'</span>]...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">HT'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "x&lt;&gt;y".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.T_Var"><span class="id" type="constructor">T_Var</span></a>. <span class="id" type="tactic">rewrite</span> <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#extend_neq"><span class="id" type="lemma">extend_neq</span></a> <span class="id" type="keyword">in</span> <span class="id" type="var">H2</span>...<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "tabs".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">rename</span> <span class="id" type="var">i</span> <span class="id" type="var">into</span> <span class="id" type="var">y</span>. <span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.T_Abs"><span class="id" type="constructor">T_Abs</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> (<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <span class="id" type="var">x</span> <span class="id" type="var">y</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "x=y".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">eapply</span> <a class="idref" href="StlcProp.html#STLCProp.context_invariance"><span class="id" type="lemma">context_invariance</span></a>...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">x</span> <span class="id" type="var">Hafi</span>. <span class="id" type="tactic">unfold</span> <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#extend"><span class="id" type="definition">extend</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> (<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <span class="id" type="var">y</span> <span class="id" type="var">x</span>)...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "x&lt;&gt;y".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <span class="id" type="var">IHt</span>. <span class="id" type="tactic">eapply</span> <a class="idref" href="StlcProp.html#STLCProp.context_invariance"><span class="id" type="lemma">context_invariance</span></a>...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">z</span> <span class="id" type="var">Hafi</span>. <span class="id" type="tactic">unfold</span> <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#extend"><span class="id" type="definition">extend</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> (<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <span class="id" type="var">y</span> <span class="id" type="var">z</span>)...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">subst</span>. <span class="id" type="tactic">rewrite</span> <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#neq_id"><span class="id" type="axiom">neq_id</span></a>...<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The substitution lemma can be viewed as a kind of "commutation"
+    property.  Intuitively, it says that substitution and typing can
+    be done in either order: we can either assign types to the terms
+    <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a></span> separately (under suitable contexts) and then combine
+    them using substitution, or we can substitute first and then
+    assign a type to <span class="inlinecode"></span> <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Lists.html#v"><span class="id" type="variable">v</span></a>]</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode"></span> -- the result is the same either
+    way. 
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab709"></a><h2 class="section">Main Theorem</h2>
+
+<div class="paragraph"> </div>
+
+ We now have the tools we need to prove preservation: if a closed
+    term <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> has type <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span>, and takes an evaluation step to <span class="inlinecode"><a class="idref" href="Smallstep.html#t'"><span class="id" type="variable">t'</span></a></span>, then <span class="inlinecode"><a class="idref" href="Smallstep.html#t'"><span class="id" type="variable">t'</span></a></span>
+    is also a closed term with type <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span>.  In other words, the small-step
+    evaluation relation preserves types.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="STLCProp.preservation"><span class="id" type="lemma">preservation</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">t</span> <span class="id" type="var">t'</span> <span class="id" type="var">T</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="StlcProp.html#T"><span class="id" type="variable">T</span></a>  →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="StlcProp.html#t'"><span class="id" type="variable">t'</span></a>  →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="StlcProp.html#t'"><span class="id" type="variable">t'</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="StlcProp.html#T"><span class="id" type="variable">T</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<i>Proof</i>: by induction on the derivation of <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span>.
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> We can immediately rule out <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_Var"><span class="id" type="constructor">T_Var</span></a></span>, <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_Abs"><span class="id" type="constructor">T_Abs</span></a></span>, <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_True"><span class="id" type="constructor">T_True</span></a></span>, and
+      <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_False"><span class="id" type="constructor">T_False</span></a></span> as the final rules in the derivation, since in each of
+      these cases <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> cannot take a step.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> If the last rule in the derivation was <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_App"><span class="id" type="constructor">T_App</span></a></span>, then <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span>
+      <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span>.  There are three cases to consider, one for each rule that
+      could have been used to show that <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> takes a step to <span class="inlinecode"><a class="idref" href="Smallstep.html#t'"><span class="id" type="variable">t'</span></a></span>.
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> If <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> takes a step by <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#ST_App1"><span class="id" type="constructor">ST_App1</span></a></span>, with <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> stepping to
+          <span class="inlinecode"><a class="idref" href="Smallstep.html#t1'"><span class="id" type="variable">t1'</span></a></span>, then by the IH <span class="inlinecode"><a class="idref" href="Smallstep.html#t1'"><span class="id" type="variable">t1'</span></a></span> has the same type as <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span>, and
+          hence <span class="inlinecode"><a class="idref" href="Smallstep.html#t1'"><span class="id" type="variable">t1'</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> has the same type as <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span>.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> The <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#ST_App2"><span class="id" type="constructor">ST_App2</span></a></span> case is similar.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> If <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> takes a step by <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#ST_AppAbs"><span class="id" type="constructor">ST_AppAbs</span></a></span>, then <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> <span class="inlinecode">=</span>
+          <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="var">T11.t12</span></span> and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> steps to <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a>]<a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a></span>; the
+          desired result now follows from the fact that substitution
+          preserves types.
+
+<div class="paragraph"> </div>
+
+
+</li>
+</ul>
+
+</li>
+<li> If the last rule in the derivation was <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#T_If"><span class="id" type="constructor">T_If</span></a></span>, then <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" type="keyword">if</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span>
+      <span class="inlinecode"><span class="id" type="keyword">then</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> <span class="inlinecode"><span class="id" type="keyword">else</span></span> <span class="inlinecode"><a class="idref" href="Smallstep.html#t3"><span class="id" type="variable">t3</span></a></span>, and there are again three cases depending on
+      how <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> steps.
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> If <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> steps to <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> or <span class="inlinecode"><a class="idref" href="Smallstep.html#t3"><span class="id" type="variable">t3</span></a></span>, the result is immediate, since
+          <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t2"><span class="id" type="variable">t2</span></a></span> and <span class="inlinecode"><a class="idref" href="Smallstep.html#t3"><span class="id" type="variable">t3</span></a></span> have the same type as <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span>.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Otherwise, <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> steps by <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#ST_If"><span class="id" type="constructor">ST_If</span></a></span>, and the desired conclusion
+          follows directly from the induction hypothesis.
+
+</li>
+</ul>
+
+</li>
+</ul>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Proof</span> <span class="id" type="keyword">with</span> <span class="id" type="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">remember</span> (@<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Stlc.html#STLC.ty"><span class="id" type="inductive">ty</span></a>) <span class="id" type="keyword">as</span> <span class="id" type="var">Gamma</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">t</span> <span class="id" type="var">t'</span> <span class="id" type="var">T</span> <span class="id" type="var">HT</span>. <span class="id" type="tactic">generalize</span> <span class="id" type="tactic">dependent</span> <span class="id" type="var">t'</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">has_type_cases</span> (<span class="id" type="tactic">induction</span> <span class="id" type="var">HT</span>) <span class="id" type="var">Case</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">t'</span> <span class="id" type="var">HE</span>; <span class="id" type="tactic">subst</span> <span class="id" type="var">Gamma</span>; <span class="id" type="tactic">subst</span>; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">try</span> <span class="id" type="tactic">solve</span> [<span class="id" type="tactic">inversion</span> <span class="id" type="var">HE</span>; <span class="id" type="tactic">subst</span>; <span class="id" type="tactic">auto</span>].<br/>
+&nbsp;&nbsp;<span class="id" type="var">Case</span> "T_App".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">HE</span>; <span class="id" type="tactic">subst</span>...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">SCase</span> "ST_AppAbs".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="StlcProp.html#STLCProp.substitution_preserves_typing"><span class="id" type="lemma">substitution_preserves_typing</span></a> <span class="id" type="keyword">with</span> <span class="id" type="var">T11</span>...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">HT1</span>...<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab710"></a><h4 class="section">Exercise: 2 stars (subject_expansion_stlc)</h4>
+ An exercise in the <span class="inlinecode"><span class="id" type="keyword">Types</span></span> chapter asked about the subject
+    expansion property for the simple language of arithmetic and
+    boolean expressions.  Does this property hold for STLC?  That is,
+    is it always the case that, if <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">==&gt;</span> <span class="inlinecode"><a class="idref" href="Smallstep.html#t'"><span class="id" type="variable">t'</span></a></span> and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#has_type"><span class="id" type="inductive">has_type</span></a></span> <span class="inlinecode"><a class="idref" href="Smallstep.html#t'"><span class="id" type="variable">t'</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span>,
+    then <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#empty"><span class="id" type="definition">empty</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span>?  If so, prove it.  If not, give a
+    counter-example not involving conditionals.
+
+<div class="paragraph"> </div>
+
+<font size=-2>&#9744;</font>
+
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab711"></a><h1 class="section">Type Soundness</h1>
+
+<div class="paragraph"> </div>
+
+<a name="lab712"></a><h4 class="section">Exercise: 2 stars, optional (type_soundness)</h4>
+
+<div class="paragraph"> </div>
+
+ Put progress and preservation together and show that a well-typed
+    term can <i>never</i> reach a stuck state.  
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="STLCProp.stuck"><span class="id" type="definition">stuck</span></a> (<span class="id" type="var">t</span>:<a class="idref" href="Stlc.html#STLC.tm"><span class="id" type="inductive">tm</span></a>) : <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;(<a class="idref" href="Smallstep.html#normal_form"><span class="id" type="definition">normal_form</span></a> <a class="idref" href="Stlc.html#STLC.step"><span class="id" type="inductive">step</span></a>) <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'/\'_x"><span class="id" type="notation">∧</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">¬</span></a> <a class="idref" href="Stlc.html#STLC.value"><span class="id" type="inductive">value</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Corollary</span> <a name="STLCProp.soundness"><span class="id" type="lemma">soundness</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">t</span> <span class="id" type="var">t'</span> <span class="id" type="var">T</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="StlcProp.html#T"><span class="id" type="variable">T</span></a> → <br/>
+&nbsp;&nbsp;<a class="idref" href="StlcProp.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">==&gt;*</span></a> <a class="idref" href="StlcProp.html#t'"><span class="id" type="variable">t'</span></a> →<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">~(</span></a><a class="idref" href="StlcProp.html#STLCProp.stuck"><span class="id" type="definition">stuck</span></a> <a class="idref" href="StlcProp.html#t'"><span class="id" type="variable">t'</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">)</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">t</span> <span class="id" type="var">t'</span> <span class="id" type="var">T</span> <span class="id" type="var">Hhas_type</span> <span class="id" type="var">Hmulti</span>. <span class="id" type="tactic">unfold</span> <a class="idref" href="StlcProp.html#STLCProp.stuck"><span class="id" type="definition">stuck</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> [<span class="id" type="var">Hnf</span> <span class="id" type="var">Hnot_val</span>]. <span class="id" type="tactic">unfold</span> <a class="idref" href="Smallstep.html#normal_form"><span class="id" type="definition">normal_form</span></a> <span class="id" type="keyword">in</span> <span class="id" type="var">Hnf</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">induction</span> <span class="id" type="var">Hmulti</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab713"></a><h1 class="section">Uniqueness of Types</h1>
+
+<div class="paragraph"> </div>
+
+<a name="lab714"></a><h4 class="section">Exercise: 3 stars (types_unique)</h4>
+ Another pleasant property of the STLC is that types are
+    unique: a given term (in a given context) has at most one
+    type.  Formalize this statement and prove it. 
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab715"></a><h1 class="section">Additional Exercises</h1>
+
+<div class="paragraph"> </div>
+
+<a name="lab716"></a><h4 class="section">Exercise: 1 star (progress_preservation_statement)</h4>
+ Without peeking, write down the progress and preservation
+    theorems for the simply typed lambda-calculus.  <font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+<a name="lab717"></a><h4 class="section">Exercise: 2 stars (stlc_variation1)</h4>
+ Suppose we add a new term <span class="inlinecode"><span class="id" type="var">zap</span></span> with the following reduction rule:
+<hr/>
+                  (ST_Zap)
+                         t ==&gt; zap
+and the following typing rule:
+<hr/>
+               (T_Zap)
+                      Gamma |- zap : T
+    Which of the following properties of the STLC remain true in
+    the presence of this rule?  For each one, write either
+    "remains true" or else "becomes false." If a property becomes
+    false, give a counterexample.
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> Determinism of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#step"><span class="id" type="inductive">step</span></a></span>
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Progress
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Preservation
+
+</li>
+</ul>
+
+<div class="paragraph"> </div>
+
+<font size=-2>&#9744;</font>
+
+<div class="paragraph"> </div>
+
+<a name="lab718"></a><h4 class="section">Exercise: 2 stars (stlc_variation2)</h4>
+ Suppose instead that we add a new term <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Imp.html#AExp.foo"><span class="id" type="lemma">foo</span></a></span> with the following reduction rules:
+<hr/>
+                (ST_Foo1)
+                       (\x:A. x) ==&gt; foo 
+<hr/>
+                   (ST_Foo2)
+                         foo ==&gt; true
+    Which of the following properties of the STLC remain true in
+    the presence of this rule?  For each one, write either
+    "remains true" or else "becomes false." If a property becomes
+    false, give a counterexample.
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> Determinism of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#step"><span class="id" type="inductive">step</span></a></span>
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Progress
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Preservation
+
+</li>
+</ul>
+
+<div class="paragraph"> </div>
+
+<font size=-2>&#9744;</font>
+
+<div class="paragraph"> </div>
+
+<a name="lab719"></a><h4 class="section">Exercise: 2 stars (stlc_variation3)</h4>
+ Suppose instead that we remove the rule <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#ST_App1"><span class="id" type="constructor">ST_App1</span></a></span> from the <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#step"><span class="id" type="inductive">step</span></a></span>
+    relation. Which of the following properties of the STLC remain
+    true in the presence of this rule?  For each one, write either
+    "remains true" or else "becomes false." If a property becomes
+    false, give a counterexample.
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> Determinism of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#step"><span class="id" type="inductive">step</span></a></span>
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Progress
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Preservation
+
+</li>
+</ul>
+
+<div class="paragraph"> </div>
+
+<font size=-2>&#9744;</font>
+
+<div class="paragraph"> </div>
+
+<a name="lab720"></a><h4 class="section">Exercise: 2 stars, optional (stlc_variation4)</h4>
+ Suppose instead that we add the following new rule to the reduction relation:
+<hr/>
+        (ST_FunnyIfTrue)
+            (if true then t1 else t2) ==&gt; true
+    Which of the following properties of the STLC remain true in
+    the presence of this rule?  For each one, write either
+    "remains true" or else "becomes false." If a property becomes
+    false, give a counterexample.
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> Determinism of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#step"><span class="id" type="inductive">step</span></a></span>
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Progress
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Preservation
+
+</li>
+</ul>
+
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+<a name="lab721"></a><h4 class="section">Exercise: 2 stars, optional (stlc_variation5)</h4>
+ Suppose instead that we add the following new rule to the typing relation:
+                 Gamma |- t1 \in Bool-&gt;Bool-&gt;Bool
+                     Gamma |- t2 \in Bool
+<hr/>
+          (T_FunnyApp)
+                    Gamma |- t1 t2 \in Bool
+    Which of the following properties of the STLC remain true in
+    the presence of this rule?  For each one, write either
+    "remains true" or else "becomes false." If a property becomes
+    false, give a counterexample.
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> Determinism of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#step"><span class="id" type="inductive">step</span></a></span>
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Progress
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Preservation
+
+</li>
+</ul>
+
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+<a name="lab722"></a><h4 class="section">Exercise: 2 stars, optional (stlc_variation6)</h4>
+ Suppose instead that we add the following new rule to the typing relation:
+                     Gamma |- t1 \in Bool
+                     Gamma |- t2 \in Bool
+<hr/>
+               (T_FunnyApp')
+                    Gamma |- t1 t2 \in Bool
+    Which of the following properties of the STLC remain true in
+    the presence of this rule?  For each one, write either
+    "remains true" or else "becomes false." If a property becomes
+    false, give a counterexample.
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> Determinism of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#step"><span class="id" type="inductive">step</span></a></span>
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Progress
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Preservation
+
+</li>
+</ul>
+
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+<a name="lab723"></a><h4 class="section">Exercise: 2 stars, optional (stlc_variation7)</h4>
+ Suppose we add the following new rule to the typing
+    relation of the STLC:
+<hr/>
+ (T_FunnyAbs)
+                         |- \x:Bool.t \in Bool
+    Which of the following properties of the STLC remain true in
+    the presence of this rule?  For each one, write either
+    "remains true" or else "becomes false." If a property becomes
+    false, give a counterexample.
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> Determinism of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#step"><span class="id" type="inductive">step</span></a></span>
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Progress
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Preservation
+
+</li>
+</ul>
+
+<div class="paragraph"> </div>
+
+<font size=-2>&#9744;</font>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">End</span> <a class="idref" href="StlcProp.html#STLCProp"><span class="id" type="module">STLCProp</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab724"></a><h2 class="section">Exercise: STLC with Arithmetic</h2>
+
+<div class="paragraph"> </div>
+
+ To see how the STLC might function as the core of a real
+    programming language, let's extend it with a concrete base
+    type of numbers and some constants and primitive
+    operators. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Module</span> <a name="STLCArith"><span class="id" type="module">STLCArith</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+To types, we add a base type of natural numbers (and remove
+    booleans, for brevity) 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="STLCArith.ty"><span class="id" type="inductive">ty</span></a> : <span class="id" type="keyword">Type</span> :=<br/>
+&nbsp;&nbsp;| <a name="STLCArith.TArrow"><span class="id" type="constructor">TArrow</span></a> : <a class="idref" href="StlcProp.html#ty"><span class="id" type="inductive">ty</span></a> → <a class="idref" href="StlcProp.html#ty"><span class="id" type="inductive">ty</span></a> → <a class="idref" href="StlcProp.html#ty"><span class="id" type="inductive">ty</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCArith.TNat"><span class="id" type="constructor">TNat</span></a>   : <a class="idref" href="StlcProp.html#ty"><span class="id" type="inductive">ty</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+To terms, we add natural number constants, along with
+    successor, predecessor, multiplication, and zero-testing... 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="STLCArith.tm"><span class="id" type="inductive">tm</span></a> : <span class="id" type="keyword">Type</span> :=<br/>
+&nbsp;&nbsp;| <a name="STLCArith.tvar"><span class="id" type="constructor">tvar</span></a> : <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#id"><span class="id" type="inductive">id</span></a> → <a class="idref" href="StlcProp.html#tm"><span class="id" type="inductive">tm</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCArith.tapp"><span class="id" type="constructor">tapp</span></a> : <a class="idref" href="StlcProp.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="StlcProp.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="StlcProp.html#tm"><span class="id" type="inductive">tm</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCArith.tabs"><span class="id" type="constructor">tabs</span></a> : <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#id"><span class="id" type="inductive">id</span></a> → <a class="idref" href="StlcProp.html#STLCArith.ty"><span class="id" type="inductive">ty</span></a> → <a class="idref" href="StlcProp.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="StlcProp.html#tm"><span class="id" type="inductive">tm</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCArith.tnat"><span class="id" type="constructor">tnat</span></a>  : <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a> → <a class="idref" href="StlcProp.html#tm"><span class="id" type="inductive">tm</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCArith.tsucc"><span class="id" type="constructor">tsucc</span></a> : <a class="idref" href="StlcProp.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="StlcProp.html#tm"><span class="id" type="inductive">tm</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCArith.tpred"><span class="id" type="constructor">tpred</span></a> : <a class="idref" href="StlcProp.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="StlcProp.html#tm"><span class="id" type="inductive">tm</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCArith.tmult"><span class="id" type="constructor">tmult</span></a> : <a class="idref" href="StlcProp.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="StlcProp.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="StlcProp.html#tm"><span class="id" type="inductive">tm</span></a><br/>
+&nbsp;&nbsp;| <a name="STLCArith.tif0"><span class="id" type="constructor">tif0</span></a>  : <a class="idref" href="StlcProp.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="StlcProp.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="StlcProp.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="StlcProp.html#tm"><span class="id" type="inductive">tm</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Tactic Notation</span> "t_cases" <span class="id" type="var">tactic</span>(<span class="id" type="tactic">first</span>) <span class="id" type="var">ident</span>(<span class="id" type="var">c</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">first</span>;<br/>
+&nbsp;&nbsp;[ <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "tvar" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "tapp" <br/>
+&nbsp;&nbsp;| <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "tabs" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "tnat" <br/>
+&nbsp;&nbsp;| <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "tsucc" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "tpred"<br/>
+&nbsp;&nbsp;| <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "tmult" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "tif0" ].<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab725"></a><h4 class="section">Exercise: 4 stars (stlc_arith)</h4>
+ Finish formalizing the definition and properties of the STLC extended
+    with arithmetic.  Specifically:
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> Copy the whole development of STLC that we went through above (from
+      the definition of values through the Progress theorem), and
+      paste it into the file at this point.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Extend the definitions of the <span class="inlinecode"><span class="id" type="tactic">subst</span></span> operation and the <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#step"><span class="id" type="inductive">step</span></a></span>
+      relation to include appropriate clauses for the arithmetic operators.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Extend the proofs of all the properties (up to <span class="inlinecode"><a class="idref" href="StlcProp.html#STLCProp.soundness"><span class="id" type="lemma">soundness</span></a></span>) of
+      the original STLC to deal with the new syntactic forms.  Make
+      sure Coq accepts the whole file. 
+</li>
+</ul>
+
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">End</span> <a class="idref" href="StlcProp.html#STLCArith"><span class="id" type="module">STLCArith</span></a>.<br/>
+
+<br/>
+
+<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

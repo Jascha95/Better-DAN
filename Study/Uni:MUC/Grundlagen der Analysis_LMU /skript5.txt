@@ -1,0 +1,268 @@
+5 Komplexe Zahlen
+=================
+
+5.1 Definition durch Hinzunahme der Wurzel aus -1
+-------------------------------------------------
+
+Man erhaelt die komplexen Zahlen, indem man zu den reellen Zahlen die
+*imaginaere Einheit* i, die dem Gesetz i^2 = -1 genuegt, hinzunimmt.
+
+Bemerkung: Man kann nicht "einfach so" Zahlen dazu nehmen. Kaeme
+z.B. jemand auf die Idee, eine Zahl j einzufuehren, sodass j=1/0, so
+haette man 0*j=1, also 0 = 1*j - 1*j = (1-1)*j = 0*j = 1, ein
+Widerspruch. Im Falle der Wurzel aus -1 ist solch eine Hinzunahme
+aber widerspruchsfrei moeglich.
+
+Jede komplexe Zahl hat dann die Form a+i*b fuer a,b:RR, denn jeder
+Rechenausdruck mit komplexen Zahlen laesst sich mithilfe der folgenden
+Rechenregeln auf dieses Format bringen:
+
+Rechenregeln:
+
+(a+bi) + (c+di) = (a+c) + (b+d)i
+(a+bi) * (c+di) = ac+(ad+bc)*i+bdi^2 = (ac-bd)+(ad+bc)i wg i^2=-1
+(a+bi) - (c+di) = (a-c) + (b-d)i
+(a+bi) / (c+di) = (a+bi)*(c-di) / (c+di)*(c-di) = 1/(c^2+d^2)*(ac+bd+(bc-ad)i)
+
+Ist z=a+bi, so heisst a Realteil und b Imaginaerteil von z.
+Man schreibt a=Re(z) und b=Im(z).
+
+
+
+
+5.2 Konjugation und Betrag
+--------------------------
+
+Die Konjugierte von z ist die komplexe Zahl ^z := a-bi.
+NB: ^z soll die Ueberstreichung von z, gelesen "z-quer" repraesentieren.
+
+Es ist z * ^z = a^2+b^2 = Re(z)^2 + Im(z)^2.
+
+Man definiert den Betrag einer komplexen Zahl durch
+|z| = sqrt(Re(z)^2+Im(z)^2) = sqrt(z * ^z).
+
+Es gilt:
+
+|w+z| <= |w|+|z| (Dreiecksungleichung)
+|w*z| = |w|*|z|
+
+Der Division komplexer Zahlen liegt also das Erweitern mit der
+Konjugierten des Nenners zugrunde: w/z = w ^z / z z^ = 1/|z|^2 * w * ^z.
+
+Die Menge der komplexen Zahlen wird mit CC bezeichnet (grosses C mit
+Doppelstrich).
+
+
+5.3 Komplexe Zahlenebene
+------------------------
+
+Man veranschaulicht sich die komplexen Zahlen als Ortsvektoren in der
+Ebene (Realteil = x-Koordinate, Imaginaerteil = y-Koordinate). Die
+Laenge dieser Vektoren entspricht dann gerade dem eben definierten
+Betrag. 
+
+Die Addition komplexer Zahlen entspricht der Vektoraddition, die
+Multiplikation entspricht der Operation "stretch and turn": die
+Laengen (Betraege) der zu multiplizierenden Vektoren werden
+multipliziert, die Winkel der Vektoren, gemessen von der x-Achse
+entgegen dem Uhrzeigersinn, werden *addiert*,
+
+Z.B. ist die imaginaere Einheit i der Einheitsvektor in
+y-Richtung. Multipliziert man ihn mit sich selbst nach der
+"stretch-and-turn" Vorschrift, so erhaelt man offensichtlich die Minus
+Eins.
+
+Ebenso gilt natuerlich i^3=-i und i^4=1.
+
+Ist epsilon die komplexe Zahl mit Betrag 1 und Winkel 120 Grad, also
+
+epsilon = -1/2 + 1/2*sqrt(3)*i
+
+so ist epsilon^2 = ^epsilon und epsilon^3=1
+
+Man sagt: epsilon sei eine primitive dritte Einheitswurzel ("Wurzel aus Eins"). 
+
+"Primitiv" deshalb, weil alle drei dritten Einheitswurzeln, naemlich 1, epsilon und ^epsilon Potenzen von epsilon sind. Ebenso ist ^epsilon primitive dritte EW, denn epsilon = ^epsilon^2.
+
+Die Zahlen 1,i,-1,-i sind vierte Einheitswurzeln, i und -i sind sogar primitiv. 
+
+
+Allgemein ist die komplexe Zahl mit Betrag a und Winkel alpha (im
+Bogenmass) gegeben durch
+
+z = a*(cos(alpha) + i*sin(alpha))
+
+Im Beispiel war alpha=2*pi/3 und sin(alpha)=1/2*sqrt(3), cos(alpha)=-1/2. 
+
+Dementsprechend sind die n n-ten Einheitswurzeln gegeben durch
+cos(2*phi*k/n)+i*sin(2*pi*k/n), wobei k=0...n-1. Fuer k teilerfremd zu
+n, insbesondere k=1 ergeben sich primitive n-te EW.
+
+NB: Alle n-ten EW sind Nullstellen des Polynoms z^n-1, also gibt es
+hoechstens n n-te EW und wie wir gesehen haben, genau n.
+
+Die Einheitswurzeln spielen unter anderem bei der diskreten
+Fouriertransformation, einem wichtigen Hilfsmittel bei der
+Signalverarbeitung eine bedeutende Rolle.
+
+
+5.4 Komplexe Nullstellen von Polynomen
+--------------------------------------
+
+In den komplexen Zahlen hat jede (nichttriviale) quadratische
+Gleichung eine Loesung, z.B.,
+
+x^2 - 2x + 5 = 0
+x_1/2 = 1/2*(-2 +- sqrt(-16)) = -1 +- 4i
+
+Ebenso: sqrt(-3) = sqrt(3)i
+
+Bem: ax^2+bx+c=0 heisst hier "trivial", wenn a=b=0. 
+
+Es gilt sogar, das jedes nichtkonstante Polynom eine Nullstelle in den
+komplexen Zahlen hat ("Fundamentalsatz der Algebra"). Hat man eine
+Nullstelle gefunden, dann kann man die "rausdividieren" und findet so
+insgesamt genau so viele Nullstellen (Vielfachheit eingerechnet), wie
+der Grad des Polynoms. 
+
+So hat das Polynom x^3-3x^2+7x-5 = (x^2-2x+5)*(x-1) eine reelle
+Nullstelle, naemlich 1 und zwei komplexe Nullstellen, naemlich -1+4i
+und -1-4i.
+
+Da die komplexe Konjugation mit Addition und Multiplikation
+vertraeglich ist (^(z+w)=^z + ^w und ^(zw)=^z ^w) folgt, dass wenn z
+eine Nullstelle eines Polynoms P(x) (mit reellen Koeffizienten!) ist,
+so auch die Konjugierte ^z.
+
+
+5.5 Konvergenz im Komplexen
+---------------------------
+
+Konvergenz von Folgen und Grenzwerte von Funktionen werden im
+Komplexen genauso wie im Reellen definiert. An die Stelle des
+Absolutbetrages tritt hier natuerlich der Betrag der komplexen Zahlen.
+
+Also konvergiert eine Folge (a_n)_n von komplexen Zahlen gegen b:CC,
+wenn fuer jedes epsilon>0 ein N:NN existiert, sodass fuer alle n>=N
+gilt |a_n-b|<epsilon.
+
+Die Konvergenzkriterien fuer Reihen und bereits hergeleitete
+Summenformeln gelten sinngemaess fort.
+
+Beispiel: z := 1/(1+i) = 1/2*(1-i). Es ist |z|=1/2<1, also ist
+sum(1/(1+i)^k,k=0..oo) = 1 / (1-z) = 2 / (1+i) = 1-i. 
+
+
+
+5.6 Die komplexe Exponentialfunktion
+------------------------------------
+
+Man erweitert die Exponentialfunktion exp(x)=e^x auf die komplexen
+Zahlen durch die folgende Setzung:
+
+
+e^(a+bi) = e^a * (cos(b) + i*sin(b))
+
+also insbesondere e^(i*t) = cos(t) + i*sin(t).
+
+Diese Definition ist aus folgenden Gruenden sinnvoll:
+
+* Die Potenzgesetze gelten fort:
+
+   e^(w+z) = e^w*e^z, selbst wenn w,z komplex sind
+
+* Die Reihenentwicklung
+
+   e^z = sum(z^k/k!, k=0..oo)
+
+gilt auch fuer die oben definierte Fortsetzung der e-Funktion auf die
+komplexen Zahlen.
+
+NB: Man kann die Exponentialreihe als Definition der komplexen
+Exponentialfunktion nehmen und dann die obigen Gleichungen beweisen.
+
+Es gilt sin(t) = Im(e^(it)), cos(t) = Re(e^(it)). Daraus erhaelt man
+folgende Reihenentwicklungen fuer die trigonometrischen Funktionen:
+
+sin(x) = sum((-1)^k * x^(2k+1)/(2k+1)!, k=0..oo)
+cos(x) = sum((-1)^k * x^(2k)/(2k)!, k=0..oo)
+
+Daraus kann man z.B. ableiten
+
+lim sin(x)/x = lim (x+O(x^2))/x = 1
+x->0           x->0
+
+lim (cos(x)-1)/x = lim (O(x^2))/x = 0
+x->0               x->0
+
+Fuer den speziellen Wert x=pi ergibt sich aus der Definition der
+Exponentialfunktion die beruehmte Eulersche Formel
+
+                     i pi 
+                   e       =  -1
+
+und ebenso e^(2*pi*i)=1. 
+
+
+
+
+5.7 Polarkoordinaten
+- - - - - - - - - -
+
+Jede komplexe Zahl z=a+bi kann in der Form r*e^(i*phi) geschrieben
+werden, wobei r=|z| = sqrt(a^2+b^2) und phi der Winkel des Ortsvektors
+(a,b) ist. Es ist phi = arctan(b/a) oder phi = pi-arctan(b/a), je
+nachdem, ob a positiv oder negativ ist. In vielen Programmiersprachen
+gibt es die Funktion atan2 fuer diesen Zweck.
+
+Man erhaelt als Anwendung eine praktische Darstellung der n-ten Einheitswurzeln: und zwar definiert man
+
+w_z := e^(2*pi*i / n)
+
+und die Eckpunkte eines regelmaessigen n-Ecks vom Radius Eins in der Zahlenebene sind dann w_z, w_z^2, ..., w_z^n, wobei w_z^n=1 gilt. 
+
+Anwendung: Die Gleichung e^x = z hat fuer alle z:CC eine Loesung, naemlich ln(r)+i*(phi+2*pi*k), falls z=r*e^(i*phi) und k:ZZ beliebig.
+
+Man findet die Notation Ln(z) fuer diese Loesung im Falle k=0 und
+phi:]-pi;pi] und spricht vom Hauptwert des komplexen Logarithmus. Wir
+verwenden diese Notation und Sprechweise nicht.
+
+
+5.8 Komplexe Potenzen
+---------------------
+
+Fuer reelles a>0 und komplexes z definiert man
+
+a^z := exp(z * ln(a))
+
+Es gilt dann a^(w+z)=a^w*a^z. 
+
+
+Potenzen mit komplexen Basen sind ebenso wie solche mit negativen
+Basen nach wie vor nur fuer ganzzahlige Exponenten erklaert.
+
+Zwar koennte man z.B. setzen, (-1)^(0.5) = i, aber warum nicht -i.
+Bei komplexen Exponenten und negativen Basen ergeben sich weitere
+Ungereimtheiten: 
+
+e^(i pi) = -1
+
+(-1)^i =?= e^(-pi)
+
+
+e^(-2pi) =?= 1^i = 1 ????
+
+
+5.9 Trigonometrische Funktionen im Komplexen
+--------------------------------------------
+
+Fuer reelles x rechnet man leicht nach, dass
+
+cos(x) = (e^(ix)+e^(-ix))/2
+sin(x) = (e^(ix)-e^(-ix))/(2i)
+
+
+Diese Formeln machen nun auch fuer komplexes x Sinn und werden daher
+als Definition der trig. Fkt. im Komplexen verwendet.  Die weiter oben
+besprochenen Reihenentwicklungen fuer die trig. Fkt. gelten auch fuer
+diese komplexen Erweiterungen. 

@@ -1,0 +1,29 @@
+* Verwenden Sie unbedingt die vorgegebenen Namen für Klassen und Funktionen sowie deren Argumente. 
+
+* Für jede Klasse und jede Funktion muss ein Docstring definiert werden.
+
+* Wenn möglich, geben Sie Typannotationen für Funktionen an.
+
+* Eingaben außerhalb der Spezifikation der Aufgabe müssen nicht berücksichtigt werden.
+
+* Verwenden Sie keine Importe. Die Module `math`, `random` und `string` werden immer importiert. Deren Inhalt darf benutzt, aber nicht verändert werden. 
+
+* Jeder Aufgabenteil muss in dem zugehörigen Abschnitt bearbeitet werden. Vorangegangene Aufgabenteile können verwendet werden.
+
+* Die Bezeichner Testing und TestGrade werden zur Korrektur verwendet und dürfen in der Lösung nicht verwendet werden.
+
+* Es gibt vordefinierte Tests, die Sie daraufhinweisen wenn ihre Funktionen, Argumente und Klassen die falschen Namen haben.
+
+----------
+
+Beispiel-Aufgabe: Implementieren Sie eine Funktion `foo(x: int)` mit beliebigen Inhalt.
+
+Kopieren Sie den folgenden (fehlerhaften) Code in das Lösungsfeld und drücken Sie auf den Knopf `Ausführen`.
+[code]
+def foo(y: int):
+    pass
+[/code]
+Ihr Code wird nun mitsamt einigen Tests ausgeführt und Sie bekommen eine Fehlermeldung, dass das Argument von `foo` eigentlich `x` heißen sollte.
+
+Reparieren Sie den Fehler indem Sie `y` nach `x` umbenennen und klicken Sie erneut auf `Ausführen`.
+

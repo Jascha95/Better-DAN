@@ -1,0 +1,21 @@
+Nach dem Anlegen der keystores (siehe README.keytool), Server ausfuehren:
+
+java -Djavax.net.ssl.keyStore=serverStore -Djavax.net.ssl.keyStorePassword=pass -Djavax.net.ssl.trustStore=serverStore -Djavax.net.ssl.trustStorePassword=pass ChatServer 4000
+
+("pass" entsprechend ersetzen)
+
+fuer den client, den parameter "pass" in client.html anpassen, dann ausfuehren:
+
+appletviewer client.html
+
+Jeder client bekommt ein ID. sieht man, wenn man was sagt, bzw. in der Server
+ausgabe, zB:
+
+Server Thread 33560 running.
+
+dann ist man wohl Client 33560. Mit dem Befehl:
+
+.cert 33560
+
+(im client eingeben, kann man sich das zertifikat des entsprechenden Clients 
+anzeigen lassen)

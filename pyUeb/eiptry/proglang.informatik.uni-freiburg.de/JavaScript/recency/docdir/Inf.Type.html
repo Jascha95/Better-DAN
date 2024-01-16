@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index.html">
+<link rel="previous" href="Inf.Vars.html">
+<link rel="next" href="Inf.ConstBasic.html">
+<link rel="Up" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.html">
+<link title="Index of types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_types.html">
+<link title="Index of exceptions" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_exceptions.html">
+<link title="Index of values" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_values.html">
+<link title="Index of modules" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_modules.html">
+<link title="Index of module types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_module_types.html">
+<link title="Args" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Args.html">
+<link title="Gen" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gen.html">
+<link title="GenVars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/GenVars.html">
+<link title="Gvars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gvars.html">
+<link title="Inf" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.html">
+<link title="Location" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Location.html">
+<link title="LowerUpper" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpper.html">
+<link title="LowerUpperNeg" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpperNeg.html">
+<link title="LUNVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUNVar.html">
+<link title="LUVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUVar.html">
+<link title="MapVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.html">
+<link title="PrioQueue" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/PrioQueue.html">
+<link title="ProgLabel" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/ProgLabel.html">
+<link title="Syntax" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Syntax.html"><link title="Methods to create values" rel="Section" href="Inf.Type.html#3_Methodstocreatevalues">
+<link title="output " rel="Section" href="Inf.Type.html#3_output">
+<link title="Types " rel="Subsection" href="Inf.Type.html#4_Types">
+<link title="Local Environment " rel="Subsection" href="Inf.Type.html#4_LocalEnvironment">
+<link title="Object Types " rel="Subsection" href="Inf.Type.html#4_ObjectTypes">
+<link title="Locations " rel="Subsection" href="Inf.Type.html#4_Locations">
+<link title="Precise Informations " rel="Subsection" href="Inf.Type.html#4_PreciseInformations">
+<title>Inf.Type</title>
+</head>
+<body>
+<div class="navbar"><a href="Inf.Vars.html">Previous</a>
+&nbsp;<a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.html">Up</a>
+&nbsp;<a href="Inf.ConstBasic.html">Next</a>
+</div>
+<center><h1>Module <a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/type_Inf.Type.html">Inf.Type</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> Type: <code class="code">sig</code> <a href="Inf.Type.html">..</a> <code class="code">end</code></pre>Module that conataints the types<br>
+<hr width="100%">
+<pre><span class="keyword">type</span> <a name="TYPEt"></a><code class="type"></code>t </pre>
+<div class="info">
+Types and type variables<br>
+</div>
+
+<pre><span class="keyword">type</span> <a name="TYPEtau"></a><code class="type"></code>tau </pre>
+<div class="info">
+Types without type variables<br>
+</div>
+
+<pre><span class="keyword">type</span> <a name="TYPElenv"></a><code class="type"></code>lenv </pre>
+<div class="info">
+Location environment or local envrionment variable (LEVar)<br>
+</div>
+
+<pre><span class="keyword">type</span> <a name="TYPEr"></a><code class="type"></code>r </pre>
+<div class="info">
+object type or object type variable (OTVar)<br>
+</div>
+
+<pre><span class="keyword">type</span> <a name="TYPEphi"></a><code class="type"></code>phi </pre>
+<div class="info">
+location set or location set variable (LSVar)<br>
+</div>
+
+<pre><span class="keyword">type</span> <a name="TYPEq"></a><code class="type"></code>q </pre>
+<div class="info">
+Precise information of precise variable (PreVar)<br>
+</div>
+
+<br>
+<a name="3_Methodstocreatevalues"></a>
+<h3>Methods to create values</h3><br>
+<br>
+<a name="4_Types"></a>
+<h4>Types </h4><br>
+<pre><span class="keyword">val</span> <a name="VALt_top"></a>t_top : <code class="type"><a href="Inf.Type.html#TYPEt">t</a></code></pre><pre><span class="keyword">val</span> <a name="VALt_undef"></a>t_undef : <code class="type"><a href="Inf.Type.html#TYPEt">t</a></code></pre><pre><span class="keyword">val</span> <a name="VALt_int"></a>t_int : <code class="type"><a href="Inf.Type.html#TYPEt">t</a></code></pre><pre><span class="keyword">val</span> <a name="VALcreate_t_obj"></a>create_t_obj : <code class="type"><a href="Inf.Type.html#TYPEq">q</a> -> <a href="Inf.Type.html#TYPEphi">phi</a> -> <a href="Inf.Type.html#TYPEt">t</a></code></pre><pre><span class="keyword">val</span> <a name="VALcreate_t_fun"></a>create_t_fun : <code class="type">Inf.Vars.LEVar.t -><br>       <a href="Inf.Type.html#TYPEt">t</a> -><br>       <a href="Inf.Type.html#TYPEt">t</a> -> <a href="Inf.Type.html#TYPEphi">phi</a> -> Inf.Vars.LEVar.t -> <a href="Inf.Type.html#TYPEt">t</a> -> <a href="Inf.Type.html#TYPEt">t</a></code></pre><pre><span class="keyword">val</span> <a name="VALcreate_t_tv"></a>create_t_tv : <code class="type">Inf.Vars.TVar.t -> <a href="Inf.Type.html#TYPEt">t</a></code></pre><br>
+<a name="4_LocalEnvironment"></a>
+<h4>Local Environment </h4><br>
+<pre><span class="keyword">val</span> <a name="VALempty_lenv"></a>empty_lenv : <code class="type"><a href="Inf.Type.html#TYPElenv">lenv</a></code></pre><pre><span class="keyword">val</span> <a name="VALadd_to_lenv"></a>add_to_lenv : <code class="type"><a href="Inf.Type.html#TYPElenv">lenv</a> -> <a href="Location.Loc.html#TYPEt">Location.Loc.t</a> -> <a href="Inf.Type.html#TYPEr">r</a> -> <a href="Inf.Type.html#TYPElenv">lenv</a></code></pre><pre><span class="keyword">val</span> <a name="VALunion_lenv"></a>union_lenv : <code class="type"><a href="Inf.Type.html#TYPElenv">lenv</a> -> <a href="Inf.Type.html#TYPElenv">lenv</a> -> <a href="Inf.Type.html#TYPElenv">lenv</a></code></pre><pre><span class="keyword">val</span> <a name="VALcreate_lenv_levar"></a>create_lenv_levar : <code class="type"><a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.html#TYPElevar">Inf.levar</a> -> <a href="Inf.Type.html#TYPElenv">lenv</a></code></pre><br>
+<a name="4_ObjectTypes"></a>
+<h4>Object Types </h4><br>
+<pre><span class="keyword">val</span> <a name="VALempty_obj"></a>empty_obj : <code class="type"><a href="Inf.Type.html#TYPEr">r</a></code></pre><pre><span class="keyword">val</span> <a name="VALadd_to_obj"></a>add_to_obj : <code class="type"><a href="Inf.Type.html#TYPEr">r</a> -> <a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Syntax.html#TYPElabel">Syntax.label</a> -> Inf.Vars.TVar.t -> <a href="Inf.Type.html#TYPEr">r</a></code></pre><pre><span class="keyword">val</span> <a name="VALcreate_r_otv"></a>create_r_otv : <code class="type">Inf.Vars.OTVar.t -> <a href="Inf.Type.html#TYPEr">r</a></code></pre><br>
+<a name="4_Locations"></a>
+<h4>Locations </h4><br>
+<pre><span class="keyword">val</span> <a name="VALcreate_phi_ls"></a>create_phi_ls : <code class="type">Location.LSet.t -> <a href="Inf.Type.html#TYPEphi">phi</a></code></pre><pre><span class="keyword">val</span> <a name="VALcreate_phi_lsvar"></a>create_phi_lsvar : <code class="type">Inf.Vars.LSVar.t -> <a href="Inf.Type.html#TYPEphi">phi</a></code></pre><br>
+<a name="4_PreciseInformations"></a>
+<h4>Precise Informations </h4><br>
+<pre><span class="keyword">val</span> <a name="VALq_in"></a>q_in : <code class="type"><a href="Inf.Type.html#TYPEq">q</a></code></pre><pre><span class="keyword">val</span> <a name="VALq_ex"></a>q_ex : <code class="type"><a href="Inf.Type.html#TYPEq">q</a></code></pre><pre><span class="keyword">val</span> <a name="VALcreate_q_pv"></a>create_q_pv : <code class="type">Inf.Vars.PrVar.t -> <a href="Inf.Type.html#TYPEq">q</a></code></pre><br>
+<a name="3_output"></a>
+<h3>output </h3><br>
+<pre><span class="keyword">val</span> <a name="VALstring_of"></a>string_of : <code class="type"><a href="Inf.Type.html#TYPEt">t</a> -> string</code></pre><pre><span class="keyword">val</span> <a name="VALstring_of_p"></a>string_of_p : <code class="type"><a href="Inf.Type.html#TYPEq">q</a> * <a href="Inf.Type.html#TYPEphi">phi</a> -> string</code></pre><pre><span class="keyword">val</span> <a name="VALstring_of_lenv"></a>string_of_lenv : <code class="type"><a href="Inf.Type.html#TYPElenv">lenv</a> -> string</code></pre><pre><span class="keyword">val</span> <a name="VALstring_of_r"></a>string_of_r : <code class="type"><a href="Inf.Type.html#TYPEr">r</a> -> string</code></pre><pre><span class="keyword">val</span> <a name="VALstring_of_phi"></a>string_of_phi : <code class="type"><a href="Inf.Type.html#TYPEphi">phi</a> -> string</code></pre><pre><span class="keyword">val</span> <a name="VALstring_of_q"></a>string_of_q : <code class="type"><a href="Inf.Type.html#TYPEq">q</a> -> string</code></pre></body></html>

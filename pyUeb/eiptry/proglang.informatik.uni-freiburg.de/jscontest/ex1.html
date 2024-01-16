@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>Test Framework</title>
+    <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="testsrandom.js"></script>
+    <script type="text/javascript" src="ex1.test.js"></script>
+    <script type="text/javascript">
+      var dl = TESTS.createEnumLogger('logger',"ul");
+      TESTS.registerLogger(dl);
+    </script>
+  </head>
+  <body onload="TESTS.run()">
+    <h1>Test Framework</h1>
+    <div id="logger"></div>
+  </body>
+</html>

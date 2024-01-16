@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index.html">
+<link rel="previous" href="Inf.ConstBasic.html">
+<link rel="next" href="Inf.GEnv.html">
+<link rel="Up" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.html">
+<link title="Index of types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_types.html">
+<link title="Index of exceptions" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_exceptions.html">
+<link title="Index of values" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_values.html">
+<link title="Index of modules" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_modules.html">
+<link title="Index of module types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_module_types.html">
+<link title="Args" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Args.html">
+<link title="Gen" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gen.html">
+<link title="GenVars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/GenVars.html">
+<link title="Gvars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gvars.html">
+<link title="Inf" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.html">
+<link title="Location" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Location.html">
+<link title="LowerUpper" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpper.html">
+<link title="LowerUpperNeg" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpperNeg.html">
+<link title="LUNVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUNVar.html">
+<link title="LUVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUVar.html">
+<link title="MapVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.html">
+<link title="PrioQueue" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/PrioQueue.html">
+<link title="ProgLabel" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/ProgLabel.html">
+<link title="Syntax" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Syntax.html"><title>Inf.Const</title>
+</head>
+<body>
+<div class="navbar"><a href="Inf.ConstBasic.html">Previous</a>
+&nbsp;<a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.html">Up</a>
+&nbsp;<a href="Inf.GEnv.html">Next</a>
+</div>
+<center><h1>Module <a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/type_Inf.Const.html">Inf.Const</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> Const: <code class="code">sig</code> <a href="Inf.Const.html">..</a> <code class="code">end</code></pre>Module that contains the global set of basic constraints<br>
+<hr width="100%">
+<pre><span class="keyword">type</span> <a name="TYPEobs"></a><code class="type"></code>obs = <code class="type"><a href="Inf.ConstBasic.html#TYPEobs">Inf.ConstBasic.obs</a></code> </pre>
+<div class="info">
+Type of the observer<br>
+</div>
+
+<pre><span class="keyword">val</span> <a name="VALadd"></a>add : <code class="type"><a href="Inf.ConstBasic.html#TYPEt">Inf.ConstBasic.t</a> -> unit</code></pre><div class="info">
+<code class="code">add obs</code> adds the basic constraint <code class="code">obs</code> to the global 
+      constraint set.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALis_false"></a>is_false : <code class="type">string -> unit</code></pre><div class="info">
+<code class="code">is_false str</code> adds the constraint <code class="code">False (Some s)</code> to the
+      global constraint set and removes all other constraints from
+      the set. It also empties the work list.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALremove"></a>remove : <code class="type"><a href="Inf.ConstBasic.html#TYPEt">Inf.ConstBasic.t</a> -> unit</code></pre><div class="info">
+<code class="code">remove obs</code> removes the basic constraint <code class="code">obs</code> from the 
+      global constraint set.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALadd_wl"></a>add_wl : <code class="type"><a href="Inf.Const.html#TYPEobs">obs</a> -> unit</code></pre><div class="info">
+<code class="code">add_wl obs</code> adds the observer <code class="code">obs</code> to the working list. This 
+      ensures that the <code class="code">solve</code> function will visit the observer  
+      <code class="code">obs</code> if the solving procedure did not deduce an <code class="code">False</code> before. 
+      If the observer is already part of the work list it is not added a
+      second time.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALsolve"></a>solve : <code class="type">unit -> unit</code></pre><div class="info">
+<code class="code">solve ()</code> starts the solving of the global constraint set. 
+      This means going throw the work list and call for each basic
+      constraint the function <code class="code">fire</code>. Before the fire function is called
+      the basic constraint is removed from the work list. So if a basic
+      constraints needs more than one visit it can add them self to
+      the list again using <code class="code">add_wl</code>.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstring_of"></a>string_of : <code class="type">unit -> string</code></pre><div class="info">
+This returns a string representation of the global constraint. The
+      string do not contain information about the work list.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALreset"></a>reset : <code class="type">unit -> unit</code></pre><div class="info">
+This function resets the global constraint. This results in the
+      constraint <code class="code">true</code> and an empty work list.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALfull_visit"></a>full_visit : <code class="type">unit -> unit</code></pre><div class="info">
+Calling of <code class="code">full_visit</code> adds all constraints that are part of
+      the global constraint set to the work list.<br>
+</div>
+</body></html>

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index.html">
+<link rel="next" href="MapVar.S.html">
+<link rel="Up" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.html">
+<link title="Index of types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_types.html">
+<link title="Index of exceptions" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_exceptions.html">
+<link title="Index of values" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_values.html">
+<link title="Index of modules" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_modules.html">
+<link title="Index of module types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_module_types.html">
+<link title="Args" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Args.html">
+<link title="Gen" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gen.html">
+<link title="GenVars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/GenVars.html">
+<link title="Gvars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gvars.html">
+<link title="Inf" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.html">
+<link title="Location" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Location.html">
+<link title="LowerUpper" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpper.html">
+<link title="LowerUpperNeg" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpperNeg.html">
+<link title="LUNVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUNVar.html">
+<link title="LUVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUVar.html">
+<link title="MapVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.html">
+<link title="PrioQueue" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/PrioQueue.html">
+<link title="ProgLabel" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/ProgLabel.html">
+<link title="Syntax" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Syntax.html"><title>MapVar.S_WITHOUT_STATE</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.html">Up</a>
+&nbsp;<a href="MapVar.S.html">Next</a>
+</div>
+<center><h1>Module type <a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/type_MapVar.S_WITHOUT_STATE.html">MapVar.S_WITHOUT_STATE</a></h1></center>
+<br>
+<pre><span class="keyword">module type</span> S_WITHOUT_STATE = <code class="code">sig</code> <a href="MapVar.S_WITHOUT_STATE.html">..</a> <code class="code">end</code></pre>Signature of the functor<br>
+<hr width="100%">
+<pre><span class="keyword">include</span> <a href="GenVars.VAR_WITHOUT_IMG.html">GenVars.VAR_WITHOUT_IMG</a></pre>
+<pre><span class="keyword">type</span> <a name="TYPEimg"></a><code class="type"></code>img </pre>
+
+<pre><span class="keyword">module</span> <a href="MapVar.S_WITHOUT_STATE.I.html">I</a>: <code class="code">sig</code> <a href="MapVar.S_WITHOUT_STATE.I.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">val</span> <a name="VALdomain"></a>domain : <code class="type">t -> <a href="MapVar.S_WITHOUT_STATE.I.html#TYPEkey">I.key</a> list</code></pre><div class="info">
+Returns the domain of the map<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALfind'"></a>find' : <code class="type"><a href="MapVar.S_WITHOUT_STATE.I.html#TYPEkey">I.key</a> -> t -> <a href="MapVar.S_WITHOUT_STATE.I.html#TYPEimg">I.img</a> option</code></pre><div class="info">
+<code class="code">find' k map</code> returns <code class="code">Some b</code> if <code class="code">map(k) == b</code>.
+        If the exists no binding for <code class="code">k</code>, then <code class="code">None</code> 
+        is returned.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALfind_or_add"></a>find_or_add : <code class="type">create:(unit -> <a href="MapVar.S_WITHOUT_STATE.I.html#TYPEimg">I.img</a>) -><br>       key:<a href="MapVar.S_WITHOUT_STATE.I.html#TYPEkey">I.key</a> -> map:t -> <a href="MapVar.S_WITHOUT_STATE.I.html#TYPEimg">I.img</a></code></pre><div class="info">
+<code class="code">find_or_add ~create:c ~key:k ~map:m</code> 
+        returns <code class="code">m(k)</code> if <code class="code">k</code> in <code class="code">domain(m)</code>.
+        If <code class="code">k</code> is not in the domain of <code class="code">m</code>, then a new
+        image is create with the function <code class="code">c</code>. Then
+        <code class="code">m(k)</code> is set to this new image and the new 
+        image is returned.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALiter"></a>iter : <code class="type">(<a href="MapVar.S_WITHOUT_STATE.I.html#TYPEkey">I.key</a> -> <a href="MapVar.S_WITHOUT_STATE.I.html#TYPEimg">I.img</a> -> unit) -><br>       t -> unit</code></pre><pre><span class="keyword">val</span> <a name="VALfold"></a>fold : <code class="type">(<a href="MapVar.S_WITHOUT_STATE.I.html#TYPEkey">I.key</a> -> <a href="MapVar.S_WITHOUT_STATE.I.html#TYPEimg">I.img</a> -> 'a -> 'a) -><br>       t -> 'a -> 'a</code></pre><div class="info">
+Like a fold operator on a map<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALmake_write_equal"></a>make_write_equal : <code class="type">(<a href="MapVar.S_WITHOUT_STATE.I.html#TYPEkey">I.key</a> -> <a href="MapVar.S_WITHOUT_STATE.I.html#TYPEkey">I.key</a> -> int) -><br>       (<a href="MapVar.S_WITHOUT_STATE.I.html#TYPEimg">I.img</a> -> <a href="MapVar.S_WITHOUT_STATE.I.html#TYPEimg">I.img</a> -> unit) -><br>       t -> t -> <a href="MapVar.S_WITHOUT_STATE.I.html#TYPEkey">I.key</a> -> unit</code></pre><div class="info">
+hm, what happens here?<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstring_of_map"></a>string_of_map : <code class="type">t -> string</code></pre><div class="info">
+convert the map into a string<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstring_of_with_img"></a>string_of_with_img : <code class="type">t -> string</code></pre></body></html>

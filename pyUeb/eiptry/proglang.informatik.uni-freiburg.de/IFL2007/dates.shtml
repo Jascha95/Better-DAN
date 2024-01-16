@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+  <html>
+  <head>
+    <title>IFL 2007: Important Dates</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      
+  
+
+    <link rel="stylesheet" type="text/css" href="common-style.css">
+    <script language="javascript" type="text/javascript">
+      function make () {
+        var c = '@';
+        var r = arguments[0];
+        for (var i=1; i < arguments.length; i++) {
+          r = r + c + arguments[i];
+          c = '.';
+      }
+      /* new line  */
+      r = r.replace(/[A-Z]/g,'')
+      var res = '\x3Ca href="mailto:' + r + '"\x3E' + r + '\x3C/a\x3E';
+      return res;
+      }
+      
+      var ifl = make ('ADEiDLKOfDOPlPP07X', 'informatik', 'uni-freiburg', 'de');
+      var icfp = make ('SDFAicSDFAPfpDOI07POLS', 'informatik', 'uni-freiburg', 'de');
+      var berit = make ('IObrSDFAOPauSDFASOPQerXLDK', 'informatik', 'uni-freiburg', 'de');
+    </script>
+  </head>
+  
+  <body>
+
+    <div id="menu">
+        <ul>
+    <li><a href="index.shtml">Home</a></li>
+    <li><a href="cfp.shtml">Call for Papers</a></li>
+    <li><a href="cfp.shtml#landin">Peter Landin Prize</a></li>
+    <li><a href="committee.shtml">Programme Committee</a></li>
+    <li><a href="proceedings.shtml">Proceedings</a></li>
+    <li><a href="dates.shtml">Important Dates</a></li>
+    <li><a href="submission.shtml">Submission</a></li>
+    <li><a href="schedule.shtml">Schedule</a></li>
+    <li><a href="registration.shtml">Registration</a></li>
+    <li><a href="accommodation.shtml">Accommodation</a></li>
+    <li><a href="travel-information.shtml">Travel Information</a></li>
+    <li><a href="conference-venue.shtml">Conference Venue</a></li>
+    <li><a href="local-information.shtml">Local Information</a></li>
+    <li><a href="maps.shtml">Maps</a></li>
+    <li><a href="organizers.shtml">Organisers</a></li>
+  </ul>
+
+    </div>
+    <div id="wrapper" class="vspace">
+    <div id="content">
+      <div id="header">
+        <center>
+  <h1>19th International Symposium on Implementation and 
+    Application of Functional Languages
+  </h1>
+  
+  <h2>IFL 2007</h2>
+  
+  <h2>Freiburg, Germany, 27-29 September 2007</h2>
+  
+  <h3>
+    Co-located with 
+    <a href="http://www.informatik.uni-bonn.de/~ralf/icfp07.html">ICFP 2007</a> 
+    (1-3 October 2007)
+  </h3>
+</center>
+
+      </div>
+      
+      <div id="mainmatter">
+        <h1>Important Dates</h1>
+        
+        <table>
+            <tr>
+              <td>Submission for Draft Proceedings</td>
+              <td>31 August 2007</td>
+            </tr>
+            <tr>
+              <td>Early Registration Deadline</td>
+              <td>1 September 2007</td>
+            </tr>
+            <tr>
+              <td>Hotel Registration Deadline</td>
+              <td>1 September 2007</td>
+            </tr>
+            <tr>
+              <td>Symposium</td>
+              <td>27 September 2007 - 29 September 2007</td>
+            </tr>
+            <tr>
+              <td>Submission for post-refereeing</td>
+              <td><strong>30 November 2007</strong></td>
+            </tr>
+            <tr>
+              <td>Notification of acceptance / rejection</td>
+              <td>28 January 2008</td>
+            </tr>
+            <tr>
+              <td>Submission of camera-ready version</td>
+              <td>22 February 2008</td>
+            </tr>
+        </table>
+      </div>
+      <p>Due to popular demand the deadline for submission for post-refereeing has been extended and hence all later dates have been moved as well.</p>
+      <div id="footer">
+            <a href="impressum.shtml">Impressum</a>,
+    Webmaster: 
+    <script type="text/javascript">
+      document.write (ifl);
+    </script><noscript>ifl07 AT informatik DOT uni-freiburg DOT de</noscript>,
+    
+    Last modified: 2019-10-22 14:25:02
+
+      </div>
+
+    </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+<title>all.bib</title>
+</head>
+
+<body>
+<h1>all.bib</h1><p><a name="Pierce2005-attapl-dependent-types"></a><pre>
+@INBOOK{Pierce2005-attapl-dependent-types,
+  CROSSREF = {<a href="all_bib.shtml#Pierce2005-attapl">Pierce2005-attapl</a>},
+  CHAPTER = {2 \emph{Dependent Types}},
+  PAGES = {45 - 86}
+}
+</pre>
+</p>
+<p><a name="Pierce2005-attapl-substructural"></a><pre>
+@INBOOK{Pierce2005-attapl-substructural,
+  CROSSREF = {<a href="all_bib.shtml#Pierce2005-attapl">Pierce2005-attapl</a>},
+  CHAPTER = {1 \emph{Substructural Type Systems}},
+  PAGES = {3 - 44}
+}
+</pre>
+</p>
+<p><a name="Pierce2002-tpl-recursive"></a><pre>
+@INBOOK{Pierce2002-tpl-recursive,
+  CROSSREF = {<a href="all_bib.shtml#Pierce2002-tpl">Pierce2002-tpl</a>},
+  CHAPTER = {21 \emph{Metatheory of Recursive Types}},
+  PAGES = {281 - 314}
+}
+</pre>
+</p>
+<p><a name="ClarkePotterNoble1998"></a><pre>
+@INPROCEEDINGS{ClarkePotterNoble1998,
+  AUTHOR = {David G. Clarke and John M. Potter and James Noble},
+  TITLE = {Ownership Types for Flexible Alias Protection},
+  CROSSREF = {<a href="all_bib.shtml#OOPSLA1998">OOPSLA1998</a>},
+  YEAR = 1998,
+  PAGES = {48--64},
+  DOI = {<a href="http://doi.acm.org/10.1145/286936.286947">http://doi.acm.org/10.1145/286936.286947</a>}
+}
+</pre>
+</p>
+<p><a name="ClementDespeyrouxDespeyrouxKahn1986"></a><pre>
+@INPROCEEDINGS{ClementDespeyrouxDespeyrouxKahn1986,
+  CROSSREF = {<a href="all_bib.shtml#LFP1986">LFP1986</a>},
+  AUTHOR = {Dominique Clément and Joëlle Despeyroux and Thierry Despeyroux and Gilles Kahn},
+  TITLE = {A Simple Applicative Language: Mini-{ML}},
+  YEAR = 1986,
+  PAGES = {13-27},
+  DOI = {<a href="http://doi.acm.org/10.1145/319838.319847">http://doi.acm.org/10.1145/319838.319847</a>}
+}
+</pre>
+</p>
+<p><a name="DamasMilner1982"></a><pre>
+@INPROCEEDINGS{DamasMilner1982,
+  CROSSREF = {<a href="all_bib.shtml#POPL1982">POPL1982</a>},
+  AUTHOR = {Luis Damas and Robin Milner},
+  TITLE = {Principal Type-Schemes for Functional Programs},
+  YEAR = 1982,
+  PAGES = {207-212},
+  DOI = {<a href="http://doi.acm.org/10.1145/582153.582176">http://doi.acm.org/10.1145/582153.582176</a>}
+}
+</pre>
+</p>
+<p><a name="HosoyaVouillonPierce2000"></a><pre>
+@INPROCEEDINGS{HosoyaVouillonPierce2000,
+  AUTHOR = {Haruo Hosoya and Jérôme Vouillon and Benjamin C. Pierce},
+  TITLE = {Regular Expression Types for {XML}},
+  CROSSREF = {<a href="all_bib.shtml#ICFP2000">ICFP2000</a>},
+  PAGES = {11-22},
+  YEAR = 2000,
+  DOI = {<a href="http://doi.acm.org/10.1145/351240.351242">http://doi.acm.org/10.1145/351240.351242</a>}
+}
+</pre>
+</p>
+<p><a name="HosoyaVouillonPierce2004-toplas"></a><pre>
+@ARTICLE{HosoyaVouillonPierce2004-toplas,
+  AUTHOR = {Haruo Hosoya and Jérôme Vouillon and Benjamin C. Pierce},
+  TITLE = {Regular Expression Types for {XML}},
+  JOURNAL = {{ACM} Transactions on Programming Languages and Systems},
+  YEAR = 2004,
+  VOLUME = 27,
+  NUMBER = 1,
+  DOI = {<a href="http://doi.acm.org/10.1145/1053468.1053470">http://doi.acm.org/10.1145/1053468.1053470</a>}
+}
+</pre>
+</p>
+<p><a name="Milner1978"></a><pre>
+@ARTICLE{Milner1978,
+  AUTHOR = {Robin Milner},
+  TITLE = {A Theory of Type Polymorphism in Programming},
+  JOURNAL = <a href="all_bib.shtml#JCSS">JCSS</a>,
+  YEAR = 1978,
+  VOLUME = {17},
+  PAGES = {348-375}
+}
+</pre>
+</p>
+<p><a name="MorrisettWalkerCraryGlew1998"></a><pre>
+@INPROCEEDINGS{MorrisettWalkerCraryGlew1998,
+  AUTHOR = {Greg Morrisett and David Walker and Karl Crary and
+		    Neal Glew},
+  TITLE = {From System {F} to Typed Assembly Language},
+  CROSSREF = {<a href="all_bib.shtml#POPL1998">POPL1998</a>},
+  DOI = {<a href="http://doi.acm.org/10.1145/268946.268954">http://doi.acm.org/10.1145/268946.268954</a>}
+}
+</pre>
+</p>
+<p><a name="MorrisettWalkerCraryGlew1999-toplas"></a><pre>
+@ARTICLE{MorrisettWalkerCraryGlew1999-toplas,
+  AUTHOR = {Greg Morrisett and David Walker and Karl Crary and Neal Glew},
+  TITLE = {From system {F} to typed assembly language},
+  JOURNAL = {{ACM} Transactions on Programming Languages and Systems},
+  VOLUME = {21},
+  NUMBER = {3},
+  YEAR = {1999},
+  PAGES = {527--568},
+  DOI = {<a href="http://doi.acm.org/10.1145/319301.319345">http://doi.acm.org/10.1145/319301.319345</a>}
+}
+</pre>
+</p>
+<p><a name="OOPSLA1998"></a><pre>
+@PROCEEDINGS{OOPSLA1998,
+  KEY = {OOPSLA'98},
+  TITLE = {Proceedings of the  13th  ACM SIGPLAN Conference on  Object Oriented Programming, Systems, Languages, and Applications},
+  BOOKTITLE = {Proceedings of the  13th  ACM SIGPLAN Conference on  Object Oriented Programming, Systems, Languages, and Applications},
+  PUBLISHER = {{ACM} Press, New York},
+  ISBN = {1-58113-005-8},
+  ADDRESS = {Vancouver, BC, Canada},
+  YEAR = 1998,
+  MONTH = OCT
+}
+</pre>
+</p>
+<p><a name="LFP1986"></a><pre>
+@PROCEEDINGS{LFP1986,
+  KEY = {LFP 1986},
+  TITLE = {Proceedings of the  1986 {ACM} Conference on {Lisp} and Functional Programming},
+  YEAR = 1986,
+  BOOKTITLE = {Proceedings of the  1986 {ACM} Conference on {Lisp} and Functional Programming}
+}
+</pre>
+</p>
+<p><a name="ICFP2000"></a><pre>
+@PROCEEDINGS{ICFP2000,
+  TITLE = {International Conference on Functional Programming},
+  BOOKTITLE = {Proceedings International Conference on Functional Programming 2000},
+  YEAR = 2000,
+  EDITOR = {Philip Wadler},
+  PUBLISHER = {{ACM} Press, New York},
+  ADDRESS = {Montreal, Canada},
+  ISBN = {1-58113-202-6},
+  MONTH = SEP
+}
+</pre>
+</p>
+<p><a name="POPL1982"></a><pre>
+@PROCEEDINGS{POPL1982,
+  KEY = {POPL~1982},
+  TITLE = {Proceedings of the 9th Annual {ACM} Symposium on Principles of Programming Languages},
+  BOOKTITLE = {Proceedings of the 9th Annual {ACM} Symposium on Principles of Programming Languages},
+  OLDTITLE = {Proceedings of the  1982 {ACM} SIGPLAN Symposium on Principles of Programming Languages},
+  OLDBOOKTITLE = {Proceedings of the  1982 {ACM} SIGPLAN Symposium on Principles of Programming Languages},
+  YEAR = 1982,
+  ISBN = {0-89791-065-6},
+  ADDRESS = {Albuquerque, New Mexico, USA},
+  PUBLISHER = {{ACM} Press}
+}
+</pre>
+</p>
+<p><a name="POPL1998"></a><pre>
+@PROCEEDINGS{POPL1998,
+  TITLE = {Proceedings 25th Annual {ACM} Symposium on Principles of Programming Languages},
+  BOOKTITLE = {Proceedings 25th Annual {ACM} Symposium on Principles of Programming Languages},
+  YEAR = 1998,
+  KEY = {POPL~1998},
+  EDITOR = {Luca Cardelli},
+  PUBLISHER = {{ACM} Press},
+  ADDRESS = {San Diego, CA, USA},
+  MONTH = JAN
+}
+</pre>
+</p>
+<p><a name="Pierce2002-tpl"></a><pre>
+@BOOK{Pierce2002-tpl,
+  AUTHOR = {Pierce, Benjamin C.},
+  TITLE = {Types and Programming Languages},
+  PUBLISHER = {MIT Press},
+  YEAR = 2002
+}
+</pre>
+</p>
+<p><a name="Pierce2005-attapl"></a><pre>
+@BOOK{Pierce2005-attapl,
+  EDITOR = {Pierce, Benjamin C.},
+  TITLE = {Advanced Topics in Types and Programming Languages},
+  BOOKTITLE = {Advanced Topics in Types and Programming Languages},
+  PUBLISHER = {MIT Press},
+  YEAR = 2005
+}
+</pre>
+</p>
+<hr><p><em>This file has been generated by
+<a href="http://www.lri.fr/~filliatr/bibtex2html/">bibtex2html</a> 1.76</em></p>
+</body>
+</html>

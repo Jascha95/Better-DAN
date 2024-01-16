@@ -1,0 +1,37 @@
+body {color: #363534; font: 69% Arial,FreeSans,sans-serif;}
+h1 {font-size: 160%;}
+h2 {font-size: 130%;}
+h3 {font-size: 130%;}
+h4 {font-size: 100%;}
+h5 {font-size: 100%;}
+h6 {font-size: 90%;}
+
+h1 {font-family: "Times New Roman",FreeSerif,serif;}
+h2, h3, h4, h5, h6 {font-family: Arial,FreeSans,sans-serif;}
+
+h1, h2 {border-bottom: 1px solid #c9cac8;}
+
+h4, h6 {font-weight: bold;}
+
+h1, h2, h3, h4, h5 {color: #363534;}
+h6 {color: #747678;}
+
+h1, h2, h3, h4, h5, h6 {margin: 0.75em 0 0.25em;}
+
+p {line-height: 1.2em; margin: 0 0 0.75em;}
+
+a {color: #2a6ebb; text-decoration: none;} 
+a:active {color: #6f9ad3;}
+a:hover {text-decoration: underline;}
+a:visited {color: #2a6ebb;}
+
+pre.code code {
+  background-color: #e0e1dd;
+}
+
+.discreet {color: #747678; font-size: 90%;}
+
+br { line-height: -1em; }
+
+.api dt { color: #2a6ebb;}
+.api dd { padding:0;}

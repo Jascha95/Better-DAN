@@ -1,0 +1,7 @@
+#!/bin/bash
+make
+./main.byte -t
+echo "Soll commited werden? Falls ja, bitte Kommentar eingeben!"
+KOM=`head -1`
+svn commit -m "$KOM"
+

@@ -1,0 +1,1346 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/coqdoc.css" rel="stylesheet" type="text/css"/>
+<title>Stlc</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library Stlc</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab680"></a><h1 class="section">Stlc: The Simply Typed Lambda-Calculus</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Export</span> <span class="id" type="keyword">Types</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab681"></a><h1 class="section">The Simply Typed Lambda-Calculus</h1>
+
+<div class="paragraph"> </div>
+
+ The simply typed lambda-calculus (STLC) is a tiny core calculus
+    embodying the key concept of <i>functional abstraction</i>, which shows
+    up in pretty much every real-world programming language in some
+    form (functions, procedures, methods, etc.).
+
+<div class="paragraph"> </div>
+
+    We will follow exactly the same pattern as in the previous
+    chapter when formalizing this calculus (syntax, small-step
+    semantics, typing rules) and its main properties (progress and
+    preservation).  The new technical challenges (which will take some
+    work to deal with) all arise from the mechanisms of <i>variable
+    binding</i> and <i>substitution</i>. 
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab682"></a><h2 class="section">Overview</h2>
+
+<div class="paragraph"> </div>
+
+ The STLC is built on some collection of <i>base types</i> -- booleans,
+    numbers, strings, etc.  The exact choice of base types doesn't
+    matter -- the construction of the language and its theoretical
+    properties work out pretty much the same -- so for the sake of
+    brevity let's take just <span class="inlinecode"><span class="id" type="library">Bool</span></span> for the moment.  At the end of the
+    chapter we'll see how to add more base types, and in later
+    chapters we'll enrich the pure STLC with other useful constructs
+    like pairs, records, subtyping, and mutable state.
+
+<div class="paragraph"> </div>
+
+    Starting from the booleans, we add three things:
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> variables
+
+</li>
+<li> function abstractions
+
+</li>
+<li> application
+
+</li>
+</ul>
+
+<div class="paragraph"> </div>
+
+    This gives us the following collection of abstract syntax
+    constructors (written out here in informal BNF notation -- we'll
+    formalize it below).
+
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+ Informal concrete syntax: 
+       t ::= x                       variable
+           | \x:T1.t2                abstraction
+           | t1 t2                   application
+           | true                    constant true
+           | false                   constant false
+           | if t1 then t2 else t3   conditional
+
+<div class="paragraph"> </div>
+
+ The <span class="inlinecode">\</span> symbol (backslash, in ascii) in a function abstraction
+    <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="var">T1.t2</span></span> is generally written as a greek letter "lambda" (hence
+    the name of the calculus).  The variable <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> is called the
+    <i>parameter</i> to the function; the term <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> is its <i>body</i>.  The
+    annotation <span class="inlinecode">:<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> specifies the type of arguments that the function
+    can be applied to. 
+<div class="paragraph"> </div>
+
+ Some examples:
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>
+
+<div class="paragraph"> </div>
+
+        The identity function for booleans.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <span class="inlinecode">(\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>)</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span>
+
+<div class="paragraph"> </div>
+
+        The identity function for booleans, applied to the boolean <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span>.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><span class="id" type="keyword">if</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode"><span class="id" type="keyword">then</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a></span> <span class="inlinecode"><span class="id" type="keyword">else</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span>
+
+<div class="paragraph"> </div>
+
+        The boolean "not" function.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span>
+
+<div class="paragraph"> </div>
+
+        The constant function that takes every (boolean) argument to
+        <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span>. 
+</li>
+</ul>
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>
+
+<div class="paragraph"> </div>
+
+        A two-argument function that takes two booleans and returns
+        the first one.  (Note that, as in Coq, a two-argument function
+        is really a one-argument function whose body is also a
+        one-argument function.)
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <span class="inlinecode">(\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>)</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span>
+
+<div class="paragraph"> </div>
+
+        A two-argument function that takes two booleans and returns
+        the first one, applied to the booleans <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a></span> and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span>.
+
+<div class="paragraph"> </div>
+
+        Note that, as in Coq, application associates to the left --
+        i.e., this expression is parsed as <span class="inlinecode">((\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>)</span>
+        <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a>)</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span>.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Records.html#STLCExtendedRecords.f"><span class="id" type="abbreviation">f</span></a>:<span class="id" type="library">Bool</span>→<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Records.html#STLCExtendedRecords.f"><span class="id" type="abbreviation">f</span></a></span> <span class="inlinecode">(<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Records.html#STLCExtendedRecords.f"><span class="id" type="abbreviation">f</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a>)</span>
+
+<div class="paragraph"> </div>
+
+        A higher-order function that takes a <i>function</i> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Records.html#STLCExtendedRecords.f"><span class="id" type="abbreviation">f</span></a></span> (from
+        booleans to booleans) as an argument, applies <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Records.html#STLCExtendedRecords.f"><span class="id" type="abbreviation">f</span></a></span> to <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span>,
+        and applies <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Records.html#STLCExtendedRecords.f"><span class="id" type="abbreviation">f</span></a></span> again to the result.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <span class="inlinecode">(\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Records.html#STLCExtendedRecords.f"><span class="id" type="abbreviation">f</span></a>:<span class="id" type="library">Bool</span>→<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Records.html#STLCExtendedRecords.f"><span class="id" type="abbreviation">f</span></a></span> <span class="inlinecode">(<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Records.html#STLCExtendedRecords.f"><span class="id" type="abbreviation">f</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a>))</span> <span class="inlinecode">(\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a>)</span>
+
+<div class="paragraph"> </div>
+
+        The same higher-order function, applied to the constantly
+        <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a></span> function. 
+</li>
+</ul>
+
+<div class="paragraph"> </div>
+
+ As the last several examples show, the STLC is a language of
+    <i>higher-order</i> functions: we can write down functions that take
+    other functions as arguments and/or return other functions as
+    results.  
+
+<div class="paragraph"> </div>
+
+    Another point to note is that the STLC doesn't provide any
+    primitive syntax for defining <i>named</i> functions -- all functions
+    are "anonymous."  We'll see in chapter <span class="inlinecode"><span class="id" type="library">MoreStlc</span></span> that it is easy
+    to add named functions to what we've got -- indeed, the
+    fundamental naming and binding mechanisms are exactly the same.  
+
+<div class="paragraph"> </div>
+
+    The <i>types</i> of the STLC include <span class="inlinecode"><span class="id" type="library">Bool</span></span>, which classifies the
+    boolean constants <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span> and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a></span> as well as more complex
+    computations that yield booleans, plus <i>arrow types</i> that classify
+    functions. 
+<div class="paragraph"> </div>
+
+      T ::= Bool
+          | T1 -&gt; T2
+    For example:
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a></span> has type <span class="inlinecode"><span class="id" type="library">Bool</span>→<span class="id" type="library">Bool</span></span>
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> has type <span class="inlinecode"><span class="id" type="library">Bool</span>→<span class="id" type="library">Bool</span></span>
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <span class="inlinecode">(\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>)</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span> has type <span class="inlinecode"><span class="id" type="library">Bool</span></span>
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> has type <span class="inlinecode"><span class="id" type="library">Bool</span>→<span class="id" type="library">Bool</span>→<span class="id" type="library">Bool</span></span> (i.e. <span class="inlinecode"><span class="id" type="library">Bool</span></span> <span class="inlinecode">→</span> <span class="inlinecode">(<span class="id" type="library">Bool</span>→<span class="id" type="library">Bool</span>)</span>)
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <span class="inlinecode">(\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>)</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a></span> has type <span class="inlinecode"><span class="id" type="library">Bool</span>→<span class="id" type="library">Bool</span></span>
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <span class="inlinecode">(\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>)</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span> has type <span class="inlinecode"><span class="id" type="library">Bool</span></span>
+
+</li>
+</ul>
+
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab683"></a><h2 class="section">Syntax</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Module</span> <a name="STLC"><span class="id" type="module">STLC</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab684"></a><h3 class="section">Types</h3>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="STLC.ty"><span class="id" type="inductive">ty</span></a> : <span class="id" type="keyword">Type</span> := <br/>
+&nbsp;&nbsp;| <a name="STLC.TBool"><span class="id" type="constructor">TBool</span></a>  : <a class="idref" href="Stlc.html#ty"><span class="id" type="inductive">ty</span></a> <br/>
+&nbsp;&nbsp;| <a name="STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> : <a class="idref" href="Stlc.html#ty"><span class="id" type="inductive">ty</span></a> → <a class="idref" href="Stlc.html#ty"><span class="id" type="inductive">ty</span></a> → <a class="idref" href="Stlc.html#ty"><span class="id" type="inductive">ty</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab685"></a><h3 class="section">Terms</h3>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="STLC.tm"><span class="id" type="inductive">tm</span></a> : <span class="id" type="keyword">Type</span> :=<br/>
+&nbsp;&nbsp;| <a name="STLC.tvar"><span class="id" type="constructor">tvar</span></a> : <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#id"><span class="id" type="inductive">id</span></a> → <a class="idref" href="Stlc.html#tm"><span class="id" type="inductive">tm</span></a><br/>
+&nbsp;&nbsp;| <a name="STLC.tapp"><span class="id" type="constructor">tapp</span></a> : <a class="idref" href="Stlc.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="Stlc.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="Stlc.html#tm"><span class="id" type="inductive">tm</span></a><br/>
+&nbsp;&nbsp;| <a name="STLC.tabs"><span class="id" type="constructor">tabs</span></a> : <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#id"><span class="id" type="inductive">id</span></a> → <a class="idref" href="Stlc.html#STLC.ty"><span class="id" type="inductive">ty</span></a> → <a class="idref" href="Stlc.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="Stlc.html#tm"><span class="id" type="inductive">tm</span></a><br/>
+&nbsp;&nbsp;| <a name="STLC.ttrue"><span class="id" type="constructor">ttrue</span></a> : <a class="idref" href="Stlc.html#tm"><span class="id" type="inductive">tm</span></a><br/>
+&nbsp;&nbsp;| <a name="STLC.tfalse"><span class="id" type="constructor">tfalse</span></a> : <a class="idref" href="Stlc.html#tm"><span class="id" type="inductive">tm</span></a><br/>
+&nbsp;&nbsp;| <a name="STLC.tif"><span class="id" type="constructor">tif</span></a> : <a class="idref" href="Stlc.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="Stlc.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="Stlc.html#tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="Stlc.html#tm"><span class="id" type="inductive">tm</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Tactic Notation</span> "t_cases" <span class="id" type="var">tactic</span>(<span class="id" type="tactic">first</span>) <span class="id" type="var">ident</span>(<span class="id" type="var">c</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">first</span>;<br/>
+&nbsp;&nbsp;[ <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "tvar" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "tapp" <br/>
+&nbsp;&nbsp;| <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "tabs" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "ttrue" <br/>
+&nbsp;&nbsp;| <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "tfalse" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "tif" ].<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Note that an abstraction <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="var">T.t</span></span> (formally, <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#tabs"><span class="id" type="constructor">tabs</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span>) is
+    always annotated with the type <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> of its parameter, in contrast
+    to Coq (and other functional languages like ML, Haskell, etc.),
+    which use <i>type inference</i> to fill in missing annotations.  We're
+    not considering type inference here, to keep things simple. 
+<div class="paragraph"> </div>
+
+ Some examples... 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="STLC.x"><span class="id" type="definition">x</span></a> := (<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Id"><span class="id" type="constructor">Id</span></a> 0).<br/>
+<span class="id" type="keyword">Definition</span> <a name="STLC.y"><span class="id" type="definition">y</span></a> := (<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Id"><span class="id" type="constructor">Id</span></a> 1).<br/>
+<span class="id" type="keyword">Definition</span> <a name="STLC.z"><span class="id" type="definition">z</span></a> := (<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Id"><span class="id" type="constructor">Id</span></a> 2).<br/>
+<span class="id" type="keyword">Hint Unfold</span> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a>.<br/>
+<span class="id" type="keyword">Hint Unfold</span> <a class="idref" href="Stlc.html#STLC.y"><span class="id" type="definition">y</span></a>.<br/>
+<span class="id" type="keyword">Hint Unfold</span> <a class="idref" href="Stlc.html#STLC.z"><span class="id" type="definition">z</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="Stlc.html#STLC.idB"><span class="id" type="abbreviation">idB</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Notation</span> <a name="STLC.idB"><span class="id" type="abbreviation">idB</span></a> := <br/>
+&nbsp;&nbsp;(<a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a>)).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="Stlc.html#STLC.idBB"><span class="id" type="abbreviation">idBB</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>→<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Notation</span> <a name="STLC.idBB"><span class="id" type="abbreviation">idBB</span></a> := <br/>
+&nbsp;&nbsp;(<a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a> (<a class="idref" href="Stlc.html#STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a>) (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a>)).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="Stlc.html#STLC.idBBBB"><span class="id" type="abbreviation">idBBBB</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:(<span class="id" type="library">Bool</span>→<span class="id" type="library">Bool</span>)</span> <span class="inlinecode">→</span> <span class="inlinecode">(<span class="id" type="library">Bool</span>→<span class="id" type="library">Bool</span>).</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Notation</span> <a name="STLC.idBBBB"><span class="id" type="abbreviation">idBBBB</span></a> :=<br/>
+&nbsp;&nbsp;(<a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a> (<a class="idref" href="Stlc.html#STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> (<a class="idref" href="Stlc.html#STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a>) <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="Stlc.html#STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a>)) <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a>)).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.k"><span class="id" type="abbreviation">k</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Notation</span> <a name="STLC.k"><span class="id" type="abbreviation">k</span></a> := (<a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> (<a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#STLC.y"><span class="id" type="definition">y</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a>))).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="Stlc.html#STLC.notB"><span class="id" type="abbreviation">notB</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><span class="id" type="keyword">if</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode"><span class="id" type="keyword">then</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a></span> <span class="inlinecode"><span class="id" type="keyword">else</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span> 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Notation</span> <a name="STLC.notB"><span class="id" type="abbreviation">notB</span></a> := (<a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> (<a class="idref" href="Stlc.html#STLC.tif"><span class="id" type="constructor">tif</span></a> (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a>) <a class="idref" href="Stlc.html#STLC.tfalse"><span class="id" type="constructor">tfalse</span></a> <a class="idref" href="Stlc.html#STLC.ttrue"><span class="id" type="constructor">ttrue</span></a>)).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+(We write these as <span class="inlinecode"><span class="id" type="keyword">Notation</span></span>s rather than <span class="inlinecode"><span class="id" type="keyword">Definition</span></span>s to make
+    things easier for <span class="inlinecode"><span class="id" type="tactic">auto</span></span>.) 
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab686"></a><h2 class="section">Operational Semantics</h2>
+
+<div class="paragraph"> </div>
+
+ To define the small-step semantics of STLC terms, we begin -- as
+    always -- by defining the set of values.  Next, we define the
+    critical notions of <i>free variables</i> and <i>substitution</i>, which are
+    used in the reduction rule for application expressions.  And
+    finally we give the small-step relation itself. 
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab687"></a><h3 class="section">Values</h3>
+
+<div class="paragraph"> </div>
+
+ To define the values of the STLC, we have a few cases to consider.
+
+<div class="paragraph"> </div>
+
+    First, for the boolean part of the language, the situation is
+    clear: <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span> and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a></span> are the only values.  An <span class="inlinecode"><span class="id" type="keyword">if</span></span>
+    expression is never a value. 
+<div class="paragraph"> </div>
+
+ Second, an application is clearly not a value: It represents a
+    function being invoked on some argument, which clearly still has
+    work left to do. 
+<div class="paragraph"> </div>
+
+ Third, for abstractions, we have a choice:
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> We can say that <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="var">T.t1</span></span> is a value only when <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> is a
+        value -- i.e., only if the function's body has been
+        reduced (as much as it can be without knowing what argument it
+        is going to be applied to).
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> Or we can say that <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="var">T.t1</span></span> is always a value, no matter
+        whether <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#t1"><span class="id" type="variable">t1</span></a></span> is one or not -- in other words, we can say that
+        reduction stops at abstractions.
+
+</li>
+</ul>
+
+<div class="paragraph"> </div>
+
+    Coq, in its built-in functional programming langauge, makes the
+    first choice -- for example,
+         Eval simpl in (fun x:bool =&gt; 3 + 4)
+    yields <span class="inlinecode"><span class="id" type="keyword">fun</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#bool"><span class="id" type="inductive">bool</span></a></span> <span class="inlinecode">⇒</span> <span class="inlinecode">7</span>.  
+
+<div class="paragraph"> </div>
+
+    Most real-world functional programming languages make the second
+    choice -- reduction of a function's body only begins when the
+    function is actually applied to an argument.  We also make the
+    second choice here. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="STLC.value"><span class="id" type="inductive">value</span></a> : <a class="idref" href="Stlc.html#STLC.tm"><span class="id" type="inductive">tm</span></a> → <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;| <a name="STLC.v_abs"><span class="id" type="constructor">v_abs</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">T</span> <span class="id" type="var">t</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#value"><span class="id" type="inductive">value</span></a> (<a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Stlc.html#T"><span class="id" type="variable">T</span></a> <a class="idref" href="Stlc.html#t"><span class="id" type="variable">t</span></a>)<br/>
+&nbsp;&nbsp;| <a name="STLC.v_true"><span class="id" type="constructor">v_true</span></a> : <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#value"><span class="id" type="inductive">value</span></a> <a class="idref" href="Stlc.html#STLC.ttrue"><span class="id" type="constructor">ttrue</span></a><br/>
+&nbsp;&nbsp;| <a name="STLC.v_false"><span class="id" type="constructor">v_false</span></a> : <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#value"><span class="id" type="inductive">value</span></a> <a class="idref" href="Stlc.html#STLC.tfalse"><span class="id" type="constructor">tfalse</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Hint Constructors</span> <a class="idref" href="Stlc.html#value"><span class="id" type="inductive">value</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Finally, we must consider what constitutes a <i>complete</i> program.
+
+<div class="paragraph"> </div>
+
+  Intuitively, a "complete" program must not refer to any undefined
+  variables.  We'll see shortly how to define the "free" variables 
+  in a STLC term.  A program is "closed", that is, it contains no
+  free variables.
+
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+ Having made the choice not to reduce under abstractions,
+    we don't need to worry about whether variables are values, since
+    we'll always be reducing programs "from the outside in," and that
+    means the <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#step"><span class="id" type="inductive">step</span></a></span> relation will always be working with closed
+    terms (ones with no free variables).  
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab688"></a><h3 class="section">Substitution</h3>
+
+<div class="paragraph"> </div>
+
+ Now we come to the heart of the STLC: the operation of
+    substituting one term for a variable in another term.
+
+<div class="paragraph"> </div>
+
+    This operation will be used below to define the operational
+    semantics of function application, where we will need to
+    substitute the argument term for the function parameter in the
+    function's body.  For example, we reduce
+       (\x:Bool. if x then true else x) false
+    to 
+       if false then true else false
+]] 
+    by substituting <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a></span> for the parameter <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> in the body of the
+    function.  
+
+<div class="paragraph"> </div>
+
+    In general, we need to be able to substitute some given
+    term <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span> for occurrences of some variable <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> in another term <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span>.
+    In informal discussions, this is usually written <span class="inlinecode"></span> <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a>]<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode"></span> and
+    pronounced "substitute <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> with <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span> in <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span>." 
+<div class="paragraph"> </div>
+
+ Here are some examples:
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a>]</span> <span class="inlinecode">(<span class="id" type="keyword">if</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode"><span class="id" type="keyword">then</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode"><span class="id" type="keyword">else</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a>)</span> yields <span class="inlinecode"><span class="id" type="keyword">if</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span> <span class="inlinecode"><span class="id" type="keyword">then</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span> <span class="inlinecode"><span class="id" type="keyword">else</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a></span>
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a>]</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> yields <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span>
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a>]</span> <span class="inlinecode">(<span class="id" type="keyword">if</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode"><span class="id" type="keyword">then</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode"><span class="id" type="keyword">else</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>)</span> yields <span class="inlinecode"><span class="id" type="keyword">if</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span> <span class="inlinecode"><span class="id" type="keyword">then</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span> <span class="inlinecode"><span class="id" type="keyword">else</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span>
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a>]</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span> yields <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span>
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a>]</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a></span> yields <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a></span> (vacuous substitution)
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a>]</span> <span class="inlinecode">(\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><span class="id" type="keyword">if</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span> <span class="inlinecode"><span class="id" type="keyword">then</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode"><span class="id" type="keyword">else</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a>)</span> yields <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><span class="id" type="keyword">if</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span> <span class="inlinecode"><span class="id" type="keyword">then</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span> <span class="inlinecode"><span class="id" type="keyword">else</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#false"><span class="id" type="constructor">false</span></a></span>
+
+</li>
+<li> <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a>]</span> <span class="inlinecode">(\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>)</span> yields <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span>
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a>]</span> <span class="inlinecode">(\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>)</span> yields <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span>
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <span class="inlinecode">[<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a>]</span> <span class="inlinecode">(\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>)</span> yields <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>
+
+</li>
+</ul>
+
+<div class="paragraph"> </div>
+
+    The last example is very important: substituting <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> with <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span> in
+    <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> does <i>not</i> yield <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#true"><span class="id" type="constructor">true</span></a></span>!  The reason for
+    this is that the <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> in the body of <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> is <i>bound</i> by the
+    abstraction: it is a new, local name that just happens to be
+    spelled the same as some global name <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>. 
+<div class="paragraph"> </div>
+
+ Here is the definition, informally...
+   <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span>x = s
+   <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span>y = y                                   if x &lt;&gt; y
+   <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span>(\x:T11.t12)   = \x:T11. t12      
+   <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span>(\y:T11.t12)   = \y:T11. <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span>t12      if x &lt;&gt; y
+   <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span>(t1 t2)        = (<span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span>t1) (<span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span>t2)       
+   <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span>true           = true
+   <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span>false          = false
+   <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span>(if t1 then t2 else t3) = 
+                   if <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span>t1 then <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span>t2 else <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span>t3
+]]  
+
+<div class="paragraph"> </div>
+
+    ... and formally: 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Reserved Notation</span> "'[' x ':=' s ']' t" (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 20).<br/>
+
+<br/>
+<span class="id" type="keyword">Fixpoint</span> <a name="STLC.subst"><span class="id" type="definition">subst</span></a> (<span class="id" type="var">x</span>:<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#id"><span class="id" type="inductive">id</span></a>) (<span class="id" type="var">s</span>:<a class="idref" href="Stlc.html#STLC.tm"><span class="id" type="inductive">tm</span></a>) (<span class="id" type="var">t</span>:<a class="idref" href="Stlc.html#STLC.tm"><span class="id" type="inductive">tm</span></a>) : <a class="idref" href="Stlc.html#STLC.tm"><span class="id" type="inductive">tm</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">match</span> <a class="idref" href="Stlc.html#t"><span class="id" type="variable">t</span></a> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;| <a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <span class="id" type="var">x'</span> ⇒ <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">if</span> <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a> <span class="id" type="var">x'</span> <span class="id" type="keyword">then</span> <a class="idref" href="Stlc.html#s"><span class="id" type="variable">s</span></a> <span class="id" type="keyword">else</span> <a class="idref" href="Stlc.html#t"><span class="id" type="variable">t</span></a><br/>
+&nbsp;&nbsp;| <a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <span class="id" type="var">x'</span> <span class="id" type="var">T</span> <span class="id" type="var">t1</span> ⇒ <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <span class="id" type="var">x'</span> <span class="id" type="var">T</span> (<span class="id" type="keyword">if</span> <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a> <span class="id" type="var">x'</span> <span class="id" type="keyword">then</span> <span class="id" type="var">t1</span> <span class="id" type="keyword">else</span> (<a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">[</span></a><a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">:=</span></a><a class="idref" href="Stlc.html#s"><span class="id" type="variable">s</span></a><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">]</span></a> <span class="id" type="var">t1</span>)) <br/>
+&nbsp;&nbsp;| <a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span> ⇒ <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> (<a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">[</span></a><a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">:=</span></a><a class="idref" href="Stlc.html#s"><span class="id" type="variable">s</span></a><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">]</span></a> <span class="id" type="var">t1</span>) (<a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">[</span></a><a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">:=</span></a><a class="idref" href="Stlc.html#s"><span class="id" type="variable">s</span></a><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">]</span></a> <span class="id" type="var">t2</span>)<br/>
+&nbsp;&nbsp;| <a class="idref" href="Stlc.html#STLC.ttrue"><span class="id" type="constructor">ttrue</span></a> ⇒ <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.ttrue"><span class="id" type="constructor">ttrue</span></a><br/>
+&nbsp;&nbsp;| <a class="idref" href="Stlc.html#STLC.tfalse"><span class="id" type="constructor">tfalse</span></a> ⇒ <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.tfalse"><span class="id" type="constructor">tfalse</span></a><br/>
+&nbsp;&nbsp;| <a class="idref" href="Stlc.html#STLC.tif"><span class="id" type="constructor">tif</span></a> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span> <span class="id" type="var">t3</span> ⇒ <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.tif"><span class="id" type="constructor">tif</span></a> (<a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">[</span></a><a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">:=</span></a><a class="idref" href="Stlc.html#s"><span class="id" type="variable">s</span></a><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">]</span></a> <span class="id" type="var">t1</span>) (<a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">[</span></a><a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">:=</span></a><a class="idref" href="Stlc.html#s"><span class="id" type="variable">s</span></a><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">]</span></a> <span class="id" type="var">t2</span>) (<a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">[</span></a><a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">:=</span></a><a class="idref" href="Stlc.html#s"><span class="id" type="variable">s</span></a><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">]</span></a> <span class="id" type="var">t3</span>)<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">end</span><br/>
+<br/>
+<span class="id" type="keyword">where</span> <a name="STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">"</span></a>'[' x ':=' s ']' t" := (<a class="idref" href="Stlc.html#subst"><span class="id" type="definition">subst</span></a> <span class="id" type="var">x</span> <span class="id" type="var">s</span> <span class="id" type="var">t</span>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<i>Technical note</i>: Substitution becomes trickier to define if we
+    consider the case where <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/References.html#STLCRef.ExampleVariables.s"><span class="id" type="definition">s</span></a></span>, the term being substituted for a
+    variable in some other term, may itself contain free variables.
+    Since we are only interested here in defining the <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#step"><span class="id" type="inductive">step</span></a></span> relation
+    on closed terms (i.e., terms like <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span>, that do not mention
+    variables are not bound by some enclosing lambda), we can skip
+    this extra complexity here, but it must be dealt with when
+    formalizing richer languages. 
+<div class="paragraph"> </div>
+
+<a name="lab689"></a><h3 class="section"> </h3>
+<a name="lab690"></a><h4 class="section">Exercise: 3 stars (substi)</h4>
+
+<div class="paragraph"> </div>
+
+ The definition that we gave above uses Coq's <span class="inlinecode"><span class="id" type="keyword">Fixpoint</span></span> facility
+    to define substitution as a <i>function</i>.  Suppose, instead, we
+    wanted to define substitution as an inductive <i>relation</i> <span class="inlinecode"><a class="idref" href="Stlc.html#STLC.substi"><span class="id" type="inductive">substi</span></a></span>.
+    We've begun the definition by providing the <span class="inlinecode"><span class="id" type="keyword">Inductive</span></span> header and
+    one of the constructors; your job is to fill in the rest of the
+    constructors. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="STLC.substi"><span class="id" type="inductive">substi</span></a> (<span class="id" type="var">s</span>:<a class="idref" href="Stlc.html#STLC.tm"><span class="id" type="inductive">tm</span></a>) (<span class="id" type="var">x</span>:<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#id"><span class="id" type="inductive">id</span></a>) : <a class="idref" href="Stlc.html#STLC.tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="Stlc.html#STLC.tm"><span class="id" type="inductive">tm</span></a> → <span class="id" type="keyword">Prop</span> := <br/>
+&nbsp;&nbsp;| <a name="STLC.s_var1"><span class="id" type="constructor">s_var1</span></a> : <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#substi"><span class="id" type="inductive">substi</span></a> <span class="id" type="var">s</span> <span class="id" type="var">x</span> (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <span class="id" type="var">x</span>) <span class="id" type="var">s</span><br/>
+&nbsp;&nbsp;<br/>
+.<br/>
+
+<br/>
+<span class="id" type="keyword">Hint Constructors</span> <a class="idref" href="Stlc.html#substi"><span class="id" type="inductive">substi</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="STLC.substi_correct"><span class="id" type="lemma">substi_correct</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">s</span> <span class="id" type="var">x</span> <span class="id" type="var">t</span> <span class="id" type="var">t'</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">[</span></a><a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">:=</span></a><a class="idref" href="Stlc.html#s"><span class="id" type="variable">s</span></a><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">]</span></a><a class="idref" href="Stlc.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="Stlc.html#t'"><span class="id" type="variable">t'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'<->'_x"><span class="id" type="notation">↔</span></a> <a class="idref" href="Stlc.html#STLC.substi"><span class="id" type="inductive">substi</span></a> <a class="idref" href="Stlc.html#s"><span class="id" type="variable">s</span></a> <a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Stlc.html#t"><span class="id" type="variable">t</span></a> <a class="idref" href="Stlc.html#t'"><span class="id" type="variable">t'</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab691"></a><h3 class="section">Reduction</h3>
+
+<div class="paragraph"> </div>
+
+ The small-step reduction relation for STLC now follows the same
+    pattern as the ones we have seen before.  Intuitively, to reduce a
+    function application, we first reduce its left-hand side until it
+    becomes a literal function; then we reduce its right-hand
+    side (the argument) until it is also a value; and finally we
+    substitute the argument for the bound variable in the body of the
+    function.  This last rule, written informally as
+      (\x:T.t12) v2 ==&gt; <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="Stlc.html#v2"><span class="id" type="variable">v2</span></a></span>t12
+    is traditionally called "beta-reduction". 
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+                               value v2
+<hr/>
+                   (ST_AppAbs)
+                     (\x:T.t12) v2 ==&gt; <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:=<a class="idref" href="Stlc.html#v2"><span class="id" type="variable">v2</span></a></span>t12
+
+<div class="paragraph"> </div>
+
+                              t1 ==&gt; t1'
+<hr/>
+                           (ST_App1)
+                           t1 t2 ==&gt; t1' t2
+
+<div class="paragraph"> </div>
+
+                              value v1
+                              t2 ==&gt; t2'
+<hr/>
+                           (ST_App2)
+                           v1 t2 ==&gt; v1 t2'
+ ... plus the usual rules for booleans:
+<hr/>
+                (ST_IfTrue)
+                    (if true then t1 else t2) ==&gt; t1
+<hr/>
+              (ST_IfFalse)
+                    (if false then t1 else t2) ==&gt; t2
+
+<div class="paragraph"> </div>
+
+                              t1 ==&gt; t1'
+<hr/>
+           (ST_If)
+         (if t1 then t2 else t3) ==&gt; (if t1' then t2 else t3)
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Reserved Notation</span> "t1 '==&gt;' t2" (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 40).<br/>
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="STLC.step"><span class="id" type="inductive">step</span></a> : <a class="idref" href="Stlc.html#STLC.tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="Stlc.html#STLC.tm"><span class="id" type="inductive">tm</span></a> → <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;| <a name="STLC.ST_AppAbs"><span class="id" type="constructor">ST_AppAbs</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">T</span> <span class="id" type="var">t12</span> <span class="id" type="var">v2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.value"><span class="id" type="inductive">value</span></a> <a class="idref" href="Stlc.html#v2"><span class="id" type="variable">v2</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> (<a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Stlc.html#T"><span class="id" type="variable">T</span></a> <a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a>) <a class="idref" href="Stlc.html#v2"><span class="id" type="variable">v2</span></a><a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">[</span></a><a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">:=</span></a><a class="idref" href="Stlc.html#v2"><span class="id" type="variable">v2</span></a><a class="idref" href="Stlc.html#STLC.::'['_x_':='_x_']'_x"><span class="id" type="notation">]</span></a><a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a><br/>
+&nbsp;&nbsp;| <a name="STLC.ST_App1"><span class="id" type="constructor">ST_App1</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">t1</span> <span class="id" type="var">t1'</span> <span class="id" type="var">t2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Stlc.html#t1'"><span class="id" type="variable">t1'</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Stlc.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Stlc.html#t2"><span class="id" type="variable">t2</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Stlc.html#t1'"><span class="id" type="variable">t1'</span></a> <a class="idref" href="Stlc.html#t2"><span class="id" type="variable">t2</span></a><br/>
+&nbsp;&nbsp;| <a name="STLC.ST_App2"><span class="id" type="constructor">ST_App2</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">v1</span> <span class="id" type="var">t2</span> <span class="id" type="var">t2'</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.value"><span class="id" type="inductive">value</span></a> <a class="idref" href="Stlc.html#v1"><span class="id" type="variable">v1</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#t2"><span class="id" type="variable">t2</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Stlc.html#t2'"><span class="id" type="variable">t2'</span></a> → <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Stlc.html#v1"><span class="id" type="variable">v1</span></a> <a class="idref" href="Stlc.html#t2"><span class="id" type="variable">t2</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Stlc.html#v1"><span class="id" type="variable">v1</span></a>  <a class="idref" href="Stlc.html#t2'"><span class="id" type="variable">t2'</span></a><br/>
+&nbsp;&nbsp;| <a name="STLC.ST_IfTrue"><span class="id" type="constructor">ST_IfTrue</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Stlc.html#STLC.tif"><span class="id" type="constructor">tif</span></a> <a class="idref" href="Stlc.html#STLC.ttrue"><span class="id" type="constructor">ttrue</span></a> <a class="idref" href="Stlc.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Stlc.html#t2"><span class="id" type="variable">t2</span></a><a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Stlc.html#t1"><span class="id" type="variable">t1</span></a><br/>
+&nbsp;&nbsp;| <a name="STLC.ST_IfFalse"><span class="id" type="constructor">ST_IfFalse</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Stlc.html#STLC.tif"><span class="id" type="constructor">tif</span></a> <a class="idref" href="Stlc.html#STLC.tfalse"><span class="id" type="constructor">tfalse</span></a> <a class="idref" href="Stlc.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Stlc.html#t2"><span class="id" type="variable">t2</span></a><a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Stlc.html#t2"><span class="id" type="variable">t2</span></a><br/>
+&nbsp;&nbsp;| <a name="STLC.ST_If"><span class="id" type="constructor">ST_If</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">t1</span> <span class="id" type="var">t1'</span> <span class="id" type="var">t2</span> <span class="id" type="var">t3</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Stlc.html#t1'"><span class="id" type="variable">t1'</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Stlc.html#STLC.tif"><span class="id" type="constructor">tif</span></a> <a class="idref" href="Stlc.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Stlc.html#t2"><span class="id" type="variable">t2</span></a> <a class="idref" href="Stlc.html#t3"><span class="id" type="variable">t3</span></a><a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">==&gt;</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Stlc.html#STLC.tif"><span class="id" type="constructor">tif</span></a> <a class="idref" href="Stlc.html#t1'"><span class="id" type="variable">t1'</span></a> <a class="idref" href="Stlc.html#t2"><span class="id" type="variable">t2</span></a> <a class="idref" href="Stlc.html#t3"><span class="id" type="variable">t3</span></a><a class="idref" href="Stlc.html#STLC.::x_'==>'_x"><span class="id" type="notation">)</span></a><br/>
+<br/>
+<span class="id" type="keyword">where</span> <a name="STLC.::x_'==>'_x"><span class="id" type="notation">"</span></a>t1 '==&gt;' t2" := (<a class="idref" href="Stlc.html#step"><span class="id" type="inductive">step</span></a> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span>).<br/>
+
+<br/>
+<span class="id" type="keyword">Tactic Notation</span> "step_cases" <span class="id" type="var">tactic</span>(<span class="id" type="tactic">first</span>) <span class="id" type="var">ident</span>(<span class="id" type="var">c</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">first</span>;<br/>
+&nbsp;&nbsp;[ <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "ST_AppAbs" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "ST_App1" <br/>
+&nbsp;&nbsp;| <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "ST_App2" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "ST_IfTrue" <br/>
+&nbsp;&nbsp;| <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "ST_IfFalse" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "ST_If" ].<br/>
+
+<br/>
+<span class="id" type="keyword">Hint Constructors</span> <a class="idref" href="Stlc.html#step"><span class="id" type="inductive">step</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Notation</span> <a name="STLC.multistep"><span class="id" type="abbreviation">multistep</span></a> := (<a class="idref" href="Smallstep.html#multi"><span class="id" type="inductive">multi</span></a> <a class="idref" href="Stlc.html#STLC.step"><span class="id" type="inductive">step</span></a>).<br/>
+<span class="id" type="keyword">Notation</span> <a name="STLC.::x_'==>*'_x"><span class="id" type="notation">"</span></a>t1 '==&gt;*' t2" := (<a class="idref" href="Stlc.html#STLC.multistep"><span class="id" type="abbreviation">multistep</span></a> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span>) (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 40).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab692"></a><h3 class="section">Examples</h3>
+
+<div class="paragraph"> </div>
+
+ Example:
+    ((\x:Bool-&gt;Bool. x) (\x:Bool. x)) ==&gt;* (\x:Bool. x)
+i.e.
+    (idBB idB) ==&gt;* idB
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLC.step_example1"><span class="id" type="lemma">step_example1</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Stlc.html#STLC.idBB"><span class="id" type="abbreviation">idBB</span></a> <a class="idref" href="Stlc.html#STLC.idB"><span class="id" type="abbreviation">idB</span></a><a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">==&gt;*</span></a> <a class="idref" href="Stlc.html#STLC.idB"><span class="id" type="abbreviation">idB</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">eapply</span> <a class="idref" href="Smallstep.html#multi_step"><span class="id" type="constructor">multi_step</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.ST_AppAbs"><span class="id" type="constructor">ST_AppAbs</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.v_abs"><span class="id" type="constructor">v_abs</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Smallstep.html#multi_refl"><span class="id" type="constructor">multi_refl</span></a>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Example:
+((\x:Bool-&gt;Bool. x) ((\x:Bool-&gt;Bool. x) (\x:Bool. x))) 
+      ==&gt;* (\x:Bool. x)
+i.e.
+  (idBB (idBB idB)) ==&gt;* idB.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLC.step_example2"><span class="id" type="lemma">step_example2</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Stlc.html#STLC.idBB"><span class="id" type="abbreviation">idBB</span></a> (<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Stlc.html#STLC.idBB"><span class="id" type="abbreviation">idBB</span></a> <a class="idref" href="Stlc.html#STLC.idB"><span class="id" type="abbreviation">idB</span></a>)<a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">==&gt;*</span></a> <a class="idref" href="Stlc.html#STLC.idB"><span class="id" type="abbreviation">idB</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">eapply</span> <a class="idref" href="Smallstep.html#multi_step"><span class="id" type="constructor">multi_step</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.ST_App2"><span class="id" type="constructor">ST_App2</span></a>. <span class="id" type="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.ST_AppAbs"><span class="id" type="constructor">ST_AppAbs</span></a>. <span class="id" type="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">eapply</span> <a class="idref" href="Smallstep.html#multi_step"><span class="id" type="constructor">multi_step</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.ST_AppAbs"><span class="id" type="constructor">ST_AppAbs</span></a>. <span class="id" type="tactic">simpl</span>. <span class="id" type="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">simpl</span>. <span class="id" type="tactic">apply</span> <a class="idref" href="Smallstep.html#multi_refl"><span class="id" type="constructor">multi_refl</span></a>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Example:
+((\x:Bool-&gt;Bool. x) (\x:Bool. if x then false
+                              else true)) true)
+      ==&gt;* false
+i.e.
+  ((idBB notB) ttrue) ==&gt;* tfalse.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLC.step_example3"><span class="id" type="lemma">step_example3</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> (<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Stlc.html#STLC.idBB"><span class="id" type="abbreviation">idBB</span></a> <a class="idref" href="Stlc.html#STLC.notB"><span class="id" type="abbreviation">notB</span></a>) <a class="idref" href="Stlc.html#STLC.ttrue"><span class="id" type="constructor">ttrue</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">==&gt;*</span></a> <a class="idref" href="Stlc.html#STLC.tfalse"><span class="id" type="constructor">tfalse</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">eapply</span> <a class="idref" href="Smallstep.html#multi_step"><span class="id" type="constructor">multi_step</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.ST_App1"><span class="id" type="constructor">ST_App1</span></a>. <span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.ST_AppAbs"><span class="id" type="constructor">ST_AppAbs</span></a>. <span class="id" type="tactic">auto</span>. <span class="id" type="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">eapply</span> <a class="idref" href="Smallstep.html#multi_step"><span class="id" type="constructor">multi_step</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.ST_AppAbs"><span class="id" type="constructor">ST_AppAbs</span></a>. <span class="id" type="tactic">auto</span>. <span class="id" type="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">eapply</span> <a class="idref" href="Smallstep.html#multi_step"><span class="id" type="constructor">multi_step</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.ST_IfTrue"><span class="id" type="constructor">ST_IfTrue</span></a>. <span class="id" type="tactic">apply</span> <a class="idref" href="Smallstep.html#multi_refl"><span class="id" type="constructor">multi_refl</span></a>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Example:
+((\x:Bool-&gt;Bool. x) ((\x:Bool. if x then false
+                               else true) true))
+      ==&gt;* false
+i.e.
+  (idBB (notB ttrue)) ==&gt;* tfalse.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLC.step_example4"><span class="id" type="lemma">step_example4</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Stlc.html#STLC.idBB"><span class="id" type="abbreviation">idBB</span></a> (<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Stlc.html#STLC.notB"><span class="id" type="abbreviation">notB</span></a> <a class="idref" href="Stlc.html#STLC.ttrue"><span class="id" type="constructor">ttrue</span></a>) <a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">==&gt;*</span></a> <a class="idref" href="Stlc.html#STLC.tfalse"><span class="id" type="constructor">tfalse</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">eapply</span> <a class="idref" href="Smallstep.html#multi_step"><span class="id" type="constructor">multi_step</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.ST_App2"><span class="id" type="constructor">ST_App2</span></a>. <span class="id" type="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.ST_AppAbs"><span class="id" type="constructor">ST_AppAbs</span></a>. <span class="id" type="tactic">auto</span>. <span class="id" type="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">eapply</span> <a class="idref" href="Smallstep.html#multi_step"><span class="id" type="constructor">multi_step</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.ST_App2"><span class="id" type="constructor">ST_App2</span></a>. <span class="id" type="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.ST_IfTrue"><span class="id" type="constructor">ST_IfTrue</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">eapply</span> <a class="idref" href="Smallstep.html#multi_step"><span class="id" type="constructor">multi_step</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.ST_AppAbs"><span class="id" type="constructor">ST_AppAbs</span></a>. <span class="id" type="tactic">auto</span>. <span class="id" type="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Smallstep.html#multi_refl"><span class="id" type="constructor">multi_refl</span></a>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A more automatic proof 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLC.step_example1'"><span class="id" type="lemma">step_example1'</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Stlc.html#STLC.idBB"><span class="id" type="abbreviation">idBB</span></a> <a class="idref" href="Stlc.html#STLC.idB"><span class="id" type="abbreviation">idB</span></a><a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">==&gt;*</span></a> <a class="idref" href="Stlc.html#STLC.idB"><span class="id" type="abbreviation">idB</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>. <span class="id" type="var">normalize</span>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Again, we can use the <span class="inlinecode"><span class="id" type="var">normalize</span></span> tactic from above to simplify
+    the proof. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLC.step_example2'"><span class="id" type="lemma">step_example2'</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Stlc.html#STLC.idBB"><span class="id" type="abbreviation">idBB</span></a> (<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Stlc.html#STLC.idBB"><span class="id" type="abbreviation">idBB</span></a> <a class="idref" href="Stlc.html#STLC.idB"><span class="id" type="abbreviation">idB</span></a>)<a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">==&gt;*</span></a> <a class="idref" href="Stlc.html#STLC.idB"><span class="id" type="abbreviation">idB</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">normalize</span>.<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLC.step_example3'"><span class="id" type="lemma">step_example3'</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> (<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Stlc.html#STLC.idBB"><span class="id" type="abbreviation">idBB</span></a> <a class="idref" href="Stlc.html#STLC.notB"><span class="id" type="abbreviation">notB</span></a>) <a class="idref" href="Stlc.html#STLC.ttrue"><span class="id" type="constructor">ttrue</span></a> <a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">==&gt;*</span></a> <a class="idref" href="Stlc.html#STLC.tfalse"><span class="id" type="constructor">tfalse</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>. <span class="id" type="var">normalize</span>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLC.step_example4'"><span class="id" type="lemma">step_example4'</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Stlc.html#STLC.idBB"><span class="id" type="abbreviation">idBB</span></a> (<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Stlc.html#STLC.notB"><span class="id" type="abbreviation">notB</span></a> <a class="idref" href="Stlc.html#STLC.ttrue"><span class="id" type="constructor">ttrue</span></a>) <a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">==&gt;*</span></a> <a class="idref" href="Stlc.html#STLC.tfalse"><span class="id" type="constructor">tfalse</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>. <span class="id" type="var">normalize</span>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab693"></a><h4 class="section">Exercise: 2 stars (step_example3)</h4>
+ Try to do this one both with and without <span class="inlinecode"><span class="id" type="var">normalize</span></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLC.step_example5"><span class="id" type="lemma">step_example5</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> (<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Stlc.html#STLC.idBBBB"><span class="id" type="abbreviation">idBBBB</span></a> <a class="idref" href="Stlc.html#STLC.idBB"><span class="id" type="abbreviation">idBB</span></a>) <a class="idref" href="Stlc.html#STLC.idB"><span class="id" type="abbreviation">idB</span></a><a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">)</span></a><br/>
+&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.::x_'==>*'_x"><span class="id" type="notation">==&gt;*</span></a> <a class="idref" href="Stlc.html#STLC.idB"><span class="id" type="abbreviation">idB</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab694"></a><h2 class="section">Typing</h2>
+
+</div>
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab695"></a><h3 class="section">Contexts</h3>
+
+<div class="paragraph"> </div>
+
+ <i>Question</i>: What is the type of the term "<span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span>"?
+
+<div class="paragraph"> </div>
+
+    <i>Answer</i>: It depends on the types of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> and <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span>!  
+
+<div class="paragraph"> </div>
+
+    I.e., in order to assign a type to a term, we need to know
+    what assumptions we should make about the types of its free
+    variables.
+
+<div class="paragraph"> </div>
+
+    This leads us to a three-place "typing judgment", informally
+    written <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span>, where <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> is a
+    "typing context" -- a mapping from variables to their types. 
+<div class="paragraph"> </div>
+
+ We hide the definition of partial maps in a module since it is
+    actually defined in <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#"><span class="id" type="library">SfLib</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Module</span> <a name="STLC.PartialMap"><span class="id" type="module">PartialMap</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="STLC.PartialMap.partial_map"><span class="id" type="definition">partial_map</span></a> (<span class="id" type="var">A</span>:<span class="id" type="keyword">Type</span>) := <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#id"><span class="id" type="inductive">id</span></a> → <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#option"><span class="id" type="inductive">option</span></a> <a class="idref" href="Stlc.html#A"><span class="id" type="variable">A</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="STLC.PartialMap.empty"><span class="id" type="definition">empty</span></a> {<span class="id" type="var">A</span>:<span class="id" type="keyword">Type</span>} : <a class="idref" href="Stlc.html#STLC.PartialMap.partial_map"><span class="id" type="definition">partial_map</span></a> <a class="idref" href="Stlc.html#A"><span class="id" type="variable">A</span></a> := (<span class="id" type="keyword">fun</span> <span class="id" type="var">_</span> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#None"><span class="id" type="constructor">None</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Informally, we'll write <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a>,</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> for "extend the partial
+    function <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> to also map <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> to <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span>."  Formally, we use the
+    function <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#extend"><span class="id" type="definition">extend</span></a></span> to add a binding to a partial map. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="STLC.PartialMap.extend"><span class="id" type="definition">extend</span></a> {<span class="id" type="var">A</span>:<span class="id" type="keyword">Type</span>} (<span class="id" type="var">Gamma</span> : <a class="idref" href="Stlc.html#STLC.PartialMap.partial_map"><span class="id" type="definition">partial_map</span></a> <a class="idref" href="Stlc.html#A"><span class="id" type="variable">A</span></a>) (<span class="id" type="var">x</span>:<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#id"><span class="id" type="inductive">id</span></a>) (<span class="id" type="var">T</span> : <a class="idref" href="Stlc.html#A"><span class="id" type="variable">A</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">fun</span> <span class="id" type="var">x'</span> ⇒ <span class="id" type="keyword">if</span> <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#eq_id_dec"><span class="id" type="lemma">eq_id_dec</span></a> <a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Stlc.html#x'"><span class="id" type="variable">x'</span></a> <span class="id" type="keyword">then</span> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" type="constructor">Some</span></a> <a class="idref" href="Stlc.html#T"><span class="id" type="variable">T</span></a> <span class="id" type="keyword">else</span> <a class="idref" href="Stlc.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Stlc.html#x'"><span class="id" type="variable">x'</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLC.PartialMap.extend_eq"><span class="id" type="lemma">extend_eq</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">A</span> (<span class="id" type="var">ctxt</span>: <a class="idref" href="Stlc.html#STLC.PartialMap.partial_map"><span class="id" type="definition">partial_map</span></a> <a class="idref" href="Stlc.html#A"><span class="id" type="variable">A</span></a>) <span class="id" type="var">x</span> <span class="id" type="var">T</span>,<br/>
+&nbsp;&nbsp;(<a class="idref" href="Stlc.html#STLC.PartialMap.extend"><span class="id" type="definition">extend</span></a> <a class="idref" href="Stlc.html#ctxt"><span class="id" type="variable">ctxt</span></a> <a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Stlc.html#T"><span class="id" type="variable">T</span></a>) <a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" type="constructor">Some</span></a> <a class="idref" href="Stlc.html#T"><span class="id" type="variable">T</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span>. <span class="id" type="tactic">unfold</span> <a class="idref" href="Stlc.html#STLC.PartialMap.extend"><span class="id" type="definition">extend</span></a>. <span class="id" type="tactic">rewrite</span> <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#eq_id"><span class="id" type="lemma">eq_id</span></a>. <span class="id" type="tactic">auto</span>.<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <a name="STLC.PartialMap.extend_neq"><span class="id" type="lemma">extend_neq</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">A</span> (<span class="id" type="var">ctxt</span>: <a class="idref" href="Stlc.html#STLC.PartialMap.partial_map"><span class="id" type="definition">partial_map</span></a> <a class="idref" href="Stlc.html#A"><span class="id" type="variable">A</span></a>) <span class="id" type="var">x1</span> <span class="id" type="var">T</span> <span class="id" type="var">x2</span>,<br/>
+&nbsp;&nbsp;<a class="idref" href="Stlc.html#x2"><span class="id" type="variable">x2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'<>'_x"><span class="id" type="notation">≠</span></a> <a class="idref" href="Stlc.html#x1"><span class="id" type="variable">x1</span></a> →                       <br/>
+&nbsp;&nbsp;(<a class="idref" href="Stlc.html#STLC.PartialMap.extend"><span class="id" type="definition">extend</span></a> <a class="idref" href="Stlc.html#ctxt"><span class="id" type="variable">ctxt</span></a> <a class="idref" href="Stlc.html#x2"><span class="id" type="variable">x2</span></a> <a class="idref" href="Stlc.html#T"><span class="id" type="variable">T</span></a>) <a class="idref" href="Stlc.html#x1"><span class="id" type="variable">x1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="Stlc.html#ctxt"><span class="id" type="variable">ctxt</span></a> <a class="idref" href="Stlc.html#x1"><span class="id" type="variable">x1</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span>. <span class="id" type="tactic">unfold</span> <a class="idref" href="Stlc.html#STLC.PartialMap.extend"><span class="id" type="definition">extend</span></a>. <span class="id" type="tactic">rewrite</span> <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#neq_id"><span class="id" type="axiom">neq_id</span></a>; <span class="id" type="tactic">auto</span>.<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">End</span> <a class="idref" href="Stlc.html#STLC.PartialMap"><span class="id" type="module">PartialMap</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Definition</span> <span class="id" type="keyword">context</span> := <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#partial_map"><span class="id" type="definition">partial_map</span></a> <a class="idref" href="Stlc.html#STLC.ty"><span class="id" type="inductive">ty</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab696"></a><h3 class="section">Typing Relation</h3>
+
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+                             Gamma x = T
+<hr/>
+                              (T_Var)
+                            Gamma |- x \in T
+
+<div class="paragraph"> </div>
+
+                      Gamma , x:T11 |- t12 \in T12
+<hr/>
+                       (T_Abs)
+                     Gamma |- \x:T11.t12 \in T11-&gt;T12
+
+<div class="paragraph"> </div>
+
+                        Gamma |- t1 \in T11-&gt;T12
+                          Gamma |- t2 \in T11
+<hr/>
+                          (T_App)
+                         Gamma |- t1 t2 \in T12
+<hr/>
+                          (T_True)
+                         Gamma |- true \in Bool
+<hr/>
+                         (T_False)
+                        Gamma |- false \in Bool
+
+<div class="paragraph"> </div>
+
+       Gamma |- t1 \in Bool    Gamma |- t2 \in T    Gamma |- t3 \in T
+<hr/>
+          (T_If)
+                  Gamma |- if t1 then t2 else t3 \in T
+
+<div class="paragraph"> </div>
+
+    We can read the three-place relation <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span> <span class="inlinecode">|-</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> <span class="inlinecode">\<span class="id" type="keyword">in</span></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> as: 
+    "to the term <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> we can assign the type <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Basics.html#T"><span class="id" type="variable">T</span></a></span> using as types for
+    the free variables of <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/ImpParser.html#t"><span class="id" type="variable">t</span></a></span> the ones specified in the context 
+    <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#Gamma"><span class="id" type="variable">Gamma</span></a></span>." 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Reserved Notation</span> "Gamma '|-' t '\in' T" (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 40).<br/>
+
+<br/>
+<span class="id" type="keyword">Inductive</span> <a name="STLC.has_type"><span class="id" type="inductive">has_type</span></a> : <span class="id" type="keyword">context</span> → <a class="idref" href="Stlc.html#STLC.tm"><span class="id" type="inductive">tm</span></a> → <a class="idref" href="Stlc.html#STLC.ty"><span class="id" type="inductive">ty</span></a> → <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;| <a name="STLC.T_Var"><span class="id" type="constructor">T_Var</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">x</span> <span class="id" type="var">T</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" type="constructor">Some</span></a> <a class="idref" href="Stlc.html#T"><span class="id" type="variable">T</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Stlc.html#T"><span class="id" type="variable">T</span></a><br/>
+&nbsp;&nbsp;| <a name="STLC.T_Abs"><span class="id" type="constructor">T_Abs</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">x</span> <span class="id" type="var">T11</span> <span class="id" type="var">T12</span> <span class="id" type="var">t12</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#extend"><span class="id" type="definition">extend</span></a> <a class="idref" href="Stlc.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Stlc.html#T12"><span class="id" type="variable">T12</span></a> → <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a> <a class="idref" href="Stlc.html#t12"><span class="id" type="variable">t12</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Stlc.html#STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a> <a class="idref" href="Stlc.html#T12"><span class="id" type="variable">T12</span></a><br/>
+&nbsp;&nbsp;| <a name="STLC.T_App"><span class="id" type="constructor">T_App</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">T11</span> <span class="id" type="var">T12</span> <span class="id" type="var">Gamma</span> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Stlc.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Stlc.html#STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a> <a class="idref" href="Stlc.html#T12"><span class="id" type="variable">T12</span></a> → <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Stlc.html#t2"><span class="id" type="variable">t2</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Stlc.html#T11"><span class="id" type="variable">T11</span></a> → <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> <a class="idref" href="Stlc.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Stlc.html#t2"><span class="id" type="variable">t2</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Stlc.html#T12"><span class="id" type="variable">T12</span></a><br/>
+&nbsp;&nbsp;| <a name="STLC.T_True"><span class="id" type="constructor">T_True</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">Gamma</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Stlc.html#STLC.ttrue"><span class="id" type="constructor">ttrue</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a><br/>
+&nbsp;&nbsp;| <a name="STLC.T_False"><span class="id" type="constructor">T_False</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">Gamma</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Stlc.html#STLC.tfalse"><span class="id" type="constructor">tfalse</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a><br/>
+&nbsp;&nbsp;| <a name="STLC.T_If"><span class="id" type="constructor">T_If</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">t1</span> <span class="id" type="var">t2</span> <span class="id" type="var">t3</span> <span class="id" type="var">T</span> <span class="id" type="var">Gamma</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Stlc.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Stlc.html#t2"><span class="id" type="variable">t2</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Stlc.html#T"><span class="id" type="variable">T</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Stlc.html#t3"><span class="id" type="variable">t3</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Stlc.html#T"><span class="id" type="variable">T</span></a> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#Gamma"><span class="id" type="variable">Gamma</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Stlc.html#STLC.tif"><span class="id" type="constructor">tif</span></a> <a class="idref" href="Stlc.html#t1"><span class="id" type="variable">t1</span></a> <a class="idref" href="Stlc.html#t2"><span class="id" type="variable">t2</span></a> <a class="idref" href="Stlc.html#t3"><span class="id" type="variable">t3</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Stlc.html#T"><span class="id" type="variable">T</span></a><br/>
+<br/>
+<span class="id" type="keyword">where</span> <a name="STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">"</span></a>Gamma '|-' t '\in' T" := (<a class="idref" href="Stlc.html#has_type"><span class="id" type="inductive">has_type</span></a> <span class="id" type="var">Gamma</span> <span class="id" type="var">t</span> <span class="id" type="var">T</span>).<br/>
+
+<br/>
+<span class="id" type="keyword">Tactic Notation</span> "has_type_cases" <span class="id" type="var">tactic</span>(<span class="id" type="tactic">first</span>) <span class="id" type="var">ident</span>(<span class="id" type="var">c</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">first</span>;<br/>
+&nbsp;&nbsp;[ <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "T_Var" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "T_Abs" <br/>
+&nbsp;&nbsp;| <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "T_App" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "T_True" <br/>
+&nbsp;&nbsp;| <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "T_False" | <span class="id" type="var">Case_aux</span> <span class="id" type="var">c</span> "T_If" ].<br/>
+
+<br/>
+<span class="id" type="keyword">Hint Constructors</span> <a class="idref" href="Stlc.html#has_type"><span class="id" type="inductive">has_type</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab697"></a><h3 class="section">Examples</h3>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Example</span> <a name="STLC.typing_example_1"><span class="id" type="definition">typing_example_1</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a>) <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Stlc.html#STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.T_Abs"><span class="id" type="constructor">T_Abs</span></a>. <span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.T_Var"><span class="id" type="constructor">T_Var</span></a>. <span class="id" type="tactic">reflexivity</span>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Note that since we added the <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/Norm.html#has_type"><span class="id" type="inductive">has_type</span></a></span> constructors to the hints
+    database, auto can actually solve this one immediately. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Example</span> <a name="STLC.typing_example_1'"><span class="id" type="definition">typing_example_1'</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a>) <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span> <a class="idref" href="Stlc.html#STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>. <span class="id" type="tactic">auto</span>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Another example:
+     empty |- \x:A. \y:A-&gt;A. y (y x)) 
+           \in A -&gt; (A-&gt;A) -&gt; A.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Example</span> <a name="STLC.typing_example_2"><span class="id" type="definition">typing_example_2</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#STLC.y"><span class="id" type="definition">y</span></a> (<a class="idref" href="Stlc.html#STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.y"><span class="id" type="definition">y</span></a>) (<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.y"><span class="id" type="definition">y</span></a>) (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a>))))<a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Stlc.html#STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> (<a class="idref" href="Stlc.html#STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> (<a class="idref" href="Stlc.html#STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a>) <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a>)<a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a>.<br/>
+<span class="id" type="keyword">Proof</span> <span class="id" type="keyword">with</span> <span class="id" type="tactic">auto</span> <span class="id" type="keyword">using</span> <a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#extend_eq"><span class="id" type="lemma">extend_eq</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.T_Abs"><span class="id" type="constructor">T_Abs</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.T_Abs"><span class="id" type="constructor">T_Abs</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">eapply</span> <a class="idref" href="Stlc.html#STLC.T_App"><span class="id" type="constructor">T_App</span></a>. <span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.T_Var"><span class="id" type="constructor">T_Var</span></a>...<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">eapply</span> <a class="idref" href="Stlc.html#STLC.T_App"><span class="id" type="constructor">T_App</span></a>. <span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.T_Var"><span class="id" type="constructor">T_Var</span></a>...<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="Stlc.html#STLC.T_Var"><span class="id" type="constructor">T_Var</span></a>...<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab698"></a><h4 class="section">Exercise: 2 stars, optional (typing_example_2_full)</h4>
+ Prove the same result without using <span class="inlinecode"><span class="id" type="tactic">auto</span></span>, <span class="inlinecode"><span class="id" type="tactic">eauto</span></span>, or
+    <span class="inlinecode"><span class="id" type="tactic">eapply</span></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Example</span> <a name="STLC.typing_example_2_full"><span class="id" type="definition">typing_example_2_full</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#STLC.y"><span class="id" type="definition">y</span></a> (<a class="idref" href="Stlc.html#STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.y"><span class="id" type="definition">y</span></a>) (<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.y"><span class="id" type="definition">y</span></a>) (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a>))))<a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Stlc.html#STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> (<a class="idref" href="Stlc.html#STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> (<a class="idref" href="Stlc.html#STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a>) <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a>)<a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+<a name="lab699"></a><h4 class="section">Exercise: 2 stars (typing_example_3)</h4>
+ Formally prove the following typing derivation holds: 
+<div class="paragraph"> </div>
+
+   empty |- \x:Bool-&gt;B. \y:Bool-&gt;Bool. \z:Bool.
+               y (x z) 
+         \in T.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Example</span> <a name="STLC.typing_example_3"><span class="id" type="definition">typing_example_3</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">T</span><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">,</span></a> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a> (<a class="idref" href="Stlc.html#STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#STLC.y"><span class="id" type="definition">y</span></a> (<a class="idref" href="Stlc.html#STLC.TArrow"><span class="id" type="constructor">TArrow</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#STLC.z"><span class="id" type="definition">z</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.y"><span class="id" type="definition">y</span></a>) (<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a>) (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.z"><span class="id" type="definition">z</span></a>)))))<a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#T"><span class="id" type="variable">T</span></a>.<br/>
+<span class="id" type="keyword">Proof</span> <span class="id" type="keyword">with</span> <span class="id" type="tactic">auto</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+<div class="paragraph"> </div>
+
+ We can also show that terms are <i>not</i> typable.  For example, let's
+    formally check that there is no typing derivation assigning a type
+    to the term <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a>:<span class="id" type="library">Bool</span>.</span> <span class="inlinecode">\<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a>:<span class="id" type="library">Bool</span>,</span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.x"><span class="id" type="abbreviation">x</span></a></span> <span class="inlinecode"><a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/RecordSub.html#Examples.y"><span class="id" type="abbreviation">y</span></a></span> -- i.e.,
+    ~ exists T,
+        empty |- \x:Bool. \y:Bool, x y : T.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Example</span> <a name="STLC.typing_nonexample_1"><span class="id" type="definition">typing_nonexample_1</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">¬</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">T</span><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">,</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#STLC.y"><span class="id" type="definition">y</span></a> <a class="idref" href="Stlc.html#STLC.TBool"><span class="id" type="constructor">TBool</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a>) (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.y"><span class="id" type="definition">y</span></a>)))<a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#T"><span class="id" type="variable">T</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">Hc</span>. <span class="id" type="tactic">inversion</span> <span class="id" type="var">Hc</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>. <span class="id" type="tactic">subst</span>. <span class="id" type="tactic">clear</span> <span class="id" type="var">H</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H5</span>. <span class="id" type="tactic">subst</span>. <span class="id" type="tactic">clear</span> <span class="id" type="var">H5</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H4</span>. <span class="id" type="tactic">subst</span>. <span class="id" type="tactic">clear</span> <span class="id" type="var">H4</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H2</span>. <span class="id" type="tactic">subst</span>. <span class="id" type="tactic">clear</span> <span class="id" type="var">H2</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H5</span>. <span class="id" type="tactic">subst</span>. <span class="id" type="tactic">clear</span> <span class="id" type="var">H5</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H1</span>. <span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab700"></a><h4 class="section">Exercise: 3 stars, optional (typing_nonexample_3)</h4>
+ Another nonexample:
+    ~ (exists S, exists T,
+          empty |- \x:S. x x : T).
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Example</span> <a name="STLC.typing_nonexample_3"><span class="id" type="definition">typing_nonexample_3</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">¬</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">(</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">S</span><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">,</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">∃</span></a> <span class="id" type="var">T</span><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">,</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/SfLib.html#empty"><span class="id" type="definition">empty</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">|-</span></a> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">(</span></a><a class="idref" href="Stlc.html#STLC.tabs"><span class="id" type="constructor">tabs</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a> <a class="idref" href="Stlc.html#S"><span class="id" type="variable">S</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="Stlc.html#STLC.tapp"><span class="id" type="constructor">tapp</span></a> (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a>) (<a class="idref" href="Stlc.html#STLC.tvar"><span class="id" type="constructor">tvar</span></a> <a class="idref" href="Stlc.html#STLC.x"><span class="id" type="definition">x</span></a>))<a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Stlc.html#STLC.::x_'|-'_x_'\in'_x"><span class="id" type="notation">\</span></a><span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Stlc.html#T"><span class="id" type="variable">T</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic.html#:type_scope:'~'_x"><span class="id" type="notation">)</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+ <span class="id" type="var">Admitted</span>.<br/>
+</div>
+
+<div class="doc">
+<font size=-2>&#9744;</font> 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">End</span> <a class="idref" href="Stlc.html#STLC"><span class="id" type="module">STLC</span></a>.<br/>
+
+<br/>
+
+<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="https://proglang.informatik.uni-freiburg.de/teaching/coq/2014ws-seminar/sf/index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

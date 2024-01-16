@@ -1,0 +1,436 @@
+
+6. Differentiation
+==================
+
+6.1 Definition und Beispiele
+----------------------------
+
+
+Sei f : D->W wobei D <= RR, W <= CC und x:D.
+Die Funktion f ist an der Stelle x:D differenzierbar, wenn der Grenzwert
+
+lim   (f(x+h) - f(x)) / h
+h->0
+
+existiert. Man schreibt dann f'(x) fuer diesen Grenzwert. 
+
+Alternative Notation: df(x)/dx (gelesen df(x) nach dx).
+
+Im Falle W <=RR ist f'(x) die Steigung der Tangente an den Graphen von f
+an der Stelle x, also die Steigung des Graphen im Punkt x. Je steiler,
+desto groesser ist f'(x); ist f(x)=0, so verlaeuft der Graph im Punkt
+x eben.
+
+Im Falle W<=CC ist der Graph von f eine gewundene Kurve, f'(x) gibt
+an, wie stark sich in einer Umgebung von x der Realteil und der
+Imaginaerteil von x aendern.
+
+Die Funktion f'(x), die die Steigung von f in Abhaengigkeit von x
+angibt heisst Ableitung von f.
+
+Beispiele: 
+
+f(x) = c /* konstante Funktion */
+
+lim  (c-c)/h = 0, also f'(x)=0 und der Grenzwert existiert fuer alle x:R 
+h->0
+
+Die Steigung ist ueberall 0. 
+
+f(x) = x
+
+lim  (x+h-x)/h = lim  h/h = 1, also f'(x)=1 (Steigung konstant 1) 
+
+f(x) = x^2
+
+lim  ((x+h)^2-x^2)/h = lim  (2hx+h^2)/h = 2x, also f'(x)=2x. 
+(Steigung proportional zu x)
+
+f(x) = 1/x und D=RR^+.
+
+lim (1/(x+h)-1/x)/h = lim (x-x-h)/(h*x*(x+h)) = - lim h/(h*x*(x+h)) =
+- lim 1/(x*(x+h)) = - 1/x^2. Also f'(x) = - 1/x^2.
+
+f(x) = exp(x)
+
+lim (exp(x+h)-exp(x))/h = exp(x) * lim (exp(h)-1)/h = exp(x).
+
+f(x) = sin(x)
+
+lim (sin(x+h)-sin(x))/h = lim (sin(x)cos(h)+cos(x)sin(h)-sin(x))/h =
+(cos(x)lim sin(h)/h) + sin(x)lim(cos(h)-1)/h = cos(x)
+
+Analog: cos'(x) = -sin(x)
+
+f(x) = g(lambda*x)
+
+lim (g(lambda*x+lambda*h)-g(lambda*x))/h =
+lim (g(lambda*x+k)-g(lambda*x))/(k/lambda) =
+lambda * g'(lambda x)
+
+
+Bemerkung: Bei komplexwertigen Funktionen gilt
+
+Re(f'(x)) = (Re f)'(x)   Im(f'(x)) = (Im f)'(x)
+
+Daraus ergeben sich alternative Beweise fuer die Ableitungen der
+trigonometrischen Funktionen:
+
+sin'(x) = Im(exp(ix)') = Im(i*exp(ix)) = cos(x)
+sin'(x) = Re(exp(ix)') = Re(i*exp(ix)) = -sin(x)
+
+
+Bemerkung: Ist eine Funktion f in einem Punkt x differenzierbar, so
+ist sie in x auch stetig. Die Umkehrung gilt nicht immer;
+Gegenbeispiel: f(x)=|x| ist in x=0 stetig, aber nicht differenzierbar. 
+
+
+6.2 Differentiations-Regeln
+---------------------------
+
+
+Grundrechenarten:
+
+Seien f,g:D->CC, lambda:CC
+
+Es gelten
+
+-) (f+g)'(x) = f'(x)+g'(x)
+-) (f-g)'(x) = f'(x)-g'(x)
+-) (lambda*f)'(x) = lambda*f'(x)
+-) (f*g)'(x) = f'(x)*g(x)+f(x)*g'(x)
+-) (f/g)'(x) = (f'(x)*g(x) - f(x)*g'(x)) / (g(x)^2)   (g(x) =/= 0)
+
+Beispiele:
+
+f(x) = x^3 = x^2*x
+f'(x) = 2x*x + x^2*1 = 3x^2.
+
+Allgemein gilt: Falls f(x)=x^n, so ist f'(x)=n*x^(n-1) und zwar nicht
+nur fuer n:NN, sondern fuer alle n:CC.
+
+f(x) = sin(x)*exp(x)
+f'(x) = cos(x)*exp(x)+sin(x)*exp(x)
+
+f(x) = tan(x) = sin(x)/cos(x)
+f'(x) = 1/(cos(x)^2)*(cos(x)^2 + sin(x)^2) = 1/cos(x)^2
+
+
+
+Kettenregel:
+
+Sei g:D->W, h:W->CC
+
+f(x) = h(g(x))
+
+Dann ist f'(x) = h'(g(x))*g'(x)
+
+Beispiele:
+f(x)=exp(-x^2)
+f'(x)=-exp(-x^2)*2x
+
+f(x)=(sin(x))^2
+f'(x)=2sin(x)*cos(x)
+
+
+
+Differentiation der Umkehrfunktion.
+
+Sei f:D->W und g:W->D die Umkehrfunktion von f (existiert, wenn f auf
+D streng monoton ist).
+
+Es gilt dann:  g'(f(x))=1/f'(x)
+
+Beispiel:
+
+f(x)=exp(x), g(x)=ln(x)
+
+g'(exp(x)) = 1/exp(x), also g'(z)=1/z
+
+f(x)=sin(x), g(x)=arcsin(x)
+g'(sin(x))=1/cos(x)=1/sqrt(1-sin(x)^2), also g'(z)=1/sqrt(1-z^2)
+
+f(x)=cos(x), g(x)=arccos(x)
+g'(cos(x))=-1/sin(x)=-1/sqrt(1-cos(x)^2), also g'(z)=-1/sqrt(1-z^2)
+
+f(x)=tan(x), g(x)=arctan(x)
+g'(tan(x))=cos(x)^2=1/(1+tan(x)^2), also g'(z)=1/(1+x^2)
+NR: tan(x)^2=(1-cos(x)^2)/cos(x)^2 ==> cos(x)^2=1/(1+tan(x)^2)
+
+Es ist bemerkenswert, dass die Ableitungen der Umkehrfunktionen von
+exp,sin,cos,tan vergleichsweise einfach aussehen.
+
+Beispiel: f(x)=x^x
+f(x) = exp(ln(x^x)) = exp(x*ln(x))
+f'(x) = exp(x*ln(x))*(1*ln(x)+x*1/x) = x^x * (ln(x)+1)
+
+
+Anwendungsbeispiel:
+
+lim log( (1+x/n)^n) = lim n*log(1+x/n) = 
+n->oo
+
+lim x * log(1+x/n)/(x/n) = 
+n->oo
+
+lim x * log(1+h)/h = x * log'(1) = x
+h->0
+
+also ist lim (1+x/n)^n = e^x 
+         n->oo
+
+"Stetige Verzinsung". Die jaehrlichen Zinsen seien x, z.B. x=0.03
+(drei Prozent). Das Jahr wird in n Teile zerlegt, z.B. n=360, nach
+jedem Teil werden die Zinsen berechnet und zum Kapital addiert. Es
+multipliziert sich also mit (1+x/n), bzw. nach einem Jahr um
+(1+x/n)^n. Laesst man die Teile im kleiner werden, so wird im
+Grenzwert das Kapital mit e^x multipliziert.
+
+
+6.3 Höhere Ableitungen
+----------------------
+
+Man definiert die zweite Ableitung einer Funktion als die Ableitung
+der Ableitung. Sie ist ein Mass fuer die Aenderung der Steigung oder
+die Kruemmung des Graphen.
+
+f''(x) = g'(x) wobei g(x)=f'(x)
+
+Natuerlich muss f'(x) in einer Umgebung von x existieren, damit f''(x)
+in x existiert.
+
+Man schreibt auch d^2 f(x) / dx^2 fuer f''(x).
+
+
+6.4 Monotonie und Konvexitaet
+-----------------------------
+
+
+Ist f'(x)>0 in einem Intervall I, so steigt f streng monoton in I
+Ist f'(x)<0 in einem Intervall I, so faellt f streng monoton in I 
+Ist f''(x)>=0 in einem Intervall I, so ist f in I konvex (nach oben gebogen)
+Ist f''(x)<=0 in einem Intervall I, so ist f in I konkav (nach unten gebogen). 
+
+Ist f in einem Intervall monoton wachsend, bzw. fallend, so gilt in
+diesem Intervall f'(x)>=0, bzw. f'(x)<=0.
+
+Eine analoge Umkehraussage kann fuer die zweite Ableitung getroffen
+werden.
+
+Die Funktion f(x)=x^3 ist in ganz RR streng monoton steigend, aber f'(0)=0.
+
+Formal definiert man eine auf einem Intervall I definierte Funktion f
+als konvex, wenn fuer alle x,y:I und lambda:[0,1] gilt:
+
+    f(lambda*x + (1-lambda)*y) <= lambda*f(x)+(1-lambda)*f(y)
+
+Hier ist z := lambda*x + (1-lambda)*y ein Punkt zwischen x und y und
+lambda*f(x)+(1-lambda)*f(y) ist der Punkt oberhalb von z auf der
+Geraden durch (x,f(x)) und (y,f(y)).
+
+Konvexitaet bedeutet also, dass der Graph zwischen zwei Punkten sich
+jeweils unterhalb der Verbindungsgerade der beiden Punkte befindet
+("nach oben gebogen"). Beispiele auf ganz RR konvexer Funktionen sind
+exp(x) und f(x)=x^2 und (ein Grenzfall) auch f(x)=x.
+
+Eine Funktion f(x) ist konkav, wenn -f konvex ist, oder - 
+gleichbedeutend - die obige Ungleichung mit >= statt mit <= erfuellt ist
+("nach unten gebogen"). Die Wurzelfunktion ist z.B. auf [0,oo] konkav.
+
+Anwendung: Fuer lambda:[0,1] und x,y:RR^+_0 gilt
+
+x^lambda * y^(1-lambda) <= lambda*x + (1-lambda)*y
+
+Beweis:
+
+Der Logarithmus ist konkav (zweite Ableitung -1/x^2). Daher gilt
+
+lambda*ln(x)+(1-lambda)*ln(y) <= ln(lambda*x + (1-lambda)*y)
+
+Also
+
+ln(x^lambda) * y^(1-lambda)) <= ln(lambda*x + (1-lambda)*y)
+
+woraus die Behauptung durch Anwenden der monotonen Funktion exp folgt.
+
+Diese Abschaetzung hat weitere Anwendungen in der linearen Algebra
+(siehe [Forster]).
+
+
+
+6.5 Lokale Extrema
+------------------
+
+Sei f:]a,b[ -> RR eine Funktion. f hat in x:]a,b[ ein lokales Maximum
+/ Minimum, wenn epsilon>0 existiert, sodass fuer alle y mit
+|x-y|<epsilon gilt f(y)<=f(x) (Maximum), bzw f(y)>=f(y) (Minimum). Hat
+man <,> statt <=,>=, so spricht man von einem strengen
+Maximum/Minimum. Der Oberbegriff fuer Maxima und Minima lautet
+Extremum. 
+
+Beispiele:
+
+f(x)=x^2 hat bei x=0 ein lokales Minimum.
+
+f(x)=sin(x) hat lokale Maxima bei pi/2+2*k*pi fuer k:ZZ und lokale
+Minima bei -pi/2+2*k*pi fuer k:ZZ.
+
+f(x)=exp(x) hat keine lokalen Extrema.
+
+Satz: Hat f bei x ein lokales Extremum und ist f bei x
+differenzierbar, so ist f'(x)=0.
+
+Intuitive Begruendung: Die Steigung bei x muss Null sein, sonst
+koennte man ja in der Naehe von x noch nach oben oder unten gehen.
+
+Die Umkehrung gilt nicht, z.B. ist f'(0)=0 fuer f(x)=x^3.
+
+Satz: Gilt f'(x)=0 und f''(x)>0, so hat f bei x ein strenges lokales Minimum;
+Ist f''(x)<0, so hat f bei x ein strenges lokales Maximum.
+
+Intuitive Begruendung: f hat bei x Steigung 0 und ist nach unten
+gebogen. Es muss ein Maximum vorliegen.
+
+Beispiel: f(x) = x^3 - 2*x^2 + 1
+f'(x)=3x^2-4x
+f'(x)=0 <=> x:{0,4/3}
+f''(x)=6x-4
+f''(0)=-2, f''(4/3)=2
+Strenges lokales Maximum bei x=0; strenges lokales Minimum bei x=2/3.
+
+Bemerkung: interessiert man sich fuer Extremwerte in einem
+geschlossenen Intervall, so muss man die Intervallgrenzen gesondert
+behandeln.
+
+Beispiel: Man bestimme alle Extrema von f(x)=x^2 in [-1,1]. Lokales
+(und absolutes) Minimum bei x=0 und es ist f'(0)=0. Lokale und
+absolute Maxima bei x=-1, x=+1, aber f'(1), f'(-1) =/= 0.
+
+Man bestimme das lokale Minimum von f(x)=x^x:
+Es ist f'(x)=x^x(ln(x)+1) und f''(x)=x^x((ln(x)+1)^2+1/x)
+Die einzige Nullstelle von f' ist 1/e und f''(1/e)=e*(1/e)^(1/e)>0.
+
+
+6.6 Mittelwertsätze
+-------------------
+
+Satz (Zwischenwertsatz): Sei f: [a,b]->RR eine stetige Funktion. Fuer
+jeden Wert y:[f(a),f(b)], bzw y:[f(b),f(a)],  gibt es ein x:[a,b] mit f(x)=y.
+      
+Begruendung: man beschreibt das gesuchte x durch eine
+Intervallschachtelung. Aufgrund der Stetigkeit von f ergibt sich dann
+der gewuenschte Funktionswert, Details s. [Forster, S113].
+
+Verallgemeinerung: Sei f: [a,b]->RR eine stetige Funktion. Seien
+u,v:[a,b] mit f(u)<=f(v). Fuer jeden Wert y:[f(u),f(v)] gibt es ein
+x:[a,b] mit f(x)=y.
+
+Satz (Mittelwertsatz der Differentialrechnung): Ist f:[a,b]->RR stetig
+differenzierbar, so gibt es x:[a,b] mit f'(x)=(f(b)-f(a))/(b-a).
+
+D.h. an einem Punkt in [a,b] entspricht die Steigung gerade der
+Steigung der Sekanten durch a und b.
+
+Beweis: Durch Umskalierung kann man sich auf den Fall f(b)=f(a)
+beschraenken ("Satz von Rolle"). Dann aber folgt die Aussage aus der
+Tatsache, dass zwischen a und b ein lokales Extremum liegen muss.
+
+Anwendungen: 
+
+Satz: Ist I ein Intervall und f:I->W differenzierbar und gilt f'(x)=0
+fuer alle x:I, so ist f konstant, also f(x)=c fuer ein c:W und alle
+x:D.
+
+Beweis: Seien a,b:I mit a=/=b. Nach dem Mittelwertsatz der
+Differentialrechnung:gibt es x:I mit (f(b)-f(a))/(b-a) = f'(x) = 0,
+also f(a)=f(b).
+
+Es gilt daher, f(x)=c fuer c:=f(a) fuer beliebig gewaehltes a:I.
+
+Satz: Ist I ein Intervall und f:I->W differenzierbar und gilt
+f'(x)=a*f(x) fuer alle x:I, so existiert c mit f(x)=c*exp(a*x).
+
+Beweis: Betrachte g(x)=f(x)*exp(-a*x). Es ist
+g'(x)=f'(x)*exp(-ax)-a*f(x)*exp(-ax) = 0 nach Annahme an f. Also ist
+g(x) konstant und die Behauptung folgt.
+
+Satz: Ist I ein Intervall und f:I->W differenzierbar und gilt
+f''(x)=-a^2*f(x) fuer alle x:I, so existieren c,d mit
+f(x)=c*sin(a*x)+d*cos(a*x).
+
+Beweis: Hat f tatsaechlich diese Form, so gilt fuer
+f1(x):=f(x)/cos(ax), dass f1(x)=c*tan(ax)+d und weiter
+f1'(x)=ac/cos(ax)^2. Daher muesste f1'(x)*cos(ax)^2 konstant sein
+(naemlich =ca). Das rechnen wir jetzt nach:
+
+Setze g(x) := f1'(x)*cos(ax)^2 = f'(x)*cos(ax) + a*f(x)*sin(ax).
+
+Es ist g'(x)=f''(x)*cos(ax)-a*f'(x)*sin(ax)+a*f'(x)*sin(ax)+a^2*f(x)*cos(ax)=0.
+
+Also g(x)=c' fuer ein c':RR. Wir setzen c:=c'/a und bemerken, dass
+wiederum unter der Annahme, dass f die gewuenschte Form hat, dann
+
+h(x) := (f(x)-c*sin(ax))/cos(ax)
+
+konstant sein muesste. Das rechnen wir ebenso nach: 
+
+h'(x) = 1/cos(ax)^2 * (f'(x)-ac cos(ax))cos(ax)+a(f(x)-c*sin(ax))sin(ax) =
+h'(x) = 1/cos(ax)^2 *
+(f'(x) cos(ax) - ac cos(ax)^2 + a f(x) sin(ax) - ac*sin(ax)^2) =
+1/cos(ax)^2 *
+(f'(x) cos(ax) + a f(x) sin(ax) - ac) = 0
+
+Also gibt es d:RR mit h(x)=d und Rueckeinsetzen liefert f(x)-c*sin(ax)
+= d*cos(ax), also f(x)=c*sin(ax)+d*cos(ax) wie gewuenscht.
+
+
+
+
+
+6.7 Regeln von l'Hospital
+-------------------------
+
+Aus dem Mittelwertsatz der Differentialgleichung koennen folgende
+nuetzliche Regeln fuer Grenzwerte hergeleitet werden.
+
+Satz (Regeln von L'Hospital):
+
+Seien f,g:D->CC stetig differenzierbar und lim f'(x)/g'(x) = c
+                                           x->b
+
+Hier ist b:RR u {oo, -oo}.
+
+Wenn lim f(x) = lim g(x) = 0, so ist lim f(x)/g(x) = c
+     x->b       x->b                 x->b
+
+Wenn lim f(x) = lim g(x) = +/- oo, so ist lim f(x)/g(x) = c
+     x->b       x->b                 x->b
+
+
+Beispiele:
+
+lim (exp(x)-1) / x = lim exp(x) / 1 = 1
+x->0                 x->0
+
+lim x^x = lim exp(x*ln(x)) = exp(lim(ln(x)/(1/x))) =
+x->0      x->0                   x->0
+
+= exp(lim -(1/x)/(1/x^2)) = exp(0) = 1.
+      x->0
+
+
+Achtung: Damit die Regel von L'Hospital anwendbar ist, *muss* eine der
+sog.  unbestimmten Formen, also 0/0, +/- oo/oo vorliegen.
+
+Gegenbeispiel:
+
+0 = lim  x / (1+x) =/= lim 1/1 = 1
+    x->0               x->0
+
+Beweisskizze fuer den Spezialfall lim f(x)/x mit lim f'(x) = c und lim f(x)=0  
+                                  x->0           x->0             x->0
+
+Wir koennen (ggf stetig fortsetzen) annehmen, dass f(0)=0. Zu jedem x
+gibt es also y:[0,x], sodass f'(y)= (f(x)-f(0))/(x-0) = f(x)/x. Wenn
+also lim f'(y) = c, dann muss auch lim f(x)/x = c sein. 
+

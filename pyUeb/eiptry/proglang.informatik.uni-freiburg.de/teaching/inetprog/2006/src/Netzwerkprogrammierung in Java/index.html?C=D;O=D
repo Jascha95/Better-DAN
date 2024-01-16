@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+ <head>
+  <title>Index of /teaching/inetprog/2006/src/Netzwerkprogrammierung in Java</title>
+ </head>
+ <body>
+<h1>Index of /teaching/inetprog/2006/src/Netzwerkprogrammierung in Java</h1>
+  <table>
+   <tr><th valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/blank.gif" alt="[ICO]"></th><th><a href="index.html?C=N%3BO=A">Name</a></th><th><a href="index.html?C=M%3BO=A">Last modified</a></th><th><a href="index.html?C=S%3BO=A">Size</a></th><th><a href="index.html?C=D%3BO=A">Description</a></th></tr>
+   <tr><th colspan="5"><hr></th></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/back.gif" alt="[PARENTDIR]"></td><td><a href="../../src">Parent Directory</a></td><td>&nbsp;</td><td align="right">  - </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/text.gif" alt="[TXT]"></td><td><a href="TCPServer.java">TCPServer.java</a></td><td align="right">2019-10-22 14:25  </td><td align="right">573 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/text.gif" alt="[TXT]"></td><td><a href="RawURLContent.java">RawURLContent.java</a></td><td align="right">2019-10-22 14:25  </td><td align="right">505 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/text.gif" alt="[TXT]"></td><td><a href="HTTPGet.java">HTTPGet.java</a></td><td align="right">2019-10-22 14:25  </td><td align="right">744 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/text.gif" alt="[TXT]"></td><td><a href="DialogHandler.java">DialogHandler.java</a></td><td align="right">2019-10-22 14:25  </td><td align="right">153 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/text.gif" alt="[TXT]"></td><td><a href="DaytimeServer.java">DaytimeServer.java</a></td><td align="right">2019-10-22 14:25  </td><td align="right">1.1K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/text.gif" alt="[TXT]"></td><td><a href="Daytime.java">Daytime.java</a></td><td align="right">2019-10-22 14:25  </td><td align="right">1.3K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/text.gif" alt="[TXT]"></td><td><a href="CertificationPath.java">CertificationPath.java</a></td><td align="right">2019-10-22 14:25  </td><td align="right">1.1K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/text.gif" alt="[TXT]"></td><td><a href="BackTalkDialog.java">BackTalkDialog.java</a></td><td align="right">2019-10-22 14:25  </td><td align="right">619 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/text.gif" alt="[TXT]"></td><td><a href="BackTalk.java">BackTalk.java</a></td><td align="right">2019-10-22 14:25  </td><td align="right">452 </td><td>&nbsp;</td></tr>
+   <tr><th colspan="5"><hr></th></tr>
+</table>
+</body></html>

@@ -1,0 +1,41 @@
+; Eine Variable des Lambda-Kalkuels ist ein Wert
+;   (make-var x)
+; wobei x ein String ist, der den Namen der Variable wiedergibt.
+(define-record-procedures var make-var var? (var-name))
+
+; Eine Anwendung im Lambda-Kalkuel ist ein Wert
+;   (make-app operator operand)
+; wobei operator und operand zwei Lambda-Ausdruecke sind,
+; die den Operator und den Operanden der Anwendung darstellen.
+
+(define-record-procedures app make-app app? (app-operator app-operand))
+
+; Eine Abstraktion im Lambda-Kalkuel ist ein Wert
+;   (make-abs x body)
+; wobei x ein String ist, der den Namen der gebundenen Variable
+; wiedergibt, und body ein Lambda-Ausdruck ist, der den Rumpf
+; der Abstraktion darstellt.
+(define-record-procedures abs make-abs abs? (abs-var-name abs-body))
+
+; Ein Lambda-Ausdruck ist eins der folgenden:
+; - eine Variable (var)
+; - eine Anwendung (app)
+; - eine Abstraktion (abs)
+; Name: lambda-term
+
+; Test ob ein Lambda-Ausdruck vorliegt.
+; lambda-term? : lambda-term -> boolean
+(define lambda-term?
+  (lambda (x)
+    (or (var? x) (app? x) (abs? x))))
+
+; Konvertiert einen Lambda-Ausdruck in einen String.
+; lambda-term->string : lambda-term -> string
+(define lambda-term->string
+  (lambda (e)
+    (cond
+      ((var? e) (var-name e))
+      ((app? e) (string-append "(" (lambda-term->string (app-operator e)) " "
+                               (lambda-term->string (app-operand e)) ")"))
+      ((abs? e) (string-append "(lambda(" (abs-var-name e) ") " 
+                               (lambda-term->string (abs-body e)) ")")))))

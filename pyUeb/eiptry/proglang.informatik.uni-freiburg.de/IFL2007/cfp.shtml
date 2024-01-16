@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+  <html>
+  <head>
+    <title>IFL 2007: Call for Papers</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      
+  
+
+    <link rel="stylesheet" type="text/css" href="common-style.css">
+    <script language="javascript" type="text/javascript">
+      function make () {
+        var c = '@';
+        var r = arguments[0];
+        for (var i=1; i < arguments.length; i++) {
+          r = r + c + arguments[i];
+          c = '.';
+      }
+      /* new line  */
+      r = r.replace(/[A-Z]/g,'')
+      var res = '\x3Ca href="mailto:' + r + '"\x3E' + r + '\x3C/a\x3E';
+      return res;
+      }
+      
+      var ifl = make ('ADEiDLKOfDOPlPP07X', 'informatik', 'uni-freiburg', 'de');
+      var icfp = make ('SDFAicSDFAPfpDOI07POLS', 'informatik', 'uni-freiburg', 'de');
+      var berit = make ('IObrSDFAOPauSDFASOPQerXLDK', 'informatik', 'uni-freiburg', 'de');
+    </script>
+  </head>
+  
+  <body>
+
+    <div id="menu">
+        <ul>
+    <li><a href="index.shtml">Home</a></li>
+    <li><a href="cfp.shtml">Call for Papers</a></li>
+    <li><a href="cfp.shtml#landin">Peter Landin Prize</a></li>
+    <li><a href="committee.shtml">Programme Committee</a></li>
+    <li><a href="proceedings.shtml">Proceedings</a></li>
+    <li><a href="dates.shtml">Important Dates</a></li>
+    <li><a href="submission.shtml">Submission</a></li>
+    <li><a href="schedule.shtml">Schedule</a></li>
+    <li><a href="registration.shtml">Registration</a></li>
+    <li><a href="accommodation.shtml">Accommodation</a></li>
+    <li><a href="travel-information.shtml">Travel Information</a></li>
+    <li><a href="conference-venue.shtml">Conference Venue</a></li>
+    <li><a href="local-information.shtml">Local Information</a></li>
+    <li><a href="maps.shtml">Maps</a></li>
+    <li><a href="organizers.shtml">Organisers</a></li>
+  </ul>
+
+    </div>
+    <div id="wrapper">
+    <div id="content">
+      <div id="header">
+        <center>
+  <h1>19th International Symposium on Implementation and 
+    Application of Functional Languages
+  </h1>
+  
+  <h2>IFL 2007</h2>
+  
+  <h2>Freiburg, Germany, 27-29 September 2007</h2>
+  
+  <h3>
+    Co-located with 
+    <a href="http://www.informatik.uni-bonn.de/~ralf/icfp07.html">ICFP 2007</a> 
+    (1-3 October 2007)
+  </h3>
+</center>
+
+      </div>
+      
+      <div id="mainmatter">
+        <h1>Call for Papers</h1>
+
+          <p>
+            The aim of the <a href="http://www.ifl-workshops.org/">IFL
+              symposia</a> is to bring together researchers actively engaged
+            in the implementation and application of functional and
+            function-based programming languages. They provide an open
+            forum for researchers who wish to present and discuss new
+            ideas and concepts, work in progress, preliminary results,
+            etc. related primarily but not exclusively to the
+            implementation and application of functional languages.
+            Formal proceedings are produced after the symposium, so that
+            authors can incorporate the feedback from discussions at the
+            symposium in their published papers.
+        </p>
+
+        <h2>Topics</h2>
+        
+        <p>
+          Topics of interest include, but are not limited to:
+          <ul>
+            <li>language concepts</li>
+            <li>type checking</li>
+            <li>compilation techniques</li>
+            <li>(abstract) interpretation</li>
+            <li>generic programming techniques</li>
+            <li>automatic program generation</li>
+            <li>array processing</li>
+            <li>concurrent/parallel programming</li>
+            <li>concurrent/parallel program execution</li>
+            <li>heap management</li>
+            <li>runtime profiling</li>
+            <li>performance measurements</li>
+            <li>debugging and tracing</li>
+            <li>(abstract) machine architectures</li>
+            <li>verification</li>
+            <li>formal aspects</li>
+            <li>tools and programming techniques</li>
+          </ul>
+        </p>
+
+        <p>
+          Papers on applications or tools demonstrating the suitability of novel
+          ideas in any of the above areas and contributions on related
+          theoretical work are also welcomed. The change of the symposium name
+          adding the term "application", introduced in 2004, is to reflect the
+          broader scope IFL has gained over the years.
+        </p>
+
+
+        <h2>Paper Submissions</h2>
+        
+        <p>
+          Prospective authors are encouraged to submit papers to be
+          published in the draft proceedings and to present them at the
+          symposium. All contributions must be written in English,
+          conform to the 
+          <a href="http://www.springer.com/east/home/computer/lncs?SGWID=5-164-7-72376-0&teaserId=45515&CENTER_ID=73062">Springer-Verlag LNCS series format</a>
+          and not
+          exceed 16 pages.  The draft proceedings will appear as a
+          technical report of the Computing Laboratory of the University
+          of Kent.
+        </p>
+
+        <p>
+          Attendees of IFL 2007 will have the opportunity to submit a
+          revised version of their paper for post-symposium
+          reviewing. As in previous years, 
+          selected papers will be published by Springer
+          Verlag in the <a href="http://www.springer.com/lncs">Lecture Notes 
+          in Computer Science (LNCS) Series</a>.
+        </p>
+
+        <div align="center"><a href="http://www.springer.com/lncs">
+         <img src="images/LNCS-Logo_4c_small.gif" alt="Springer LNCS Logo">
+        </a></div>
+        </p>
+
+
+        <h2><a name="landin">The Peter Landin Prize</a></h2>
+        
+        <p>
+          Since 2002 every year the <a
+            href="http://www.ifl-workshops.org/">Peter Landin Prize</a> of
+          &euro;150 is awarded to the best paper presented at the
+          symposium, as selected by the program committee.
+        </p>
+
+	<p>
+	This call for papers is also available in <a href="cfp.pdf">PDF</a> format.
+	</p>
+
+      </div>
+      <div id="footer">
+            <a href="impressum.shtml">Impressum</a>,
+    Webmaster: 
+    <script type="text/javascript">
+      document.write (ifl);
+    </script><noscript>ifl07 AT informatik DOT uni-freiburg DOT de</noscript>,
+    
+    Last modified: 2019-10-22 14:25:02
+
+      </div>
+    </div>
+    </div>
+  </body>
+  </html>

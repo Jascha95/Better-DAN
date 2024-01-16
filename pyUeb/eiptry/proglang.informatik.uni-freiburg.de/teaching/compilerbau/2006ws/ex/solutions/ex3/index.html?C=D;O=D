@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+ <head>
+  <title>Index of /teaching/compilerbau/2006ws/ex/solutions/ex3</title>
+ </head>
+ <body>
+<h1>Index of /teaching/compilerbau/2006ws/ex/solutions/ex3</h1>
+  <table>
+   <tr><th valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/blank.gif" alt="[ICO]"></th><th><a href="index.html?C=N%3BO=A">Name</a></th><th><a href="https://proglang.informatik.uni-freiburg.de/teaching/compilerbau/2006ws/ex/solutions/ex3/?C=M;O=A">Last modified</a></th><th><a href="https://proglang.informatik.uni-freiburg.de/teaching/compilerbau/2006ws/ex/solutions/ex3/?C=S;O=A">Size</a></th><th><a href="https://proglang.informatik.uni-freiburg.de/teaching/compilerbau/2006ws/ex/solutions/ex3/?C=D;O=A">Description</a></th></tr>
+   <tr><th colspan="5"><hr></th></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/back.gif" alt="[PARENTDIR]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/compilerbau/2006ws/ex/solutions/">Parent Directory</a></td><td>&nbsp;</td><td align="right">  - </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/text.gif" alt="[TXT]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/compilerbau/2006ws/ex/solutions/ex3/test.ml">test.ml</a></td><td align="right">2019-10-22 14:25  </td><td align="right">1.4K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/compilerbau/2006ws/ex/solutions/ex3/string_aux.ml">string_aux.ml</a></td><td align="right">2019-10-22 14:25  </td><td align="right">112 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/compilerbau/2006ws/ex/solutions/ex3/regexp_mod.mli">regexp_mod.mli</a></td><td align="right">2019-10-22 14:25  </td><td align="right">855 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/compilerbau/2006ws/ex/solutions/ex3/regexp_mod.ml">regexp_mod.ml</a></td><td align="right">2019-10-22 14:25  </td><td align="right">2.8K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/compilerbau/2006ws/ex/solutions/ex3/regexp.mli">regexp.mli</a></td><td align="right">2019-10-22 14:25  </td><td align="right">506 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/compilerbau/2006ws/ex/solutions/ex3/regexp.ml">regexp.ml</a></td><td align="right">2019-10-22 14:25  </td><td align="right">1.9K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/text.gif" alt="[TXT]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/compilerbau/2006ws/ex/solutions/ex3/arith.mll">arith.mll</a></td><td align="right">2019-10-22 14:25  </td><td align="right">1.8K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/compilerbau/2006ws/ex/solutions/ex3/arith">arith</a></td><td align="right">2019-10-22 14:25  </td><td align="right"> 64 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/compilerbau/2006ws/ex/solutions/ex3/Makefile">Makefile</a></td><td align="right">2019-10-22 14:25  </td><td align="right">299 </td><td>&nbsp;</td></tr>
+   <tr><th colspan="5"><hr></th></tr>
+</table>
+</body></html>

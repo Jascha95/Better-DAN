@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="LUVar.html">
+<link rel="next" href="PrioQueue.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Args" rel="Chapter" href="Args.html">
+<link title="Gen" rel="Chapter" href="Gen.html">
+<link title="GenVars" rel="Chapter" href="GenVars.html">
+<link title="Gvars" rel="Chapter" href="Gvars.html">
+<link title="Inf" rel="Chapter" href="Inf.html">
+<link title="Location" rel="Chapter" href="Location.html">
+<link title="LowerUpper" rel="Chapter" href="LowerUpper.html">
+<link title="LowerUpperNeg" rel="Chapter" href="LowerUpperNeg.html">
+<link title="LUNVar" rel="Chapter" href="LUNVar.html">
+<link title="LUVar" rel="Chapter" href="LUVar.html">
+<link title="MapVar" rel="Chapter" href="MapVar.html">
+<link title="PrioQueue" rel="Chapter" href="PrioQueue.html">
+<link title="ProgLabel" rel="Chapter" href="ProgLabel.html">
+<link title="Syntax" rel="Chapter" href="Syntax.html"><title>MapVar</title>
+</head>
+<body>
+<div class="navbar"><a href="LUVar.html">Previous</a>
+&nbsp;<a href="index.html">Up</a>
+&nbsp;<a href="PrioQueue.html">Next</a>
+</div>
+<center><h1>Module <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/type_MapVar.html">MapVar</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> MapVar: <code class="code">sig</code> <a href="MapVar.html">..</a> <code class="code">end</code></pre>This module provides a functor that create a 
+    mapping variable from a normal variable.<br>
+<hr width="100%">
+<pre><span class="keyword">module type</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.S_WITHOUT_STATE.html">S_WITHOUT_STATE</a> = <code class="code">sig</code> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.S_WITHOUT_STATE.html">..</a> <code class="code">end</code></pre><div class="info">
+Signature of the functor
+</div>
+<pre><span class="keyword">module type</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.S.html">S</a> = <code class="code">sig</code> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.S.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.Make.html">Make</a>: <div class="sig_block"><code class="code">functor (</code><code class="code">DVar</code><code class="code"> : </code><code class="code">sig</code><div class="sig_block"><pre><span class="keyword">type</span> <a name="TYPEt"></a><code class="type"></code>t </pre>
+
+<pre><span class="keyword">val</span> <a name="VALcreate"></a>create : <code class="type">unit -> t</code></pre><pre><span class="keyword">val</span> <a name="VALmerge"></a>merge : <code class="type">t -> t -> t</code></pre></div><code class="code">end</code><code class="code">) -&gt; </code><div class="sig_block"><code class="code">functor (</code><code class="code">Map</code><code class="code"> : </code><code class="code">sig</code><div class="sig_block"><pre><span class="keyword">include</span> OwnMap.S_Str</pre>
+<pre><span class="keyword">val</span> <a name="VALalias"></a>alias : <code class="type">img -> img -> unit</code></pre></div><code class="code">end</code><code class="code">) -&gt; </code><div class="sig_block"><code class="code">functor (</code><code class="code">P</code><code class="code"> : </code><code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/GenVars.PREFIX.html">GenVars.PREFIX</a></code><code class="code">) -&gt; </code><div class="sig_block"><code class="code">functor (</code><code class="code">O</code><code class="code"> : </code><code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/GenVars.OBSERVER.html">GenVars.OBSERVER</a></code><code class="code">) -&gt; </code><div class="sig_block"><code class="code">functor (</code><code class="code">State</code><code class="code"> : </code><code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/GenVars.STATE.html">GenVars.STATE</a></code><code class="type">  with type obs = O.t</code><code class="code">) -&gt; </code><code class="type"><a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.S.html">S</a></code><code class="type"> 
+  with type I.key = Map.key
+  and type I.img = Map.img
+  and type obs = O.t
+  and type domain_var = DVar.t</code></div></div></div></div></div></pre></body></html>

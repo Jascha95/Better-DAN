@@ -1,0 +1,6 @@
+[10 Punkte]
+Implementieren Sie die Funktion `divide(a: int, b: int) -> int`,
+die den Quotienten zweier ganzer Zahlen `x = a//b` errechnet und zurück gibt.
+Nutzen Sie nur `+` und `-` und sonst keine weiteren Operatoren oder Funktionen.
+Im Speziellen benutzen Sie nicht `/`, `//` oder `\*`.
+Sie können `a >= 0` und `b > 0` annehmen.

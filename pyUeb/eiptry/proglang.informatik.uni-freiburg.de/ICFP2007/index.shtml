@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+  <html>
+  <head>
+    <title>ICFP 2007</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      
+  
+
+    <link rel="stylesheet" type="text/css" href="../IFL2007/common-style.css">
+    <script language="javascript" type="text/javascript">
+      function make () {
+        var c = '@';
+        var r = arguments[0];
+        for (var i=1; i < arguments.length; i++) {
+          r = r + c + arguments[i];
+          c = '.';
+      }
+      /* new line  */
+      r = r.replace(/[A-Z]/g,'')
+      var res = '\x3Ca href="mailto:' + r + '"\x3E' + r + '\x3C/a\x3E';
+      return res;
+      }
+      
+      var ifl = make ('ADEiDLKOfDOPlPP07X', 'informatik', 'uni-freiburg', 'de');
+      var icfp = make ('SDFAicSDFAPfpDOI07POLS', 'informatik', 'uni-freiburg', 'de');
+      var berit = make ('IObrSDFAOPauSDFASOPQerXLDK', 'informatik', 'uni-freiburg', 'de');
+    </script>
+  </head>
+  
+  <body>
+
+    <div id="menu">
+        <ul>
+    <li><a href="index.shtml">Home</a></li>
+    <li><a href="registration.shtml">Registration</a></li>
+    <li><a href="accommodation.shtml">Accommodation</a></li>
+    <li><a href="travel-information.shtml">Travel Information</a></li>
+    <li><a href="conference-venue.shtml">Conference Venue</a></li>
+    <li><a href="local-information.shtml">Local Information</a></li>
+    <li><a href="schedule.shtml">Schedule</a></li>
+    <li><a href="maps.shtml">Maps</a></li>
+    <li><a href="local-organizers.shtml">Local Organizers</a></li>
+    <li class="exit">
+      <a href="http://www.informatik.uni-bonn.de/~ralf/icfp07.html">
+        General ICFP '07 Page
+        </a>
+    </li>
+  </ul>
+
+    </div>
+    <div id="wrapper">
+    <div id="content">
+      <div id="header">
+        <center>
+  <h1>
+    The 12th ACM SIGPLAN International Conference on Functional Programming
+  </h1>
+  
+  <h2>ICFP 2007</h2>
+  
+  <h2>Freiburg, Germany, 1-3 October 2007</h2>
+  
+  <h3>
+    Co-located with 
+    <a href="../IFL2007/index.html">IFL 2007</a> 
+    (September 27-29, 2007)
+  </h3>
+</center>
+
+      </div>
+      
+      <div id="mainmatter">
+        <div class="front-picture">
+          <img src="images/muenster.jpg" alt="Freiburg Münster"
+            style="float:none; width:600px; height:400px">
+          <p>
+            Freiburg Münster
+            <br>
+            (&copy; Freiburg Wirtschaft Touristik und Messe 
+            GmbH &amp; Co. KG / Foto: Karl-Heinz Raach)
+          </p>
+        </div>
+        <p>ICFP 2007 provides a forum for researchers and developers
+          to hear about the latest work on the design, implementations,
+          principles, and uses of functional programming. The conference
+          covers the entire spectrum of work, from practice to theory,
+          including its peripheries.
+        </p>
+  
+
+        <p>
+          ICFP 2007 features the following related workshops:
+        </p>
+        <ul class="icfp-workshops">
+          <li>
+            <a href="http://www.cse.unsw.edu.au/~keller/haskellws/HaskellWorkshop.html">ACM SIGPLAN Haskell workshop</a> (30 Sept. 2007)
+          </li>
+          <li><a href="http://sfp2007.ift.ulaval.ca/">
+              ACM SIGPLAN Scheme and Functional Programming</a>
+            (30 Sept. 2007)
+          </li>
+          <li>
+            <a href="http://cufp.galois.com/">
+              ACM SIGPLAN Commercial Users of Functional Programming</a>
+            (4 Oct. 2007)
+          </li>
+          <li>
+            <a href="http://www.cis.upenn.edu/~sweirich/wmm/">
+              ACM SIGPLAN Workshop on Mechanizing Metatheory</a>
+            (4 Oct. 2007)
+          </li>
+          <li>
+            <a href="http://www.erlang.se/workshop/2007/">
+              ACM SIGPLAN Erlang Workshop</a>
+            (5. Oct)
+          </li>
+          <li>
+            <a href="http://research.microsoft.com/~crusso/ml2007/">
+              ACM SIGPLAN Workshop on ML</a>
+            (5. Oct)
+          </li>
+          <li>
+            <a href="http://www.plpv.org/">
+              ACM SIGPLAN Programming Languages meets Program Verification</a>
+            (5 Oct. 2007)
+          </li>
+        </ul>
+      </div>
+
+      <div id="footer">
+            <a href="impressum.shtml">Impressum</a>,
+    Webmaster: 
+    <script type="text/javascript">
+      document.write (icfp);
+    </script><noscript>icfp2007 AT informatik DOT uni-freiburg DOT de</noscript>,
+    
+    Last modified: 2019-10-22 14:25:02
+
+      </div>
+    </div>
+    </div>
+  </body>
+  </html>

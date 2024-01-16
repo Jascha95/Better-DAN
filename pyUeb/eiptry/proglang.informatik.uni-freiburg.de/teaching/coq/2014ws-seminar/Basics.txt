@@ -1,0 +1,45 @@
+admit (Definition), admit 
+admit, admit_use
+Admitted (Definition), admit
+Admitted, admit_use
+compute, compute
+compute, compute_simpl
+Definition (First use), match
+Eval, compute
+Example, Example
+Inductive, Inductive_first
+Inductive, nat
+Type inference, Type_inference
+reflexivity, reflexivity
+reflexivity, proof_by_simplification
+Extraction, Extraction_first
+Pattern Matching, match
+match, match
+match, nat
+Function Types, function_types
+Check, function_types
+Module, Module
+Natural Numbers, nat
+Constructor, nat
+Inductive Definition, nat
+Fixpoint, Fixpoint
+Recursive Function, Fixpoint
+Simplification, simplification
+_,wildcard
+Wildcard Pattern, wildcard
+simpl, compute_simpl
+Theorem, theorem
+Lemma, theorem
+Fact, theorem
+Remark, theorem
+forall, theorem
+intros, theorem
+Tactics, theorem
+Context, theorem
+Goal, theorem
+rewrite, proof_by_rewriting
+destruct, proof_by_case_analysis
+"as" clause,  proof_by_case_analysis
+Notation, notation1
+Notation, notation2
+Structural Recursion, structural_recursion

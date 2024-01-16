@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="de">
+  <head>
+    <meta content="text/html; charset=iso-8859-1" 
+      http-equiv="Content-Type"/>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <title>Das Turtle Teachpack</title>
+  </head>
+
+  <body>
+    <div id="content">
+      <h1>Das Turtle Teachpack</h1>
+
+      <div class="h2">
+        <h2>Einleitung</h2>
+        <p>
+          <em>Turtle-Grafik</em> ist eine Methode zum Erstellen
+          von Computergrafiken.
+          Das Zeichnen wird dabei durch das Bewegen einer virtuellen 
+          Schildkröte 
+          über den Zeichenbereich modelliert.
+          Eine Schildkröte kann durch drei Befehle bewegt werden:
+          <ul>
+            <li><code>(move n)</code>: Bewegt die Schildkröte
+              um <i>n</i> Pixel ohne zu zeichnen.</li>
+            <li><code>(draw n)</code>: Bewegt die Schildkröte
+              um <i>n</i> Pixel und zeichnet dabei.</li>
+            <li><code>(turn n)</code>: Dreht die Schildkröte
+              um <i>n</i> Grad im Uhrzeigersinn.</li>
+          </ul>
+        </p>
+        <p>
+          Wir stellen jetzt ein Teachpack für DrScheme vor,
+          mit dessen Hilfe solche Turtle-Grafiken erstellt werden können.
+        </p>
+      </div>
+
+      <div class="h2">
+        <h2>Installation</h2>
+        <p>
+          Sie können das Teackpack installieren, indem Sie im Menü
+          <i>Sprache</i> den Befehl <i>Teachpack hinzufügen</i>
+          wählen. Dann müssen Sie die Datei <code>turtle.ss</code>
+          den <i>selbst installierte Teachpacks</i> hinzufügen.
+        </p>
+      </div>      
+      <div class="h2">
+        <h2>Tutorial</h2>
+
+        <p>
+          Unser Ziel ist es, in diesem Tutorial ein Quadrat mithilfe
+          der Funktionen des Teachpacks zu zeichnen. Aus diesem Grund
+          müssen wir zunächst mit der Prozedur
+          <a href="turtle.shtml#func_draw"><code>draw</a> eine Linie nach rechts malen. 
+          Die initiale Ausgansposition der Turtle ist
+          in der Bildmitte mit Blick nach rechts.
+          Mit <code>(draw 20)</code> bewegen wir die Turtle
+          dann 20 Pixel nach rechts und zeichnen dabei.
+          Um das resultierende Bild zu sehen ist, müssen
+          wir die Turtle mittels der Funktion 
+            <a href="turtle.shtml#func_run"><code>run</code></a>
+          laufen lassen. Die restlichen Parameter für <code>run</code>
+          sind die Höhe und die Breite des Bildes sowie
+          die Farbe, in der gezeichnet werden soll.
+          Geben Sie also folgenden Befehl in die REPL ein,
+          um Ihre erste Turtle-Grafik zu erstellen:
+        </p>
+<pre>
+(run (draw 20) 100 100 "red")
+</pre>
+        <p>
+           Sie erhalten dann eine Ausgabe wie
+           die folgende:
+        </p>
+        <p>
+           <img border="1" src="p1.jpg"/>
+        </p>
+        <p>
+          Nun vervollständigen wir die Linie
+          zu einem rechten Winkel: wir drehen die Turtle um 90° nach rechts 
+          und zeichnen dann eine Line der Länge 20 Pixel nach unten.
+          Zum Drehen einer Turtle verwenden wir die
+          Funktion <a href="turtle.shtml#func_turn">turn</a>. 
+        </p>
+        <p>
+          Da wir ein Quadrat aus zwei rechten Winkeln
+          zusammensetzen können, abstrahieren wir
+          über das Zeichnen des rechten Winkels.
+          Dazu schreiben wir eine Prozedur
+          <code>right-angle</code> die als
+          Parameter eine Turtle erhält: 
+         </p>
+<pre>; right-angle : turtle -> turtle
+(define right-angle 
+  (lambda (t1)
+    (let* ((t2 ((draw 20) t1))
+           (t3 ((turn -90) t2))
+           (t4 ((draw 20) t3)))
+      t4)))
+</pre>
+         <p>
+          Das Ergebnis sieht dann so aus:
+         </p>
+
+         <p><img border="1" src="p2.jpg"/></p>
+
+         <p> 
+           Um das Quadrat komplett zu zeichnen, sollen nun
+           zwei rechte Winkel verwendet werden. 
+           Wir zeichnen also einen rechten Winkel, drehen uns um
+           90° nach rechts, und zeichnen einen zweiten rechten
+           Winkel.
+         </p>
+<pre>; square : turtle -> turtle
+(define square  
+  (lambda (t1)
+    (let* ((t2 (right-angle t1))
+           (t3 ((turn -90) t2))
+           (t4 (right-angle t3)))
+      t4)))
+</pre>
+        <p>
+          So sieht das Ergebnis aus:
+        </p>
+        <p><img border="1" src="p3.jpg"/></p>
+         
+      <h3>Verbesserungen</h3>
+      <p> An dem Beispiel ist leicht zu sehen, dass es zum Zeichnen
+          mit Hilfe von Turtle-Grafik oft erforderlich ist, 
+          Zwischenwerte wie <code>t1</code>, <code>t2</code> etc., 
+          an die nächste Funktion weiterzureichen, die Werte
+          ansonsten aber nicht weiterverwendet werden. 
+          Beispielsweise werden
+          in der obigen Definition von <code>square</code>
+          die Variablen <code>t1</code>, ..., <code>t4</code>
+          nur gebraucht, um die Prozeduren
+          <code>right-angle</code>, <code>(turn -90)</code>
+          und <code>right-angle</code> hintereinander auszuführen.
+        </p>
+        <p>
+          Um solche Fälle einfach programmieren zu können, enthält das
+          Turtle Teachpack die Prozedur
+          <a href="http://proglang.informatik.uni-freiburg.de/teaching/info1/2007/func_sequence">sequence</a>. Damit können wir eine
+          zu <code>right-angle</code> äquivalente Version
+          wesentlicher einfacher aufschreiben:
+      </p>
+<pre>(define right-angle2 
+  (sequence (draw 20) (turn -90) (draw 20)))
+</pre>
+        Ebenso wie
+      <code>right-angle</code> können wir <code>square</code>
+      leichter schreiben als:
+      </p>
+<pre>(define square2  
+  (sequence right-angle (turn -90) right-angle))
+</pre>
+
+      </div>
+
+
+
+      <div class="h2">
+        <h2>Funktionen</h2>
+        Funktionen, die das Teachpack bereitstellt:
+        <ul>
+          <li><a href="turtle.shtml#func_sc">set-color</a></li>
+          <li><a href="turtle.shtml#func_turn">turn</a></li>
+          <li><a href="turtle.shtml#func_draw">draw</a></li>
+          <li><a href="turtle.shtml#func_move">move</a></li>
+          <li><a href="turtle.shtml#func_run">run</a></li>
+          <li><a href="turtle.shtml#func_sequence">sequence</a></li>
+        </ul>     
+
+        <div class="block">
+          <h3 id="func_sc">set-color</h3>
+          <p>
+            Diese Funktion ist eine Funktionsfabrik. Sie liefert
+            als Ergebnis eine Funktion, die auf eine
+            <code>turtle</code> anwendbar ist. Wendet man das
+            Ergebnis auf eine <code>turtle</code> an, so ändert dies die
+            Farbe mit der gezeichnet wird.
+          </p>
+<pre>set-color: color -> (turtle -> turtle) </pre>
+          
+          <h4>Beispiel</h4>
+          <p>
+            Folgender Code
+          </p>
+<pre>(define square3
+  (sequence right-angle (turn -90) (set-color "blue") right-angle))</pre>
+          <p>
+            liefert dieses Bild:
+          </p>
+          <img src="p4.jpg">
+          
+        </div>
+
+        <div class="block">
+          <h3 id="func_turn">turn</h3>
+          <p>
+            Diese Funktion ist eine Funktionsfabrik. Sie liefert
+            als Ergebnis eine Funktion, die auf eine
+            <code>turtle</code> anwendbar ist. Wendet man das
+            Ergebnis auf eine <code>turtle</code> an, 
+            so ändert sich die Blickrichtung 
+            der Turtle um die gegebene Gradzahl gegen den Uhrzeigersinn.
+          </p>
+<pre>turn: number -> (turtle -> turtle) </pre>
+         
+        </div>
+
+        <div class="block">
+          <h3 id="func_draw">draw</h3>
+          <p>
+            Diese Funktion ist eine Funktionsfabrik. Sie liefert
+            als Ergebnis eine Funktion, die auf eine
+            <code>turtle</code> anwendbar ist. Wendet man das
+            Ergebnis auf eine <code>turtle</code> an, so bewegt
+            sich die Schildkröte um die gegebene Anzahl
+            von Pixel und zeichnet dabei eine Linie.
+          </p>
+<pre>draw: number -> (turtle -> turtle) </pre>
+          
+        </div>
+
+
+        <div class="block">
+          <h3 id="func_move">move</h3>
+          <p>
+            Diese Funktion ist eine Funktionsfabrik. Sie liefert
+            als Ergebnis eine Funktion, die auf ein
+            <code>turtle</code> anwendbar ist. Wendet man das
+            Ergebnis auf eine <code>turtle</code> an, so bewegt
+            sich die Schildkröte um die gegebene Anzahl
+            von Pixel, zeichnet dabei aber keine Linie.
+          </p>
+<pre>draw: number -> (turtle -> turtle) </pre>
+          
+        </div>
+
+
+        <div class="block">
+          <h3 id="func_run">run</h3>
+          <p>
+            Diese Funktion wendet die übergebene
+            Funktion von <code>turtle</code> nach <code>turtle</code>
+            auf die initiale Schildkröte an und zeigt das
+            daraus resultierende Bild an.
+            Der zweite Parameter ist die Höhe des Bilds,
+            der dritte Parameter die Breite des Bilds
+            und der vierte Parameter die Farbe, mit der
+            gezeichnet wird.
+          </p>
+<pre>run: (turtle -> turtle) number number color -> image</pre>
+          <p>
+            
+          </p>
+        </div>
+
+
+        <div class="block">
+          <h3 id="func_sequence">sequence</h3>
+          <p>
+            Diese Funktion nimmt eine beliebige Anzahl
+            von Turtle-Veränderungen (d.h. Funktionen 
+            mit Typ <code>turtle -> turtle</code>)
+            und erstellt eine neue Funktion, die die Veränderungen
+            der Reihe nach von links nach
+            rechts abarbeitet.
+          </p>
+<pre>sequence: (turtle -> turtle) ... -> (turtle -> turtle)</pre>
+          
+        </div>
+
+
+      </div> <!-- h2 -->
+    </div> <!-- content -->
+
+
+      
+    <hr />
+    <p>
+        <!-- Created: Wed Dec  5 09:31:22 CET 2007 -->
+        <!-- hhmts start -->
+Last modified: Fri Dec  7 07:53:05 CET 2007
+<!-- hhmts end -->
+    </p>
+  </body>
+</html>

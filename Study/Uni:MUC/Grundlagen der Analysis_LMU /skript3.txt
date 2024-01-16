@@ -1,0 +1,124 @@
+
+3. Exponentialfunktion und Logarithmus
+======================================
+
+Die Exponentialfunktion exp(x)=e^x ist streng monoton steigend und
+ueberall >0.  Die Logarithmusfunktion ln(x) ist ihre Umkehrfunktion
+und ebenfalls streng monoton steigend, aber nur fuer positive Zahlen
+definiert.
+
+NB: Wir setzen hier voraus, dass die e-Funktion exp(x)=e^x aus der
+Schule bekannt ist. Moechte man sie rigoros definieren, so bietet sich
+die bereits erwaehnte Exponentialreihe an:
+exp(x):=sum(x^n/n!,n=0..oo).
+
+
+3.1 Potenz- und Logarithmusgesetze
+----------------------------------
+
+Es gelten die folgenden Potenzgesetze
+
+a^(u+v) = a^u*a^v
+a^(u-v) = a^u/a^v
+a^(uv)  = (a^u)^v
+a^(u/v) = a^u^{1/v}
+a^0 = 1
+
+Zur Erinnerung:
+
+a^n = a*...*a (n Faktoren), wenn n:NN
+a^(-n) = 1 / a^n
+a^{p/q} = q-te Wurzel aus a^p 
+
+Aus den Potenzgesetzen ergeben sich die Rechenregeln fuer Logarithmen:
+
+ln(xy) = ln(x)+ln(y)
+ln(x/y) = ln(x)-ln(y)
+ln(x^y) = y*ln(x)
+ln(1) = 0
+
+Ausserdem gilt:
+a^u = exp(ln(a^u)) = exp(u*ln(a)).
+Formal nimmt man dies als *Definition* der allgemeinen Potenz. 
+
+Es gibt auch Logarithmen zu anderen Basen als e:
+
+log_a ist die Umkehrfunktion zu a^x und es gilt: log_a(x) = ln(x) / ln(a). 
+
+
+
+3.2 Grenzwerte mit exp und ln
+-----------------------------
+
+lim  exp(x)/x^n = oo 
+x->oo
+
+Die Exponentialfunktion waechst mit x->oo staerker als jede Potenz.
+
+Anschaulicher Beweis:
+
+exp(x) = sum(1/k!*x^k,k=0..oo) >= 1/(n+1)! x^(n+1), aber
+
+lim 1/(n+1)!*x^(n+1)/x^n = oo
+x->oo
+
+
+lim  ln(x)/x^n = 0
+x->oo
+
+Der Logarithmus waechst langsamer als jede Potenz.
+
+Anschaulicher Beweis:
+
+lim  ln(x)/x^n = lim ln(exp(y))/exp(y)^n = lim y/exp(ny) = 0
+x->oo            y->oo                     y->oo
+
+
+Bemerkung: das gilt auch fuer n ersetzt durch irgendein alpha>0,
+z.B. alpha=1/2.
+
+lim  (exp(x)-1) / x = 1
+x->0
+
+Beweis benutzt die Exponentialreihe. 
+
+
+lim   x*ln(x) = lim exp(-y)*ln(exp(-y)) = - lim y/exp(y) = 0
+x->0+           y->oo                       y->oo
+
+3.3  Die Landau-Symbole
+----------------------
+
+Man schreibt auch exp(x) = 1+x+O(x^2) fuer x->0 wobei O(x^2) eine
+Funktion bezeichnet, die höchstens so stark waechst (hier fuer x->0)
+wie ein festes Vielfaches von x^2. Das *Landau-Symbol* O(f(x))
+bezeichnet, bzgl eines bestimmten Grenzuebergangs x->a, eine beliebige
+Funktion g mit |g(x)| <=c*|f(x)| fuer ein festes c>0 und x->a.
+
+Man schreibt auch ln(x) = o(x^n) fuer x->oo zum Zeichen, dass ln(x)
+schwaecher waechst als jede Potenz von x. Das *Landau-Symbol* o(f(x))
+bezeichnet, bzgl eines bestimmten Grenzuebergangs x->a, eine beliebige
+Funktion g mit |g(x)| <=c*|f(x)| fuer alle c>0 und x->a.
+
+Mit den Landau-Symbolen lassen sich Rechnungen mit Grenzwerten
+bisweilen vereinfachen.
+
+
+Z.B. lim (exp(x)-1)/x = lim (1+x+O(x^2)-1)/x = 
+    x->0
+                  = 1 + lim O(x^2)/x = 1 
+
+lim    ln(x)/x =  lim o(x)/x = 0
+x->oo            x->oo  
+
+Die Landau Symbole verstehen sich immer bezueglich eines bestimmten
+Grenzuebergangs. So ist, wie erwaehnt, exp(x)=1+x+O(x^2) fuer x->0,
+aber natuerlich nicht fuer x->oo. Anderes Beispiel: ln(x) = O(x-1)
+fuer x->1 aber nicht fuer x->0, denn lim ln(x)=-oo
+                                     x->0
+
+Das Gleichheitszeichen bei der O-Notation ist auch eher eine
+Elementbeziehung, als eine echte Gleichheit, insbesondere nicht
+transitiv: x+1=O(x), x=O(x), aber natuerlich nicht x+1=x.
+ 
+

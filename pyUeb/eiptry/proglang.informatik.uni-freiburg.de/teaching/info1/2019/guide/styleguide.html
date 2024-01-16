@@ -1,0 +1,391 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Python Style Guide &mdash; Info I Guide (WS 2019)</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Info I Guide (WS 2019)" href="index.html"/>
+        <link rel="prev" title="Hinweise zur Bearbeitung der Übungsaufgaben" href="hinweise.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Info I Guide (WS 2019)
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial: Daphne und Subversion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hinweise.html">Hinweise zur Bearbeitung der Übungsaufgaben</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="styleguide.html">Python Style Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="styleguide.html#allgemeine-regeln">Allgemeine Regeln</a></li>
+<li class="toctree-l2"><a class="reference internal" href="styleguide.html#doc-strings">Doc-Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="styleguide.html#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Info I Guide (WS 2019)</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Python Style Guide</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="python-style-guide">
+<span id="python-styleguide"></span><h1>Python Style Guide<a class="headerlink" href="styleguide.html#python-style-guide" title="Link zu dieser Überschrift">¶</a></h1>
+<div class="section" id="allgemeine-regeln">
+<span id="python-style-general"></span><h2>Allgemeine Regeln<a class="headerlink" href="styleguide.html#allgemeine-regeln" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Für Python-Dateien gelten die Formatierungsrichtlinien, die in PEP 8 <a class="reference internal" href="styleguide.html#pep8" id="id1">[PEP8]</a>
+formuliert sind. Nachfolgend eine kurze Zusammenfassung der wichtigsten Punkte:</p>
+<ul class="simple">
+<li>Eine Einrückungsebene in Python entspricht genau 4 Leerzeichen (keine
+Tabulatorzeichen). Falls Sie Tabulatorzeichen verwenden, achten Sie darauf,
+dass Ihr Editor diese beim Speichern der Datei zu jeweils 4 Leerzeichen
+expandiert.</li>
+<li>Jede Zeile soll aus höchstens 79 Zeichen bestehen. Es gibt sehr seltene
+Ausnahmen von dieser Regel.</li>
+<li>Funktionen, die nicht innerhalb anderer Funktionen definiert werden,
+(sogenannte Funktionen auf Modulebene) sollen durch zwei Leerzeilen getrennt
+werden.</li>
+<li>Funktionsnamen bestehen ausschließlich aus Kleinbuchstaben: Unterstriche sind
+erlaubt, wenn dies die Lesbarkeit des Codes verbessert. Entsprechendes gilt
+für Variablennamen (siehe <a class="reference internal" href="styleguide.html#pep8" id="id2">[PEP8]</a>).</li>
+<li>Am Anfang jeder Python-Datei steht ein Doc-String der kurz den Inhalt
+der Datei bescheibt. Dies ist auch der geeignete Ort, um Metadaten (z.B.
+Informationen zum Autor, Lizenz, etc.) zu listen.</li>
+<li>Jede definierte Funktion wird mit einem Doc-String versehen werden. Im Rahmen
+der Vorlesung verwenden wir dazu ein Schema in Anlehnung an PEP 257 <a class="reference internal" href="styleguide.html#pep257" id="id3">[PEP257]</a> und dem
+Google Python Style Guide <a class="reference internal" href="styleguide.html#gpsg" id="id4">[GPSG]</a>. Siehe hierzu  <a class="reference internal" href="styleguide.html#python-style-docstrings"><span>Doc-Strings</span></a>.</li>
+<li>Am Ende der Datei sind <em>alle</em> Leerzeilen zu entfernen.</li>
+</ul>
+<p>Eine kleine Beispieldatei können Sie <a class="reference download internal" href="http://proglang.informatik.uni-freiburg.de/teaching/info1/2019/guide/_downloads/example-minimal.py" download=""><code class="xref download docutils literal"><span class="pre">hier</span></code></a>
+herunterladen und als Template für Ihre eigenen Python-Dateien benutzen.</p>
+</div>
+<div class="section" id="doc-strings">
+<span id="python-style-docstrings"></span><h2>Doc-Strings<a class="headerlink" href="styleguide.html#doc-strings" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Die Dokumentierung von Code ist wichtig, nicht nur (aber besonders) wenn Sie
+den Code veröffentlichen. Zur Dokumentation verwendet man in Python
+Doc-Strings. Diese Doc-Strings können ferner verwendet werden, um
+automatisch eine Dokumentation von Python-Modulen zu erzeugen (siehe z.B.
+<a class="reference internal" href="styleguide.html#sphinx" id="id5">[Sphinx]</a>).
+Sie können aber auch verwendet werden, um mittels Doc-Tests zu prüfen, ob die
+dokumentierte Funktionsweise von Funktionen mit deren Implementierung
+übereinstimmt.</p>
+<p>Wie diese Doc-Strings aufgebaut sind hängt, vom jeweiligen Kontext ab.
+Ein Doc-String am Beginn des Python-Moduls sollte eine kurz die im Modul
+implementierte Funktionalität beschreiben.
+Dies ist auch der geeignete Ort, um Meta-Daten abzulegen: wer hat an dem Modul
+mitgeschrieben, mit welcher Lizenz wird die Datei weitergegeben, die
+Versionsnummer des Moduls, ein knapper ChangeLog der Versionen, etc.</p>
+<p>Der Doc-String des Moduls könnte in etwa wie folgt aussehen:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;String tools.</span>
+
+<span class="sd">This module defines some helper function often used but not found in the</span>
+<span class="sd">`Python Standard Library`_.</span>
+
+<span class="sd">Authors:</span>
+<span class="sd">    Your Name &lt;your-name@address.de&gt;</span>
+
+
+<span class="sd">.. _`Python Standard Library`:</span>
+<span class="sd">    https://docs.python.org/3.5/library</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Für die Dokumentation von Funktionen beachten Sie bitte ebenfalls den Google
+Python Style Guide <a class="reference internal" href="styleguide.html#gpsg" id="id6">[GPSG]</a>. Betrachten wir dazu das folgende Beispiel (ein bei
+weitem ausführlicheres Beispiel finden Sie auf der Webseite des Sphinx-Pakets
+Napoleon <a class="reference internal" href="styleguide.html#nap" id="id7">[Nap]</a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">charcount</span><span class="p">(</span><span class="n">char</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the number of occurences of a character in a string.</span>
+
+<span class="sd">    If reasonable, a more elaborate description of the function follows (not</span>
+<span class="sd">    needed here).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        char (str): A string of length 1.</span>
+<span class="sd">            Some further description of the parameter char is indented.</span>
+<span class="sd">        string (str): A string.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int or None: int if ``char`` is a string of length 1; None otherwise.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        Python has no own type for characters. If we had introduced exceptions</span>
+<span class="sd">        in the lecture, we would throw some on non-legal inputs. Instead we are</span>
+<span class="sd">        returning ``None`` in this case.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">        &gt;&gt;&gt; charcount(&quot;s&quot;, &quot;spamam&quot;)</span>
+<span class="sd">        1</span>
+<span class="sd">        &gt;&gt;&gt; charcount(&quot;a&quot;, &quot;spamam&quot;)</span>
+<span class="sd">        2</span>
+<span class="sd">        &gt;&gt;&gt; charcount(&quot;x&quot;, &quot;spamam&quot;)</span>
+<span class="sd">        0</span>
+<span class="sd">        &gt;&gt;&gt; x = charcount(&quot;am&quot;, &quot;spamam&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; x is None</span>
+<span class="sd">        True</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>  <span class="c1"># Implementation follows here</span>
+</pre></div>
+</div>
+<p>Die erste Zeile ist wieder eine kurze Zusammenfassung dessen, was die Funktion
+macht (typischerweise in Befehlsform geschrieben), ggfs. gefolgt von einer
+genaueren Beschreibung. Anschließend werden die Argumente der Funktion sowie
+deren Rückgabewert beschrieben.  Danach dokumentiert ein &#8220;Examples&#8221;-Abschnitt
+die Verwendungsweise der Funktion.
+Beachten Sie insbesondere die Leerzeilen und die Einrückungen in diesem Beispiel.</p>
+<div class="admonition note">
+<p class="first admonition-title">Bemerkung</p>
+<p class="last">Bei der Abgabe von Übungsblättern sollte der Doc-String einer Funktion
+stets Folgendes enthalten: die Kurzbeschreibung der Funktion, die Dokumentation
+der Parameter und die des Rückgabewerts.</p>
+</div>
+<p>Ebenso müssen Klassen mit Doc-Strings versehen werden. Beispiel:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">SampleClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Summary of class here.</span>
+
+<span class="sd">    Longer class information....</span>
+<span class="sd">    Longer class information....</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        likes_spam: A boolean indicating if we like SPAM or not.</span>
+<span class="sd">        eggs: An integer count of the eggs we have laid.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">likes_spam</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Inits SampleClass with blah.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">likes_spam</span> <span class="o">=</span> <span class="n">likes_spam</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eggs</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">public_method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Performs operation blah.&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="references">
+<span id="id8"></span><h2>References<a class="headerlink" href="styleguide.html#references" title="Link zu dieser Überschrift">¶</a></h2>
+<table class="docutils citation" frame="void" id="pep8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[PEP8]</td><td><em>(<a class="fn-backref" href="styleguide.html#id1">1</a>, <a class="fn-backref" href="styleguide.html#id2">2</a>)</em> Guido van Rossum et al.:
+Style Guide for Python Code (PEP 8).
+URL:
+<a class="reference external" href="http://legacy.python.org/dev/peps/pep-0008/">http://legacy.python.org/dev/peps/pep-0008/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="pep257" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="styleguide.html#id3">[PEP257]</a></td><td>David Goodger und Guido van Rossum:
+Docstring Conventions (PEP 257).
+Online verfügbar unter:
+<a class="reference external" href="http://legacy.python.org/dev/peps/pep-0257/">http://legacy.python.org/dev/peps/pep-0257/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="gpsg" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[GPSG]</td><td><em>(<a class="fn-backref" href="styleguide.html#id4">1</a>, <a class="fn-backref" href="styleguide.html#id6">2</a>)</em> Amit Patel et al.:
+Google Python Style Guide.
+URL:
+<a class="reference external" href="https://google.github.io/styleguide/pyguide.html">https://google.github.io/styleguide/pyguide.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="sphinx" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="styleguide.html#id5">[Sphinx]</a></td><td>Georg Brandl and the Sphinx team:
+Sphinx Python Documentation Generator
+URL:
+<a class="reference external" href="http://sphinx-doc.org">http://sphinx-doc.org</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="nap" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="styleguide.html#id7">[Nap]</a></td><td>Rob Ruana:
+Napoleon Sphinx Package: Example Google Style Python Docstrings
+URL:
+<a class="reference external" href="http://sphinxcontrib-napoleon.readthedocs.org/en/latest/example_google.html#example-google">http://sphinxcontrib-napoleon.readthedocs.org/en/latest/example_google.html#example-google</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="rst" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[RST]</td><td>Georg Brandl and the Sphinx team:
+reStructuredText Primer. URL:
+<a class="reference external" href="http://sphinx-doc.org/rest.html">http://sphinx-doc.org/rest.html</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="hinweise.html" class="btn btn-neutral" title="Hinweise zur Bearbeitung der Übungsaufgaben" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Tim Schulte, Thorsten Engesser.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/translations.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

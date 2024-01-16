@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index.html">
+<link rel="previous" href="GenVars.STATE.html">
+<link rel="next" href="GenVars.VAR.html">
+<link rel="Up" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/GenVars.html">
+<link title="Index of types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_types.html">
+<link title="Index of exceptions" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_exceptions.html">
+<link title="Index of values" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_values.html">
+<link title="Index of modules" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_modules.html">
+<link title="Index of module types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_module_types.html">
+<link title="Args" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Args.html">
+<link title="Gen" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gen.html">
+<link title="GenVars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/GenVars.html">
+<link title="Gvars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gvars.html">
+<link title="Inf" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.html">
+<link title="Location" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Location.html">
+<link title="LowerUpper" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpper.html">
+<link title="LowerUpperNeg" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpperNeg.html">
+<link title="LUNVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUNVar.html">
+<link title="LUVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUVar.html">
+<link title="MapVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.html">
+<link title="PrioQueue" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/PrioQueue.html">
+<link title="ProgLabel" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/ProgLabel.html">
+<link title="Syntax" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Syntax.html"><title>GenVars.VAR_WITHOUT_IMG</title>
+</head>
+<body>
+<div class="navbar"><a href="GenVars.STATE.html">Previous</a>
+&nbsp;<a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/GenVars.html">Up</a>
+&nbsp;<a href="GenVars.VAR.html">Next</a>
+</div>
+<center><h1>Module type <a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/type_GenVars.VAR_WITHOUT_IMG.html">GenVars.VAR_WITHOUT_IMG</a></h1></center>
+<br>
+<pre><span class="keyword">module type</span> VAR_WITHOUT_IMG = <code class="code">sig</code> <a href="GenVars.VAR_WITHOUT_IMG.html">..</a> <code class="code">end</code></pre>This module type is the signature of the typevars without
+    the image operations. The type is used by the <a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.html"><code class="code">MapVar</code></a> Module
+    to modify the interface to the image. There the two functions
+    allowing the modifications of the image are hidden.<br>
+<hr width="100%">
+<br>
+The image of the vars are the from type img. Solving the constraints 
+      means maps variables to values in a way, that the constraints are
+      satisfied.<br>
+<pre><span class="keyword">type</span> <a name="TYPEobs"></a><code class="type"></code>obs </pre>
+<div class="info">
+type of the observer<br>
+</div>
+
+<pre><span class="keyword">type</span> <a name="TYPEt"></a><code class="type"></code>t </pre>
+<div class="info">
+Type variables are instances of this type<br>
+</div>
+
+<pre><span class="keyword">val</span> <a name="VALcreate"></a>create : <code class="type">unit -> <a href="GenVars.VAR_WITHOUT_IMG.html#TYPEt">t</a></code></pre><div class="info">
+create a new uniquie type variable<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcompare"></a>compare : <code class="type"><a href="GenVars.VAR_WITHOUT_IMG.html#TYPEt">t</a> -> <a href="GenVars.VAR_WITHOUT_IMG.html#TYPEt">t</a> -> int</code></pre><div class="info">
+compare type variables. It looks if you have added aliases, and
+      if so, the two type variable are equal.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALtotal_ord"></a>total_ord : <code class="type"><a href="GenVars.VAR_WITHOUT_IMG.html#TYPEt">t</a> -> <a href="GenVars.VAR_WITHOUT_IMG.html#TYPEt">t</a> -> int</code></pre><div class="info">
+compare type variables. It do not look 
+      if you have added aliases!<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALadd_alias"></a>add_alias : <code class="type"><a href="GenVars.VAR_WITHOUT_IMG.html#TYPEt">t</a> -> <a href="GenVars.VAR_WITHOUT_IMG.html#TYPEt">t</a> -> unit</code></pre><div class="info">
+make two variables equal<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALdo_normalize"></a>do_normalize : <code class="type"><a href="GenVars.VAR_WITHOUT_IMG.html#TYPEt">t</a> -> unit</code></pre><div class="info">
+This function is called by observers every time something
+      with the image of the variable changes. The variable should
+      then call the normalize function of the image to ensure that
+      the assignment is up to date.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALadd_observer"></a>add_observer : <code class="type"><a href="GenVars.VAR_WITHOUT_IMG.html#TYPEobs">obs</a> -> <a href="GenVars.VAR_WITHOUT_IMG.html#TYPEt">t</a> -> unit</code></pre><div class="info">
+add a new observer<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALremove_observer"></a>remove_observer : <code class="type"><a href="GenVars.VAR_WITHOUT_IMG.html#TYPEobs">obs</a> -> <a href="GenVars.VAR_WITHOUT_IMG.html#TYPEt">t</a> -> unit</code></pre><div class="info">
+remove a observer<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstring_of"></a>string_of : <code class="type"><a href="GenVars.VAR_WITHOUT_IMG.html#TYPEt">t</a> -> string</code></pre><div class="info">
+converts a variable to a string<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALreset"></a>reset : <code class="type">unit -> unit</code></pre><div class="info">
+Resets the internal counter that allows to differ 
+      variables from each other. Do not call this function
+      exept for testing. If you use it, you will use the
+      invariant, that two variables are different if you
+      create two with the create function.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALget_all_ts"></a>get_all_ts : <code class="type">unit -> <a href="GenVars.VAR_WITHOUT_IMG.html#TYPEt">t</a> list</code></pre></body></html>

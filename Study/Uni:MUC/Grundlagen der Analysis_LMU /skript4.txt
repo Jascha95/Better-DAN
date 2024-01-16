@@ -1,0 +1,83 @@
+4 Trigonometrische Funktionen
+=============================
+
+4.1 Bogenmass und Definition
+----------------------------
+
+Das Bogenmass eines Winkels alpha ist definiert durch alpha / 180Grad
+* pi.  Das Bogenmass entspricht der Laenge eines Bogens (zum
+entsprechenden Winkel) des Einheitskreises.
+
+Die y- und x-Koordinaten eines Einheitsvektors mit Winkel alpha (im
+Bogenmass von der x-Achse aus im Gegenuhrzeigersinn gemessen) heissen
+sin(alpha) und cos(alpha).
+
+Die Sinus- und Cosinusfunktionen sind stetig und auf ganz RR definiert.
+
+
+4.2 Rechenregeln und spezielle Werte
+------------------------------------
+
+Es gelten die folgenden Gesetze
+
+sin(alpha+2pi) = sin(alpha)
+cos(alpha+2pi) = cos(alpha) /* sin und cos sind periodische Funktionen
+mit Periode 2pi */
+
+sin(0)=0, cos(0)=1
+sin(pi)=0, cos(pi)=-1
+sin(pi/2)=1, cos(pi/2)=0
+sin(pi/3 /*60 Grad*/)= 1/2 sqrt(3)
+cos(pi/3 /*60 Grad*/)= 1/2
+
+sin(alpha)=cos(alpha-pi/2)
+
+sin(alpha)^2 + cos(alpha)^2 = 1
+
+sin(alpha+beta) = sin(alpha)cos(beta)+cos(alpha)sin(beta)
+cos(alpha+beta) = cos(alpha)cos(beta)-sin(alpha)sin(beta)
+
+etc
+
+
+4.3 Trigonometrie
+-----------------
+
+Im rechtwinkligen Dreieck sei alpha einer der Winkel < pi/2. Die
+laengste Seite heisst Hypotenuse. Die kurze Seite, die an alpha
+anliegt, heisst Ankathete (von alpha); die alpha gegenueberliegende
+Seite heisst Gegenkathete.
+
+Es gilt:
+
+Ankathete/Hypotenuse = cos(alpha)
+Gegenkathete/Hypotenuse = sin(alpha)
+
+Man definiert auch noch tan(alpha) = sin(alpha)/cos(alpha). Es gilt dann
+
+Gegenkathete/Ankathete = tan(alpha)
+
+Satz:
+Fuer x->0 gilt lim sin(x)/x = 1.
+
+Anschaulicher Beweis: Fuer 0<=x<pi/2 gilt:
+
+sin(x) <= x <= tan(x) (Veranschaulichung am Einheitskreis)
+
+Also sin(x)/tan(x) <= sin(x)/x <= sin(x)/sin(x)
+Also cos(x) <= sin(x)/x <= 1
+Also lim sin(x)/x = 1 fuer x->0+.
+Fuer x->0- ebenso, da sin(-x)/-x = sin(x)/x.
+
+
+4.4 Umkehrfunktionen
+--------------------
+
+Der Sinus ist im Intervall [-pi/2,pi/2] streng monoton steigend mit
+Wertemenge [-1,1]. Die entsprechende Umkehrfunktion heisst Arcus-Sinus
+(arcsin, oder sin^-1) und ist auf [-1,1] mit Wertemenge [-pi/2,pi/2]
+definiert.
+
+Ebenso gibt es die Arcus-Cosinus Funktion arccos:[-1,1]->[0,pi]
+
+und die Arcus-Tangensfunktion arctan:RR->[-pi/2,pi/2]

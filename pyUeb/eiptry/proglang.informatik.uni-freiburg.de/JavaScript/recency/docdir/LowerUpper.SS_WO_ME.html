@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index.html">
+<link rel="next" href="LowerUpper.SMALLSET.html">
+<link rel="Up" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpper.html">
+<link title="Index of types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_types.html">
+<link title="Index of exceptions" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_exceptions.html">
+<link title="Index of values" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_values.html">
+<link title="Index of modules" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_modules.html">
+<link title="Index of module types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_module_types.html">
+<link title="Args" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Args.html">
+<link title="Gen" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gen.html">
+<link title="GenVars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/GenVars.html">
+<link title="Gvars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gvars.html">
+<link title="Inf" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.html">
+<link title="Location" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Location.html">
+<link title="LowerUpper" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpper.html">
+<link title="LowerUpperNeg" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpperNeg.html">
+<link title="LUNVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUNVar.html">
+<link title="LUVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUVar.html">
+<link title="MapVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.html">
+<link title="PrioQueue" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/PrioQueue.html">
+<link title="ProgLabel" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/ProgLabel.html">
+<link title="Syntax" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Syntax.html"><title>LowerUpper.SS_WO_ME</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpper.html">Up</a>
+&nbsp;<a href="LowerUpper.SMALLSET.html">Next</a>
+</div>
+<center><h1>Module type <a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/type_LowerUpper.SS_WO_ME.html">LowerUpper.SS_WO_ME</a></h1></center>
+<br>
+<pre><span class="keyword">module type</span> SS_WO_ME = <code class="code">sig</code> <a href="LowerUpper.SS_WO_ME.html">..</a> <code class="code">end</code></pre><hr width="100%">
+<pre><span class="keyword">type</span> <a name="TYPEt"></a><code class="type"></code>t </pre>
+
+<pre><span class="keyword">val</span> <a name="VALis_empty"></a>is_empty : <code class="type"><a href="LowerUpper.SS_WO_ME.html#TYPEt">t</a> -> bool</code></pre><div class="info">
+<code class="code">is_empty t</code> should returns <code class="code">true</code> if <code class="code">t</code> is the empty set, 
+      otherwise it returns <code class="code">false</code>.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALsubset"></a>subset : <code class="type"><a href="LowerUpper.SS_WO_ME.html#TYPEt">t</a> -> <a href="LowerUpper.SS_WO_ME.html#TYPEt">t</a> -> bool option</code></pre><div class="info">
+<code class="code">subset t1 t2</code> should return <code class="code">Some true</code> if <code class="code">t1</code> is a subset of <code class="code">t2</code>.
+      If <code class="code">t1</code> is no subtype of <code class="code">t2</code>, then it should returns <code class="code">Some false</code>. 
+      If the result of the subtype relation is unsure (for example <code class="code">t1</code>
+      is a type variable that is not assigned to a type, and <code class="code">t2</code> is
+      a type), then the function should return <code class="code">None</code>.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALinter"></a>inter : <code class="type"><a href="LowerUpper.SS_WO_ME.html#TYPEt">t</a> -> <a href="LowerUpper.SS_WO_ME.html#TYPEt">t</a> -> <a href="LowerUpper.SS_WO_ME.html#TYPEt">t</a></code></pre><div class="info">
+If <code class="code">inter t1 t2</code> is called please compute a value <code class="code">t</code> such that 
+      <code class="code">subset t t1</code> and <code class="code">subset t t2</code> holds.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALunion"></a>union : <code class="type"><a href="LowerUpper.SS_WO_ME.html#TYPEt">t</a> -> <a href="LowerUpper.SS_WO_ME.html#TYPEt">t</a> -> <a href="LowerUpper.SS_WO_ME.html#TYPEt">t</a></code></pre><div class="info">
+If <code class="code">union t1 t2</code> is called please compute a value <code class="code">t</code> such that 
+      <code class="code">subset t1 t</code> and <code class="code">subset t2 t</code> holds.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALcompare"></a>compare : <code class="type"><a href="LowerUpper.SS_WO_ME.html#TYPEt">t</a> -> <a href="LowerUpper.SS_WO_ME.html#TYPEt">t</a> -> int</code></pre><pre><span class="keyword">val</span> <a name="VALstring_of"></a>string_of : <code class="type"><a href="LowerUpper.SS_WO_ME.html#TYPEt">t</a> -> string</code></pre><pre><span class="keyword">val</span> <a name="VALnormalize"></a>normalize : <code class="type"><a href="LowerUpper.SS_WO_ME.html#TYPEt">t</a> -> <a href="LowerUpper.SS_WO_ME.html#TYPEt">t</a></code></pre></body></html>

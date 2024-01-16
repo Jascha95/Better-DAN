@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+  <html>
+  <head>
+    <title>IFL 2007: Program Committee</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      
+  
+
+    <link rel="stylesheet" type="text/css" href="common-style.css">
+    <script language="javascript" type="text/javascript">
+      function make () {
+        var c = '@';
+        var r = arguments[0];
+        for (var i=1; i < arguments.length; i++) {
+          r = r + c + arguments[i];
+          c = '.';
+      }
+      /* new line  */
+      r = r.replace(/[A-Z]/g,'')
+      var res = '\x3Ca href="mailto:' + r + '"\x3E' + r + '\x3C/a\x3E';
+      return res;
+      }
+      
+      var ifl = make ('ADEiDLKOfDOPlPP07X', 'informatik', 'uni-freiburg', 'de');
+      var icfp = make ('SDFAicSDFAPfpDOI07POLS', 'informatik', 'uni-freiburg', 'de');
+      var berit = make ('IObrSDFAOPauSDFASOPQerXLDK', 'informatik', 'uni-freiburg', 'de');
+    </script>
+  </head>
+  
+  <body>
+
+    <div id="menu">
+        <ul>
+    <li><a href="index.shtml">Home</a></li>
+    <li><a href="cfp.shtml">Call for Papers</a></li>
+    <li><a href="cfp.shtml#landin">Peter Landin Prize</a></li>
+    <li><a href="committee.shtml">Programme Committee</a></li>
+    <li><a href="proceedings.shtml">Proceedings</a></li>
+    <li><a href="dates.shtml">Important Dates</a></li>
+    <li><a href="submission.shtml">Submission</a></li>
+    <li><a href="schedule.shtml">Schedule</a></li>
+    <li><a href="registration.shtml">Registration</a></li>
+    <li><a href="accommodation.shtml">Accommodation</a></li>
+    <li><a href="travel-information.shtml">Travel Information</a></li>
+    <li><a href="conference-venue.shtml">Conference Venue</a></li>
+    <li><a href="local-information.shtml">Local Information</a></li>
+    <li><a href="maps.shtml">Maps</a></li>
+    <li><a href="organizers.shtml">Organisers</a></li>
+  </ul>
+
+    </div>
+
+    <div id="wrapper">
+    <div id="content">
+      <div id="header">
+        <center>
+  <h1>19th International Symposium on Implementation and 
+    Application of Functional Languages
+  </h1>
+  
+  <h2>IFL 2007</h2>
+  
+  <h2>Freiburg, Germany, 27-29 September 2007</h2>
+  
+  <h3>
+    Co-located with 
+    <a href="http://www.informatik.uni-bonn.de/~ralf/icfp07.html">ICFP 2007</a> 
+    (1-3 October 2007)
+  </h3>
+</center>
+
+      </div>
+      
+      <div id="mainmatter">
+        <h1>Program Committee</h1>
+
+        <table>
+            <tr>
+              <td><a href="http://www.cs.ru.nl/P.Achten/">Peter Achten</a></td>
+              <td>Radboud University Nijmegen, The Netherlands</td>
+            </tr>
+            
+            <tr>
+              <td><a href="http://pllab.is.ocha.ac.jp/~asai/">Kenichi Asai</a></td>
+              <td>Ochanomizu University, Japan</td>
+            </tr>
+            
+            <tr>
+              <td><a href="http://www.cse.unsw.edu.au/~chak/">Manuel Chakravarty</a></td>
+              <td>The University of New South Wales, Australia</td>
+            </tr>
+            
+            <tr>
+              <td><a href="http://www.cs.kent.ac.uk/~oc">Olaf Chitil</a> (chair)</td>
+              <td>University of Kent, UK</td>
+            </tr>
+            
+            <tr>
+              <td><a href="http://web.engr.oregonstate.edu/~erwig/">Martin Erwig</a></td>
+              <td>Oregon State University, Oregon, USA</td>
+            </tr>
+            
+            <tr>
+              <td><a href="http://www.iro.umontreal.ca/~feeley/">Marc Feeley</a></td>
+              <td>Universit&eacute; de Montr&eacute;al, Canada</td>
+            </tr>
+            
+            <tr>
+              <td><a href="http://www-pu.informatik.uni-tuebingen.de/users/gasbichl/">Martin Gasbichler</a></td>
+              <td>Z&uuml;hlke Engineering AG, Switzerland</td>
+            </tr>
+            
+            <tr>
+              <td><a href="http://www.dcs.st-and.ac.uk/~kh/">Kevin Hammond</a></td>
+              <td>University of St. Andrews, Scotland</td>
+            </tr>
+            
+            <tr>
+              <td><a href="http://people.inf.elte.hu/hz/index_eng.html">Zoltán Horváth</a></td>
+              <td>Eötvös Loránd University, Budapest, Hungary</td>
+            </tr>
+            
+            <tr>
+              <td><a href="http://www.cs.chalmers.se/~rjmh/">John Hughes</a></td>
+              <td>Chalmers University of Technology, Sweden</td>
+            </tr>
+            
+            <tr>
+              <td><a href="http://ken.friislarsen.net">Ken Friis Larsen</a></td>
+              <td>University of Copenhagen, Denmark</td>
+            </tr>
+            
+            <tr>
+              <td><a href="http://www.mathematik.uni-marburg.de/~loogen/">Rita Loogen</a></td>
+              <td>Philipps-Universit&auml;t Marburg, Germany</td>
+            </tr>
+            
+            <tr>
+              <td><a href="http://quincy.inria.fr/">Michel Mauny</a></td>
+              <td>ENSTA, France</td>
+            </tr>
+            
+            <tr>
+              <td><a href="http://homepages.feis.herts.ac.uk/~comqss/">Sven-Bodo Scholz</a></td>
+              <td>University of Hertfordshire, UK</td>
+            </tr>
+            
+            <tr>
+              <td><a href="http://dalila.sip.ucm.es/~clara/">Clara Segura</a></td>
+              <td>Universidad Complutense de Madrid, Spain</td>
+            </tr>
+            
+            <tr>
+              <td><a href="http://web.cecs.pdx.edu/~sheard/">Tim Sheard</a></td>
+              <td>Portland State University, Oregon, USA</td>
+            </tr>
+            
+            <tr>
+              <td><a href="https://www.cs.tcd.ie/Glenn.Strong/">Glenn Strong</a></td>
+              <td>Trinity College, Dublin, Ireland</td>
+            </tr>
+            
+            <tr>
+              <td><a href="http://www.cs.uu.nl/wiki/Swierstra/WebHome">Doaitse Swierstra</a></td>
+              <td>Utrecht University, The Netherlands</td>
+            </tr>
+            
+            <tr>
+              <td><a href="http://www-users.cs.york.ac.uk/~malcolm/">Malcolm Wallace</a></td>
+              <td>The University of York, UK</td>
+            </tr>
+            
+        </table>
+        <p></p>
+      </div>
+
+      <div id="footer">
+            <a href="impressum.shtml">Impressum</a>,
+    Webmaster: 
+    <script type="text/javascript">
+      document.write (ifl);
+    </script><noscript>ifl07 AT informatik DOT uni-freiburg DOT de</noscript>,
+    
+    Last modified: 2019-10-22 14:25:02
+
+      </div>
+
+    </div>
+    </div>
+  </body>
+</html>

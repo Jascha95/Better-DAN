@@ -1,0 +1,116 @@
+new c s : +{setDate: !integer.end, commit: end}
+c select setDate. c!2013 |
+case s of 
+    setDate -> s?x. printIntegerLn!x
+	commit -> printStringLn!"Done"
+
+------------------------------------------------------------
+
+type Donation = +{setDate: !integer.Donation, commit: end}
+
+new c s : Donation
+c select setDate. c!2013.
+c select setDate. c!2014.
+c select commit |
+
+def server s : dualof Donation =
+case s of 
+    setDate -> s?x. printIntegerLn!x. server!s
+	commit -> printStringLn!"Done"
+
+server!s
+
+------------------------------------------------------------
+
+type Donation = +{setDate: !integer.Donation, commit: Promotion}
+type Promotion = un!(CreditCard, integer). Promotion
+type CreditCard = string
+
+new c s : Donation
+c select setDate. c!2013.
+c select setDate. c!2014.
+c select commit . {
+  c!("AAAA", 400) |
+  c!("BBBB", 150)
+  }	
+
+|
+
+def server s : dualof Donation =
+case s of 
+    setDate -> s?x. printIntegerLn!x. server!s
+	commit -> printStringLn!"Done"
+
+server!s
+
+------------------------------------------------------------
+
+type Donation = +{setDate: !integer.Donation, commit: Promotion}
+type Promotion = un!(CreditCard, integer). Promotion
+type CreditCard = string
+
+new c s : Donation
+c select setDate. c!2013.
+c select setDate. c!2014.
+c select commit . {
+  c!("AAAA", 400) |
+  c!("BBBB", 150)
+  }	
+
+|
+
+def server s : dualof Donation =
+case s of 
+    setDate -> s?x. printIntegerLn!x. server!s
+	commit -> printStringLn!"Done". acceptDonation!s
+
+def acceptDonation s : dualof Promotion =
+	s?(card, amount). 
+	printString!"Received ". printInteger!amount. 
+	printString!" from ". printStringLn!card.
+	acceptDonation!s
+
+server!s
+
+------------------------------------------------------------
+
+type Donation = +{setDate: !integer.Donation, commit: Promotion}
+type Promotion = un!(CreditCard, integer). Promotion
+type CreditCard = string
+
+new client server : *?Donation
+
+client?c. 
+c select setDate. c!2013.
+c select setDate. c!2014.
+c select commit . {
+  c!("AAAA", 400) |
+  c!("BBBB", 150)
+  }	|
+
+client?c. 
+c select setDate. c!2015.
+c select commit . {
+  c!("CCCC", 100) |
+  c!("DDDD", 250)
+  }	|
+
+def donationServer server : *!Donation =
+	def setup s : dualof Donation =
+	case s of 
+    	setDate -> s?x. setup!s
+		commit -> acceptDonation!s
+
+	def acceptDonation s : dualof Promotion =
+		s?(card, amount). 
+		printString!"Received ". printInteger!amount. 
+		printString!" from ". printStringLn!card.
+		acceptDonation!s
+
+	server!(new s : dualof Donation).
+	setup!s.
+	donationServer!server
+
+donationServer!server
+
+------------------------------------------------------------

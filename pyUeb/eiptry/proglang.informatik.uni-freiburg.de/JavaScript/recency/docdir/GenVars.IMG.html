@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index.html">
+<link rel="next" href="GenVars.PREFIX.html">
+<link rel="Up" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/GenVars.html">
+<link title="Index of types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_types.html">
+<link title="Index of exceptions" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_exceptions.html">
+<link title="Index of values" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_values.html">
+<link title="Index of modules" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_modules.html">
+<link title="Index of module types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_module_types.html">
+<link title="Args" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Args.html">
+<link title="Gen" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gen.html">
+<link title="GenVars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/GenVars.html">
+<link title="Gvars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gvars.html">
+<link title="Inf" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.html">
+<link title="Location" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Location.html">
+<link title="LowerUpper" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpper.html">
+<link title="LowerUpperNeg" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpperNeg.html">
+<link title="LUNVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUNVar.html">
+<link title="LUVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUVar.html">
+<link title="MapVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.html">
+<link title="PrioQueue" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/PrioQueue.html">
+<link title="ProgLabel" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/ProgLabel.html">
+<link title="Syntax" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Syntax.html"><title>GenVars.IMG</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/GenVars.html">Up</a>
+&nbsp;<a href="GenVars.PREFIX.html">Next</a>
+</div>
+<center><h1>Module type <a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/type_GenVars.IMG.html">GenVars.IMG</a></h1></center>
+<br>
+<pre><span class="keyword">module type</span> IMG = <code class="code">sig</code> <a href="GenVars.IMG.html">..</a> <code class="code">end</code></pre>Module type for the image of the map 
+    assigning variables to values. It's nesseary to
+    compare the values and to compute a union of
+    two value. This is needed in the module, because
+    while make to variables aliases we need to union
+    the two value of these.
+    If it's not possible to union all values, for example
+    because there's no top type, you should include a 
+    <code class="code">NotPossible</code> Value into the img type and deal with 
+    this value in your constraints solver. It will normaly 
+    mean, that no solution could be found.<br>
+<hr width="100%">
+<pre><span class="keyword">type</span> <a name="TYPEt"></a><code class="type"></code>t </pre>
+<div class="info">
+type of the values<br>
+</div>
+
+<pre><span class="keyword">val</span> <a name="VALcompare"></a>compare : <code class="type"><a href="GenVars.IMG.html#TYPEt">t</a> -> <a href="GenVars.IMG.html#TYPEt">t</a> -> int</code></pre><div class="info">
+compare to values<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALmerge"></a>merge : <code class="type"><a href="GenVars.IMG.html#TYPEt">t</a> -> <a href="GenVars.IMG.html#TYPEt">t</a> -> <a href="GenVars.IMG.html#TYPEt">t</a></code></pre><div class="info">
+merge these two images, such that the new image
+      fulfills all properties of both old ones.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALnormalize"></a>normalize : <code class="type"><a href="GenVars.IMG.html#TYPEt">t</a> -> <a href="GenVars.IMG.html#TYPEt">t</a></code></pre><div class="info">
+bring the image into a unique from<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstring_of"></a>string_of : <code class="type"><a href="GenVars.IMG.html#TYPEt">t</a> -> string</code></pre></body></html>

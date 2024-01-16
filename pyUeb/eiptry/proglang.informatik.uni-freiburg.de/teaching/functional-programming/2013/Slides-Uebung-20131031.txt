@@ -1,0 +1,141 @@
+                       _________________________
+
+                        ÜBUNGSSTUNDE 2013-10-31
+
+                            Luminous Fennell
+                       _________________________
+
+
+1 Errata
+========
+
+  - threepenny-gui (`cabal install ... threepenny-gui')
+  - bmp Installation (Mac OS X)
+  - import von `Ex01' *und* `CalcMain' `:l Ex01.hs CalcMain.hs'
+  - `dup' nicht erklärt `dup [1,2,3,...] == [1,1,2,3,...]'
+  - `calcMain' füttert Wörter an `readCommand', (statt Zeilen)
+
+  Korrekturen werden in die Installationsanleitung aufgenommen!
+
+
+2 Modules and Imports
+=====================
+
+  - Declaration
+    ,----
+    | -- This is the top of the file
+    | module Ex01_Solution where
+    | -- ...
+    `----
+  - Import:
+    ,----
+    | import Ex01_Solution
+    `----
+
+  - Modules correspond to filenames
+  - Modules have capital names
+  - If no module is declared, the default is `Main'
+  - The module `Prelude' is imported by default
+
+
+3 Name Clashes
+==============
+
+  Loading the following `.hs'-File:
+  ,----
+  | curry :: String
+  | curry = "yes"
+  | 
+  | travelDestination :: String
+  | travelDestination = if curry == "yes"
+  |                     then "India"
+  |                     else "France"
+  `----
+  Yields a compilation error:
+  ,----
+  | Ambiguous occurrence `curry'
+  |  It could refer to either `Main.curry',
+  |                           defined at LabExamples_scratch.hs:3:1
+  |                        or `Prelude.curry',
+  |                           imported from `Prelude' at LabExamples_scratch.hs:1:1
+  |                           (and originally defined in `Data.Tuple')
+  `----
+
+
+4 Resolving Name Clashes: Selective import
+==========================================
+
+  - By default, importing a module includes all the funtions it defines.
+  - Using a special import form lets us choose the imported functions
+    explicitly:
+  ,----
+  | import Prelude (String, (==))
+  | -- Here, we only import the two listed functions
+  | --   that we need from Prelude
+  | 
+  | curry :: String
+  | curry = "yes"
+  | 
+  | travelDestination :: String
+  | travelDestination = if curry == "yes" then "India" else "France"
+  `----
+  but we have to list everything we need from Prelude...
+
+
+5 Resolving Name Clashes: hiding
+================================
+
+  Alternatively, we can prevent certain functions from being imported:
+  ,----
+  | import Prelude hiding (curry)
+  | 
+  | curry :: String
+  | curry = "yes"
+  | -- ...
+  `----
+
+
+6 Qualified imports
+===================
+
+  - Sometimes it may be necessary to use both, our definitions, and that
+    of the module.
+  - *Qualified imports* allow to specify a custom prefix for imported
+    functions.
+  ,----
+  | import qualified Prelude as P
+  | -- qualified import
+  | 
+  | curry :: P.String
+  | -- String needs to be prefixed with P to be recognized
+  | curry = "yes"
+  | 
+  | -- this is the curry from Prelude
+  | defaultCurry = P.curry
+  | 
+  | -- (==) also needs to be prefixed
+  | travelDestination :: P.String
+  | travelDestination = if curry P.== "yes" then "India" else "France"
+  `----
+
+
+7 Qualified imports
+===================
+
+  In order to avoid prefixing everything, we can combine hiding and
+  qualified imports
+  ,----
+  | import Prelude hiding (curry)
+  | import qualified Prelude as P
+  | 
+  | 
+  | -- only `curry' is hidden, no need to prefix `String'
+  | curry :: String
+  | curry = "yes"
+  | 
+  | -- this is the curry from Prelude
+  | defaultCurry = P.curry
+  | 
+  | travelDestination :: String
+  | travelDestination = if curry == "yes" then "India" else "France"
+  `----

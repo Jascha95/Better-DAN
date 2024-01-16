@@ -1,0 +1,139 @@
+
+/* seitliches Menü */ 
+#HOLE_vmenu {
+background-color: #FFFFFF;
+    border-bottom: medium none;
+    font-family: Arial,sans-serif;
+    font-size: 1.105em;
+    line-height: 1.105em;
+    margin: 0 0 21px;
+    overflow: hidden;
+    padding: 0;
+    width: 180px;
+}
+
+/* Inhalt */
+#HOLE_content {
+  padding: .5em;
+  min-height: 100%;
+  
+}
+
+/* Horizontales Menü */
+#portal-breadcrumbs ul {
+  display: block;
+  height: 20px;
+  padding: 1px;
+  margin: 0px;
+  border: 5px;
+}
+
+#portal-breadcrumbs div ul.right {
+  display: block;
+  float: right;
+  height: 20px;
+  padding: 1px;
+  margin: 0px;
+}
+
+#portal-breadcrumbs ul li {
+  display: block;
+  float: left;
+  margin: 0;
+  text-align: left;
+  padding-left:5px;
+}
+
+#portal-breadcrumbs ul li {
+  display: block;
+  float: left;
+  margin: 0;
+  text-align: left;
+}
+
+#portal-breadcrumbs ul li:after
+{
+  content:" |";
+}
+#portal-breadcrumbs ul li:last-child:after
+{
+  content:" ";
+}
+
+#portal-breadcrumbs ul li a.mark:link, #portal-breadcrumbs ul li a.mark:visited, 
+#portal-breadcrumbs ul li a.mark:hover { 
+  font-weight: bold;
+}
+
+
+/* Seitliches Menü */
+#HOLE_vmenu ul {
+    margin: 0;
+    padding: 0;
+list-style-type:none;
+}
+#HOLE_vmenu ul li {
+    background: url("navigationLevel0.gif") repeat-y scroll left top #CACAC8;
+    padding-left: 4px;
+	border-bottom: 1px solid #FFFFFF;
+    list-style: none outside none;
+    margin: 0;
+	
+}
+
+#HOLE_vmenu ul li a {
+
+    background: none repeat scroll 0 0 #CACAC8;
+    /*color: #373534;*/
+    display: block;
+    font-family: arial,"Trebuchet MS","Lucida Grande",lucida,verdana,sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    margin: 0;
+    padding: 3px 0 3px 4px;
+    text-decoration: none;
+    width: auto;
+    color: #373534 !important;
+} 
+
+
+#HOLE_vmenu ul li a.current {
+
+    background: none repeat scroll 0 0 #FFFFFF;
+    /*color: #373534;*/
+    display: block;
+    font-family: arial,"Trebuchet MS","Lucida Grande",lucida,verdana,sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0;
+    padding: 3px 0 3px 4px;
+    text-decoration: none;
+    width: auto;
+    color: #373534 !important;
+} 
+
+#HOLE_vmenu ul li a.mark {
+
+    background-color: #2A6EBB !important;
+    color: #FFFFFF !important;
+} 
+
+
+
+#HOLE_vmenu ul li ul {
+border-top: 1px solid #FFFFFF;
+    margin: 0 0 0 0;
+}
+
+/* First leaf on light blue (like the other leafs)*/
+/*
+#HOLE_vmenu ul li.leaf {
+  background: url("navigationLevel1.gif") repeat-y scroll 0 top transparent;
+}
+*/
+
+/* First leaf on dark blue */
+#HOLE_vmenu ul li ul li.leaf {
+  background: url("navigationLevel1.gif") repeat-y scroll 0 top transparent;
+}
+

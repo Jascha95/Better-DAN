@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+<title>Seminar WS 2008/2009</title>
+</head>
+
+<body>
+
+<!-- This document was automatically generated with bibtex2html 1.76
+     (see http://www.lri.fr/~filliatr/bibtex2html/),
+     with the following command:
+     bibtex2html -s alpha -a -t "Seminar WS 2008/2009" -f doi -suffix .shtml -citefile keys.txt all.bib  -->
+
+<h1>Seminar WS 2008/2009</h1>
+<table>
+
+<tr valign="top">
+<td align="right">
+[<a name="ClementDespeyrouxDespeyrouxKahn1986">CDDK86</a>]
+</td>
+<td>
+Dominique Clément, Joëlle Despeyroux, Thierry Despeyroux, and Gilles Kahn.
+  A simple applicative language: Mini-ML.
+  In <em>Proceedings of the 1986 ACM Conference on Lisp and
+  Functional Programming</em>, pages 13-27, 1986.<br />
+[ <a href="all_bib.shtml#ClementDespeyrouxDespeyrouxKahn1986">bib</a> | 
+<a href="http://doi.acm.org/10.1145/319838.319847">http</a> ]
+
+</td>
+</tr>
+
+
+<tr valign="top">
+<td align="right">
+[<a name="ClarkePotterNoble1998">CPN98</a>]
+</td>
+<td>
+David&nbsp;G. Clarke, John&nbsp;M. Potter, and James Noble.
+  Ownership types for flexible alias protection.
+  In <em>Proceedings of the 13th ACM SIGPLAN Conference on Object
+  Oriented Programming, Systems, Languages, and Applications</em>, pages 48-64,
+  Vancouver, BC, Canada, October 1998. ACM Press, New York.<br />
+[ <a href="all_bib.shtml#ClarkePotterNoble1998">bib</a> | 
+<a href="http://doi.acm.org/10.1145/286936.286947">http</a> ]
+
+</td>
+</tr>
+
+
+<tr valign="top">
+<td align="right">
+[<a name="DamasMilner1982">DM82</a>]
+</td>
+<td>
+Luis Damas and Robin Milner.
+  Principal type-schemes for functional programs.
+  In <em>Proceedings of the 9th Annual ACM Symposium on Principles
+  of Programming Languages</em>, pages 207-212, Albuquerque, New Mexico, USA,
+  1982. ACM Press.<br />
+[ <a href="all_bib.shtml#DamasMilner1982">bib</a> | 
+<a href="http://doi.acm.org/10.1145/582153.582176">http</a> ]
+
+</td>
+</tr>
+
+
+<tr valign="top">
+<td align="right">
+[<a name="HosoyaVouillonPierce2000">HVP00</a>]
+</td>
+<td>
+Haruo Hosoya, Jérôme Vouillon, and Benjamin&nbsp;C. Pierce.
+  Regular expression types for XML.
+  In Philip Wadler, editor, <em>Proceedings International Conference
+  on Functional Programming 2000</em>, pages 11-22, Montreal, Canada, September
+  2000. ACM Press, New York.<br />
+[ <a href="all_bib.shtml#HosoyaVouillonPierce2000">bib</a> | 
+<a href="http://doi.acm.org/10.1145/351240.351242">http</a> ]
+
+</td>
+</tr>
+
+
+<tr valign="top">
+<td align="right">
+[<a name="HosoyaVouillonPierce2004-toplas">HVP04</a>]
+</td>
+<td>
+Haruo Hosoya, Jérôme Vouillon, and Benjamin&nbsp;C. Pierce.
+  Regular expression types for XML.
+  <em>ACM Transactions on Programming Languages and Systems</em>, 27(1),
+  2004.<br />
+[ <a href="all_bib.shtml#HosoyaVouillonPierce2004-toplas">bib</a> | 
+<a href="http://doi.acm.org/10.1145/1053468.1053470">http</a> ]
+
+</td>
+</tr>
+
+
+<tr valign="top">
+<td align="right">
+[<a name="Milner1978">Mil78</a>]
+</td>
+<td>
+Robin Milner.
+  A theory of type polymorphism in programming.
+  <em>Journal of Computer and System Sciences</em>, 17:348-375, 1978.<br />
+[ <a href="all_bib.shtml#Milner1978">bib</a> ]
+
+</td>
+</tr>
+
+
+<tr valign="top">
+<td align="right">
+[<a name="MorrisettWalkerCraryGlew1998">MWCG98</a>]
+</td>
+<td>
+Greg Morrisett, David Walker, Karl Crary, and Neal Glew.
+  From system F to typed assembly language.
+  In Luca Cardelli, editor, <em>Proceedings 25th Annual ACM
+  Symposium on Principles of Programming Languages</em>, San Diego, CA, USA,
+  January 1998. ACM Press.<br />
+[ <a href="all_bib.shtml#MorrisettWalkerCraryGlew1998">bib</a> | 
+<a href="http://doi.acm.org/10.1145/268946.268954">http</a> ]
+
+</td>
+</tr>
+
+
+<tr valign="top">
+<td align="right">
+[<a name="MorrisettWalkerCraryGlew1999-toplas">MWCG99</a>]
+</td>
+<td>
+Greg Morrisett, David Walker, Karl Crary, and Neal Glew.
+  From system F to typed assembly language.
+  <em>ACM Transactions on Programming Languages and Systems</em>,
+  21(3):527-568, 1999.<br />
+[ <a href="all_bib.shtml#MorrisettWalkerCraryGlew1999-toplas">bib</a> | 
+<a href="http://doi.acm.org/10.1145/319301.319345">http</a> ]
+
+</td>
+</tr>
+
+
+<tr valign="top">
+<td align="right">
+[<a name="Pierce2002-tpl-recursive">Pie02</a>]
+</td>
+<td>
+Benjamin&nbsp;C. Pierce.
+  <em>Types and Programming Languages</em>, chapter 21 <em>Metatheory of
+  Recursive Types</em>, pages 281 - 314.
+  MIT Press, 2002.<br />
+[ <a href="all_bib.shtml#Pierce2002-tpl-recursive">bib</a> ]
+
+</td>
+</tr>
+
+
+<tr valign="top">
+<td align="right">
+[<a name="Pierce2005-attapl-dependent-types">Pie05a</a>]
+</td>
+<td>
+Benjamin&nbsp;C. Pierce, editor.
+  <em>Advanced Topics in Types and Programming Languages</em>, chapter 2
+  <em>Dependent Types</em>, pages 45 - 86.
+  MIT Press, 2005.<br />
+[ <a href="all_bib.shtml#Pierce2005-attapl-dependent-types">bib</a> ]
+
+</td>
+</tr>
+
+
+<tr valign="top">
+<td align="right">
+[<a name="Pierce2005-attapl-substructural">Pie05b</a>]
+</td>
+<td>
+Benjamin&nbsp;C. Pierce, editor.
+  <em>Advanced Topics in Types and Programming Languages</em>, chapter 1
+  <em>Substructural Type Systems</em>, pages 3 - 44.
+  MIT Press, 2005.<br />
+[ <a href="all_bib.shtml#Pierce2005-attapl-substructural">bib</a> ]
+
+</td>
+</tr>
+</table><hr><p><em>This file has been generated by
+<a href="http://www.lri.fr/~filliatr/bibtex2html/">bibtex2html</a> 1.76</em></p>
+</body>
+</html>

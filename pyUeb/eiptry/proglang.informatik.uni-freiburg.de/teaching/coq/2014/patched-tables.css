@@ -1,0 +1,60 @@
+div.infos>table tr td { 
+  padding-right: 10px;
+  padding-left: 2px;
+  padding-bottom: 3px;
+  padding-top: 3px;
+  vertical-align: top;
+}
+
+div.border>table { 
+  border-collapse: collapse;
+  border-spacing: 0px;
+  border-left: 0;
+  border-top: 1px gray dashed ;
+  border-bottom: 1px gray dashed  ;
+  border-right: 1px gray dashed ; 
+}
+
+div.border>table tr.head th { 
+  border-bottom: 1px gray dashed ; 
+}
+
+div.border>table tr th, div.border>table tr td { 
+  border-left: 1px gray dashed ;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+div.border>table tr td.right, div.border>table tr th.right { 
+  text-align: right;
+}
+
+div.border>table tr td.center, div.border>table tr th.center { 
+  text-align: center;
+}
+
+div.border>table tr.insert td { 
+  border-bottom: 1px gray dashed ; 
+  border-top: 1px gray dashed ; 
+}
+
+div.border>table tr.line td { 
+  border-top: 1px gray dashed ; 
+}
+
+div.borders>table { 
+  border-collapse: collapse;
+  border-spacing: 0px;
+  border-left: 1px gray solid;
+  border-top: 1px gray solid ;
+  border-bottom: 1px gray solid  ;
+  border-right: 1px gray solid ; 
+}
+
+div.borders>table tr.head th { 
+  border-bottom: 1px gray solid ; 
+}
+
+div.borders>table tr th, div.borders>table tr td { 
+  border: 1px gray solid ;
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+ <head>
+  <title>Index of /teaching/advanced-programming/2019/code/Vorlesung10</title>
+ </head>
+ <body>
+<h1>Index of /teaching/advanced-programming/2019/code/Vorlesung10</h1>
+  <table>
+   <tr><th valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/blank.gif" alt="[ICO]"></th><th><a href="https://proglang.informatik.uni-freiburg.de/teaching/advanced-programming/2019/code/Vorlesung10/?C=N;O=A">Name</a></th><th><a href="index.html?C=M%3BO=A">Last modified</a></th><th><a href="index.html?C=S%3BO=A">Size</a></th><th><a href="index.html?C=D%3BO=A">Description</a></th></tr>
+   <tr><th colspan="5"><hr></th></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/back.gif" alt="[PARENTDIR]"></td><td><a href="https://proglang.informatik.uni-freiburg.de/teaching/advanced-programming/2019/code/">Parent Directory</a></td><td>&nbsp;</td><td align="right">  - </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/text.gif" alt="[TXT]"></td><td><a href="json_test.c">json_test.c</a></td><td align="right">2019-10-22 14:25  </td><td align="right">537 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/text.gif" alt="[TXT]"></td><td><a href="json_reader.h">json_reader.h</a></td><td align="right">2019-10-22 14:25  </td><td align="right">396 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/text.gif" alt="[TXT]"></td><td><a href="json_reader.c">json_reader.c</a></td><td align="right">2019-10-22 14:25  </td><td align="right">3.2K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/text.gif" alt="[TXT]"></td><td><a href="json_read_test.c">json_read_test.c</a></td><td align="right">2019-10-22 14:25  </td><td align="right">542 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/text.gif" alt="[TXT]"></td><td><a href="json_parser.h">json_parser.h</a></td><td align="right">2019-10-22 14:25  </td><td align="right">433 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/text.gif" alt="[TXT]"></td><td><a href="json_parser.c">json_parser.c</a></td><td align="right">2019-10-22 14:25  </td><td align="right">3.1K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/text.gif" alt="[TXT]"></td><td><a href="json_data.h">json_data.h</a></td><td align="right">2019-10-22 14:25  </td><td align="right">781 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/text.gif" alt="[TXT]"></td><td><a href="json_data.c">json_data.c</a></td><td align="right">2019-10-22 14:25  </td><td align="right">2.9K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="json-org-example.json">json-org-example.json</a></td><td align="right">2019-10-22 14:25  </td><td align="right">583 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="ex4.json">ex4.json</a></td><td align="right">2019-10-22 14:25  </td><td align="right"> 66 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="ex3.json">ex3.json</a></td><td align="right">2019-10-22 14:25  </td><td align="right"> 98 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="ex2.json">ex2.json</a></td><td align="right">2019-10-22 14:25  </td><td align="right"> 67 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="ex1.string">ex1.string</a></td><td align="right">2019-10-22 14:25  </td><td align="right"> 18 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="ex1.number">ex1.number</a></td><td align="right">2019-10-22 14:25  </td><td align="right">  7 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="ex1.json">ex1.json</a></td><td align="right">2019-10-22 14:25  </td><td align="right"> 70 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="https://proglang.informatik.uni-freiburg.de/icons/unknown.gif" alt="[   ]"></td><td><a href="Makefile">Makefile</a></td><td align="right">2019-10-22 14:25  </td><td align="right">944 </td><td>&nbsp;</td></tr>
+   <tr><th colspan="5"><hr></th></tr>
+</table>
+</body></html>

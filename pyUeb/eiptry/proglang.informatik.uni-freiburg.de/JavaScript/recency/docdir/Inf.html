@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Gvars.html">
+<link rel="next" href="Location.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Args" rel="Chapter" href="Args.html">
+<link title="Gen" rel="Chapter" href="Gen.html">
+<link title="GenVars" rel="Chapter" href="GenVars.html">
+<link title="Gvars" rel="Chapter" href="Gvars.html">
+<link title="Inf" rel="Chapter" href="Inf.html">
+<link title="Location" rel="Chapter" href="Location.html">
+<link title="LowerUpper" rel="Chapter" href="LowerUpper.html">
+<link title="LowerUpperNeg" rel="Chapter" href="LowerUpperNeg.html">
+<link title="LUNVar" rel="Chapter" href="LUNVar.html">
+<link title="LUVar" rel="Chapter" href="LUVar.html">
+<link title="MapVar" rel="Chapter" href="MapVar.html">
+<link title="PrioQueue" rel="Chapter" href="PrioQueue.html">
+<link title="ProgLabel" rel="Chapter" href="ProgLabel.html">
+<link title="Syntax" rel="Chapter" href="Syntax.html"><link title="Types of Variables " rel="Section" href="Inf.html#2_TypesofVariables">
+<link title="Modules" rel="Section" href="Inf.html#2_Modules">
+<title>Inf</title>
+</head>
+<body>
+<div class="navbar"><a href="Gvars.html">Previous</a>
+&nbsp;<a href="index.html">Up</a>
+&nbsp;<a href="Location.html">Next</a>
+</div>
+<center><h1>Module <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/type_Inf.html">Inf</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> Inf: <code class="code">sig</code> <a href="Inf.html">..</a> <code class="code">end</code></pre>Module that provides structurs for doing the type inference<br>
+<hr width="100%">
+<br>
+<a name="2_TypesofVariables"></a>
+<h2>Types of Variables </h2><br>
+<pre><span class="keyword">type</span> <a name="TYPEtvar"></a><code class="type"></code>tvar </pre>
+<div class="info">
+Type variables<br>
+</div>
+
+<pre><span class="keyword">type</span> <a name="TYPElevar"></a><code class="type"></code>levar </pre>
+<div class="info">
+Local environment Variables<br>
+</div>
+
+<pre><span class="keyword">type</span> <a name="TYPEotvar"></a><code class="type"></code>otvar </pre>
+<div class="info">
+Object type variables<br>
+</div>
+
+<pre><span class="keyword">type</span> <a name="TYPEprevar"></a><code class="type"></code>prevar </pre>
+<div class="info">
+Precise variables<br>
+</div>
+
+<pre><span class="keyword">type</span> <a name="TYPElsvar"></a><code class="type"></code>lsvar </pre>
+<div class="info">
+Location Set Variables<br>
+</div>
+
+<br>
+<a name="2_Modules"></a>
+<h2>Modules</h2><br>
+<pre><span class="keyword">module</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.Vars.html">Vars</a>: <code class="code">sig</code> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.Vars.html">..</a> <code class="code">end</code></pre><div class="info">
+Module that containts the variables
+</div>
+<pre><span class="keyword">module</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.Type.html">Type</a>: <code class="code">sig</code> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.Type.html">..</a> <code class="code">end</code></pre><div class="info">
+Module that conataints the types
+</div>
+<pre><span class="keyword">module</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.ConstBasic.html">ConstBasic</a>: <code class="code">sig</code> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.ConstBasic.html">..</a> <code class="code">end</code></pre><div class="info">
+Module that containts the constraints
+</div>
+<pre><span class="keyword">module</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.Const.html">Const</a>: <code class="code">sig</code> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.Const.html">..</a> <code class="code">end</code></pre><div class="info">
+Module that contains the global set of basic constraints
+</div>
+<pre><span class="keyword">module</span> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.GEnv.html">GEnv</a>: <code class="code">sig</code> <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.GEnv.html">..</a> <code class="code">end</code></pre></body></html>

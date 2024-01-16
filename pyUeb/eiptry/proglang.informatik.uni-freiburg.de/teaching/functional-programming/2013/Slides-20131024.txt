@@ -1,0 +1,189 @@
+>>> Predefined Types
+
+* Bool  (True, False)
+* Char ('x', '?', ...)
+* Double, Float
+* Integer
+* Int  - machine integers (>= 30 bits signed integer)
+* ()    - the unit type, single value ()
+...
+
+* function types
+* tuples and lists
+* String ("xyz", ...)
+...
+
+
+
+
+
+
+
+
+
+
+
+
+>>> Collections of things: Tuples and Lists 101
+>>> Tuples
+
+%%%%%%%%%%%%%%%%%%%%
+-- example tuples
+examplePair :: (Double, Bool)  -- Double x Bool
+examplePair = (3.14, False)
+
+exampleTriple :: (Bool, Int, String) -- Bool x Int x String
+exampleTriple = (False, 42, "Answer")
+
+exampleFunction :: (Bool, Int, String) -> Bool
+exampleFunction (b, i, s) = not b && length s < i
+%%%%%%%%%%%%%%%%%%%%
+
+* syntax for tuple type like syntax for tuple values
+* tuples are *immutable* : once a tuple value is defined it cannot change!
+
+
+
+
+
+
+>>> Lists
+
+• The “duct tape” of functional programming
+• Collections of things of the same type.
+  – Two lists of the same type may have different number of elements
+• For any type x, [x] is the type of lists of xs
+  – e.g. [Bool] is the type of lists of Bool
+
+
+
+* syntax for list type like syntax for list values
+* lists are *immutable* : once a list value is defined it cannot change!
+
+
+
+
+
+
+
+
+>>> Lists
+
+• The values in [A] are either of the form 
+  – [ ] , the empty list (also called nil)
+  – x:xs where x has type A and xs has type [A]. 
+
+• Which of the following are in [Bool] ?
+  []
+  True : [ ]
+  True:False
+  False:(False:[ ])
+  (False:False):[ ]
+  (False:[]):[ ]
+  (True : (False : (True : []))) : (False:[]):[ ]
+
+[check the types with ghci]
+
+
+
+
+>>> List shorthands
+
+• The following are all equivalent ways of writing the list 1:(2:(3:[ ]))
+
+  1:2:3:[ ]    -- (:) associates to the right
+  [1,2,3]
+  [1..3] 
+
+• The third is a bit special – it is really a shorthand for an
+expression which builds the list. 
+• Other examples: ['a'..'z'] and [1..]  and [1,3..] (enumerate with
+increment 2)
+
+
+
+
+
+
+
+
+>>> Functions over lists
+
+• Functions over lists can be defined using pattern matching. E.g.,
+
+%%%%%%%%%%%%%%%%%%%%
+-- function over lists - examples
+summerize :: [String] -> String
+summerize []  = "None"
+summerize [x] = "Only " ++ x
+summerize [x,y] = "Two things: " ++ x ++ " and " ++ y
+summerize [_,_,_] = "Three things: ???"
+summerize _   = "Several things."   -- wild card pattern
+%%%%%%%%%%%%%%%%%%%%
+
+* (++) list concatentation, associates to right because it's more efficient
+*  [1,2,3,4,5] ++ ([6,7,8,9] ++ [])   -- 10 copy operations
+*  ([1,2,3,4,5] ++ [6,7,8,9]) ++ []   -- 14 copy operations, because [1,2,3,4,5] is copied twice
+* patterns are checked in sequence
+* variables in patterns are bound to the values in corresponding position in the argument
+* each variable may occur at most once in a pattern
+* wild card pattern matches everything, no binding, may occur multiple times
+
+
+>>> Functions over lists
+
+• Primitive recursion is the most common form:
+
+%%%%%%%%%%%%%%%%%%%%
+-- doubles [3,6,12] = [6,12,24]
+doubles :: [Integer] -> [Integer]
+doubles []     = undefined
+doubles (x:xs) = undefined
+%%%%%%%%%%%%%%%%%%%%
+
+Would not write it in this way - it's a common pattern that we define in a common (library) function
+
+* undefined is a value of any type
+* executing it yields a run-time error
+
+
+
+
+>>> map
+
+%%%%%%%%%%%%%%%%%%%%
+-- map f [x1, x2, ..., xn] = [f x1, f x2, ..., fn]
+map f []     = undefined
+map f (x:xs) = undefined
+%%%%%%%%%%%%%%%%%%%%
+
+(map is in the standard Prelude - no need to define it)
+
+Define doubles in terms of map:
+%%%%%%%%%%%%%%%%%%%%
+doubles xs = map double xs
+
+double :: Integer -> Integer
+double x = undefined
+%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+>>> filter
+
+Produce a list by removing all elements 
+which do not have a certain property from 
+a given list: 
+e.g. filter even [1..9] gives [2,4,6,8]
+
+%%%%%%%%%%%%%%%%%%%%
+filter :: (a -> Bool) -> [a] -> [a]
+filter p []       = undefined
+filter p (x:xs) = undefined
+%%%%%%%%%%%%%%%%%%%%
+
+
+(filter is in the standard Prelude - no need to define it)

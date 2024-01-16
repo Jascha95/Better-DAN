@@ -1,0 +1,66 @@
+*** Starting build.
+# Target: extList.mli.depends, tags: { extension:mli, file:extList.mli, ocaml, ocamldep, quiet, traverse }
+/usr/bin/ocamldep.opt -modules extList.mli > extList.mli.depends # cached
+# Target: extList.odoc, tags: { doc, extension:mli, file:extList.mli, interf, ocaml, quiet, traverse }
+/usr/bin/ocamldoc.opt -dump extList.odoc extList.mli # cached
+# Target: extSMap.mli.depends, tags: { extension:mli, file:extSMap.mli, ocaml, ocamldep, quiet, traverse }
+/usr/bin/ocamldep.opt -modules extSMap.mli > extSMap.mli.depends # cached
+# Target: extSMap.odoc, tags: { doc, extension:mli, file:extSMap.mli, interf, ocaml, quiet, traverse }
+/usr/bin/ocamldoc.opt -dump extSMap.odoc extSMap.mli # cached
+# Target: extSSet.mli.depends, tags: { extension:mli, file:extSSet.mli, ocaml, ocamldep, quiet, traverse }
+/usr/bin/ocamldep.opt -modules extSSet.mli > extSSet.mli.depends # cached
+# Target: extSSet.odoc, tags: { doc, extension:mli, file:extSSet.mli, interf, ocaml, quiet, traverse }
+/usr/bin/ocamldoc.opt -dump extSSet.odoc extSSet.mli # cached
+# Target: extString.mli.depends, tags: { extension:mli, file:extString.mli, ocaml, ocamldep, quiet, traverse }
+/usr/bin/ocamldep.opt -modules extString.mli > extString.mli.depends # cached
+# Target: extString.odoc, tags: { doc, extension:mli, file:extString.mli, interf, ocaml, quiet, traverse }
+/usr/bin/ocamldoc.opt -dump extString.odoc extString.mli # cached
+# Target: extUtils.mli.depends, tags: { extension:mli, file:extUtils.mli, ocaml, ocamldep, quiet, traverse }
+/usr/bin/ocamldep.opt -modules extUtils.mli > extUtils.mli.depends # cached
+# Target: extUtils.odoc, tags: { doc, extension:mli, file:extUtils.mli, interf, ocaml, quiet, traverse }
+/usr/bin/ocamldoc.opt -dump extUtils.odoc extUtils.mli # cached
+# Target: hiddenInts.mli.depends, tags: { extension:mli, file:hiddenInts.mli, ocaml, ocamldep, quiet, traverse }
+/usr/bin/ocamldep.opt -modules hiddenInts.mli > hiddenInts.mli.depends # cached
+# Target: hiddenInts.odoc, tags: { doc, extension:mli, file:hiddenInts.mli, interf, ocaml, quiet, traverse }
+/usr/bin/ocamldoc.opt -dump hiddenInts.odoc hiddenInts.mli # cached
+# Target: historyMap.mli.depends, tags: { extension:mli, file:historyMap.mli, ocaml, ocamldep, quiet, traverse }
+/usr/bin/ocamldep.opt -modules historyMap.mli > historyMap.mli.depends # cached
+# Target: ownMap.mli.depends, tags: { extension:mli, file:ownMap.mli, ocaml, ocamldep, quiet, traverse }
+/usr/bin/ocamldep.opt -modules ownMap.mli > ownMap.mli.depends # cached
+# Target: ownMap.cmi, tags: { byte, compile, extension:mli, file:ownMap.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -package unix -c -o ownMap.cmi ownMap.mli # cached
+# Target: historyMap.odoc, tags: { doc, extension:mli, file:historyMap.mli, interf, ocaml, quiet, traverse }
+/usr/bin/ocamldoc.opt -dump historyMap.odoc historyMap.mli # cached
+# Target: log.mli.depends, tags: { extension:mli, file:log.mli, ocaml, ocamldep, quiet, traverse }
+/usr/bin/ocamldep.opt -modules log.mli > log.mli.depends # cached
+# Target: log.odoc, tags: { doc, extension:mli, file:log.mli, interf, ocaml, quiet, traverse }
+/usr/bin/ocamldoc.opt -dump log.odoc log.mli # cached
+# Target: option.mli.depends, tags: { extension:mli, file:option.mli, ocaml, ocamldep, quiet, traverse }
+/usr/bin/ocamldep.opt -modules option.mli > option.mli.depends # cached
+# Target: option.odoc, tags: { doc, extension:mli, file:option.mli, interf, ocaml, quiet, traverse }
+/usr/bin/ocamldoc.opt -dump option.odoc option.mli # cached
+# Target: oUnit.mli.depends, tags: { extension:mli, file:oUnit.mli, ocaml, ocamldep, quiet, traverse }
+/usr/bin/ocamldep.opt -modules oUnit.mli > oUnit.mli.depends # cached
+# Target: oUnit.odoc, tags: { doc, extension:mli, file:oUnit.mli, interf, ocaml, quiet, traverse }
+/usr/bin/ocamldoc.opt -dump oUnit.odoc oUnit.mli # cached
+# Target: ownMap.odoc, tags: { doc, extension:mli, file:ownMap.mli, interf, ocaml, quiet, traverse }
+/usr/bin/ocamldoc.opt -dump ownMap.odoc ownMap.mli # cached
+# Target: path.mli.depends, tags: { extension:mli, file:path.mli, ocaml, ocamldep, quiet, traverse }
+/usr/bin/ocamldep.opt -modules path.mli > path.mli.depends # cached
+# Target: path.odoc, tags: { doc, extension:mli, file:path.mli, interf, ocaml, quiet, traverse }
+/usr/bin/ocamldoc.opt -dump path.odoc path.mli # cached
+# Target: string_of.mli.depends, tags: { extension:mli, file:string_of.mli, ocaml, ocamldep, quiet, traverse }
+/usr/bin/ocamldep.opt -modules string_of.mli > string_of.mli.depends # cached
+# Target: string_of.odoc, tags: { doc, extension:mli, file:string_of.mli, interf, ocaml, quiet, traverse }
+/usr/bin/ocamldoc.opt -dump string_of.odoc string_of.mli # cached
+# Target: test.mli.depends, tags: { extension:mli, file:test.mli, ocaml, ocamldep, quiet, traverse }
+/usr/bin/ocamldep.opt -modules test.mli > test.mli.depends # cached
+# Target: test.odoc, tags: { doc, extension:mli, file:test.mli, interf, ocaml, quiet, traverse }
+/usr/bin/ocamldoc.opt -dump test.odoc test.mli # cached
+# Target: proglangUtils.docdir, tags: {  }
+rm -rf proglangUtils.docdir # cached
+# Target: proglangUtils.docdir, tags: {  }
+mkdir -p proglangUtils.docdir # cached
+# Target: proglangUtils.docdir, tags: { doc, docdir, extension:docdir, extension:html, file:proglangUtils.docdir, file:proglangUtils.docdir/index.html, ocaml, quiet, traverse }
+/usr/bin/ocamldoc.opt -load extList.odoc -load extSMap.odoc -load extSSet.odoc -load extString.odoc -load extUtils.odoc -load hiddenInts.odoc -load historyMap.odoc -load log.odoc -load option.odoc -load oUnit.odoc -load ownMap.odoc -load path.odoc -load string_of.odoc -load test.odoc -html -d proglangUtils.docdir # cached
+# Compilation successful.

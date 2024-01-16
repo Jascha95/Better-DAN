@@ -1,0 +1,179 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf200
+{\fonttbl\f0\fnil\fcharset0 Avenir-Book;\f1\fnil\fcharset0 AppleColorEmoji;\f2\fnil\fcharset0 Monaco;
+}
+{\colortbl;\red255\green255\blue255;\red15\green15\blue15;\red255\green255\blue10;\red0\green0\blue0;
+\red0\green0\blue0;\red153\green102\blue51;\red140\green140\blue140;\red251\green2\blue7;}
+{\*\expandedcolortbl;;\csgray\c6818;\cssrgb\c99942\c98555\c0;\cssrgb\c0\c0\c0;
+\csgray\c0;\cssrgb\c66800\c47512\c25860;\csgray\c61825;\cssrgb\c100000\c14913\c0;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid1\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid1}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
+\paperw11900\paperh16840\margl1440\margr1440\vieww24320\viewh16140\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf0 Normalformen- Datenbanksysteme u10\
+\
+2. Normalform\
+(\ul A,B\ulnone , C) A,B Prim\
+\
+B \'97> C kann nur einen Prim haben \
+\
+\cf2 (\ul A,B\ulnone )\
+(\ul B\ulnone ,C) richtig \cf3 \
+\cf4 2.N ist auch erf\'fcllt wenn alle attribute Prim sind.\cf3 \
+\cf5 \
+3.Normalform\cf6 \
+\cf4 X und Y k\'f6nnen mehrere werte haben \
+\
+(\ul A\ulnone ,B,C)\
+B \'97>C. geht nicht \
+\ul (A,\ulnone B)\
+(\ul B,\ulnone C)\
+\ul (A\ulnone  -> C)\
+\
+u10 \
+\
+10-1 \
+\
+\ul Redundanzen\ulnone  \
+4x(1Opel)\
+4x(2VW)\
+2x(1,1,Opel,Kadett,60)\
+2x(4,2,VW,Golf,90)\
+\ul Anomalien\
+\ulnone Einf\'fcge-Anomalie (Kein neuer Hersteller einfugen/ ohne Modell, Fahrzeug)\
+\'c4nderungs-Anomalie (\'c4nderung von Ps eines Modells in jedem Tupel)\
+Entfernungs-Anomalie (Informationsverlust beim L\'f6schen des letzen Fahrzeuges eines Modells)\
+\
+jedes Attribut Prim oder voll funktional abh\'e4ngig\
+\
+10-2 \
+a) \
+(mnr, fznr) Schl\'fcsselkandidat\
+(hnr, hersteller, typ,ps) sind funktional abh\'e4ngig von mnr, also Partiziel abh\'e4ngig vom schl\'fcssel. Au\'dferdem nicht Prim /2.NF verletzt\
+\
+b) Modell (\ul mnr\ulnone , hnr, hersteller, typ, ps)\
+	\{mnr -> hnr, hersteller, typ,ps; hnr -> hersteller\}\
+Fahrzeug (\ul mnr, fznr,\ulnone  baujahr, km-stand, n-preis, h-preis,ek-preis)\
+	\{mnr, fznr -> \'85..\}\
+\
+10-3\
+Fahrzeug ist schon in der 3NF\
+Modell\
+mnr -> hnr, hersteller,typ,ps 
+\f1 \uc0\u55357 \u56396 
+\f0 \
+\
+hnr -> hersteller /Fder3NF weil hnr nicht schl\'fcsselkandidat und hersteller\uc0\u8800  prim\
+\
+Relation \
+Hersteller(hnr,hersteller)\
+Modell (mnr,hnr,typ,ps) \
+\
+NaturalJoin \'97> wieder zur ausgangs Tabelle \
+\
+\
+10-4\
+\
+FLS (Fach, Lehrer, Sch\'fcler)\
+	1. Jeder Sch\'fcler hat einen Lehrer pro Fach.\
+	2. Jeder unterrichtet nur 1.Fach/ aber jedes Fach kann von mehreren Lehrern vertreten werden\
+\
+Sch\'fcler, Fach -> Lehrer (aus1.)\
+Lehrer -> Fach (aus.2)\
+\
+Schl\'fcsselkandidaten: (Sch\'fcler, Fach) und (Sch\'fcler, Lehrer)\
+1NF
+\f1 \uc0\u55357 \u56397 
+\f0 \
+2NF
+\f1 \uc0\u55357 \u56397  
+\f2 alles
+\f1  
+\f2 prim
+\f0 \
+3NF
+\f1 \uc0\u55357 \u56397  
+\f2 alles
+\f1  
+\f2 prim
+\f0 \
+\
+BCNF enth\'e4lt keinen Schl\'fcsselkandidaten \
+\
+\ul Anomalien \
+\ulnone Einf\'fcgen: kein Lehrer ohne Sch\'fcler\
+Entfernen: mit letztem Sch\'fcler wird Info \'fcber Lehrer gel\'f6scht\
+\
+\pard\tx220\tx720\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li720\fi-720\pardirnatural\partightenfactor0
+\ls1\ilvl0\cf4 LF (\ul Lehrer,\ulnone  Fach)\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf4 SL (\ul Sch\'fcler,Lehrer\ulnone )\
+\
+Probleme: Sch\'fcler kann mehrere Lehrer in einem Fach haben (1.)\
+		   Sch\'fcler, Fach \'97> Lehrer geht verloren \
+\
+10-5\
+\
+a) \
+\{D,E\} eindeutig \
+\{D, E\}^+ = \{ D, E, C , A, F,B \}\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf4 \{D,E\} minimal \
+\{D\}^+ = \{D,C,F,B,A\}\
+\{E\}^+ = \{E,C,A\}\
+(attributsh\'fclle) somit \{D,E \} Schl\'fcsselkandidat \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf4 \
+\
+D und E lassen sich nicht aus anderen Attributen herleiten, da sie nur \'84links\'93 auftachen\
+Deshalb muss in \{D,E\} \uc0\u8804  S eine Teilmenge f\'fcr jeden Schl\'fcsselkandidat S\
+Jeder  S\uc0\u8800  \{D,E\} ist nicht minimal, da \{D,E\} bereits ein SK ist => S ist kein SK\
+\
+b)\
+1. Kanonische \'dcberdeckung Fc zu F\
+a) Linksreduktion \
+C -> A\
+D -> C\
+E -> C,A\
+B,C,\cf7 A \cf4 -> F.    	F\'80Attributh\'fclle (F,\{B,C\})\
+			=\{B,C,A,F\} F darin<- \'84A\'93 kann gestrichen werden\
+	 		F\cf8 \'80\cf4 Attributh\'fclle (F,\{C\}) \
+			=\{C,A\} kann nicht gestrichen werden \
+nur eine Begr\'fcndung warum man reduziert \
+linke seiten k\'f6nnen nicht aufgespallten werden \
+\
+D,C -> F, B 	\{F,B\} C Attributh\'fclle (F,\{D\})\
+			= \{D,C,A,F,B\}\
+\
+b) Rechtsreduktion  A -> \{\}\
+	C -> A \
+	B, C -> F\
+	D -> C \
+	E ->C,\cf8 A\cf4  (A streichen) A\'80 Attributh\'fclle (F-\{E->C,A\}\
+									(\{E-C\},\{E\})\
+									= \{E,C,A\}\
+D-> F(steichen),D			F\'80Attriubth\'fclle (F-\{D ->F,B\}u \{D->B\},\{D\}) =\{D,B;C,F,A\}\
+\
+c) Entfernung rechleerer Abh\'e4ngigkeiten \
+	nicht zu tun /\
+d) \
+Zusammenfassung gleicher linker Seiten \
+D -> C, B ; C ->A; B,C \'97> F\
+E->C kannonische \'fcberdecken von F\
+\
+2. Relationenshema aus Fc\
+R1(\ul D\ulnone ,C,B); R2 (\ul C\ulnone ,A); R3 (\ul B,C\ulnone ,F) R4(\ul E\ulnone ,C)\
+\
+3. Rekonstruktion \
+R5 (\ul D,E)\
+\ulnone 4. Elimination \'fcberfl\'fcssiger Relationen\
+/nichts zu tun\
+\
+\
+\
+\
+\
+\
+\
+\
+}

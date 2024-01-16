@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="HistoryMap.html">
+<link rel="next" href="Option.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="ExtList" rel="Chapter" href="ExtList.html">
+<link title="ExtSMap" rel="Chapter" href="ExtSMap.html">
+<link title="ExtSSet" rel="Chapter" href="ExtSSet.html">
+<link title="ExtSSetImp" rel="Chapter" href="ExtSSetImp.html">
+<link title="ExtString" rel="Chapter" href="ExtString.html">
+<link title="ExtSQueue" rel="Chapter" href="ExtSQueue.html">
+<link title="ExtUtils" rel="Chapter" href="ExtUtils.html">
+<link title="HiddenInts" rel="Chapter" href="HiddenInts.html">
+<link title="HistoryMap" rel="Chapter" href="HistoryMap.html">
+<link title="Log" rel="Chapter" href="Log.html">
+<link title="Option" rel="Chapter" href="Option.html">
+<link title="OUnit" rel="Chapter" href="OUnit.html">
+<link title="OwnMap" rel="Chapter" href="OwnMap.html">
+<link title="Path" rel="Chapter" href="Path.html">
+<link title="PrioQueues" rel="Chapter" href="PrioQueues.html">
+<link title="String_of" rel="Chapter" href="String_of.html">
+<link title="Test" rel="Chapter" href="Test.html"><title>Log</title>
+</head>
+<body>
+<div class="navbar"><a href="HistoryMap.html">Previous</a>
+&nbsp;<a href="index.html">Up</a>
+&nbsp;<a href="Option.html">Next</a>
+</div>
+<center><h1>Module <a href="http://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/type_Log.html">Log</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> Log: <code class="code">sig</code> <a href="Log.html">..</a> <code class="code">end</code></pre>Module that provides methods for logging to 
+    a file or to <code class="code">stdout</code>.<br>
+<b>Author(s):</b> Stefan Wehr, Phillip Heidegger<br>
+<hr width="100%">
+<pre><span class="keyword">type</span> <a name="TYPElevel"></a><code class="type"></code>level </pre>
+<div class="info">
+type of log levels<br>
+</div>
+
+<pre><span class="keyword">val</span> <a name="VALlevel_full_debug"></a>level_full_debug : <code class="type"><a href="Log.html#TYPElevel">level</a></code></pre><div class="info">
+one log level<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALlevel_debug"></a>level_debug : <code class="type"><a href="Log.html#TYPElevel">level</a></code></pre><div class="info">
+one log level<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALlevel_full_info"></a>level_full_info : <code class="type"><a href="Log.html#TYPElevel">level</a></code></pre><div class="info">
+one log level<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALlevel_info"></a>level_info : <code class="type"><a href="Log.html#TYPElevel">level</a></code></pre><div class="info">
+one log level<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALlevel_warn"></a>level_warn : <code class="type"><a href="Log.html#TYPElevel">level</a></code></pre><div class="info">
+one log level<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALlevel_error"></a>level_error : <code class="type"><a href="Log.html#TYPElevel">level</a></code></pre><div class="info">
+one log level<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALlevel_fatal"></a>level_fatal : <code class="type"><a href="Log.html#TYPElevel">level</a></code></pre><div class="info">
+one log level<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALlevel_of_string"></a>level_of_string : <code class="type">string -> <a href="Log.html#TYPElevel">level</a></code></pre><div class="info">
+Converts string into level.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALstring_of_level"></a>string_of_level : <code class="type"><a href="Log.html#TYPElevel">level</a> -> string</code></pre><div class="info">
+Converts level into string.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALenable_level"></a>enable_level : <code class="type"><a href="Log.html#TYPElevel">level</a> -> unit</code></pre><div class="info">
+enable the given level and all level with
+    higher priority. If you enable e.g. <code class="code">debug</code>, 
+    then <code class="code">full_info</code>, and <code class="code">warn</code> are also enabled.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALdisable_level"></a>disable_level : <code class="type"><a href="Log.html#TYPElevel">level</a> -> unit</code></pre><div class="info">
+disable the level and all levels with lower
+    priority.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALset_level"></a>set_level : <code class="type"><a href="Log.html#TYPElevel">level</a> -> unit</code></pre><div class="info">
+</div>
+<pre><span class="keyword">val</span> <a name="VALis_enabled"></a>is_enabled : <code class="type"><a href="Log.html#TYPElevel">level</a> -> bool</code></pre><div class="info">
+Checks if level is enabled.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALtoggle_level"></a>toggle_level : <code class="type"><a href="Log.html#TYPElevel">level</a> -> unit</code></pre><div class="info">
+</div>
+<pre><span class="keyword">val</span> <a name="VALwith_level"></a>with_level : <code class="type"><a href="Log.html#TYPElevel">level</a> -> (unit -> 'a) -> 'a</code></pre><div class="info">
+run a function and sets for this function
+    the log level to the given one.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALlevel_names"></a>level_names : <code class="type">string list</code></pre><div class="info">
+list of log level names<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALdisable_ansi_esc"></a>disable_ansi_esc : <code class="type">unit -> unit</code></pre><div class="info">
+Disable the ansi escape sequence usage, if
+    you log to <code class="code">stdout</code>.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALdisable_ansi_color"></a>disable_ansi_color : <code class="type">unit -> unit</code></pre><div class="info">
+Disable the ansi color escape sequence usage, if
+    you log to <code class="code">stdout</code>.<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALchange_log_target"></a>change_log_target : <code class="type">Pervasives.out_channel -> unit</code></pre><div class="info">
+Change the log target<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALadd_log_target"></a>add_log_target : <code class="type">Pervasives.out_channel -> unit</code></pre><div class="info">
+add another log target<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALopen_log_file"></a>open_log_file : <code class="type">string -> Pervasives.out_channel</code></pre><div class="info">
+Open a log file<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALfull_debug"></a>full_debug : <code class="type">string Lazy.t -> unit</code></pre><div class="info">
+Full Debug log<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALdebug"></a>debug : <code class="type">string Lazy.t -> unit</code></pre><div class="info">
+Debug log<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALfull_info"></a>full_info : <code class="type">string Lazy.t -> unit</code></pre><div class="info">
+Full info log<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALinfo"></a>info : <code class="type">string Lazy.t -> unit</code></pre><div class="info">
+Info log<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALwarn"></a>warn : <code class="type">string Lazy.t -> unit</code></pre><div class="info">
+Warning log<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALerror"></a>error : <code class="type">string -> unit</code></pre><div class="info">
+Error log<br>
+</div>
+<pre><span class="keyword">val</span> <a name="VALfatal"></a>fatal : <code class="type">string -> 'a</code></pre><div class="info">
+Fatal log<br>
+</div>
+<pre><span class="keyword">exception</span> <a name="EXCEPTIONLog_fatal"></a>Log_fatal <span class="keyword">of</span> <code class="type">string</code></pre>
+<div class="info">
+Exception that is thrown when <code class="code">fatal</code> is called.<br>
+</div>
+</body></html>

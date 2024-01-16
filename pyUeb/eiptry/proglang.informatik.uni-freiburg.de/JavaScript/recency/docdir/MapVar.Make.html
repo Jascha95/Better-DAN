@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index.html">
+<link rel="Up" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.html">
+<link title="Index of types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_types.html">
+<link title="Index of exceptions" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_exceptions.html">
+<link title="Index of values" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_values.html">
+<link title="Index of modules" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_modules.html">
+<link title="Index of module types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/index_module_types.html">
+<link title="Args" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Args.html">
+<link title="Gen" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gen.html">
+<link title="GenVars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/GenVars.html">
+<link title="Gvars" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Gvars.html">
+<link title="Inf" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Inf.html">
+<link title="Location" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Location.html">
+<link title="LowerUpper" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpper.html">
+<link title="LowerUpperNeg" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LowerUpperNeg.html">
+<link title="LUNVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUNVar.html">
+<link title="LUVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/LUVar.html">
+<link title="MapVar" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.html">
+<link title="PrioQueue" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/PrioQueue.html">
+<link title="ProgLabel" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/ProgLabel.html">
+<link title="Syntax" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/Syntax.html"><title>MapVar.Make</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/MapVar.html">Up</a>
+&nbsp;</div>
+<center><h1>Functor <a href="https://proglang.informatik.uni-freiburg.de/JavaScript/recency/docdir/type_MapVar.Make.html">MapVar.Make</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> Make: <div class="sig_block"><code class="code">functor (</code><code class="code">DVar</code><code class="code"> : </code><code class="code">sig</code><div class="sig_block"><pre><span class="keyword">type</span> <a name="TYPEt"></a><code class="type"></code>t </pre>
+
+<pre><span class="keyword">val</span> <a name="VALcreate"></a>create : <code class="type">unit -> t</code></pre><pre><span class="keyword">val</span> <a name="VALmerge"></a>merge : <code class="type">t -> t -> t</code></pre></div><code class="code">end</code><code class="code">) -&gt; </code><div class="sig_block"><code class="code">functor (</code><code class="code">Map</code><code class="code"> : </code><code class="code">sig</code><div class="sig_block"><pre><span class="keyword">include</span> OwnMap.S_Str</pre>
+<pre><span class="keyword">val</span> <a name="VALalias"></a>alias : <code class="type">img -> img -> unit</code></pre></div><code class="code">end</code><code class="code">) -&gt; </code><div class="sig_block"><code class="code">functor (</code><code class="code">P</code><code class="code"> : </code><code class="type"><a href="GenVars.PREFIX.html">GenVars.PREFIX</a></code><code class="code">) -&gt; </code><div class="sig_block"><code class="code">functor (</code><code class="code">O</code><code class="code"> : </code><code class="type"><a href="GenVars.OBSERVER.html">GenVars.OBSERVER</a></code><code class="code">) -&gt; </code><div class="sig_block"><code class="code">functor (</code><code class="code">State</code><code class="code"> : </code><code class="type"><a href="GenVars.STATE.html">GenVars.STATE</a></code><code class="type">  with type obs = O.t</code><code class="code">) -&gt; </code><code class="type"><a href="MapVar.S.html">S</a></code><code class="type"> 
+  with type I.key = Map.key
+  and type I.img = Map.img
+  and type obs = O.t
+  and type domain_var = DVar.t</code></div></div></div></div></div></pre><table border="0" cellpadding="3" width="100%">
+<tr>
+<td align="left" valign="top" width="1%%"><b>Parameters: </b></td>
+<td>
+<table class="paramstable">
+<tr>
+<td align="center" valign="top" width="15%">
+<code>DVar</code></td>
+<td align="center" valign="top">:</td>
+<td><code class="type">sig type t val create : unit -> t val merge : t -> t -> t end</code>
+<tr>
+<td align="center" valign="top" width="15%">
+<code>Map</code></td>
+<td align="center" valign="top">:</td>
+<td><code class="type">sig include OwnMap.S_Str val alias : img -> img -> unit end</code>
+<tr>
+<td align="center" valign="top" width="15%">
+<code>P</code></td>
+<td align="center" valign="top">:</td>
+<td><code class="type"><a href="GenVars.PREFIX.html">GenVars.PREFIX</a></code>
+<tr>
+<td align="center" valign="top" width="15%">
+<code>O</code></td>
+<td align="center" valign="top">:</td>
+<td><code class="type"><a href="GenVars.OBSERVER.html">GenVars.OBSERVER</a></code>
+<tr>
+<td align="center" valign="top" width="15%">
+<code>State</code></td>
+<td align="center" valign="top">:</td>
+<td><code class="type"><a href="GenVars.STATE.html">GenVars.STATE</a> with type obs = O.t</code>
+</table>
+</td>
+</tr>
+</table>
+<hr width="100%">
+<pre><span class="keyword">include</span> <a href="MapVar.S_WITHOUT_STATE.html">MapVar.S_WITHOUT_STATE</a></pre>
+<pre><span class="keyword">type</span> <a name="TYPEdomain_var"></a><code class="type"></code>domain_var </pre>
+
+<pre><span class="keyword">val</span> <a name="VALget_domain_var"></a>get_domain_var : <code class="type">t -> <a href="MapVar.S.html#TYPEdomain_var">domain_var</a></code></pre></body></html>

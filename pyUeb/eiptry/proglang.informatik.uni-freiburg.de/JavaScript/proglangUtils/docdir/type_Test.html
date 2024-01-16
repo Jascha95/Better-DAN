@@ -1,0 +1,45 @@
+<html><head>
+<link rel="stylesheet" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index.html">
+<link title="Index of types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_types.html">
+<link title="Index of exceptions" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_exceptions.html">
+<link title="Index of values" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_values.html">
+<link title="Index of modules" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_modules.html">
+<link title="Index of module types" rel=Appendix href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/index_module_types.html">
+<link title="ExtList" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtList.html">
+<link title="ExtSMap" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSMap.html">
+<link title="ExtSSet" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSSet.html">
+<link title="ExtSSetImp" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSSetImp.html">
+<link title="ExtString" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtString.html">
+<link title="ExtSQueue" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtSQueue.html">
+<link title="ExtUtils" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/ExtUtils.html">
+<link title="HiddenInts" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/HiddenInts.html">
+<link title="HistoryMap" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/HistoryMap.html">
+<link title="Log" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Log.html">
+<link title="Option" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Option.html">
+<link title="OUnit" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OUnit.html">
+<link title="OwnMap" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/OwnMap.html">
+<link title="Path" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Path.html">
+<link title="PrioQueues" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/PrioQueues.html">
+<link title="String_of" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/String_of.html">
+<link title="Test" rel="Chapter" href="https://proglang.informatik.uni-freiburg.de/JavaScript/proglangUtils/docdir/Test.html"><title>Test</title>
+</head>
+<body>
+<code class="code"><span class="keyword">sig</span><br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;assert_failure&nbsp;:&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>a<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;assert_bool&nbsp;:&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;(&nbsp;@?&nbsp;)&nbsp;:&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;assert_string&nbsp;:&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;assert_equal&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?cmp:(<span class="keywordsign">'</span>a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?printer:(<span class="keywordsign">'</span>a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;?msg:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;assert_raises&nbsp;:&nbsp;?msg:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;exn&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>a)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;cmp_float&nbsp;:&nbsp;?epsilon:float&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;float&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;float&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;bracket&nbsp;:&nbsp;(unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>a)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="keywordsign">'</span>a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>b)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="keywordsign">'</span>a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>c)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>c<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;test_fun&nbsp;=&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;tests&nbsp;=&nbsp;(string&nbsp;*&nbsp;<span class="constructor">Test</span>.test_fun)&nbsp;list<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;install_tests&nbsp;:&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Test</span>.tests)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;run_tests&nbsp;:&nbsp;string&nbsp;list&nbsp;option&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;test_program&nbsp;:&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Test</span>.test_fun<br>
+<span class="keyword">end</span></code></body></html>
