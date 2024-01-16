@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flask Example</title>
+</head>
+<body>
+    <img src="/static/logo.png">
+    <h1>Flask Example</h1>
+
+    <h2>Submit a Message:</h2>
+    <form method="POST" action="/save">
+        <input type="text" name="message">
+        <input type="submit" value="Submit">
+    </form>
+
+    <h2>Messages:</h2>
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+            <li>{{ message[1] }} <small>({{ message[2] }})</small></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
